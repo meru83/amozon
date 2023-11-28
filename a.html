@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js</title>
+</head>
+<body>
+    <h1>js</h1>
+    <div id="test"></div>
+    <div id="time"></div>
+
+
+    <script>
+        function updateTime() {
+            let now = new Date();
+            let japanTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
+            let hour = japanTime.getHours().toString().padStart(2, "0");
+            let min = japanTime.getMinutes().toString().padStart(2, "0");
+            let sec = japanTime.getSeconds().toString().padStart(2, "0");
+            document.getElementById("time").textContent = hour + ":" + min + ":" + sec;
+        }
+
+        window.addEventListener("load", function(e) {
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</body>
+</html>

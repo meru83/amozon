@@ -1,0 +1,131 @@
+/*【#header #footer #chat-logｍのheigetの編集方法】
+１．デベロッパーツールでフッターとヘッダーの値を確認する。
+２．その合計値と+αぐらいの値を
+#chat-logのheightのcalc(100vh - {ここに入れる})*/
+
+
+/*body,h1はこれで統一*/
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+/*ヘッダー*/
+#header {
+    position: sticky;/*必須*/
+    top: 0;/*必須*/
+    background-color: #99CCFF;
+    color: #000;
+    text-align: center;
+    height: 50px;/*必須(※値変えてもいいけど注意必要。)*/
+    padding: 5px;
+    
+}
+
+/*メッセージが表示される全体の部分*/
+#chat-log {
+    background-color: #87ceeb;
+    ;
+    padding: 10px;
+    overflow-y: scroll;/*必須*/
+    height: calc(100vh - 118px);/*必須(※値変えてもいいけど注意必要。)*/
+    width: auto;
+}
+
+/*すべてのメッセージに対して*/
+.chat-message {
+    margin-top: 20px; 
+}
+
+/*メッセージの画像*/
+.chat-image{
+    width: auto;
+    height: auto;
+}
+
+/*自分の送信したメッセージ*/
+.my-message{
+    text-align: right;/*必須*/
+    background-color:#fff;
+
+}
+.my-message p {
+    color: #333;
+    line-height: 1.5;
+}
+
+/*相手の送信したメッセージ*/
+.other-message{
+    text-align: left;/*必須*/
+    background-color:#7cfc00;
+}
+
+
+.other-message p {
+    color: #333;
+    line-height: 1.5;
+}
+
+
+/*日付*/
+.chat-date{
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+.chat-time{
+    margin-bottom: 10px;
+
+}
+
+
+/*フッター*/
+#footer {
+    position: fixed;/*必須*/
+    bottom: 0;/*必須*/
+    padding:auto;
+    background-color: #003366;
+    color: #FFF;
+    width: 100%;/*必須*/
+    height: 50px;/*必須*/
+    display: flex;
+    flex-direction: column; /* 要素を縦に配置 */
+    align-items: center;
+}
+
+/*入力フォーム全体*/
+#message-form {
+    display: flex; /* フォーム要素を横並びに配置 */
+    align-items: center;/*必須*/
+}
+
+/*テキスト入力フォーム*/
+#message-text {
+    flex: 1;
+    margin:10px 10px 10px auto;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: calc(100% - 80px);
+}
+
+/*送信ボタン*/
+.send {
+    display       : inline-block;
+    border-radius : 5%;          /* 角丸       */
+    font-size     : 12pt;        /* 文字サイズ */
+    text-align    : center;      /* 文字位置   */
+    cursor        : pointer;     /* カーソル   */
+    padding       : 15px 15px;   /* 余白       */
+    background    : #6666ff;     /* 背景色     */
+    color         : #ffffff;     /* 文字色     */
+    line-height   : 1em;         /* 1行の高さ  */
+    transition    : .3s;         /* なめらか変化 */
+    border        : 2px solid #6666ff;    
+}
+.send:hover {
+    box-shadow    : none;        /* カーソル時の影消去 */
+    color         : #6666ff;     /* 背景色     */
+    background    : #ffffff;     /* 文字色     */
+  }

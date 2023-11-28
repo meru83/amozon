@@ -1,0 +1,9 @@
+/**
+ * Minified by jsDelivr using UglifyJS v3.3.16.
+ * Original file: /npm/fetch-jsonp@1.1.3/build/fetch-jsonp.js
+ * 
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+//API
+!function(e,t){if("function"==typeof define&&define.amd)define(["exports","module"],t);else if("undefined"!=typeof exports&&"undefined"!=typeof module)t(exports,module);else{var n={exports:{}};t(n.exports,n),e.fetchJsonp=n.exports}}(this,function(e,t){"use strict";var n={timeout:5e3,jsonpCallback:"callback",jsonpCallbackFunction:null};function l(t){try{delete window[t]}catch(e){window[t]=void 0}}function f(e){var t=document.getElementById(e);t&&document.getElementsByTagName("head")[0].removeChild(t)}t.exports=function(r){var a=arguments.length<=1||void 0===arguments[1]?{}:arguments[1],c=r,u=a.timeout||n.timeout,s=a.jsonpCallback||n.jsonpCallback,d=void 0;return new Promise(function(t,e){var n=a.jsonpCallbackFunction||"jsonp_"+Date.now()+"_"+Math.ceil(1e5*Math.random()),o=s+"_"+n;window[n]=function(e){t({ok:!0,json:function(){return Promise.resolve(e)}}),d&&clearTimeout(d),f(o),l(n)},c+=-1===c.indexOf("?")?"?":"&";var i=document.createElement("script");i.setAttribute("src",""+c+s+"="+n),a.charset&&i.setAttribute("charset",a.charset),i.id=o,document.getElementsByTagName("head")[0].appendChild(i),d=setTimeout(function(){e(new Error("JSONP request to "+r+" timed out")),l(n),f(o),window[n]=function(){l(n)}},u),i.onerror=function(){e(new Error("JSONP request to "+r+" failed")),l(n),f(o),d&&clearTimeout(d)}})}});
+//# sourceMappingURL=/sm/707d5ca8b3eba7365e87a02a90aec8c250f2080c1beac0f690984803fa9e572b.map
