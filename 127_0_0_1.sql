@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-11-28 04:28:27
+-- 生成日時: 2023-12-01 08:36:37
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -49,11 +49,11 @@ INSERT INTO `big_category` (`big_category_id`, `big_category_name`) VALUES
 --
 
 CREATE TABLE `cart` (
-  `cart_id` int(11) NOT NULL,
   `user_id` varchar(255) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `pieces` int(11) NOT NULL
+  `color_size_id` int(11) NOT NULL,
+  `pieces` int(11) NOT NULL,
+  `create_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -967,7 +967,7 @@ INSERT INTO `orders` (`order_id`, `user_id`, `total`, `order_status`, `create_at
 CREATE TABLE `orders_detail` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `detail_number` int(11) NOT NULL,
+  `color_size_id` int(11) NOT NULL,
   `order_pieces` int(11) NOT NULL,
   `detail_total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1407,9 +1407,10 @@ ALTER TABLE `big_category`
 -- テーブルのインデックス `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cart_id`),
+  ADD PRIMARY KEY (`user_id`,`product_id`,`color_size_id`),
   ADD KEY `product_id` (`product_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `color_size_id` (`color_size_id`);
 
 --
 -- テーブルのインデックス `category`
@@ -1460,8 +1461,9 @@ ALTER TABLE `orders`
 -- テーブルのインデックス `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  ADD PRIMARY KEY (`order_id`,`product_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD PRIMARY KEY (`order_id`,`product_id`,`color_size_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `color_size_id` (`color_size_id`);
 
 --
 -- テーブルのインデックス `products`
@@ -1508,12 +1510,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `big_category`
   MODIFY `big_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- テーブルの AUTO_INCREMENT `cart`
---
-ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- テーブルの AUTO_INCREMENT `category`
@@ -1565,7 +1561,8 @@ ALTER TABLE `products_img`
 -- テーブルの制約 `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`color_size_id`) REFERENCES `color_size` (`color_size_id`);
 
 --
 -- テーブルの制約 `chatrooms`
@@ -1598,8 +1595,8 @@ ALTER TABLE `orders`
 -- テーブルの制約 `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  ADD CONSTRAINT `orders_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-  ADD CONSTRAINT `orders_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+  ADD CONSTRAINT `orders_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  ADD CONSTRAINT `orders_detail_ibfk_2` FOREIGN KEY (`color_size_id`) REFERENCES `color_size` (`color_size_id`);
 
 --
 -- テーブルの制約 `products`
