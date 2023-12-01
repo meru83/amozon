@@ -73,10 +73,10 @@ $htmlText = <<<END
 <hr>
 
 <form name="sizeChangeForm" id="sizeChangeForm" method="post">
-<input type="hidden" name="product_id" value="$product_id">
-<input type="hidden" name="color_code" value="$color_code">
+<input type="hidden" name="product_id" value="$product_id" required>
+<input type="hidden" name="color_code" value="$color_code" required>
 <label id="pSizeChange" for="sizeChange">ほかのサイズ：</label><select name="sizeChange" id="sizeChange">
-    <option hidden>$size</option>
+    <option hidden selected>$size</option>
 END;
 $sizeSql = "SELECT s.size FROM products p
             LEFT JOIN color_size s ON(p.product_id = s.product_id)
