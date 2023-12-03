@@ -22,7 +22,7 @@ if (isset($_SESSION['user_id'])) {
 }else{    
     $_SESSION['cart']['product_id'][] = $product_id;
     $_SESSION['cart']['color_size_id'][] = $color_size_id;
-    $_SESSION['cart']['pieces'][] = $pieces;
+    $_SESSION['cart']['pieces'][] = $pieces;//+=にしたら事前にカートに入ってたぶんに追加される形になる
 
     header("Location:cartContents.php");
     exit();
