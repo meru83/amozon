@@ -32,6 +32,7 @@ if(isset($_SESSION['cart'])){
             $colorCode = $row['color_code'];
             $colorName = getColor($conn, $colorCode);
             $size = $row['size'];
+            $maxPieces = $row['pieces'];
             $productname = $row['productname'];
             $category_name = !is_null($row['category_name'])?$row['category_name']:"";
             $price  = $row['price'];
@@ -61,7 +62,7 @@ if(isset($_SESSION['cart'])){
                 </a>
                 <br>
                 <div id="$i">
-                    <input type="number" id="$i" value="$pieces" min="0" max="$在庫数を取る">
+                    <input type="number" id="$i" value="$pieces" min="0" max="$maxPieces">
                 </div>
                 <br>
                 <hr>
@@ -92,3 +93,17 @@ function getColor($conn, $color_code){
     } 
 }
 ?>
+
+<script>
+//phpで画面がすべて構築されてからaddEventListenerの設定をする
+window.onload =function(){
+    var count = <?=$count?>;
+    for(var i = 0; i < count; i ++){
+        var iId = document.getElementById('i');
+        iId.addEventListener('change',function(){
+            //非同期通信でsessionやらデータベースの情報を書き換える。
+            console.log('a');
+        });
+    }
+}
+</script>
