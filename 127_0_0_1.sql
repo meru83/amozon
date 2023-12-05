@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-01 08:36:37
+-- 生成日時: 2023-12-05 03:31:55
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -189,7 +189,10 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (4, '#AAB2BE', 'XL', 2, 2, 14),
 (4, '#FFFFFF', 'FREE', 1, 1, 6),
 (4, '#FFFFFF', 'XL', 2, 2, 12),
-(4, '#FFFFFF', 'XS', 2, 2, 9);
+(4, '#FFFFFF', 'XS', 2, 2, 9),
+(5, '#313131', 'FREE', 3, 4, 16),
+(5, '#FFFFFF', 'FREE', 1, 2, 15),
+(5, '#FFFFFF', 'XS', 5, 6, 17);
 
 -- --------------------------------------------------------
 
@@ -998,7 +1001,8 @@ INSERT INTO `products` (`product_id`, `productname`, `view`, `create_at`, `selle
 (1, 'サンプル', 'テスト項目', '2023-11-12 12:13:42', 'test_bank', 1, 1, 1, '新品・未使用'),
 (2, 'サンプル2', 'テスト項目', '2023-11-12 12:15:35', 'test_bank', 2, 21, 174, '良品'),
 (3, 'テスト', 'テスト項目', '2023-11-12 12:16:26', 'test_bank', 1, 11, 88, '不良'),
-(4, 'テスト10', NULL, '2023-11-28 00:59:45', 'test_bank', 1, 1, 1, '新品・未使用');
+(4, 'テスト10', NULL, '2023-11-28 00:59:45', 'test_bank', 1, 1, 1, '新品・未使用'),
+(5, 'a', 'a', '2023-12-05 01:06:47', 'test_bank', 1, 1, 1, '新品・未使用');
 
 -- --------------------------------------------------------
 
@@ -1030,6 +1034,18 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (11, 12, 'スクリーンショット 2023-11-28 10012812.png'),
 (12, 13, 'スクリーンショット 2023-11-28 10013613.png'),
 (13, 14, 'スクリーンショット 2023-11-28 10014414.png');
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `search`
+--
+
+CREATE TABLE `search` (
+  `search_id` int(11) NOT NULL,
+  `searchText` varchar(255) NOT NULL,
+  `create_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1483,6 +1499,12 @@ ALTER TABLE `products_img`
   ADD KEY `color_size_id` (`color_size_id`);
 
 --
+-- テーブルのインデックス `search`
+--
+ALTER TABLE `search`
+  ADD PRIMARY KEY (`search_id`);
+
+--
 -- テーブルのインデックス `seller`
 --
 ALTER TABLE `seller`
@@ -1527,7 +1549,7 @@ ALTER TABLE `chatrooms`
 -- テーブルの AUTO_INCREMENT `color_size`
 --
 ALTER TABLE `color_size`
-  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- テーブルの AUTO_INCREMENT `messages`
@@ -1545,7 +1567,7 @@ ALTER TABLE `orders`
 -- テーブルの AUTO_INCREMENT `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- テーブルの AUTO_INCREMENT `products_img`
