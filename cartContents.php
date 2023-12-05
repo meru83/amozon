@@ -12,6 +12,9 @@ $count = 0;
 $htmlText = "";
 if(isset($_SESSION['cart'])){
     $lastImg = array();
+    echo '<pre>';
+    print_r($_SESSION);
+    echo '</pre>';
     for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
         $product_id = $_SESSION['cart']['product_id'][$i];
         $color_size_id = $_SESSION['cart']['color_size_id'][$i];
@@ -81,7 +84,7 @@ if(isset($_SESSION['cart'])){
     <script>
     document.addEventListener('DOMContentLoaded',function(){
         var count = $count;
-        for(var i = 0; i < count; i ++){
+        for(let i = 0; i < count; i ++){
             var iId = document.getElementById(i);
             iId.addEventListener('change',function(){
                 piecesValue = iId.value;
