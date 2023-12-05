@@ -4,6 +4,10 @@ include "db_config.php";
 
 // 検索キーワードを取得し、空白で分割
 $searchText = isset($_GET['search']) ? trim($_GET['search']) : '';
+$searchSql = "INSERT INTO search(searchText) VALUES(?)";
+$searchStmt = $conn->prepare($searchSql);
+$searchStmt->bind_param("s", $searchText);
+$searchStmt->execute();
 $count = 0;
 if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり'])){
     if(preg_match('/[|]+/u',$searchText)){

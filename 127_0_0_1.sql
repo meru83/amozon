@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-05 03:31:55
+-- 生成日時: 2023-12-05 03:57:31
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -1574,6 +1574,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `products_img`
   MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- テーブルの AUTO_INCREMENT `search`
+--
+ALTER TABLE `search`
+  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- ダンプしたテーブルの制約
