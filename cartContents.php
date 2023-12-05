@@ -61,9 +61,7 @@ if(isset($_SESSION['cart'])){
                 価格　　　: $price<br>
                 </a>
                 <br>
-                <div id="$i">
-                    <input type="number" id="$i" value="$pieces" min="0" max="$maxPieces">
-                </div>
+                <input type="number" id="$i" value="$pieces" min="0" max="$maxPieces">
                 <br>
                 <hr>
                 END;
@@ -78,6 +76,35 @@ if(isset($_SESSION['cart'])){
     }
     $countJS = $count;
     echo $count . "件";
+
+    echo <<<END
+    <script>
+    document.addEventListener('DOMContentLoaded',function(){
+        var count = $count;
+        for(var i = 0; i < count; i ++){
+            var iId = document.getElementById(i);
+            iId.addEventListener('change',function(){
+                piecesValue = iId.value;
+
+                const formData = new FormData();
+                formData.append('piecesValue',piecesValue);
+                formData.append('i', i);
+
+                const xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        console.log(i);
+                    }
+                }
+
+                xhr.open('POST','increment.php',true);
+                xhr.send(formData);
+            });
+        }
+    });
+    </script>
+    END;
 }
 
 function getColor($conn, $color_code){
@@ -93,17 +120,3 @@ function getColor($conn, $color_code){
     } 
 }
 ?>
-
-<script>
-//phpで画面がすべて構築されてからaddEventListenerの設定をする
-window.onload =function(){
-    var count = <?=$count?>;
-    for(var i = 0; i < count; i ++){
-        var iId = document.getElementById('i');
-        iId.addEventListener('change',function(){
-            //非同期通信でsessionやらデータベースの情報を書き換える。
-            console.log('a');
-        });
-    }
-}
-</script>
