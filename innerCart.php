@@ -11,18 +11,27 @@ $pieces = isset($_POST['pieces'])?$_POST['pieces']:1;
 
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $insertSql = "INSERT INTO cart(user_id, product_id, color_size_id, pieces)
-                    VALUE(?,?,?,?)";
-    $insertStmt = $conn->prepare($insertSql);
-    $insertStmt->bind_param("siii",$user_id,$product_id,$color_size_id,$pieces);
-    if($insertStmt->execute()){
-        header("Location:cartContents.php");
-        exit();
+    $checkSql = "SELECT user_id, product_id, color_size_id FROM cart
+                WHERE cart.user_id = '$user_id' && cart.product_id = $product_id  && cart.color_size_id = $color_size_id";
+    $checkResult = $conn->query($checkSql);
+    if($checkResult && $checkResult->num_rows === 0){
+        $insertSql = "INSERT INTO cart(user_id, product_id, color_size_id, pieces)
+                        VALUE(?,?,?,?)";
+        $insertStmt = $conn->prepare($insertSql);
+        $insertStmt->bind_param("siii",$user_id,$product_id,$color_size_id,$pieces);
+        if($insertStmt->execute()){
+            header("Location:cartContents.php");
+            exit();
+        }
+    }else{
+        $error_message = "カートに商品を登録するのに失敗しました。";
+        header("Location:cartContents.php?error_message=$error_message");
     }
-}else{    
+}else{
+    //すでに同じ商品が登録されているか確認する処理が必要
     $_SESSION['cart']['product_id'][] = $product_id;
     $_SESSION['cart']['color_size_id'][] = $color_size_id;
-    $_SESSION['cart']['pieces'][] = $pieces;//+=にしたら事前にカートに入ってたぶんに追加される形になる
+    $_SESSION['cart']['pieces'][] = $pieces;
 
     header("Location:cartContents.php");
     exit();
