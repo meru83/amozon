@@ -31,14 +31,16 @@ if ($result && $result->num_rows > 0) {
         if(isset($_SESSION['cart'])){
             try{
                 for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
-                    $product_id = $_SESSION['cart']['product_id'][$i];
-                    $color_size_id = $_SESSION['cart']['color_size_id'][$i];
-                    $pieces = $_SESSION['cart']['pieces'][$i];
-                    
-                    $insertSql = "INSERT INTO cart(user_id, product_id, color_size_id, pieces) VALUES(?,?,?,?)";
-                    $insertStmt = $conn->prepare($insertSql);
-                    $insertStmt->bind_param("siii",$_SESSION['user_id'], $product_id, $color_size_id, $pieces);
-                    $insertStmt->execute();
+                    if($_SESSION['cart']['product_id'][$i] === null){
+                        $product_id = $_SESSION['cart']['product_id'][$i];
+                        $color_size_id = $_SESSION['cart']['color_size_id'][$i];
+                        $pieces = $_SESSION['cart']['pieces'][$i];
+                        
+                        $insertSql = "INSERT INTO cart(user_id, product_id, color_size_id, pieces) VALUES(?,?,?,?)";
+                        $insertStmt = $conn->prepare($insertSql);
+                        $insertStmt->bind_param("siii",$_SESSION['user_id'], $product_id, $color_size_id, $pieces);
+                        $insertStmt->execute();
+                    }
                 }
                 $_SESSION['cart'] = null;
             }catch(Exception $e){
