@@ -15,6 +15,7 @@ echo "<h1>カート</h1>";
 $count = 0;
 $countMax = 0;
 $htmlText = "";
+//セッションで管理されている場合
 if(isset($_SESSION['cart'])){
     $lastImg = array();
     for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
@@ -120,6 +121,7 @@ if(isset($_SESSION['cart'])){
     END;
 }else if(isset($_SESSION['user_id'])){
     //ログイン済みの時の処理を追加
+    //データベースで管理
 }
 
 function getColor($conn, $color_code){
