@@ -233,13 +233,13 @@ function addRadio(selectorNumber){
     divRadio.appendChild(radioBr);
 
     //削除ボタン生成
-    var delateRadio = document.createElement('button');
-    delateRadio.type = "button";
-    delateRadio.id = "delate"+divRadioCount;
-    delateRadio.name = selectorName+"optionArray["+divRadioCount+"]delate";
-    delateRadio.innerHTML = "削除";
-    divRadio.appendChild(delateRadio);
-    delateRadio.addEventListener('click', function(){
+    var deleteRadio = document.createElement('button');
+    deleteRadio.type = "button";
+    deleteRadio.id = "delete"+divRadioCount;
+    deleteRadio.name = selectorName+"optionArray["+divRadioCount+"]delete";
+    deleteRadio.innerHTML = "削除";
+    divRadio.appendChild(deleteRadio);
+    deleteRadio.addEventListener('click', function(){
         divRadio.remove();
     });
 
@@ -291,13 +291,13 @@ function addSelectBox(){
     }
 
     //サイズ削除ボタンの追加
-    var delateSelect = document.createElement('button');
-    delateSelect.type = "button";
-    delateSelect.id = "delateSelect"+divSelectCount;
-    delateSelect.name = "selectorArray[]delate";
-    delateSelect.innerHTML = "サイズを削除";
-    divSelect.appendChild(delateSelect);
-    delateSelect.addEventListener('click',function(){
+    var deleteSelect = document.createElement('button');
+    deleteSelect.type = "button";
+    deleteSelect.id = "deleteSelect"+divSelectCount;
+    deleteSelect.name = "selectorArray[]delete";
+    deleteSelect.innerHTML = "サイズを削除";
+    divSelect.appendChild(deleteSelect);
+    deleteSelect.addEventListener('click',function(){
         divSelect.remove();
         if(selectBox.id === 'sizeSelect'+(divSelectCount-1)){
             addSelectButton.style.display = "block";
