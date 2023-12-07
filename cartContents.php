@@ -9,16 +9,15 @@ if (session_status() == PHP_SESSION_NONE) {
 echo "<h1>カート</h1>";
 
 $count = 0;
+$countMax = 0;
 $htmlText = "";
 if(isset($_SESSION['cart'])){
     $lastImg = array();
-    echo '<pre>';
-    print_r($_SESSION);
-    echo '</pre>';
     for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
-        $product_id = $_SESSION['cart']['product_id'][$i];
-        $color_size_id = $_SESSION['cart']['color_size_id'][$i];
-        $pieces = $_SESSION['cart']['pieces'][$i];
+        $countMax++;
+        $product_id = isset($_SESSION['cart']['product_id'][$i])?$_SESSION['cart']['product_id'][$i]:null;
+        $color_size_id = isset($_SESSION['cart']['color_size_id'][$i])?$_SESSION['cart']['color_size_id'][$i]:null;
+        $pieces = isset($_SESSION['cart']['pieces'][$i])?$_SESSION['cart']['pieces'][$i]:null;
         $selectSql = "SELECT p.productname, p.view, p.create_at, p.seller_id, p.quality, s.color_size_id, s.color_code, s.size, s.pieces, s.price, i.img_url, b.big_category_name, c.category_name, sc.small_category_name FROM products p
                     LEFT JOIN color_size s ON (p.product_id = s.product_id)
                     LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
@@ -43,8 +42,10 @@ if(isset($_SESSION['cart'])){
             $img_url = is_null($row['img_url'])?null:$row['img_url'];
             if(!is_null($img_url)){
                 $imgText = "
+                <div id='divImg$i'>
                 <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
-                </a>";
+                </a>
+                </div>";
             }//else{
                 //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
             //}
@@ -53,9 +54,9 @@ if(isset($_SESSION['cart'])){
                 echo $htmlText;
                 echo $imgText;
                 $lastImg[] = $color_size_id;
-                $jsI = json_encode($i);
                 $htmlText = <<<END
                 <br>
+                <div id="divText$i">
                 <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
                 色: $colorName
                 サイズ: $size<br>
@@ -64,9 +65,11 @@ if(isset($_SESSION['cart'])){
                 価格　　　: $price<br>
                 </a>
                 <br>
-                <input type="number" id="$i" value="$pieces" min="0" max="$maxPieces">
+                <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
+                <button type="button" id="delete$i" onclick="deleteProducts($i)" value="test">削除</button>
                 <br>
                 <hr>
+                </div>
                 END;
                 // 他の情報も必要に応じて表示
                 $count++;
@@ -83,27 +86,30 @@ if(isset($_SESSION['cart'])){
     echo <<<END
     <script>
     document.addEventListener('DOMContentLoaded',function(){
-        var count = $count;
-        for(let i = 0; i < count; i ++){
+        var countMax = $countMax;
+        for(let i = 0; i < countMax; i ++){
             var iId = document.getElementById(i);
-            iId.addEventListener('change',function(){
-                piecesValue = iId.value;
-
-                const formData = new FormData();
-                formData.append('piecesValue',piecesValue);
-                formData.append('i', i);
-
-                const xhr = new XMLHttpRequest();
-
-                xhr.onreadystatechange = function(){
-                    if(xhr.readyState === 4 && xhr.status === 200){
-                        console.log(i);
+            if(iId !== null){
+                iId.addEventListener('change',function(){
+                    piecesValue = iId.value;
+                    console.log(piecesValue);
+    
+                    const formData = new FormData();
+                    formData.append('piecesValue',piecesValue);
+                    formData.append('i', i);
+    
+                    const xhr = new XMLHttpRequest();
+    
+                    xhr.onreadystatechange = function(){
+                        if(xhr.readyState === 4 && xhr.status === 200){
+                            //console.log(i);
+                        }
                     }
-                }
-
-                xhr.open('POST','increment.php',true);
-                xhr.send(formData);
-            });
+    
+                    xhr.open('POST','increment.php',true);
+                    xhr.send(formData);
+                });
+            }
         }
     });
     </script>
@@ -123,3 +129,27 @@ function getColor($conn, $color_code){
     } 
 }
 ?>
+<script>
+    function deleteProducts(defdeleteI){
+        var deleteI = document.getElementById('delete'+defdeleteI);
+        const formData = new FormData();
+        formData.append('i', defdeleteI);
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                var divImgI = document.getElementById('divImg'+defdeleteI);
+                var divTextI = document.getElementById('divText'+defdeleteI);
+
+                if(divImgI != null){
+                    divImgI.remove();
+                }
+                divTextI.remove();
+            }
+        }
+
+        xhr.open('POST','cartDelete.php',true);
+        xhr.send(formData);
+    }
+</script>

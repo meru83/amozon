@@ -11,9 +11,9 @@ error_reporting(E_ALL);
 // データベース接続情報を読み込む
 include 'db_config.php';
 
-$piecesValue = $_POST['piecesValue'];
 $i = $_POST['i'];
-$_SESSION['cart']['pieces'][$i] = $piecesValue;
-//error_log($_SESSION['cart']['product_id'][$i], 3);
+$_SESSION['cart']['product_id'][$i] = null;
+$_SESSION['cart']['color_size_id'][$i] = null;
+$_SESSION['cart']['pieces'][$i] = null;
 //error_log($_SESSION['cart']['pieces'][$i], 3);
 ?>
