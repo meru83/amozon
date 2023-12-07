@@ -12,10 +12,14 @@
         $error_message = $_GET['error_message'];
         echo "<p>".$error_message."</p>";
     }
+    if(isset($_SESSION['user_id'])){
+        echo <<<END
+        <form action="logout.php" method="post">
+            <input type="submit" name="logout" value="ログアウト">
+        </form>
+        END;
+    }
     ?>
-    <form action="logout.php" method="post">
-        <input type="submit" name="logout" value="ログアウト">
-    </form>
 
     <a href="search.php">検索</a><br>
     <a href="chat_rooms.php">チャットルーム一覧</a>
