@@ -1,3 +1,13 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log'); // エラーログをerror.logファイルに記録
+error_reporting(E_ALL);
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -18,10 +28,18 @@
             <input type="submit" name="logout" value="ログアウト">
         </form>
         END;
+    }else{
+        echo <<<END
+        <a href="register.php">新規登録</a>
+        <a href="login.php">ログイン</a>
+        <br>
+        <br>
+        END;
     }
     ?>
 
     <a href="search.php">検索</a><br>
+    <a href="cartContents.php">カート</a><br>
     <a href="chat_rooms.php">チャットルーム一覧</a>
 </body>
 </html>

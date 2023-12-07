@@ -114,6 +114,8 @@ if(isset($_SESSION['cart'])){
     });
     </script>
     END;
+}else if(isset($_SESSION['user_id'])){
+    //ログイン済みの時の処理を追加
 }
 
 function getColor($conn, $color_code){
