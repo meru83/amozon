@@ -5,6 +5,10 @@ include "db_config.php";
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+if(isset($_GET['error_message'])){
+    $error_message = $_GET['error_message'];
+    echo $error_message;
+}
 
 echo "<h1>カート</h1>";
 
