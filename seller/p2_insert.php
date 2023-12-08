@@ -18,6 +18,7 @@ $seller_id = $_SESSION['seller_id'];
 $sellerName = $_SESSION['sellerName'];
 ?>
 
+<link rel="stylesheet" href="../css/p2style.css">
 <h1>商品登録画面</h1>
 <?php
 if(isset($_GET['error'])){
@@ -28,16 +29,16 @@ if(isset($_GET['error'])){
 <form action="p2Insert.php" method="post" name="form" id="form">
     <p><?=$sellerName?></p>
     <label for="productname" class="p2_label">
-        商品名　：
-        <input type="text" name="productname" id="productname" placeholder="商品名" required>
+        商品名
+        <input type="text" name="productname" id="productname" class="styleTextBox" placeholder="商品名" required>
     </label><br>
     <label for="view" class="p2_label">
-        　概要　：
-        <textarea name="view" id="view" cols="25" rows="10" placeholder="概要"></textarea>
+        概要
+        <textarea name="view" id="view" class="styleTextArea" cols="25" rows="10" placeholder="概要"></textarea>
     </label><br>
     <label for="quality" class="p2_label">
-        　品質　：
-        <select name="quality" id="quality" required>
+        品質
+        <select name="quality" id="quality" class="styleSelect" required>
             <option value="" hidden>選択してください</option>
             <option value="新品・未使用">新品・未使用</option>
             <option value="良品">良品</option>
@@ -48,7 +49,7 @@ if(isset($_GET['error'])){
 
     <label for="big_category" class="p2_label">
         大カテゴリ：
-        <select name="big_category" id="big_category">
+        <select name="big_category" id="big_category" class="styleSelect">
             <option value="" hidden>選択してください</option>
             <?php 
             $big_sql = "SELECT big_category_id, big_category_name FROM big_category";
@@ -64,20 +65,20 @@ if(isset($_GET['error'])){
         </select>
     </label><br>
     <label for="category" id="categoryLabel" class="p2_label" style="display:none;">
-        中カテゴリ：
-        <select name="category" id="category">
+        中カテゴリ
+        <select name="category" id="category" class="styleSelect">
         </select>
     </label><br>
     <label for="small_category" id="smallCategoryLabel" class="p2_label" style="display:none;">
-        小カテゴリ：
-        <select name="small_category" id="small_category">
+        小カテゴリ
+        <select name="small_category" id="small_category" class="styleSelect">
         </select>
     </label><br><br><br>
 
     <div id="selectBoxesContainer">
         <div id="selector0">    
             <label for="sizeSelect0">商品のサイズ</label>
-            <select name="selectorArray[]" id="sizeSelect0" required>
+            <select name="selectorArray[]" id="sizeSelect0" class="styleSelect" required>
                 <option value="" hidden>選択してください</option>
                 <option value="FREE">FREE</option>
                 <option value="XS">XS</option>
@@ -96,7 +97,7 @@ if(isset($_GET['error'])){
     <hr>
     <button type="button" id="addSelectButton" onclick="addSelectBox()" style="display:none;">サイズを追加</button><br><br>
 
-    <input type="submit" name="register" id="register" value="登録">
+    <input type="submit" name="register" id="register" class="register"  value="登録">
 </form>
 
 <script>
@@ -142,6 +143,7 @@ function addRadioColor(selectorNumber){
     var addColorButton = document.createElement('button');
     addColorButton.type = "button";
     addColorButton.id = "addColor"+divRadioCount;
+    addColorButton.classList.add("styleAddcolor");
     addColorButton.innerHTML = "カラーを追加";
     selector.appendChild(addColorButton);
     addColorButton.addEventListener('click', function() {
@@ -162,15 +164,31 @@ function addRadio(selectorNumber){
 
     //ラジオボタンの要素の配列
     var radioValues = ["#FFFFFF","#313131","#AAB2BE","#81604C","#E0D1AD","#9ED563","#4DBEE9","#AD8EEF","#FED14C","#F8AFD7","#EF5663","#F98140"];
-    var radioOptions = ["ホワイト","ブラック","グレー","ブラウン","ベージュ","グリーン","ブルー","パープル","イエロー","ピンク","レッド","オレンジ"];
+    var radioOptions = ["ホワイト","ブラック","グレー　","ブラウン","ベージュ","グリーン","ブルー　","パープル","イエロー","ピンク　","レッド　","オレンジ"];
     var radioLength = radioValues.length;
 
-    //div生成
+    //div生成 価格まで全部入れる
     var divRadio = document.createElement('div');
     divRadio.id = "radioContainer"+divRadioCount;
     divRadio.classList.add("radioContainer");
+
+    //div生成2 カラーだけ
+    var divRadioChild = document.createElement('div');
+    divRadioChild.classList.add("styledivRadioChild");
+    divRadio.appendChild(divRadioChild);
+
     //ラジオボタン生成
     for(var i=0; i<radioLength; i++){
+        //div生成3　一色だけ
+        var colorBox = document.createElement('div');
+        colorBox.classList.add("styleColorBox");
+        divRadioChild.appendChild(colorBox);
+
+        //ラジオボタンとspanを入れるdivを追加
+        var divRadioGrandchild = document.createElement('div');
+        divRadioGrandchild.classList.add('styledivRadioGrandchild');
+        colorBox.appendChild(divRadioGrandchild);
+
         var colorRadio = document.createElement('input');
         colorRadio.type = "radio";
         colorRadio.name = "colorArray["+selectorValue+"]["+divRadioCount+"][color]";
@@ -180,18 +198,26 @@ function addRadio(selectorNumber){
         if(i === 0){
             colorRadio.required = true;
         }
-        divRadio.appendChild(colorRadio);
+        divRadioGrandchild.appendChild(colorRadio);
 
+        //spanを入れるlabelを生成
+        var spanLabel = document.createElement('label');
+        spanLabel.setAttribute('for', selectorId+"radio"+divRadioCount+i);
+
+        //spanを生成
         var colorSpan = document.createElement('span');
-        colorSpan.id 
-        divRadio.appendChild(colorSpan);
+        colorSpan.classList.add("span" + i);
+        spanLabel.appendChild(colorSpan);
+        divRadioGrandchild.appendChild(spanLabel);
         
         //radioボタンのラベル生成。
         var radioLabel = document.createElement('label');
         radioLabel.setAttribute('for', selectorId+"radio"+divRadioCount+i);
         radioLabel.innerHTML = radioOptions[i];
-        divRadio.appendChild(radioLabel);//(span)
-        //span.appendChild(label);
+        radioLabel.classList.add("styleRadioLabel");
+        colorBox.appendChild(radioLabel);
+
+
 
         //ラジオボタンが選択された時のイベントリスナーを追加する場合はここ
     }
@@ -203,6 +229,7 @@ function addRadio(selectorNumber){
     var piecesLabel = document.createElement('label');
     piecesLabel.setAttribute('for',"pieces"+divRadioCount);
     piecesLabel.innerHTML = "数量";
+    piecesLabel.classList.add('stylePieces');
     divRadio.appendChild(piecesLabel);
 
     //在庫数の入力フォーム生成
@@ -212,6 +239,7 @@ function addRadio(selectorNumber){
     pieces.id = "pieces"+divRadioCount;//ラベルのため
     pieces.placeholder = "数値のみ";
     pieces.required = true;
+    pieces.classList.add('styleTextBox');
     divRadio.appendChild(pieces);
 
     //価格のラベル
@@ -227,19 +255,21 @@ function addRadio(selectorNumber){
     price.id = "price"+divRadioCount;
     price.placeholder = "数値のみ　単位：円/着"
     price.required = true;
+    price.classList.add('styleTextBox');
     divRadio.appendChild(price);
 
     var radioBr = document.createElement('br');
     divRadio.appendChild(radioBr);
 
     //削除ボタン生成
-    var deleteRadio = document.createElement('button');
-    deleteRadio.type = "button";
-    deleteRadio.id = "delete"+divRadioCount;
-    deleteRadio.name = selectorName+"optionArray["+divRadioCount+"]delete";
-    deleteRadio.innerHTML = "削除";
-    divRadio.appendChild(deleteRadio);
-    deleteRadio.addEventListener('click', function(){
+    var delateRadio = document.createElement('button');
+    delateRadio.type = "button";
+    delateRadio.id = "delate"+divRadioCount;
+    delateRadio.classList.add("styleDelate");
+    delateRadio.name = selectorName+"optionArray["+divRadioCount+"]delate";
+    delateRadio.innerHTML = "リセット";
+    divRadio.appendChild(delateRadio);
+    delateRadio.addEventListener('click', function(){
         divRadio.remove();
     });
 
@@ -271,6 +301,7 @@ function addSelectBox(){
     selectBox.name = 'selectorArray[]';
     selectBox.id = 'sizeSelect'+divSelectCount;
     selectBox.required = true;
+    selectBox.classList.add('styleSelect');
     divSelect.appendChild(selectBox);
 
     //optionの追加
@@ -291,13 +322,14 @@ function addSelectBox(){
     }
 
     //サイズ削除ボタンの追加
-    var deleteSelect = document.createElement('button');
-    deleteSelect.type = "button";
-    deleteSelect.id = "deleteSelect"+divSelectCount;
-    deleteSelect.name = "selectorArray[]delete";
-    deleteSelect.innerHTML = "サイズを削除";
-    divSelect.appendChild(deleteSelect);
-    deleteSelect.addEventListener('click',function(){
+    var delateSelect = document.createElement('button');
+    delateSelect.type = "button";
+    delateSelect.id = "delateSelect"+divSelectCount;
+    delateSelect.classList.add("styleDelateSelect");
+    delateSelect.name = "selectorArray[]delate";
+    delateSelect.innerHTML = "サイズを削除";
+    divSelect.appendChild(delateSelect);
+    delateSelect.addEventListener('click',function(){
         divSelect.remove();
         if(selectBox.id === 'sizeSelect'+(divSelectCount-1)){
             addSelectButton.style.display = "block";
