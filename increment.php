@@ -11,6 +11,7 @@ error_reporting(E_ALL);
 // データベース接続情報を読み込む
 include 'db_config.php';
 
+//セッションの時の処理
 $piecesValue = $_POST['piecesValue'];
 $i = $_POST['i'];
 $_SESSION['cart']['pieces'][$i] = $piecesValue;
