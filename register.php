@@ -69,8 +69,7 @@
                     $_SESSION['username'] = $username;
 
                     //リダイレクト先のページに移動
-                    //今はチャットルームの一覧に飛ぶけど将来的にはトップページに飛ばしたい
-                    header("Location: chat_rooms.php");
+                    header("Location: address_insert.php");
                     exit();
 
                 } else {
