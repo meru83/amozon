@@ -53,7 +53,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
 
         // echo "クエリ：".$sql."<br>";
 
-        // クエリを実行a
+        // クエリを実行
         $result = $conn->query($sql);
 
         $htmlText = "";
