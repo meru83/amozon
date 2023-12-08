@@ -67,27 +67,39 @@ foreach($insertId as $rowId){
 
 $p = "";
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $postId = $_POST['img'];
-    foreach($postId as $key => $row){
-        $id = $row['id'];//登録したてのcolor_size_id    
-        $imgNameArray = $_FILES['img']['name'][$key];
-        $imgTmpArray = $_FILES['img']['tmp_name'][$key];
-        $imgFileLength = count($imgNameArray);
-        for($i = 0; $i < $imgFileLength; $i++){
-            $imgPath = $imgNameArray[$i];
-            $imgTmp = $imgTmpArray[$i];
-            $imgPathId = add_filename($imgPath,$id);
-
-            if(move_uploaded_file($imgTmp,"p_img/".$imgPathId)){
-                $insertSql = "INSERT INTO products_img(color_size_id, img_url)
-                                VALUE(?, ?)";
-                $insertStmt = $conn->prepare($insertSql);
-                $insertStmt->bind_param("is",$id,$imgPathId);
-                if($insertStmt->execute()){
-                    $p = "登録に成功しました";
+    $postId = isset($_POST['img'])?$_POST['img']:null;
+    try{
+        if($postId !== null){
+            foreach($postId as $key => $row){
+                $id = $row['id'];//登録したてのcolor_size_id    
+                $imgNameArray = $_FILES['img']['name'][$key];
+                $imgTmpArray = $_FILES['img']['tmp_name'][$key];
+                $imgFileLength = count($imgNameArray);
+                for($i = 0; $i < $imgFileLength; $i++){
+                    $imgPath = $imgNameArray[$i];
+                    $imgTmp = $imgTmpArray[$i];
+                    $imgPathId = add_filename($imgPath,$id);
+        
+                    if(move_uploaded_file($imgTmp,"p_img/".$imgPathId)){
+                        $insertSql = "INSERT INTO products_img(color_size_id, img_url)
+                                        VALUE(?, ?)";
+                        $insertStmt = $conn->prepare($insertSql);
+                        $insertStmt->bind_param("is",$id,$imgPathId);
+                        if($insertStmt->execute()){
+                            $p = "登録に成功しました。<br>";
+                        }
+                    }
                 }
             }
+        }else{
+            // エラーメッセージを表示
+            echo "エラーが発生しました。申し訳ありませんが、後でもう一度試してください。<br>";
         }
+    }catch(Exception $e){
+        error_log("Error in create.php: " . $e->getMessage(), 3);
+
+        // エラーメッセージを表示
+        echo "エラーが発生しました。申し訳ありませんが、後でもう一度試してください。";
     }
 }
 if(!($p === "")){
