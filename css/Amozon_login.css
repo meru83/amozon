@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+.login_mainb{
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    width: 100%;
+    outline: none;
+    max-width: 640px;
+    margin: 0px auto;
+    padding: var(--grid-layout-page-padding-top) var(--grid-layout-page-padding-horizontal) var(--grid-layout-page-padding-bottom);
+    min-height: calc(100vh - 64px);
+    display: flex;
+    justify-content: center; /* 中央寄せ（水平方向） */
+    align-items: center;     /* 中央寄せ（垂直方向） */
+}
+
+.login_h1{
+    padding: 20px 0 10px 30px;
+    font-size: 14px;
+    width: 100%;             /* 全幅を使用 */
+    text-align: left;        /* 左寄せ */
+    margin-left: 0;          /* 左マージンを追加することで位置調整 */
+}
+
+.error-message {
+    color: red;
+    font-size: 10px;
+}
+
+.login_form{
+    width: fit-content;
+}
+
+.login_border{
+    border: 2px solid #DBDBDB; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    display: flex;           /* フレックスボックスを適用 */
+    flex-direction: column;  /* 縦方向にアイテムを配置 */
+    align-items: center;     /* 水平方向の中央寄せ */
+}
+
+
+.login_brand {
+    height: auto;
+    width: 215px;
+}
+
+.login_input_size{
+    width: 200px;
+    height: 40px;
+    margin: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+}
+
+.login_input_size {
+    border: 1px solid #DBDBDB; 
+}
+
+.login_input_size:focus {
+    outline-color: #005aae;
+}
+
+.login_button {
+    background-color: #005aae;
+    border: none;
+    border-radius: 10px; /* 画像のボタンが角丸のため */
+    width: 220px;
+    height: 40px;
+    margin: 5px;
+    color: white;
+    font-weight: bold; /* ボタンのテキストを太字に */
+    cursor: pointer;
+    transition: background-color 0.3s; /* クリック時のアニメーション効果の追加 */
+
+    /* グラデーション効果の追加 */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login_button:hover {
+    background-color: #004488; /* ホバー時の色変更 */
+}
+
+.login_button:active {
+    background-color: #004280; /* クリック時の色変更 */
+}
+

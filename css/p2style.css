@@ -1,0 +1,283 @@
+/* style.css */
+body {
+    font-family: 'Helvetica', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    color: #333;
+}
+
+#form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.p2_label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.styleTextBox {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.styleTextArea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+#quality,
+.styleSelect {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#productname,
+#view,
+#quality,
+#big_category,
+#category,
+#small_category,
+#sizeSelect0,
+#pieces0,
+#price0:focus {
+    outline-color: #005aae;
+}
+
+
+.register {
+    background-color: #005aae;;
+    color: white;
+    padding: 6px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.register:hover {
+    background-color: #004488;
+}
+
+hr {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+#addSelectButton {
+    margin-top: 5px;
+    padding: 6px 15px;
+    color: #005aae;
+    background-color: #ffffff;
+    border: 1px solid #005aae;
+    border-radius: 4px;
+}
+/*display: inline-block;*/
+
+#addSelectButton:hover {
+    background-color: #def7ff;
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.span0 {
+    width: 15px;
+    height: 15px;
+    background-color: #FFFFFF;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+    
+.span1 {
+    width: 15px;
+    height: 15px;
+    background-color: #313131;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span2 {
+    width: 15px;
+    height: 15px;
+    background-color: #AAB2BE;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span3 {
+    width: 15px;
+    height: 15px;
+    background-color: #81604C;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span4 {
+    width: 15px;
+    height: 15px;
+    background-color: #E0D1AD;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span5 {
+    width: 15px;
+    height: 15px;
+    background-color: #9ED563;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span6 {
+    width: 15px;
+    height: 15px;
+    background-color: #4DBEE9;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span7 {
+    width: 15px;
+    height: 15px;
+    background-color: #AD8EEF;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span8 {
+    width: 15px;
+    height: 15px;
+    background-color: #FED14C;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span9 {
+    width: 15px;
+    height: 15px;
+    background-color: #F8AFD7;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span10 {
+    width: 15px;
+    height: 15px;
+    background-color: #EF5663;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.span11 {
+    width: 15px;
+    height: 15px;
+    background-color: #F98140;
+    display: inline-block;
+    border: 1px solid #DBDBDB;
+    border-radius: 100%;
+}
+
+.styledivRadioGrandchild {
+    display: flex;
+    align-items: center;
+}
+
+.styleRadioLabel {
+    white-space: nowrap;
+    padding-left: 5px;
+}
+
+.styledivRadioGrandchild {
+    float: left;
+}
+
+.styleColorBox {
+    float: left;
+    display: flex;
+}
+
+.stylePieces::before {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.styleAddcolor {
+    margin-top: 5px;
+    padding: 6px 15px;
+    color: #005aae;
+    background-color: #ffffff;
+    border: 1px solid #005aae;
+    border-radius: 4px;
+}
+
+.styleAddcolor:hover {
+    background-color: #def7ff;
+}
+
+.styleDelate {
+    margin-top: 5px;
+    padding: 6px 15px;
+    color: #005aae;
+    background-color: #ffffff;
+    border: 1px solid #005aae;
+    border-radius: 4px;
+}
+
+.styleDelate:hover {
+    background-color: #def7ff;
+}
+
+.styleDelateSelect {
+    margin: 5px 5px 0 0;
+    padding: 6px 15px;
+    color: #005aae;
+    background-color: #ffffff;
+    border: 1px solid #005aae;
+    border-radius: 4px;
+}
+
+.styleDelateSelect:hover {
+    background-color: #def7ff;
+}

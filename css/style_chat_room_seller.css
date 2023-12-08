@@ -1,0 +1,243 @@
+/*【#header #footer #chat-logｍのheigetの編集方法】
+１．デベロッパーツールでフッターとヘッダーの値を確認する。
+２．その合計値と+αぐらいの値を
+#chat-logのheightのcalc(100vh - {ここに入れる})*/
+
+
+/*body,h1はこれで統一*/
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/*ヘッダー*/
+#header {
+    position: sticky;/*必須*/
+    top: 0;/*必須*/
+    background-color: #99CCFF;
+    color: #000;
+    text-align: center;
+    height: 50px;/*必須(※値変えてもいいけど注意必要。)*/
+    padding: 5px;
+    
+}
+
+/*メッセージが表示される全体の部分*/
+#chat-log {
+    background-color: #def7ff;
+    padding: 10px;
+    overflow-y: scroll;/*必須*/
+    height: calc(100vh - 118px);/*必須(※値変えてもいいけど注意必要。)*/
+    width: auto;
+}
+
+.my-message {
+    display: flex;
+}
+
+/*ユーザーのメッセージtxst*/
+.chat-message_user {
+    max-width: 55%;
+    word-break: break-all;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border-radius: 10px 10px 10px 2px;
+    background-color:#274a78;
+    color: #FFF;
+    width:fit-content
+}
+
+.seller-message {
+    display: flex;
+    text-align: right;
+}
+
+.chat-message_user_width_img {
+    max-width: 55%;
+    height:100%;
+    margin-top: 20px;
+    /* background-color: #dfdfdf; */
+    width:fit-content
+}
+
+/* ユーザーのメッセージimg */
+.chat-message_user_width_img img{
+    max-width: 100%;
+    height: auto;
+}
+
+.chat-message_user_height_img img{
+    max-height: 400px;
+    margin-top: 20px;
+    margin-left: auto;
+    background-color: #dfdfdf;
+    width:fit-content
+}
+
+/*sellerのメッセージtext*/
+.chat-message_seller {
+    max-width: 55%;
+    word-break: break-all;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border-radius: 10px 10px 2px 10px;
+    background-color:#1e90ff;
+    color: #FFF;
+    width:fit-content
+}
+
+.chat-message_seller_width_img {
+    max-width: 55%;
+    height:100%;
+    margin-top: 20px;
+    /* background-color: #dfdfdf; */
+    width:fit-content
+}
+
+/*sellerのメッセージimg*/
+.chat-message_seller_width_img img{
+    max-width: 100%;
+    height: auto;
+}
+
+.chat-message_seller_height_img img{
+    max-height: 400px;
+    margin-top: 20px;
+    margin-left: auto;
+    background-color: #dfdfdf;
+    width:fit-content
+}
+
+/*メッセージの画像*/
+.chat-image{
+    width: auto;
+    height: auto;
+}
+
+.my-message p {
+    color: #333;
+    line-height: 1.5;
+}
+
+/*相手の送信したメッセージ*/
+.other-message{
+    text-align: left;/*必須*/
+    background-color:#7cfc00;
+}
+
+
+.other-message p {
+    color: #333;
+    line-height: 1.5;
+}
+
+
+/*日付*/
+.chat-date{
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.chat-time_user {
+    margin-left: 5px;
+    margin-top: auto;
+    font-size: 12px;
+    color: #808080
+}
+
+.chat-time_seller {
+    margin-left: auto;
+    margin-right: 5px;
+    margin-top: auto;
+    font-size: 12px;
+    color: #808080;
+}
+
+
+/*フッター*/
+#footer {
+    position: fixed;/*必須*/
+    bottom: 0;/*必須*/
+    background-color: rebeccapurple;
+    color: #FFF;
+    width: 100%;/*必須*/
+    height: 50px;/*必須*/
+    display: flex;
+    flex-direction: column; /* 要素を縦に配置 */
+    align-items: center;
+}
+
+/*入力フォーム全体*/
+#message-form {
+    display: flex; /* フォーム要素を横並びに配置 */
+    align-items: center;/*必須*/
+}
+
+/*テキスト入力フォーム*/
+#message-text {
+    margin:10px 10px 10px 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: calc(100% - 80px);
+}
+
+.styleFile {
+    border: none;
+    width: 45px;
+    height: 30px;
+    margin-right: 10px;
+    background: url(../img/syasin2.svg) center center / contain no-repeat;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.styleFile input{
+    display: none;
+}
+
+/*送信ボタン*/
+.send {
+    display       : inline-block;
+    border-radius : 20px;         /* 角丸       */
+    font-size     : 12pt;        /* 文字サイズ */
+    text-align    : center;      /* 文字位置   */
+    cursor        : pointer;     /* カーソル   */
+    padding       : 10px 15px;   /* 余白       */
+    background    : #6666ff;     /* 背景色     */
+    color         : #ffffff;     /* 文字色     */
+    line-height   : 1em;         /* 1行の高さ  */
+    transition    : .3s;         /* なめらか変化 */
+    border        : none;
+}
+.send:hover {
+    box-shadow    : none;        /* カーソル時の影消去 */
+    color         : #6666ff;     /* 背景色     */
+    background    : #ffffff;     /* 文字色     */
+  }
+
+@media screen and (min-width: 1000px) {
+    .chat_room_parent {
+        margin: 0 20%;
+    }
+
+    #footer {
+        width: 60%;
+    }
+
+    #message-text {
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 999px) {
+    #message-text {
+        width: 300px;
+    }
+}

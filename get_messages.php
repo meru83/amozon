@@ -2,6 +2,10 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+if(isset($_SESSION['seller_id']) || isset($_SESSION['user_id'])){
+    $userId = isset($_SESSION['user_id'])?$_SESSION['user_id']:null;
+    $sellerId = isset($_SESSION['seller_id'])?$_SESSION['seller_id']:null;
+}
 
 // データベース接続情報を読み込む
 include 'db_config.php';
@@ -36,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['room_id'])) {
 
     // チャットログの生成
     while ($row = $result->fetch_assoc()) {
-        $userId = $row['user_id'];
+        $user_id = $row['user_id'];
         $username = $row['username'];
         $seller_id = $row['seller_id'];
         $sellerName = $row['sellerName'];
@@ -60,27 +64,116 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['room_id'])) {
             if (!is_null($prevDate)) {
                 $chatLog[] = "</div>";
             }
-            $chatLog[] = "<div class='chat-date'>$currentDate</div>";
-            $chatLog[] = "<div class='chat-messages'>";
+            $chatLog[] = "<div class='chat-date'>$currentDate</div>";//日付が変わったら日付表示させる
+            $chatLog[] = "<div class='chat-messages'>";//日付が変わる間のメッセージすべて
             $prevDate = $currentDate;
         }
 
         // チャットログにメッセージを追加
         if (!is_null($message_text)) {
-            if(!empty($userId)){
-                $chatLog[] = "<div class='my-message'><div class='chat-message'><strong>{$username}:</strong> {$message_text}</div><div class='chat-time'>({$currentTime})</div></div>";
-            }else if(!empty($seller_id)){
-                $chatLog[] = "<div class='seller-message'><div class='chat-message'><strong>{$sellerName}:</strong> {$message_text}</div><div class='chat-time'>({$currentTime})</div></div>";
+            if(!is_null($userId)){
+                if(!empty($user_id)){
+                    $chatLog[] = "<div class='my-message'>
+                    <div class='chat-time_user'>{$currentTime}</div><div class='chat-message_user'> {$message_text}</div></div>";
+                    //user側のメッセージ
+                }else if(!empty($seller_id)){
+                    $chatLog[] = "<div class='seller-message'>
+                    <div class='chat-message_seller'> {$message_text}</div><div class='chat-time_seller'>{$currentTime}</div></div>";
+                    //seller側のメッセージ
+                }
+            }else if(!is_null($sellerId)){
+                if(!empty($user_id)){
+                    $chatLog[] = "<div class='my-message'>
+                    <div class='chat-message_user'> {$message_text}</div><div class='chat-time_user'>{$currentTime}</div></div>";
+                    //user側のメッセージ
+                }else if(!empty($seller_id)){
+                    $chatLog[] = "<div class='seller-message'>
+                    <div class='chat-time_seller'>{$currentTime}</div><div class='chat-message_seller'> {$message_text}</div></div>";
+                    //seller側のメッセージ
+                }
             }
         }
 
         // 画像が存在する場合、imgタグで表示
         if (!is_null($img_url)) {
-            if(!empty($userId)){
-                $chatLog[] = "<div class='my-message'><div class='chat-message'><strong>{$username}:</strong><br><img src='img/{$img_url}' alt='Image' class='chat-image'/></div><div class='chat-time'>({$currentTime})</div></div>";
-            }else if(!empty($seller_id)){
-                $chatLog[] = "<div class='seller-message'><div class='chat-message'><strong>{$sellerName}:</strong><br><img src='img/{$img_url}' alt='Image' class='chat-image'/></div><div class='chat-time'>({$currentTime})</div></div>";
+            if(!is_null($userId)){
+                if(!empty($user_id)){
+                    $img_file = "img/{$img_url}";
+                    list($width, $height, $type, $attr) = getimagesize($img_file);
+                    if($width > $height){
+                        //幅の方がでかいとき
+                        $chatLog[] = "<div class='my-message'>
+                        <div class='chat-time_user'>{$currentTime}</div><div class='chat-message_user_width_img'><img src='img/{$img_url}' alt='Image' /></div></div>";
+                    }else{
+                        //高さのほうがでかいとき
+                        $chatLog[] = "<div class='my-message'>
+                        <div class='chat-time_user'>{$currentTime}</div><div class='chat-message_user_height_img'><img src='img/{$img_url}' alt='Image' /></div></div>";
+                    }
+                }else if(!empty($seller_id)){
+                    $img_file = "img/{$img_url}";
+                    list($width, $height, $type, $attr) = getimagesize($img_file);
+                    if($width > $height){
+                        //幅の方がでかいとき
+                        $chatLog[] = "<div class='seller-message'>
+                        <div class='chat-message_seller_width_img'><img src='img/{$img_url}' alt='Image' /></div><div class='chat-time_seller'>{$currentTime}</div></div>";
+                    }else{
+                        //高さのほうがでかいとき
+                        $chatLog[] = "<div class='seller-message'>
+                        <div class='chat-message_seller_height_img'><img src='img/{$img_url}' alt='Image' /></div><div class='chat-time_seller'>{$currentTime}</div></div>";
+                    }
+                }
+            } else if(!is_null($sellerId)){
+                if(!empty($user_id)){
+                    $img_file = "img/{$img_url}";
+                    list($width, $height, $type, $attr) = getimagesize($img_file);
+                    if($width > $height){
+                        //幅の方がでかいとき
+                        $chatLog[] = "<div class='my-message'>
+                        <div class='chat-message_user_width_img'><img src='img/{$img_url}' alt='Image' /></div><div class='chat-time_user'>{$currentTime}</div></div>";
+                    }else{
+                        //高さのほうがでかいとき
+                        $chatLog[] = "<div class='my-message'>
+                        <div class='chat-message_user_height_img'><img src='img/{$img_url}' alt='Image' /></div><div class='chat-time_user'>{$currentTime}</div></div>";
+                    }
+                }else if(!empty($seller_id)){
+                    $img_file = "img/{$img_url}";
+                    list($width, $height, $type, $attr) = getimagesize($img_file);
+                    if($width > $height){
+                        //幅の方がでかいとき
+                        $chatLog[] = "<div class='seller-message'>
+                        <div class='chat-time_seller'>{$currentTime}</div><div class='chat-message_seller_width_img'><img src='img/{$img_url}' alt='Image' /></div></div>";
+                    }else{
+                        //高さのほうがでかいとき
+                        $chatLog[] = "<div class='seller-message'>
+                        <div class='chat-time_seller'>{$currentTime}</div><div class='chat-message_seller_height_img'><img src='img/{$img_url}' alt='Image' /></div></div>";
+                    }
+                }
             }
+            // if(!empty($user_id)){
+            //     $img_file = "img/{$img_url}";
+            //     list($width, $height, $type, $attr) = getimagesize($img_file);
+            //     if($width > $height){
+            //         //幅の方がでかいとき
+            //         $chatLog[] = "<div class='my-message'>
+            //         <div class='chat-message_user_width_img'><img src='img/{$img_url}' alt='Image' /></div><div class='chat-time'>{$currentTime}</div></div>";
+            //     }else{
+            //         //高さのほうがでかいとき
+            //         $chatLog[] = "<div class='my-message'>
+            //         <div class='chat-message_user_height_img'><br><img src='img/{$img_url}' alt='Image' /></div><div class='chat-time'>{$currentTime}</div></div>";
+            //     }
+            // }else if(!empty($seller_id)){
+            //     $img_file = "img/{$img_url}";
+            //     list($width, $height, $type, $attr) = getimagesize($img_file);
+            //     if($width > $height){
+            //         //幅の方がでかいとき
+            //         $chatLog[] = "<div class='seller-message'>
+            //         <div class='chat-message_seller_width_img'><br><img src='img/{$img_url}' alt='Image' /></div><div class='chat-time'>{$currentTime}</div></div>";
+            //     }else{
+            //         //高さのほうがでかいとき
+            //         $chatLog[] = "<div class='seller-message'>
+            //         <div class='chat-message_seller_height_img'><br><img src='img/{$img_url}' alt='Image' /></div><div class='chat-time'>{$currentTime}</div></div>";
+            //     }
+            // }
         }
     }
 
@@ -99,5 +192,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['room_id'])) {
 // データベース接続を閉じる
 $conn->close();
 ?>
+
 
 

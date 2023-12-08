@@ -18,7 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['room_id'])) {
     $room_id = $_POST['room_id'];
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     $seller_id = isset($_SESSION['seller_id']) ? $_SESSION['seller_id'] : null;
-    $message_text = isset($_POST['message_text']) ? $_POST['message_text'] : null;
+    $message_text = null;
+    if(isset($_POST['message_text']) && !($_POST['message_text'] === "")){
+        $message_text = $_POST['message_text'];
+    }
     $image_data = isset($_FILES['image_file']) ? $_FILES['image_file']['tmp_name'] : null;
 
     // メッセージの長さを検証

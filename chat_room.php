@@ -40,6 +40,7 @@ function cssLink(){
     <?=cssLink()?>
 </head>
 <body>
+<div class="chat_room_parent">
     <div id="header">
         <?="<h1>".htmlH1()."</h1>"?>
     </div>
@@ -58,11 +59,12 @@ function cssLink(){
         <!-- メッセージ入力フォーム -->
         <form id="message-form" enctype="multipart/form-data">
             <input type="hidden" name="room_id" value="<?php echo $_GET['room_id']; ?>">
-            <input type="text" name="message_text" id="message-text" class="chat_box" placeholder="メッセージを入力">
-            <input type="file" name="image_file" id="image-file" accept="image/*"> <!-- 画像ファイルの選択 -->
+            <input type="text" name="message_text" id="message-text" class="chat_box" placeholder="メッセージを入力...">
+            <label for="image-file" class="styleFile"><input type="file" name="image_file" id="image-file" accept="image/*"></label> <!-- 画像ファイルの選択 -->
             <button type="submit" class="send">送信</button>
         </form>
     </div>
+</div>
 
     <script>
         // チャットログを表示するエリアを取得
@@ -102,7 +104,9 @@ function cssLink(){
 
                     // ページが最初に読み込まれたとき、メッセージが送信されたとき、新着メッセージがある場合にスクロール
                     if (firstLoad || messageSent || hasNewMessages) {
-                        scrollToBottom(); // チャットログを一番下までスクロール
+                        setTimeout(() => {
+                            scrollToBottom();    
+                        }, 100); // チャットログを一番下までスクロール
                         firstLoad = false; // ページ最初の読み込みフラグをfalseに設定
                         messageSent = false; // メッセージ送信フラグをfalseに設定
                         lastMessageCount = messageCount; // 最後に取得したメッセージの数を更新

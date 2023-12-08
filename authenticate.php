@@ -2,7 +2,9 @@
 session_start();
 
 $_SESSION['seller_id'] = null;
+$_SESSION['sellerName'] = null;
 $_SESSION['user_id'] = null;
+$_SESSION['username'] = null;
 
 // データベースへの接続情報を設定します
 include 'db_config.php'; // データベース接続情報を読み込む

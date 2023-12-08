@@ -11,6 +11,7 @@ error_reporting(E_ALL);
 // データベース接続情報を読み込む
 include 'db_config.php';
 
+//セッションの時の処理
 $i = $_POST['i'];
 $_SESSION['cart']['product_id'][$i] = null;
 $_SESSION['cart']['color_size_id'][$i] = null;
