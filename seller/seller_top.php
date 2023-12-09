@@ -47,9 +47,11 @@ error_reporting(E_ALL);
         echo "ユーザー登録またはログインを完了させてください。";
     }
     ?>
-    <div class="Amozon-container">
+    <!--sellerとuserでデザイン分ける--->
+
+    <!-- <div class="Amozon-container"> -->
         <!-- Left Side Menu -->
-        <div class="left-menu">
+        <!-- <div class="left-menu">
             <div>
                 <ul class="menu-list">
                     <li class="menu-item"><a href=""><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
@@ -74,6 +76,6 @@ error_reporting(E_ALL);
         
         <div class="right-content">
         </div>
-    </div>
+    </div> -->
 </body>
 </html>
