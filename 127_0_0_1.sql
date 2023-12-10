@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-09 17:13:59
+-- 生成日時: 2023-12-10 23:43:32
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -762,7 +762,8 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (159, '#AAB2BE', 'M', 20, 3200, 580),
 (159, '#FED14C', 'L', 20, 3200, 587),
 (159, '#FED14C', 'M', 20, 3200, 583),
-(160, '#FFFFFF', '2XL', 1, 2, 588);
+(160, '#FFFFFF', '2XL', 1, 2, 588),
+(161, '#FFFFFF', 'FREE', 10, 1000, 589);
 
 -- --------------------------------------------------------
 
@@ -4231,7 +4232,8 @@ INSERT INTO `products` (`product_id`, `productname`, `view`, `create_at`, `selle
 (157, 'マウンテンパーカー', 'アウトドアアクティビティに適したスタイリッシュなマウンテンパーカー。', '2023-12-08 04:52:21', 'test_bank', 2, 21, 181, '新品・未使用'),
 (158, 'マウンテンパーカー', 'アウトドアアクティビティに適したスタイリッシュなマウンテンパーカー。', '2023-12-08 04:53:51', 'test_bank', 1, 2, 21, '新品・未使用'),
 (159, 'ボタンダウンカジュアルシャツ', 'カジュアルな日常スタイルにぴったりのボタンダウンシャツ。', '2023-12-08 04:57:57', 'test_bank', 2, 20, 163, '新品・未使用'),
-(160, 'らいるb', NULL, '2023-12-08 05:36:09', 'test_bank', 1, 1, 1, '不良');
+(160, 'らいるb', NULL, '2023-12-08 05:36:09', 'test_bank', 1, 1, 1, '不良'),
+(161, 'テストNo.100', NULL, '2023-12-09 16:36:35', 'test_bank', 1, 1, 1, '新品・未使用');
 
 -- --------------------------------------------------------
 
@@ -4250,10 +4252,6 @@ CREATE TABLE `products_img` (
 --
 
 INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
-(1, 1, 'スクリーンショット 2023-11-08 1010371.png'),
-(2, 2, 'スクリーンショット 2023-11-08 1009132.png'),
-(3, 3, 'スクリーンショット 2023-11-08 1009133.png'),
-(4, 3, 'スクリーンショット 2023-11-08 1010373.png'),
 (5, 6, 'スクリーンショット 2023-11-28 1000216.png'),
 (6, 7, 'スクリーンショット 2023-11-28 1000407.png'),
 (7, 8, 'スクリーンショット 2023-11-28 1000548.png'),
@@ -4333,7 +4331,10 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (195, 579, 'victoire-joncheray-6JZ-oPjbF9s-unsplash579.jpg'),
 (196, 580, 'alex-suprun-lM4X4TQdngo-unsplash580.jpg'),
 (197, 580, 'brooke-cagle-JrzzESCqeko-unsplash580.jpg'),
-(198, 580, 'monica-dahiya-caPZQg42c54-unsplash580.jpg');
+(198, 580, 'monica-dahiya-caPZQg42c54-unsplash580.jpg'),
+(199, 589, 'スクリーンショット 2023-12-10 013735589.png'),
+(200, 589, 'スクリーンショット 2023-12-10 013735589.png'),
+(201, 589, 'スクリーンショット 2023-12-10 013735589.png');
 
 -- --------------------------------------------------------
 
@@ -4346,6 +4347,15 @@ CREATE TABLE `search` (
   `searchText` varchar(255) NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `search`
+--
+
+INSERT INTO `search` (`search_id`, `searchText`, `create_at`) VALUES
+(1, 'テストNo.100', '2023-12-09 16:40:46'),
+(2, 'テスト', '2023-12-09 16:40:56'),
+(3, 'テスト', '2023-12-10 02:07:13');
 
 -- --------------------------------------------------------
 
@@ -4849,7 +4859,7 @@ ALTER TABLE `chatrooms`
 -- テーブルの AUTO_INCREMENT `color_size`
 --
 ALTER TABLE `color_size`
-  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=589;
+  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=590;
 
 --
 -- テーブルの AUTO_INCREMENT `messages`
@@ -4867,19 +4877,19 @@ ALTER TABLE `orders`
 -- テーブルの AUTO_INCREMENT `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
 --
 ALTER TABLE `search`
-  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- ダンプしたテーブルの制約
