@@ -71,7 +71,7 @@ if(isset($_SESSION['cart'])){
                 </a>
                 <br>
                 <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
-                <button type="button" id="delete$i" onclick="deleteProducts($i)" value="test">削除</button>
+                <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
                 <br>
                 <hr>
                 </div>
@@ -139,7 +139,6 @@ function getColor($conn, $color_code){
 ?>
 <script>
     function deleteProducts(defdeleteI){
-        var deleteI = document.getElementById('delete'+defdeleteI);
         const formData = new FormData();
         formData.append('i', defdeleteI);
 
