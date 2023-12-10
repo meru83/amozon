@@ -44,12 +44,8 @@ foreach($insertId as $rowId){
             $size = $row['size'];
             $create_at = $row['create_at'];
             $seller_id = $row['seller_id'];
-
             $colorCode = $row['color_code'];
-            $colorCode = str_replace("#","",$colorCode);
-            $response = file_get_contents("https://www.thecolorapi.com/id?hex=" . $colorCode);//カラーコードから色を取得するAPI
-            $colorData = json_decode($response);
-            $colorName = $colorData->name->value;
+            $colorName = getColor($conn, $colorCode);
             $htmlText .= <<<END
             商品名：$productname<br>
             カラー：$colorName<br>
@@ -114,6 +110,19 @@ function add_filename($filename,$addtext){
     }else{
         return($filename.$addtext);
     }
+}
+
+function getColor($conn, $color_code){
+    $colorSql = "SELECT * FROM color_name
+                WHERE color_code = ?";
+    $colorStmt = $conn->prepare($colorSql);
+    $colorStmt->bind_param("s",$color_code);
+    $colorStmt->execute();
+    $colorResult = $colorStmt->get_result();
+    if ($row = $colorResult->fetch_assoc()) {
+        $colorName = $row['colorName']; // ここで正しいカラム名を使用
+        return $colorName;
+    } 
 }
 ?>
 <!DOCTYPE html>
