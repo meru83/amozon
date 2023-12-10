@@ -1,0 +1,1 @@
+error : Cannot delete or update a parent row: a foreign key constraint fails (`complete`.`orders_detail`, CONSTRAINT `orders_detail_ibfk_2` FOREIGN KEY (`color_size_id`) REFERENCES `color_size` (`color_size_id`))
