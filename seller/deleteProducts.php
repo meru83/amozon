@@ -55,10 +55,8 @@ try{
                 error_log('error : '. $e->getMessage(), 3, 'error.log');
             }
         }
-        $deleteColorSize = "DELETE FROM color_size WHERE product_id = $product_id";
+        $deleteColorSize = "UPDATE color_size SET service_status = false WHERE product_id = $product_id";
         $conn->query($deleteColorSize);
-        $deleteProduct = "DELETE FROM products WHERE product_id = $product_id";
-        $conn->query($deleteProduct);   
     }else {
         // $getCSIdResultがNULLの場合のエラー処理
         error_log('Error in query: ' . $conn->error, 3, 'error.log');
