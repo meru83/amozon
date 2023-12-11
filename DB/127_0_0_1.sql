@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-11 04:29:10
+-- 生成日時: 2023-12-11 10:21:41
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -177,10 +177,10 @@ CREATE TABLE `color_size` (
 --
 
 INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`, `color_size_id`, `service_status`) VALUES
-(1, '#313131', 'M', 2, 3, 2, 1),
-(1, '#AAB2BE', 'XL', 3, 4, 3, 1),
-(1, '#FFFFFF', 'M', 1, 2, 1, 1),
-(2, '#81604C', 'FREE', 1, 2, 4, 1),
+(1, '#313131', 'M', 2, 3, 2, 0),
+(1, '#AAB2BE', 'XL', 3, 4, 3, 0),
+(1, '#FFFFFF', 'M', 1, 2, 1, 0),
+(2, '#81604C', 'FREE', 1, 2, 4, 0),
 (3, '#FFFFFF', 'L', 1, 2, 5, 1),
 (4, '#313131', 'FREE', 1, 1, 7, 1),
 (4, '#313131', 'XL', 2, 2, 13, 1),
@@ -792,18 +792,19 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (169, '#9ED563', 'M', 20, 3600, 618, 1),
 (169, '#9ED563', 'S', 20, 3600, 617, 1),
 (170, '#AAB2BE', 'L', 5, 45000, 619, 1),
-(171, '#FFFFFF', 'L', 20, 2700, 622, 1),
-(171, '#FFFFFF', 'M', 20, 2700, 621, 1),
-(171, '#FFFFFF', 'S', 20, 2700, 620, 1),
-(172, '#AAB2BE', 'L', 20, 2700, 625, 1),
-(172, '#AAB2BE', 'M', 20, 2700, 624, 1),
-(172, '#AAB2BE', 'S', 20, 2700, 623, 1),
-(173, '#4DBEE9', 'L', 20, 5200, 630, 1),
-(173, '#4DBEE9', 'M', 20, 5200, 628, 1),
-(173, '#9ED563', 'L', 20, 5200, 629, 1),
-(173, '#9ED563', 'M', 20, 5200, 626, 1),
-(173, '#EF5663', 'L', 20, 5200, 631, 1),
-(173, '#EF5663', 'M', 20, 5200, 627, 1);
+(171, '#FFFFFF', 'L', 20, 2700, 622, 0),
+(171, '#FFFFFF', 'M', 20, 2700, 621, 0),
+(171, '#FFFFFF', 'S', 20, 2700, 620, 0),
+(172, '#AAB2BE', 'L', 20, 2700, 625, 0),
+(172, '#AAB2BE', 'M', 20, 2700, 624, 0),
+(172, '#AAB2BE', 'S', 20, 2700, 623, 0),
+(173, '#4DBEE9', 'L', 20, 5200, 630, 0),
+(173, '#4DBEE9', 'M', 20, 5200, 628, 0),
+(173, '#9ED563', 'L', 20, 5200, 629, 0),
+(173, '#9ED563', 'M', 20, 5200, 626, 0),
+(173, '#EF5663', 'L', 20, 5200, 631, 0),
+(173, '#EF5663', 'M', 20, 5200, 627, 0),
+(174, '#313131', 'FREE', 10, 12000, 632, 0);
 
 -- --------------------------------------------------------
 
@@ -4285,7 +4286,8 @@ INSERT INTO `products` (`product_id`, `productname`, `view`, `create_at`, `selle
 (170, 'シャープなVネックセーター', 'クラシックなVネックでスタイリッシュな印象のセーター。', '2023-12-07 22:08:08', 'test_bank', 1, 1, 8, '不良'),
 (171, 'ロングスリーブヘンリーネックTシャツ', ' カジュアルなデイリースタイルにぴったりのヘンリーネックTシャツ。', '2023-12-07 22:18:58', 'test_bank', 2, 20, 163, '新品・未使用'),
 (172, 'カジュアルチノショートパンツ', 'くつろぎながらもおしゃれなチノショートパンツ。', '2023-12-07 22:23:38', 'test_bank', 2, 22, 206, 'やや傷あり'),
-(173, 'ライトウェイトフリースジャケット', '軽量で保温性のあるフリースジャケット。', '2023-12-07 22:33:36', 'test_bank', 2, 21, 199, '良品');
+(173, 'ライトウェイトフリースジャケット', '軽量で保温性のあるフリースジャケット。', '2023-12-07 22:33:36', 'test_bank', 2, 21, 199, '良品'),
+(174, 'testNo.1211', NULL, '2023-12-11 06:30:03', 'test_bank', 1, 1, 1, '新品・未使用');
 
 -- --------------------------------------------------------
 
@@ -4427,31 +4429,7 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (244, 616, 'olaniyan-oluwapelumi-ICOWVAqqOV0-unsplash616.jpg'),
 (245, 617, 'joshua-rondeau-RrseEMRZ5Bw-unsplash617.jpg'),
 (246, 618, 'joshua-rondeau-RrseEMRZ5Bw-unsplash618.jpg'),
-(247, 619, 'kamil-szumotalski-CKxpOhAoSRg-unsplash619.jpg'),
-(248, 620, 'anomaly-WWesmHEgXDs-unsplash620.jpg'),
-(249, 621, 'anomaly-WWesmHEgXDs-unsplash621.jpg'),
-(250, 622, 'anomaly-WWesmHEgXDs-unsplash622.jpg'),
-(251, 623, 'tadeja-pavsic-fKvEQcuYqCQ-unsplash623.jpg'),
-(252, 624, 'tadeja-pavsic-fKvEQcuYqCQ-unsplash624.jpg'),
-(253, 625, 'tadeja-pavsic-fKvEQcuYqCQ-unsplash625.jpg'),
-(254, 626, 'bhavya-shah-g28-mHHl-Z0-unsplash626.jpg'),
-(255, 626, 'lo-lindo-qQB04yQdosk-unsplash626.jpg'),
-(256, 626, 'santosh-verma-i49yJtWD57w-unsplash626.jpg'),
-(257, 627, 'brian-lundquist-7r60FV3T680-unsplash627.jpg'),
-(258, 627, 'lo-lindo-qQB04yQdosk-unsplash627.jpg'),
-(259, 627, 'santosh-verma-i49yJtWD57w-unsplash627.jpg'),
-(260, 628, 'bhavya-shah-g28-mHHl-Z0-unsplash628.jpg'),
-(261, 628, 'lo-lindo-qQB04yQdosk-unsplash628.jpg'),
-(262, 628, 'santosh-verma-i49yJtWD57w-unsplash628.jpg'),
-(263, 629, 'bhavya-shah-g28-mHHl-Z0-unsplash629.jpg'),
-(264, 629, 'lo-lindo-qQB04yQdosk-unsplash629.jpg'),
-(265, 629, 'santosh-verma-i49yJtWD57w-unsplash629.jpg'),
-(266, 630, 'bhavya-shah-g28-mHHl-Z0-unsplash630.jpg'),
-(267, 630, 'lo-lindo-qQB04yQdosk-unsplash630.jpg'),
-(268, 630, 'santosh-verma-i49yJtWD57w-unsplash630.jpg'),
-(269, 631, 'bhavya-shah-g28-mHHl-Z0-unsplash631.jpg'),
-(270, 631, 'lo-lindo-qQB04yQdosk-unsplash631.jpg'),
-(271, 631, 'santosh-verma-i49yJtWD57w-unsplash631.jpg');
+(247, 619, 'kamil-szumotalski-CKxpOhAoSRg-unsplash619.jpg');
 
 -- --------------------------------------------------------
 
@@ -4977,7 +4955,7 @@ ALTER TABLE `chatrooms`
 -- テーブルの AUTO_INCREMENT `color_size`
 --
 ALTER TABLE `color_size`
-  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=632;
+  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=633;
 
 --
 -- テーブルの AUTO_INCREMENT `messages`
@@ -4995,13 +4973,13 @@ ALTER TABLE `orders`
 -- テーブルの AUTO_INCREMENT `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 
 --
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=272;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=273;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
