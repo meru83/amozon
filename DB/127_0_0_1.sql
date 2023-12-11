@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-10 23:43:32
+-- 生成日時: 2023-12-11 02:26:21
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -763,7 +763,46 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (159, '#FED14C', 'L', 20, 3200, 587),
 (159, '#FED14C', 'M', 20, 3200, 583),
 (160, '#FFFFFF', '2XL', 1, 2, 588),
-(161, '#FFFFFF', 'FREE', 10, 1000, 589);
+(161, '#FFFFFF', 'FREE', 10, 1000, 589),
+(162, '#E0D1AD', 'M', 20, 3600, 594),
+(162, '#E0D1AD', 'S', 20, 3600, 593),
+(163, '#EF5663', 'L', 20, 20500, 597),
+(163, '#EF5663', 'M', 20, 20500, 596),
+(163, '#EF5663', 'S', 20, 20500, 595),
+(164, '#4DBEE9', 'L', 20, 2800, 599),
+(164, '#4DBEE9', 'M', 20, 2800, 598),
+(165, '#313131', 'L', 20, 5000, 604),
+(165, '#313131', 'M', 20, 5000, 601),
+(165, '#F8AFD7', 'L', 20, 5000, 605),
+(165, '#F8AFD7', 'M', 20, 5000, 602),
+(165, '#FFFFFF', 'L', 20, 5000, 603),
+(165, '#FFFFFF', 'M', 20, 5000, 600),
+(166, '#4DBEE9', 'L', 20, 4500, 608),
+(166, '#4DBEE9', 'M', 20, 4500, 607),
+(166, '#4DBEE9', 'S', 20, 4500, 606),
+(167, '#4DBEE9', 'L', 20, 4800, 614),
+(167, '#4DBEE9', 'M', 20, 4800, 610),
+(167, '#81604C', 'L', 20, 4800, 613),
+(167, '#81604C', 'M', 20, 4800, 609),
+(167, '#AAB2BE', 'L', 20, 4800, 612),
+(167, '#AAB2BE', 'M', 20, 4800, 611),
+(168, '#4DBEE9', 'FREE', 20, 22000, 616),
+(168, '#AAB2BE', 'FREE', 20, 22000, 615),
+(169, '#9ED563', 'M', 20, 3600, 618),
+(169, '#9ED563', 'S', 20, 3600, 617),
+(170, '#AAB2BE', 'L', 5, 45000, 619),
+(171, '#FFFFFF', 'L', 20, 2700, 622),
+(171, '#FFFFFF', 'M', 20, 2700, 621),
+(171, '#FFFFFF', 'S', 20, 2700, 620),
+(172, '#AAB2BE', 'L', 20, 2700, 625),
+(172, '#AAB2BE', 'M', 20, 2700, 624),
+(172, '#AAB2BE', 'S', 20, 2700, 623),
+(173, '#4DBEE9', 'L', 20, 5200, 630),
+(173, '#4DBEE9', 'M', 20, 5200, 628),
+(173, '#9ED563', 'L', 20, 5200, 629),
+(173, '#9ED563', 'M', 20, 5200, 626),
+(173, '#EF5663', 'L', 20, 5200, 631),
+(173, '#EF5663', 'M', 20, 5200, 627);
 
 -- --------------------------------------------------------
 
@@ -4233,7 +4272,19 @@ INSERT INTO `products` (`product_id`, `productname`, `view`, `create_at`, `selle
 (158, 'マウンテンパーカー', 'アウトドアアクティビティに適したスタイリッシュなマウンテンパーカー。', '2023-12-08 04:53:51', 'test_bank', 1, 2, 21, '新品・未使用'),
 (159, 'ボタンダウンカジュアルシャツ', 'カジュアルな日常スタイルにぴったりのボタンダウンシャツ。', '2023-12-08 04:57:57', 'test_bank', 2, 20, 163, '新品・未使用'),
 (160, 'らいるb', NULL, '2023-12-08 05:36:09', 'test_bank', 1, 1, 1, '不良'),
-(161, 'テストNo.100', NULL, '2023-12-09 16:36:35', 'test_bank', 1, 1, 1, '新品・未使用');
+(161, 'テストNo.100', NULL, '2023-12-09 16:36:35', 'test_bank', 1, 1, 1, '新品・未使用'),
+(162, 'ハイウエストテーパードパンツ', ' ハイウエストデザインが特徴のテーパードパンツ。', '2023-12-07 21:20:14', 'test_bank', 1, 3, 33, 'やや傷あり'),
+(163, 'チェック柄ウールブレンドコート', 'シックなチェック柄が特徴のウールブレンドコート。', '2023-12-07 21:23:44', 'test_bank', 1, 2, 12, '新品・未使用'),
+(164, ' カジュアルなヘンリーネックポロシャツ', 'カジュアルな日常スタイルに適したヘンリーネックのポロシャツ。', '2023-12-07 21:29:00', 'test_bank', 2, 20, 163, '不良'),
+(165, 'スリムフィットドレスシャツ', 'オフィスやフォーマルな場で使えるスタイリッシュなドレスシャツ。', '2023-12-07 21:31:58', 'test_bank', 2, 20, 163, 'やや傷あり'),
+(166, 'ストレッチデニムジーンズ', 'カジュアルながらも動きやすいストレッチデニムジーンズ。', '2023-12-07 21:40:29', 'test_bank', 1, 3, 22, '新品・未使用'),
+(167, 'パーカージャケット', '寒い季節に暖かさを提供するカジュアルなパーカージャケット。', '2023-12-07 21:46:28', 'test_bank', 2, 21, 199, '新品・未使用'),
+(168, 'クラシックなシングルブレストスーツ', 'ビジネスやフォーマルなイベントに適したクラシックなスーツ。', '2023-12-07 21:54:15', 'test_bank', 2, 25, 236, '新品・未使用'),
+(169, 'カモフラージュプリントカーゴパンツ', 'アウトドアやアクティブなスタイルに合うカモフラージュカーゴパンツ。', '2023-12-07 22:01:37', 'test_bank', 1, 3, 33, '新品・未使用'),
+(170, 'シャープなVネックセーター', 'クラシックなVネックでスタイリッシュな印象のセーター。', '2023-12-07 22:08:08', 'test_bank', 1, 1, 8, '不良'),
+(171, 'ロングスリーブヘンリーネックTシャツ', ' カジュアルなデイリースタイルにぴったりのヘンリーネックTシャツ。', '2023-12-07 22:18:58', 'test_bank', 2, 20, 163, '新品・未使用'),
+(172, 'カジュアルチノショートパンツ', 'くつろぎながらもおしゃれなチノショートパンツ。', '2023-12-07 22:23:38', 'test_bank', 2, 22, 206, 'やや傷あり'),
+(173, 'ライトウェイトフリースジャケット', '軽量で保温性のあるフリースジャケット。', '2023-12-07 22:33:36', 'test_bank', 2, 21, 199, '良品');
 
 -- --------------------------------------------------------
 
@@ -4334,7 +4385,72 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (198, 580, 'monica-dahiya-caPZQg42c54-unsplash580.jpg'),
 (199, 589, 'スクリーンショット 2023-12-10 013735589.png'),
 (200, 589, 'スクリーンショット 2023-12-10 013735589.png'),
-(201, 589, 'スクリーンショット 2023-12-10 013735589.png');
+(201, 589, 'スクリーンショット 2023-12-10 013735589.png'),
+(207, 593, 'kaboompics_sneakers-shoes-long-white-striped-socks-27737593.jpg'),
+(208, 594, 'kaboompics_sneakers-shoes-long-white-striped-socks-27737594.jpg'),
+(209, 595, 'valerie-elash-o4KRWaT01p4-unsplash595.jpg'),
+(210, 596, 'valerie-elash-o4KRWaT01p4-unsplash596.jpg'),
+(211, 597, 'valerie-elash-o4KRWaT01p4-unsplash597.jpg'),
+(212, 598, 'ashwini-chaudhary-monty-juHUAjTQ-cI-unsplash598.jpg'),
+(213, 599, 'ashwini-chaudhary-monty-juHUAjTQ-cI-unsplash599.jpg'),
+(214, 600, 'nimble-made-_PFanxhwe4o-unsplash600.jpg'),
+(215, 601, 'nimble-made-_PFanxhwe4o-unsplash601.jpg'),
+(216, 602, 'nimble-made-_PFanxhwe4o-unsplash602.jpg'),
+(217, 603, 'nimble-made-_PFanxhwe4o-unsplash603.jpg'),
+(218, 604, 'nimble-made-_PFanxhwe4o-unsplash604.jpg'),
+(219, 605, 'nimble-made-_PFanxhwe4o-unsplash605.jpg'),
+(220, 606, 'chelse-daniel-ZY8LhPmSvF8-unsplash606.jpg'),
+(221, 607, 'chelse-daniel-ZY8LhPmSvF8-unsplash607.jpg'),
+(222, 608, 'chelse-daniel-ZY8LhPmSvF8-unsplash608.jpg'),
+(223, 609, 'norbert-kundrak-Qkka6rvSToY-unsplash609.jpg'),
+(224, 609, 'people-6889599_1280609.jpg'),
+(225, 609, 'philipp-lansing-83_ehMTWPcc-unsplash609.jpg'),
+(226, 610, 'norbert-kundrak-Qkka6rvSToY-unsplash610.jpg'),
+(227, 610, 'people-6889599_1280610.jpg'),
+(228, 610, 'philipp-lansing-83_ehMTWPcc-unsplash610.jpg'),
+(229, 611, 'norbert-kundrak-Qkka6rvSToY-unsplash611.jpg'),
+(230, 611, 'people-6889599_1280611.jpg'),
+(231, 611, 'philipp-lansing-83_ehMTWPcc-unsplash611.jpg'),
+(232, 612, 'norbert-kundrak-Qkka6rvSToY-unsplash612.jpg'),
+(233, 612, 'people-6889599_1280612.jpg'),
+(234, 612, 'philipp-lansing-83_ehMTWPcc-unsplash612.jpg'),
+(235, 613, 'norbert-kundrak-Qkka6rvSToY-unsplash613.jpg'),
+(236, 613, 'people-6889599_1280613.jpg'),
+(237, 613, 'philipp-lansing-83_ehMTWPcc-unsplash613.jpg'),
+(238, 614, 'norbert-kundrak-Qkka6rvSToY-unsplash614.jpg'),
+(239, 614, 'people-6889599_1280614.jpg'),
+(240, 614, 'philipp-lansing-83_ehMTWPcc-unsplash614.jpg'),
+(241, 615, 'brian-lundquist-7r60FV3T680-unsplash615.jpg'),
+(242, 615, 'olaniyan-oluwapelumi-ICOWVAqqOV0-unsplash615.jpg'),
+(243, 616, 'brian-lundquist-7r60FV3T680-unsplash616.jpg'),
+(244, 616, 'olaniyan-oluwapelumi-ICOWVAqqOV0-unsplash616.jpg'),
+(245, 617, 'joshua-rondeau-RrseEMRZ5Bw-unsplash617.jpg'),
+(246, 618, 'joshua-rondeau-RrseEMRZ5Bw-unsplash618.jpg'),
+(247, 619, 'kamil-szumotalski-CKxpOhAoSRg-unsplash619.jpg'),
+(248, 620, 'anomaly-WWesmHEgXDs-unsplash620.jpg'),
+(249, 621, 'anomaly-WWesmHEgXDs-unsplash621.jpg'),
+(250, 622, 'anomaly-WWesmHEgXDs-unsplash622.jpg'),
+(251, 623, 'tadeja-pavsic-fKvEQcuYqCQ-unsplash623.jpg'),
+(252, 624, 'tadeja-pavsic-fKvEQcuYqCQ-unsplash624.jpg'),
+(253, 625, 'tadeja-pavsic-fKvEQcuYqCQ-unsplash625.jpg'),
+(254, 626, 'bhavya-shah-g28-mHHl-Z0-unsplash626.jpg'),
+(255, 626, 'lo-lindo-qQB04yQdosk-unsplash626.jpg'),
+(256, 626, 'santosh-verma-i49yJtWD57w-unsplash626.jpg'),
+(257, 627, 'brian-lundquist-7r60FV3T680-unsplash627.jpg'),
+(258, 627, 'lo-lindo-qQB04yQdosk-unsplash627.jpg'),
+(259, 627, 'santosh-verma-i49yJtWD57w-unsplash627.jpg'),
+(260, 628, 'bhavya-shah-g28-mHHl-Z0-unsplash628.jpg'),
+(261, 628, 'lo-lindo-qQB04yQdosk-unsplash628.jpg'),
+(262, 628, 'santosh-verma-i49yJtWD57w-unsplash628.jpg'),
+(263, 629, 'bhavya-shah-g28-mHHl-Z0-unsplash629.jpg'),
+(264, 629, 'lo-lindo-qQB04yQdosk-unsplash629.jpg'),
+(265, 629, 'santosh-verma-i49yJtWD57w-unsplash629.jpg'),
+(266, 630, 'bhavya-shah-g28-mHHl-Z0-unsplash630.jpg'),
+(267, 630, 'lo-lindo-qQB04yQdosk-unsplash630.jpg'),
+(268, 630, 'santosh-verma-i49yJtWD57w-unsplash630.jpg'),
+(269, 631, 'bhavya-shah-g28-mHHl-Z0-unsplash631.jpg'),
+(270, 631, 'lo-lindo-qQB04yQdosk-unsplash631.jpg'),
+(271, 631, 'santosh-verma-i49yJtWD57w-unsplash631.jpg');
 
 -- --------------------------------------------------------
 
@@ -4859,7 +4975,7 @@ ALTER TABLE `chatrooms`
 -- テーブルの AUTO_INCREMENT `color_size`
 --
 ALTER TABLE `color_size`
-  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=590;
+  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=632;
 
 --
 -- テーブルの AUTO_INCREMENT `messages`
@@ -4877,13 +4993,13 @@ ALTER TABLE `orders`
 -- テーブルの AUTO_INCREMENT `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 
 --
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=272;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
