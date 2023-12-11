@@ -41,21 +41,21 @@ SELECT
     p.seller_id,
     DATE_FORMAT(o.create_at, '%Y') AS year,
     DATE_FORMAT(o.create_at, '%Y-%m') AS month,
-    SUM(o.total) AS total
+    SUM(d.total) AS total
 FROM
-    orders o
+    orders_detail d
 LEFT JOIN 
-    orders_detail d ON (o.order_id = d.order_id)
+    orders o ON (d.order_id = o.order_id)
 LEFT JOIN
     products p ON (d.product_id = p.product_id)
 WHERE
     o.order_status = "配達完了"
 AND
-    s.seller_id = "{seller_id}"
+    p.seller_id = "{seller_id}"
 GROUP BY
-    s.seller_id, month
+    p.seller_id, month
 ORDER BY
-    s.seller_id, month
+    p.seller_id, month
 ;
 """.format(seller_id=seller_id)
 
