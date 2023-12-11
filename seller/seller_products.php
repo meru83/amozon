@@ -38,7 +38,7 @@ $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality
                 LEFT JOIN category c ON (p.category_id = c.category_id)
                 LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-                WHERE p.seller_id = ?";
+                WHERE p.seller_id = ? && s.service_status = true";
 
 $selectStmt = $conn->prepare($selectSql);
 $selectStmt->bind_param("s",$seller_id);

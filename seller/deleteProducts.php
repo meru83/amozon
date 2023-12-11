@@ -42,8 +42,15 @@ try{
         while($row = $getCSIdResult->fetch_assoc()){
             $color_size_id = $row['color_size_id'];
             try{
-                $pImgDelete = "DELETE FROM products_img WHERE color_size_id = $color_size_id";
-                $conn->query($pImgDelete);
+                $pImgDelete = "DELETE FROM products_img WHERE color_size_id = $color_size_id RETURNING *";
+                $deleteResult = $conn->query($pImgDelete);
+                while($row = $deleteResult->fetch_assoc()){
+                    $img_url = $row['img_url'];
+                    $relativePath = "p_img/$img_url";
+                    if(file_exists($relativePath)){
+                        unlink($relativePath);
+                    }
+                }
             }catch(Exception $e) {
                 error_log('error : '. $e->getMessage(), 3, 'error.log');
             }

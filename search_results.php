@@ -49,7 +49,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
                 LEFT JOIN category c ON (p.category_id = c.category_id)
                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-                WHERE $andConditions";
+                WHERE $andConditions && s.service_status = true";
 
         // echo "クエリ：".$sql."<br>";
 
