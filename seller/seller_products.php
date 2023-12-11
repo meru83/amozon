@@ -47,6 +47,7 @@ $selectResult = $selectStmt->get_result();
 
 $htmlText = "";
 $productText = "";
+$divStart = "";
 $formFlag = false;
 $checkFlag = true;
 $count = 0;
@@ -112,8 +113,8 @@ if($selectResult && $selectResult->num_rows > 0){
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
             <hr>
             </div>
-            <div id= "div$count">
             END;
+            $divStart = "<div id= 'div$count'>";
         }else{
             $formFlag = true;
         }
@@ -129,6 +130,7 @@ if($selectResult && $selectResult->num_rows > 0){
             $colorArray[] = $colorName;
             $sizeArray[] = $size;
 
+            echo $divStart;
             echo $imgText;
             $lastImg[] = $product_id;
             $htmlText = <<<END
@@ -148,7 +150,27 @@ if($selectResult && $selectResult->num_rows > 0){
         }
     }
     echo $htmlText;
-    echo $productText;
+    $countId = $count - 1;
+    echo <<<END
+            <form action="edit.php" method="post">
+                <select id="select$countId" required>
+                    <option value="" hidden>選択してください</option>
+            END;
+            for($i = 0; $i < count($colorArray); $i++){
+                echo "<option>$colorArray[$i] - $sizeArray[$i]</option>";
+            }
+            echo <<<END
+                </select>
+                <input type="hidden" value="$product_id">
+                <input type="submit" value="登録内容変更">
+            </form>
+            <input type="hidden" id="$countId" value="$lastImg[$countId]">
+            <button type="button" onclick="addColorSize($countId)">カラー・サイズの追加</button>
+            <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
+            <hr>
+            </div>
+            END;
+    echo "</div>";
     echo "登録商品は".$count."件です。";
 }else{
     echo "登録されている商品がありません。";
