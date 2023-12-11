@@ -108,8 +108,11 @@ if($selectResult && $selectResult->num_rows > 0){
                 <input type="hidden" value="$product_id">
                 <input type="submit" value="登録内容変更">
             </form>
+            <div id="addColorSizeDiv$countId">
+            <!------ここに色とカラー追加のフォームを作る------->
+            </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
-            <button type="button" onclick="addColorSize($countId)">カラー・サイズの追加</button>
+            <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)">カラー・サイズの追加</button>
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
             <hr>
             </div>
@@ -164,8 +167,11 @@ if($selectResult && $selectResult->num_rows > 0){
                 <input type="hidden" value="$product_id">
                 <input type="submit" value="登録内容変更">
             </form>
+            <div id="addColorSizeDiv$countId">
+            <!------ここにフォーム作る------->
+            </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
-            <button type="button" onclick="addColorSize($countId)">カラー・サイズの追加</button>
+            <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)" style="display:block">カラー・サイズの追加</button>
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
             <hr>
             </div>
@@ -212,5 +218,92 @@ function deleteProducts(deleteCount){
     }
     xhr.open('POST','deleteProducts.php',true);
     xhr.send(formData);
+}
+
+
+const radioValues = ["#FFFFFF","#313131","#AAB2BE","#81604C","#E0D1AD","#9ED563","#4DBEE9","#AD8EEF","#FED14C","#F8AFD7","#EF5663","#F98140"];
+const radioOptions = ["ホワイト","ブラック","グレー　","ブラウン","ベージュ","グリーン","ブルー　","パープル","イエロー","ピンク　","レッド　","オレンジ"];
+const selectOptions = ['FREE','XS','S','M','L','XL','2XL'];
+var radioLength = radioValues.length;
+let generateFlag = true;
+
+function addColorSize(addCount){
+    if(generateFlag === true){
+        var addDiv = document.getElementById('addColorSizeDiv'+addCount);
+        // var aCS = document.getElementById('aCS'+addCount);
+        var aCS = document.getElementsByName('aCS');
+        for(let i = 0; i < (aCS.length); i++){
+            aCS[i].style.display = "none";
+        }
+
+        // var addCSForm = document.createElement('form');
+        // addCSForm.method = 'POST';
+        // addCSForm.action = 'addColorSize.php';//path
+        // addDiv.appendChild(addCSForm);
+
+        for(var i=0; i<radioLength; i++){
+            var colorRadio = document.createElement('input');
+            colorRadio.type = "radio";
+            colorRadio.name = "color";
+            colorRadio.id = "radio"+i;
+            colorRadio.value = radioValues[i];
+            if(i === 0){
+                colorRadio.required = true;
+            }
+            addDiv.appendChild(colorRadio);
+
+            //radioボタンのラベル生成。
+            var radioLabel = document.createElement('label');
+            radioLabel.setAttribute('for', 'radio'+i);
+            radioLabel.innerHTML = radioOptions[i];
+            addDiv.appendChild(radioLabel);
+        }
+
+        
+        var radioBr = document.createElement('br');
+        addDiv.appendChild(radioBr);
+
+        var selectLabel = document.createElement('label');
+        selectLabel.setAttribute('for','sizeSelect');
+        selectLabel.innerHTML = "商品のサイズ";
+        addDiv.appendChild(selectLabel);
+
+        var selectBox = document.createElement('select');
+        selectBox.name = 'size';
+        selectBox.id = 'sizeSelect';
+        selectBox.required = true;
+        addDiv.appendChild(selectBox);
+
+        //optionの追加
+        //hidden枠
+        var selectOption = document.createElement('option');
+        selectOption.innerHTML = "選択してください";
+        selectOption.value = "";
+        selectOption.selected = true;
+        selectOption.hidden = true;
+        selectBox.appendChild(selectOption);
+
+        for(var i = 0; i < selectOptions.length; i++){
+            var selectOption = document.createElement('option');
+            selectOption.value = selectOptions[i];
+            selectOption.innerHTML = selectOptions[i];
+            selectBox.appendChild(selectOption);
+        }
+
+        var submitButton = document.createElement('button');
+        submitButton.type = "button";
+        submitButton.innerHTML = "追加";
+        addDiv.appendChild(submitButton);
+        submitButton.addEventListener('click',function(){
+            //関数化
+            for(let i = 0; i < (aCS.length); i++){
+                aCS[i].style.display = "block";
+            }
+        });
+
+        generateFlag = false;
+    }else{
+        alert("追加中の商品の処理を終了させてください。");
+    }
 }
 </script>
