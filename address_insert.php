@@ -23,19 +23,20 @@ if(isset($_POST['add'])){
 ?>
 <!DOCTYPE html>
 <html lang="ja">
+<link rel="stylesheet" href="css/Amozon_addres.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>住所登録</title>
 </head>
-<body>
-<form method="post" id="form">
-    <label for="post_code">郵便番号：</label><br>
-    <input type="text" name="post_code" id="input" maxlength=8 placeholder="例)1234567" required>
-    <button id="search" type="button">住所検索</button><br>
+<body class="address_body">
+<form method="post" id="form" class="address_form">
+    <label for="post_code" class="address_label">郵便番号：</label><br>
+    <input type="text" name="post_code" id="input" class="address_textbox" maxlength=8 placeholder="例)1234567" required>
+    <button id="search" class="address_botton1" type="button">住所検索</button><br>
     <p id="error"></p>
     <label for="prefectures">都道府県：</label><br>
-    <select name="prefectures" id="address1" required>
+    <select name="prefectures" id="address1" class="address_select" required>
         <option hidden>選択してください</option>
     <?php 
         $row = ['北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'];
@@ -45,17 +46,18 @@ if(isset($_POST['add'])){
     ?>
     </select><br>
     <label for="city">住所：</label><br>
-    <input type="text" name="city" id="address2" placeholder="新宿区西新宿" value="" required><br>
-    <input type="text" name="city_kana" id="kana2" placeholder="シンジュククニシシンジュク" value="" required><br>
+    <input type="text" name="city" id="address2" class="address_textbox" placeholder="大阪市北区梅田" value="" required><br>
+    <input type="text" name="city_kana" id="kana2" class="address_textbox" placeholder="オオサカシキタクウメダ" value="" required><br>
     <label for="street">丁・番地：</label><br>
-    <input type="text" name="street" id="tyou" placeholder="2-8-1" required><br>
+    <input type="text" name="street" id="tyou" class="address_textbox" placeholder="3-1-1" required><br>
     <label for="room_number">建物名・部屋番号：</label><br>
-    <input type="text" name="room_number" id="room_number"><br>
+    <input type="text" name="room_number" id="room_number" class="address_textbox"><br>
 
 
     <label for="addressname">氏名：</label><br>
-    <input type="text" name="addressname" id="addressname" placeholder="例）山田 太郎" required><br>
-    <input type="submit" name="add" value="登録する">
+    <input type="text" name="addressname" id="addressname" class="address_textbox" placeholder="例）山田 太郎" required><br>
+    <input class="addres_botton2" type="submit" name="add" value="登録">
+    <input type="submit" value="スキップ" class="skp" onclick="bottonClick()">
 </form>
 
 
@@ -74,8 +76,13 @@ form.addEventListener('keydown', (e) => {
             addressname.focus();
         }
         return false;
-    }
+    } 
 });
+
+function bottonClick(){
+    window.location = "user_top.php"
+}
+
 
 function is_empty(){
     let addressname = document.getElementById('addressname');
