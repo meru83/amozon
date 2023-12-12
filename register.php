@@ -21,7 +21,7 @@
         $username = $_POST['username'];
 
         // ユーザーIDの正規表現パターンを定義
-        $user_id_pattern = '/^[a-zA-Z0-9\-_]+$/';
+        $user_id_pattern = '/^[a-z0-9\-_]+$/';
 
         // パスワードの強度を検証
         //password_policy.phpで定義された変数。

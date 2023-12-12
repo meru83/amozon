@@ -26,10 +26,11 @@ echo "<h1>登録済み商品一覧</h1>";
 echo "<h2>$seller_name 様</h2>";
 echo "<div id='errorMessage'></div>";
 
-if(isset($_GET['errorMessage'])){
-    $errorMessage = $_GET['errorMessage'];
-    echo $errorMessage."<br>";
-}
+//alertで表示に変更
+// if(isset($_GET['errorMessage'])){
+//     $errorMessage = $_GET['errorMessage'];
+//     echo $errorMessage."<br>";
+// }
 
 $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
                 FROM products p
@@ -108,8 +109,11 @@ if($selectResult && $selectResult->num_rows > 0){
                 <input type="hidden" value="$product_id">
                 <input type="submit" value="登録内容変更">
             </form>
+            <div id="addColorSizeDiv$countId">
+            <!------ここに色とカラー追加のフォームを作る------->
+            </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
-            <button type="button" onclick="addColorSize($countId)">カラー・サイズの追加</button>
+            <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)">カラー・サイズの追加</button>
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
             <hr>
             </div>
@@ -157,15 +161,18 @@ if($selectResult && $selectResult->num_rows > 0){
                     <option value="" hidden>選択してください</option>
             END;
             for($i = 0; $i < count($colorArray); $i++){
-                echo "<option>$colorArray[$i] - $sizeArray[$i]</option>";
+                echo "<option value='$colorArray[$i]|$sizeArray[$i]'>$colorArray[$i] - $sizeArray[$i]</option>";//ここ終わってない
             }
             echo <<<END
                 </select>
                 <input type="hidden" value="$product_id">
                 <input type="submit" value="登録内容変更">
             </form>
+            <div id="addColorSizeDiv$countId">
+            <!------ここにフォーム作る------->
+            </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
-            <button type="button" onclick="addColorSize($countId)">カラー・サイズの追加</button>
+            <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)" style="display:block">カラー・サイズの追加</button>
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
             <hr>
             </div>
@@ -204,13 +211,172 @@ function deleteProducts(deleteCount){
             var divCount = document.getElementById('div'+deleteCount);
             divCount.remove();
 
-            errorMessageDiv.innerHTML = "商品の削除に成功しました。";
+            alert("商品の削除に成功しました。");
         }
         if(xhr.status < 200 && xhr.status >= 300){
-            errorMessageDiv.innerHTML = "登録商品の削除に失敗しました。";
+            alert("登録商品の削除に失敗しました。");
         }
     }
     xhr.open('POST','deleteProducts.php',true);
     xhr.send(formData);
+}
+
+
+const radioValues = ["#FFFFFF","#313131","#AAB2BE","#81604C","#E0D1AD","#9ED563","#4DBEE9","#AD8EEF","#FED14C","#F8AFD7","#EF5663","#F98140"];
+const radioOptions = ["ホワイト","ブラック","グレー　","ブラウン","ベージュ","グリーン","ブルー　","パープル","イエロー","ピンク　","レッド　","オレンジ"];
+const selectOptions = ['FREE','XS','S','M','L','XL','2XL'];
+var radioLength = radioValues.length;
+
+function addColorSize(addCount){
+    var addDiv = document.getElementById('addColorSizeDiv'+addCount);
+    var aCS = document.getElementsByName('aCS');
+    for(let i = 0; i < (aCS.length); i++){
+        aCS[i].style.display = "none";
+    }
+
+    for(var i=0; i<radioLength; i++){
+        var colorRadio = document.createElement('input');
+        colorRadio.type = "radio";
+        colorRadio.name = "color";
+        colorRadio.id = "radio"+i;
+        colorRadio.value = radioValues[i];
+        if(i === 0){
+            colorRadio.required = true;
+        }
+        addDiv.appendChild(colorRadio);
+
+        //radioボタンのラベル生成。
+        var radioLabel = document.createElement('label');
+        radioLabel.setAttribute('for', 'radio'+i);
+        radioLabel.innerHTML = radioOptions[i];
+        addDiv.appendChild(radioLabel);
+    }
+
+    
+    var radioBr = document.createElement('br');
+    addDiv.appendChild(radioBr);
+
+    var selectLabel = document.createElement('label');
+    selectLabel.setAttribute('for','sizeSelect');
+    selectLabel.innerHTML = "商品のサイズ";
+    addDiv.appendChild(selectLabel);
+
+    var selectBox = document.createElement('select');
+    selectBox.name = 'size';
+    selectBox.id = 'sizeSelect';
+    selectBox.required = true;
+    addDiv.appendChild(selectBox);
+
+    //optionの追加
+    //hidden枠
+    var selectOption = document.createElement('option');
+    selectOption.innerHTML = "選択してください";
+    selectOption.value = "";
+    selectOption.selected = true;
+    selectOption.hidden = true;
+    selectBox.appendChild(selectOption);
+
+    for(var i = 0; i < selectOptions.length; i++){
+        var selectOption = document.createElement('option');
+        selectOption.value = selectOptions[i];
+        selectOption.innerHTML = selectOptions[i];
+        selectBox.appendChild(selectOption);
+    }
+
+    var selectBr = document.createElement('br');
+    addDiv.appendChild(selectBr);
+
+    var piecesLabel = document.createElement('label');
+    piecesLabel.setAttribute('for','pieces');
+    piecesLabel.innerHTML = "数量";
+    addDiv.appendChild(piecesLabel);
+
+    var inputPieces = document.createElement('input');
+    inputPieces.type = "text";
+    inputPieces.name = "pieces";
+    inputPieces.id = "pieces";
+    inputPieces.placeholder = "数量";
+    inputPieces.required = true;
+    addDiv.appendChild(inputPieces);
+
+    var afterPiecesBr = document.createElement('br');
+    addDiv.appendChild(afterPiecesBr);
+
+    var priceLabel = document.createElement('label');
+    priceLabel.setAttribute('for','price');
+    priceLabel.innerHTML = "価格";
+    addDiv.appendChild(priceLabel);
+
+    var inputPrice = document.createElement('input');
+    inputPrice.type = "text";
+    inputPrice.name = "price";
+    inputPrice.id = "price";
+    inputPrice.required = true;
+    inputPrice.placeholder = "価格";
+    addDiv.appendChild(inputPrice);
+
+    var afterPriceBr = document.createElement('br');
+    addDiv.appendChild(afterPriceBr);
+
+    var submitButton = document.createElement('button');
+    submitButton.type = "button";
+    submitButton.innerHTML = "追加";
+    addDiv.appendChild(submitButton);
+    submitButton.addEventListener('click',function(){
+        //関数化
+        for(let i = 0; i < (aCS.length); i++){
+            aCS[i].style.display = "block";
+            // var sendProductElement = document.getElementById(addCount);
+            // var piecesElement = document.getElementById('pieces');
+            // var priceElement = document.getElementById('price');
+            // var sendProductValue = sendProductElement.value;
+            // var piecesValue = piecesElement.value;
+            // var priceValue = priceElement.value;
+            var num = selectBox.selectedIndex;
+            var sizeValue = selectBox.options[num].value;
+
+            var colorLen = colorRadio.length;
+            let colorValue = '';
+            for(let i = 0; i < colorLen; i++){
+                if(colorRadio.item(i).checked){
+                    var colorValue = colorRadio.item(i).value;
+                }
+            }
+
+            const formData = new FormData();
+            formData.append('product_id',sendProductValue);
+            formData.append('size',sizeValue);
+            formData.append('color',colorValue);
+            formData.append('pieces', pieces);
+            formData.append('price', priceValue);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'addColorSize.php', true);
+            xhr.send(formData);
+
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4 && xhr.status === 200){
+                    //selectにサイズ追加
+                    var selectI = document.getElementById('select' + addCount);
+                    var addselectOption = document.createElement('option');
+                    addselectOption.value = sizeValue+'|'+colorValue;
+                    addselectOption.innerHTML = sizeValue + ' - ' + colorValue;
+                    selectI.appendChild(addselectOption);
+
+                    alert("カラー・サイズの追加が完了しました。");
+                }
+                if(xhr.status < 200 && xhr.status >= 300){
+                    const response = JSON.parse(xhr.responseText);
+                    if(response){
+                        response.forEach(function(row){
+                            alert(row.error_message);
+                        });
+                    }else{
+                        alert("カラー・サイズの追加に失敗しました。");
+                    }
+                }
+            }
+        }
+    });
 }
 </script>
