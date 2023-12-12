@@ -26,10 +26,11 @@ echo "<h1>登録済み商品一覧</h1>";
 echo "<h2>$seller_name 様</h2>";
 echo "<div id='errorMessage'></div>";
 
-if(isset($_GET['errorMessage'])){
-    $errorMessage = $_GET['errorMessage'];
-    echo $errorMessage."<br>";
-}
+//alertで表示に変更
+// if(isset($_GET['errorMessage'])){
+//     $errorMessage = $_GET['errorMessage'];
+//     echo $errorMessage."<br>";
+// }
 
 $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
                 FROM products p
@@ -160,7 +161,7 @@ if($selectResult && $selectResult->num_rows > 0){
                     <option value="" hidden>選択してください</option>
             END;
             for($i = 0; $i < count($colorArray); $i++){
-                echo "<option>$colorArray[$i] - $sizeArray[$i]</option>";
+                echo "<option value='$colorArray[$i]|$sizeArray[$i]'>$colorArray[$i] - $sizeArray[$i]</option>";//ここ終わってない
             }
             echo <<<END
                 </select>
@@ -210,10 +211,10 @@ function deleteProducts(deleteCount){
             var divCount = document.getElementById('div'+deleteCount);
             divCount.remove();
 
-            errorMessageDiv.innerHTML = "商品の削除に成功しました。";
+            alert("商品の削除に成功しました。");
         }
         if(xhr.status < 200 && xhr.status >= 300){
-            errorMessageDiv.innerHTML = "登録商品の削除に失敗しました。";
+            alert("登録商品の削除に失敗しました。");
         }
     }
     xhr.open('POST','deleteProducts.php',true);
@@ -325,6 +326,56 @@ function addColorSize(addCount){
         //関数化
         for(let i = 0; i < (aCS.length); i++){
             aCS[i].style.display = "block";
+            // var sendProductElement = document.getElementById(addCount);
+            // var piecesElement = document.getElementById('pieces');
+            // var priceElement = document.getElementById('price');
+            // var sendProductValue = sendProductElement.value;
+            // var piecesValue = piecesElement.value;
+            // var priceValue = priceElement.value;
+            var num = selectBox.selectedIndex;
+            var sizeValue = selectBox.options[num].value;
+
+            var colorLen = colorRadio.length;
+            let colorValue = '';
+            for(let i = 0; i < colorLen; i++){
+                if(colorRadio.item(i).checked){
+                    var colorValue = colorRadio.item(i).value;
+                }
+            }
+
+            const formData = new FormData();
+            formData.append('product_id',sendProductValue);
+            formData.append('size',sizeValue);
+            formData.append('color',colorValue);
+            formData.append('pieces', pieces);
+            formData.append('price', priceValue);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'addColorSize.php', true);
+            xhr.send(formData);
+
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4 && xhr.status === 200){
+                    //selectにサイズ追加
+                    var selectI = document.getElementById('select' + addCount);
+                    var addselectOption = document.createElement('option');
+                    addselectOption.value = sizeValue+'|'+colorValue;
+                    addselectOption.innerHTML = sizeValue + ' - ' + colorValue;
+                    selectI.appendChild(addselectOption);
+
+                    alert("カラー・サイズの追加が完了しました。");
+                }
+                if(xhr.status < 200 && xhr.status >= 300){
+                    const response = JSON.parse(xhr.responseText);
+                    if(response){
+                        response.forEach(function(row){
+                            alert(row.error_message);
+                        });
+                    }else{
+                        alert("カラー・サイズの追加に失敗しました。");
+                    }
+                }
+            }
         }
     });
 }
