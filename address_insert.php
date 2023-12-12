@@ -10,7 +10,7 @@
 
 include "db_config.php";
 
-if(isset($_POST['add'])){
+if(isset($_POST['add'])){5700012343
     // $user_id = $_SESSION['user_id'];
     $addressname = $_POST['addressname'];
     $post_code = $_POST['post_code'];

@@ -95,7 +95,7 @@ a, a:hover, a:active, a:visited {
 
 .right-content {
     margin-left: 250px;
-
+    height: 100%;
 }
 .rigt-content-center {
     text-align: center;
@@ -107,6 +107,16 @@ a, a:hover, a:active, a:visited {
 
 .homeBack {
     background-color: #005aae;
+    width: fit-content;
+    color: #fff;
+    padding: 10px;
+    margin: 150px auto 0 auto;
+    border-radius: 10px;
+    /* cursor: alias; */
+}
+
+.homeBack:hover {
+    background-color: #004488; 
 }
 
 /* 1266px以下でのスタイル */
