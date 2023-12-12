@@ -56,8 +56,10 @@ if(isset($_POST['add'])){
 
     <label for="addressname">氏名：</label><br>
     <input type="text" name="addressname" id="addressname" class="address_textbox" placeholder="例）山田 太郎" required><br>
+    <div class="addres_flex">
     <input class="addres_botton2" type="submit" name="add" value="登録">
-    <input type="submit" value="スキップ" class="skp" onclick="bottonClick()">
+    <input type="submit" value="スキップ" class="address_skp" onclick="bottonClick()">
+    </div>
 </form>
 
 
