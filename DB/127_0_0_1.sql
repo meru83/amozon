@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-11 10:21:41
+-- 生成日時: 2023-12-12 03:55:15
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -804,7 +804,19 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (173, '#9ED563', 'M', 20, 5200, 626, 0),
 (173, '#EF5663', 'L', 20, 5200, 631, 0),
 (173, '#EF5663', 'M', 20, 5200, 627, 0),
-(174, '#313131', 'FREE', 10, 12000, 632, 0);
+(174, '#313131', 'FREE', 10, 12000, 632, 0),
+(175, '#4DBEE9', 'L', 30, 8000, 633, 1),
+(175, '#4DBEE9', 'XL', 30, 8000, 634, 1),
+(176, '#FFFFFF', 'L', 30, 2500, 636, 1),
+(176, '#FFFFFF', 'S', 30, 2500, 635, 1),
+(177, '#FFFFFF', 'M', 20, 4500, 639, 1),
+(177, '#FFFFFF', 'S', 20, 4500, 638, 1),
+(178, '#313131', 'L', 50, 3800, 643, 1),
+(178, '#313131', 'S', 50, 3800, 641, 1),
+(178, '#FFFFFF', 'L', 20, 3800, 642, 1),
+(178, '#FFFFFF', 'S', 50, 3800, 640, 1),
+(179, '#9ED563', 'L', 50, 2800, 645, 1),
+(179, '#9ED563', 'M', 50, 2800, 644, 1);
 
 -- --------------------------------------------------------
 
@@ -4287,7 +4299,12 @@ INSERT INTO `products` (`product_id`, `productname`, `view`, `create_at`, `selle
 (171, 'ロングスリーブヘンリーネックTシャツ', ' カジュアルなデイリースタイルにぴったりのヘンリーネックTシャツ。', '2023-12-07 22:18:58', 'test_bank', 2, 20, 163, '新品・未使用'),
 (172, 'カジュアルチノショートパンツ', 'くつろぎながらもおしゃれなチノショートパンツ。', '2023-12-07 22:23:38', 'test_bank', 2, 22, 206, 'やや傷あり'),
 (173, 'ライトウェイトフリースジャケット', '軽量で保温性のあるフリースジャケット。', '2023-12-07 22:33:36', 'test_bank', 2, 21, 199, '良品'),
-(174, 'testNo.1211', NULL, '2023-12-11 06:30:03', 'test_bank', 1, 1, 1, '新品・未使用');
+(174, 'testNo.1211', NULL, '2023-12-11 06:30:03', 'test_bank', 1, 1, 1, '新品・未使用'),
+(175, 'スリムフィットデニムジャケット', 'カジュアルでスタイリッシュなデニムジャケット。', '2023-12-12 02:10:44', 'test_bank', 2, 21, 175, '良品'),
+(176, 'プリント入りコットンTシャツ', 'カラフルなプリントが特徴のカジュアルTシャツ。', '2023-12-12 02:15:17', 'test_bank', 2, 20, 163, '良品'),
+(177, 'ウールセーターベスト', '寒い季節に重宝する暖かいウールセーターベスト。', '2023-12-12 02:18:01', 'test_bank', 2, 20, 165, '不良'),
+(178, 'スリムフィットチノパンツ', 'カジュアルながらもきちんと感のあるスリムフィットのチノパンツ。', '2023-12-12 02:21:05', 'test_bank', 2, 22, 211, 'やや傷あり'),
+(179, 'カーゴショーツ', '多くのポケットが付いた実用的なカーゴショーツ。', '2023-12-12 02:50:53', 'matchacp', 2, 22, 207, '良品');
 
 -- --------------------------------------------------------
 
@@ -4429,7 +4446,17 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (244, 616, 'olaniyan-oluwapelumi-ICOWVAqqOV0-unsplash616.jpg'),
 (245, 617, 'joshua-rondeau-RrseEMRZ5Bw-unsplash617.jpg'),
 (246, 618, 'joshua-rondeau-RrseEMRZ5Bw-unsplash618.jpg'),
-(247, 619, 'kamil-szumotalski-CKxpOhAoSRg-unsplash619.jpg');
+(247, 619, 'kamil-szumotalski-CKxpOhAoSRg-unsplash619.jpg'),
+(273, 633, 'people-2573218_1280633.jpg'),
+(274, 634, 'people-2573218_1280634.jpg'),
+(275, 638, 'ben-iwara-mNHMursJ4D4-unsplash638.jpg'),
+(276, 639, 'ben-iwara-mNHMursJ4D4-unsplash639.jpg'),
+(277, 640, 'santhosh-vaithiyanathan-ylHcWlrMlzs-unsplash640.jpg'),
+(278, 641, 'santhosh-vaithiyanathan-ylHcWlrMlzs-unsplash641.jpg'),
+(279, 642, 'santhosh-vaithiyanathan-ylHcWlrMlzs-unsplash642.jpg'),
+(280, 643, 'santhosh-vaithiyanathan-ylHcWlrMlzs-unsplash643.jpg'),
+(281, 644, 'sean-benesh-TICynpQt8uk-unsplash644.jpg'),
+(282, 645, 'sean-benesh-TICynpQt8uk-unsplash645.jpg');
 
 -- --------------------------------------------------------
 
@@ -4473,6 +4500,7 @@ CREATE TABLE `seller` (
 
 INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`) VALUES
 ('amozon', 'Amozon', '$2y$10$8ZTLZJfHCZnJlL7wyB6YguS0ltWpnwD2eFGfsWFDpKaD7/kkHR3N.', 1, '2023-10-03 19:52:53'),
+('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52'),
 ('rion_bank', 'RIONBANK', '$2y$10$ewUhXRBhoabyns9IT.H/0uyon72fmI4hXxmttgjoby6iloFBRekJ.', 1, '2023-10-03 07:19:48'),
 ('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47');
 
@@ -4955,7 +4983,7 @@ ALTER TABLE `chatrooms`
 -- テーブルの AUTO_INCREMENT `color_size`
 --
 ALTER TABLE `color_size`
-  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=633;
+  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=646;
 
 --
 -- テーブルの AUTO_INCREMENT `messages`
@@ -4973,13 +5001,13 @@ ALTER TABLE `orders`
 -- テーブルの AUTO_INCREMENT `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
 
 --
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=273;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=283;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
