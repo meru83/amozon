@@ -14,7 +14,7 @@ import csv
 args = sys.argv
 
 # seller_id = args[1]
-seller_id = "rion_bank"
+seller_id = "test_bank"
 
 # ########################################
 # データベースから対象データ取得
@@ -41,7 +41,7 @@ SELECT
     p.seller_id,
     DATE_FORMAT(o.create_at, '%Y') AS year,
     DATE_FORMAT(o.create_at, '%Y-%m') AS month,
-    SUM(d.total) AS total
+    SUM(d.detail_total) AS total
 FROM
     orders_detail d
 LEFT JOIN 
