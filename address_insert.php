@@ -32,7 +32,7 @@ if(isset($_POST['add'])){
 <body class="address_body">
 <form method="post" id="form" class="address_form">
     <label for="post_code" class="address_label">郵便番号：</label><br>
-    <input type="text" name="post_code" id="input" class="address_textbox" maxlength=8 placeholder="例)1234567" required>
+    <input type="text" name="post_code" id="input" class="address_textbox" maxlength=8 placeholder="例)1234567（ハイフンなし）" required>
     <button id="search" class="address_botton1" type="button">住所検索</button><br>
     <p id="error"></p>
     <label for="prefectures">都道府県：</label><br>
