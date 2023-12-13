@@ -34,17 +34,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     exit();
 }
 
-// $selectSql = "SELECT p.productname, p.view, p.create_at, p.seller_id, p.quality, s.color_code, s.size, s.pieces, s.price, s.color_size_id, b.big_category_name, c.category_name, small_category_name, i.img_url 
+// $selectSql = "SELECT p.productname, p.create_at, p.seller_id, p.quality, s.color_code, s.size, s.pieces, s.price, s.color_size_id, b.big_category_name, c.category_name, small_category_name, i.img_url 
 //                 FROM products p
 //                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
 //                 LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
 //                 LEFT JOIN category c ON (p.category_id = c.category_id)
 //                 LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
 //                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-//                 WHERE p.product_id = ?";
+//                 WHERE p.product_id = ? && s.color_code = ? && s.size = ?";
 // $selectStmt = $conn->prepare($selectSql);
 // $selectStmt->bind_param("i",$product_id);
-// $selectStmt->execute()
+// $selectStmt->execute();
 // $selectResult = $selectStmt->get_result();
 
 // if(){}
