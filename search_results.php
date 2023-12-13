@@ -9,6 +9,7 @@ $searchStmt = $conn->prepare($searchSql);
 $searchStmt->bind_param("s", $searchText);
 $searchStmt->execute();
 $count = 0;
+//検索された文字列が品質のみか否かのif文
 if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり'])){
     if(preg_match('/[|]+/u',$searchText)){
         $orKeywords = preg_split('/[|]+/u', $searchText);
@@ -22,6 +23,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
         $qualityConditions = array();
         $keywords = preg_split('/\s+/u',$orKeyword);
         foreach ($keywords as $keyword) {
+            //品質で検索された場合品質の項目を品質の配列($qualityConditions[])に格納
             if(in_array($keyword,['新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり'])){
                 if (in_array($keyword, ['中古', '中古品'])) {
                     $qualityConditions[] = "(p.quality = '良品' OR p.quality = 'やや傷あり' OR p.quality = '不良')";
@@ -33,6 +35,9 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $qualityConditions[] = "p.quality = '$keyword'";
                 }
             }else{
+                //品質以外の検索はここへ入る
+                //マッチ文字数の多い文字を検索上位に表示させたい
+                //初っ端のORのところをANDにして商品名での検索がないときだけカテゴリのみの検索ができるようにしたい
                 $conditions[] = "(p.productname LIKE '%$keyword%' OR 
                                 p.big_category_id IN (SELECT big_category_id FROM big_category WHERE big_category_name LIKE '%$keyword%') OR
                                 p.category_id IN (SELECT category_id FROM category WHERE category_name LIKE '%$keyword%') OR

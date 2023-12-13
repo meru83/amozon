@@ -22,8 +22,9 @@ session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
-if(isset($_POST['$product_id'])){
+if(isset($_SERVER['REQUEST_METHOD'] === 'POST')){
     $product_id = $_POST['product_id'];
+    $colorSize = $_POST['colorSize'];
 }else{
     header("Location:seller_products.php");
     exit();
