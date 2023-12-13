@@ -351,7 +351,7 @@ function addColorSize(addCount){
         formData.append('product_id',sendProductValue);
         formData.append('size',sizeValue);
         formData.append('color',colorValue);
-        formData.append('pieces', pieces);
+        formData.append('pieces', piecesValue);
         formData.append('price', priceValue);
 
         const xhr = new XMLHttpRequest();
@@ -360,36 +360,33 @@ function addColorSize(addCount){
 
         xhr.onreadystatechange = function() {
             if(xhr.readyState === 4 && xhr.status === 200){
-                // addDiv の子ノードをすべて削除
-                while (addDiv.firstChild) {
-                    addDiv.removeChild(addDiv.firstChild);
-                }
-                for(let i = 0; i < (aCS.length); i++){
-                    aCS[i].style.display = "block";
-                }
-                //selectにサイズ追加
-                var index = radioValues.indexOf(colorValue);
-                var selectI = document.getElementById('select' + addCount);
-                var addselectOption = document.createElement('option');
-                addselectOption.value = colorValue+'|'+sizeValue;
-                addselectOption.innerHTML = radioOptions[index] + ' - ' + sizeValue;
-                selectI.appendChild(addselectOption);
-
-                alert("カラー・サイズの追加が完了しました。");
-            }
-            if(xhr.status < 200 && xhr.status >= 300){
-                try {
+                try{
                     const response = JSON.parse(xhr.responseText);
-                    if (response) {
-                        response.forEach(function(row) {
-                            alert(row.error_message);
-                        });
-                    } else {
-                        alert("カラー・サイズの追加に失敗しました。");
-                    }
-                } catch (error) {
+                    response.forEach(function(row) {
+                        if(row.error_message === true){
+                            // addDiv の子ノードをすべて削除
+                            while (addDiv.firstChild) {
+                                addDiv.removeChild(addDiv.firstChild);
+                            }
+                            for(let i = 0; i < (aCS.length); i++){
+                                aCS[i].style.display = "block";
+                            }
+                            //selectにサイズ追加
+                            var index = radioValues.indexOf(colorValue);
+                            var selectI = document.getElementById('select' + addCount);
+                            var addselectOption = document.createElement('option');
+                            addselectOption.value = colorValue+'|'+sizeValue;
+                            addselectOption.innerHTML = radioOptions[index] + ' - ' + sizeValue;
+                            selectI.appendChild(addselectOption);
+
+                            alert("カラー・サイズの追加が完了しました。");
+                        }else{
+                                alert(row.error_message);
+                        }
+                    });
+                }catch (error) {
                     console.error("Error parsing JSON response:", error);
-                    alert("非同期リクエストが失敗しました。");
+                    alert("リクエストが失敗しました。");
                 }
             }
         }
