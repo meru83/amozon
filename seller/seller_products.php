@@ -100,7 +100,7 @@ if($selectResult && $selectResult->num_rows > 0){
         if($formFlag === true){
             $productText = <<<END
             <form action="edit.php" method="post">
-                <select id="select$countId" required>
+                <select id="select$countId" name="colorSize" required>
                     <option value="" hidden>選択してください</option>
             END;
             for($i = 0; $i < count($colorArray); $i++){
@@ -108,7 +108,7 @@ if($selectResult && $selectResult->num_rows > 0){
             }
             $productText .= <<<END
                 </select>
-                <input type="hidden" value="$product_id">
+                <input type="hidden" name="product_id" value="$product_id">
                 <input type="submit" value="登録内容変更">
             </form>
             <div id="addColorSizeDiv$countId">

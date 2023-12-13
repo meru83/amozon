@@ -12,8 +12,10 @@ $count = 0;
 //検索された文字列が品質のみか否かのif文
 if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり'])){
     if(preg_match('/[|]+/u',$searchText)){
+        //`|`があったらOR検索として扱いそこで区切る。
         $orKeywords = preg_split('/[|]+/u', $searchText);
     }else{
+        //`|`がない場合検索文字列をそのまま扱う。
         $orKeywords = array($searchText);
     }
 

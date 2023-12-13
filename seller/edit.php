@@ -22,26 +22,30 @@ session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
-if(isset($_SERVER['REQUEST_METHOD'] === 'POST')){
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $product_id = $_POST['product_id'];
     $colorSize = $_POST['colorSize'];
+    $colorSizeArray = preg_split('/[|]+/u',$colorSize);
+    $color_code = $colorSizeArray[0];
+    $size = $colorSizeArray[1];
+    echo "color_code".$color_code. "size :" . $size;
 }else{
     header("Location:seller_products.php");
     exit();
 }
 
-$selectSql = "SELECT p.productname, p.view, p.create_at, p.seller_id, p.quality, s.color_code, s.size, s.pieces, s.price, s.color_size_id, b.big_category_name, c.category_name, small_category_name, i.img_url 
-                FROM products p
-                LEFT JOIN color_size s ON (p.product_id = s.product_id)
-                LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
-                LEFT JOIN category c ON (p.category_id = c.category_id)
-                LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
-                LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-                WHERE p.product_id = ?";
-$selectStmt = $conn->prepare($selectSql);
-$selectStmt->bind_param("i",$product_id);
-$selectStmt->execute()
-$selectResult = $selectStmt->get_result();
+// $selectSql = "SELECT p.productname, p.view, p.create_at, p.seller_id, p.quality, s.color_code, s.size, s.pieces, s.price, s.color_size_id, b.big_category_name, c.category_name, small_category_name, i.img_url 
+//                 FROM products p
+//                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
+//                 LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
+//                 LEFT JOIN category c ON (p.category_id = c.category_id)
+//                 LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
+//                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
+//                 WHERE p.product_id = ?";
+// $selectStmt = $conn->prepare($selectSql);
+// $selectStmt->bind_param("i",$product_id);
+// $selectStmt->execute()
+// $selectResult = $selectStmt->get_result();
 
-if(){}
+// if(){}
 ?>
