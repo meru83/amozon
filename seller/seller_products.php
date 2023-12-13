@@ -55,6 +55,7 @@ $count = 0;
 if($selectResult && $selectResult->num_rows > 0){
     $lastImg = array();
     $colorArray = array();
+    $color_codeArray = array();
     $sizeArray = array();
     $productArray = array();
     echo "<div id='div$count'>";
@@ -90,6 +91,7 @@ if($selectResult && $selectResult->num_rows > 0){
             }
             if($checkFlag === true){
                 $colorArray[] = $colorName;
+                $color_codeArray[] = $color_code;
                 $sizeArray[] = $size;
             }else{
                 $checkFlag = true;
@@ -102,7 +104,7 @@ if($selectResult && $selectResult->num_rows > 0){
                     <option value="" hidden>選択してください</option>
             END;
             for($i = 0; $i < count($colorArray); $i++){
-                $productText .= "<option>$colorArray[$i] - $sizeArray[$i]</option>";
+                $productText .= "<option value='$color_codeArray[$i]|$sizeArray[$i]'>$colorArray[$i] - $sizeArray[$i]</option>";
             }
             $productText .= <<<END
                 </select>
@@ -130,8 +132,10 @@ if($selectResult && $selectResult->num_rows > 0){
             //form
             echo $productText;
             $colorArray = array();
+            $color_codeArray = array();
             $sizeArray = array();
             $colorArray[] = $colorName;
+            $color_codeArray[] = $color_code;
             $sizeArray[] = $size;
 
             echo $divStart;
@@ -323,57 +327,69 @@ function addColorSize(addCount){
     submitButton.innerHTML = "追加";
     addDiv.appendChild(submitButton);
     submitButton.addEventListener('click',function(){
-        //関数化
-        for(let i = 0; i < (aCS.length); i++){
-            aCS[i].style.display = "block";
-            // var sendProductElement = document.getElementById(addCount);
-            // var piecesElement = document.getElementById('pieces');
-            // var priceElement = document.getElementById('price');
-            // var sendProductValue = sendProductElement.value;
-            // var piecesValue = piecesElement.value;
-            // var priceValue = priceElement.value;
-            var num = selectBox.selectedIndex;
-            var sizeValue = selectBox.options[num].value;
-
-            var colorLen = colorRadio.length;
-            let colorValue = '';
-            for(let i = 0; i < colorLen; i++){
-                if(colorRadio.item(i).checked){
-                    var colorValue = colorRadio.item(i).value;
-                }
+        //関数化する↓
+        var sendProductElement = document.getElementById(addCount);
+        var sendProductValue = sendProductElement.value;
+        var piecesElement = document.getElementById('pieces');
+        var priceElement = document.getElementById('price');
+        var piecesValue = piecesElement.value;
+        var priceValue = priceElement.value;
+        var num = selectBox.selectedIndex;
+        var sizeValue = selectBox.options[num].value;
+        var colorRadioLength = document.getElementsByName('color');
+        var colorLen = colorRadioLength.length;
+        // console.log(colorLen);
+        var colorValue = '';
+        for(let i = 0; i < colorLen; i++){
+            if(colorRadioLength.item(i).checked){
+                colorValue = colorRadioLength.item(i).value;
+                // console.log(colorValue);
             }
+        }
 
-            const formData = new FormData();
-            formData.append('product_id',sendProductValue);
-            formData.append('size',sizeValue);
-            formData.append('color',colorValue);
-            formData.append('pieces', pieces);
-            formData.append('price', priceValue);
+        const formData = new FormData();
+        formData.append('product_id',sendProductValue);
+        formData.append('size',sizeValue);
+        formData.append('color',colorValue);
+        formData.append('pieces', pieces);
+        formData.append('price', priceValue);
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'addColorSize.php', true);
-            xhr.send(formData);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'addColorSize.php', true);
+        xhr.send(formData);
 
-            xhr.onreadystatechange = function() {
-                if(xhr.readyState === 4 && xhr.status === 200){
-                    //selectにサイズ追加
-                    var selectI = document.getElementById('select' + addCount);
-                    var addselectOption = document.createElement('option');
-                    addselectOption.value = sizeValue+'|'+colorValue;
-                    addselectOption.innerHTML = sizeValue + ' - ' + colorValue;
-                    selectI.appendChild(addselectOption);
-
-                    alert("カラー・サイズの追加が完了しました。");
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4 && xhr.status === 200){
+                // addDiv の子ノードをすべて削除
+                while (addDiv.firstChild) {
+                    addDiv.removeChild(addDiv.firstChild);
                 }
-                if(xhr.status < 200 && xhr.status >= 300){
+                for(let i = 0; i < (aCS.length); i++){
+                    aCS[i].style.display = "block";
+                }
+                //selectにサイズ追加
+                var index = radioValues.indexOf(colorValue);
+                var selectI = document.getElementById('select' + addCount);
+                var addselectOption = document.createElement('option');
+                addselectOption.value = colorValue+'|'+sizeValue;
+                addselectOption.innerHTML = radioOptions[index] + ' - ' + sizeValue;
+                selectI.appendChild(addselectOption);
+
+                alert("カラー・サイズの追加が完了しました。");
+            }
+            if(xhr.status < 200 && xhr.status >= 300){
+                try {
                     const response = JSON.parse(xhr.responseText);
-                    if(response){
-                        response.forEach(function(row){
+                    if (response) {
+                        response.forEach(function(row) {
                             alert(row.error_message);
                         });
-                    }else{
+                    } else {
                         alert("カラー・サイズの追加に失敗しました。");
                     }
+                } catch (error) {
+                    console.error("Error parsing JSON response:", error);
+                    alert("非同期リクエストが失敗しました。");
                 }
             }
         }
