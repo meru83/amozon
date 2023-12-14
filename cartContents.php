@@ -105,7 +105,7 @@ if(isset($_SESSION['cart'])){
 if($count !== 0) {
     echo $count . "件";
 } else {
-    echo <<< HTML
+    echo <<<HTML
     <div class="Amozon-container">
         <!-- Left Side Menu -->
         <div class="left-menu">
@@ -122,7 +122,6 @@ if($count !== 0) {
                     <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
                 </ul>
             </div>
-          
             <div>
                 <ul class="menu-list-bottom">
                     <li class="menu-item"><a href=""><span class="menu-item-icon">💬</span><span class="menu-item-text">Threads</span></a></li>
