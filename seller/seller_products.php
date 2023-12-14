@@ -149,10 +149,10 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
-            <button type="button" onclick="changeProductName($product_id)">変更</button>商品名　　: $productname<br>
-            <button type="button" onclick="changeCategory($product_id)">変更</button>カテゴリ名: $big_category_name - $category_name - $small_category_name<br>
-            <button type="button" onclick="changeView($product_id)">変更</button>概要　　　: $view<br>
-            <button type="button" onclick="changeQuality($product_id)">変更</button>品質　　　: $quality<br>
+            <button type="button" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　: $productname</p><br>
+            <button type="button" onclick="changeCategory($product_id)">変更</button><p id="category$product_id">カテゴリ名: $big_category_name - $category_name - $small_category_name</p><br>
+            <button type="button" onclick="changeView($product_id)">変更</button><p id="view$product_id">概要　　　: $view</p><br>
+            <button type="button" onclick="changeQuality($product_id)">変更</button><p id="quality$product_id">品質　　　: $quality<br>
             出品日　　: $create_at<br>
             <br>
             END;
@@ -187,7 +187,7 @@ if($selectResult && $selectResult->num_rows > 0){
             <hr>
             </div>
             END;
-    echo "</div>";
+    // echo "</div>";
     echo "登録商品は".$count."件です。";
 }else{
     echo "登録されている商品がありません。";
@@ -413,5 +413,39 @@ function addColorSize(addCount){
             }
         }
     });
+}
+
+function changeProductName(number){
+    //productnameに新しい商品名
+    productname = window.prompt("新しい商品名を入力してください", "");
+    if(productname != "" && productname != null){
+        const formData = new FormData();
+        formData.append('product_id',number);
+        formData.append('productname',productname);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST','changeProductName.php',true);
+        xhr.send(formData);
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    response.forEach(function(row) {
+                        if(row.error_message === true){
+                            var nameElement = document.getElementById('name'+number);
+                            nameElement.innerHTML  = "商品名　　: "+productname;
+                            alert("商品名の変更に成功しました。");
+                        }else{
+                                alert("商品名の変更に失敗しました。");
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error parsing JSON response:", error);
+                    alert("リクエストが失敗しました。");
+                }
+            }
+        }
+    }
 }
 </script>
