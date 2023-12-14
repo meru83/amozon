@@ -94,6 +94,11 @@ a, a:hover, a:active, a:visited {
     text-decoration: none;
 }
 
+.right-content {
+    margin-left: 280px;
+    height: 100%;
+}
+
 
 
 
@@ -117,6 +122,10 @@ a, a:hover, a:active, a:visited {
     .menu-item:hover {
         background-color: #DBDBDB;
         border-radius: 10%; /* 丸いホバーエフェクトを適用するためのスタイル */
+    }
+
+    .right-content {
+        margin-left: 110px;
     }
 }
 
