@@ -54,6 +54,7 @@ $checkFlag = true;
 $count = 0;
 if($selectResult && $selectResult->num_rows > 0){
     $lastImg = array();
+    $lastProName = array();
     $colorArray = array();
     $color_codeArray = array();
     $sizeArray = array();
@@ -115,6 +116,7 @@ if($selectResult && $selectResult->num_rows > 0){
             <!------ここに色とカラー追加のフォームを作る------->
             </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
+            <input type="hidden" id="name$countId" value="$lastProName[$countId]">
             <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)">カラー・サイズの追加</button>
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
             <hr>
@@ -142,14 +144,15 @@ if($selectResult && $selectResult->num_rows > 0){
             echo $divStart;
             echo $imgText;
             $lastImg[] = $product_id;
+            $lastProName[] = $productname;
             $htmlText = <<<END
             <br>
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
-            商品名　　: $productname<br><button type="button" onclick="changeProductName($product_id)">変更</button>
-            カテゴリ名: $big_category_name - $category_name - $small_category_name<br><button type="button" onclick="changeCategory($product_id)">変更</button>
-            概要　　　: $view<br><button type="button" onclick="changeView($product_id)">変更</button>
-            品質　　　: $quality<br><button type="button" onclick="changeQuality($product_id)">変更</button>
+            <button type="button" onclick="changeProductName($product_id)">変更</button>商品名　　: $productname<br>
+            <button type="button" onclick="changeCategory($product_id)">変更</button>カテゴリ名: $big_category_name - $category_name - $small_category_name<br>
+            <button type="button" onclick="changeView($product_id)">変更</button>概要　　　: $view<br>
+            <button type="button" onclick="changeQuality($product_id)">変更</button>品質　　　: $quality<br>
             出品日　　: $create_at<br>
             <br>
             END;
@@ -178,6 +181,7 @@ if($selectResult && $selectResult->num_rows > 0){
             <!------ここにフォーム作る------->
             </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
+            <input type="hidden" id="name$countId" value="$lastProName[$countId]"><!---一個前のproductname持ってくる--->
             <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)" style="display:block">カラー・サイズの追加</button>
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
             <hr>
@@ -206,7 +210,9 @@ function getColor($conn, $color_code){
 const errorMessageDiv = document.getElementById('errorMessage');
 function deleteProducts(deleteCount){
     var inputId = document.getElementById(deleteCount);
+    var productElement = document.getElementById('name'+deleteCount);
     var product_id = inputId.value;
+    var productname = productElement.value;
     const formData = new FormData();
     formData.append('product_id',product_id);
 
@@ -214,10 +220,24 @@ function deleteProducts(deleteCount){
 
     xhr.onreadystatechange = function(){
         if(xhr.readyState === 4 && xhr.status === 200){
-            var divCount = document.getElementById('div'+deleteCount);
-            divCount.remove();
+            try{
+                const response = JSON.parse(xhr.responseText);
+                response.forEach(function(row){
+                    if(row.error_message){
+                        //成功処理
+                        var divCount = document.getElementById('div'+deleteCount);
+                        divCount.remove();
 
-            alert("商品の削除に成功しました。");
+                        alert(productname+row.error_message);
+                    }else{
+                        //失敗処理
+                        alert("登録商品の削除に失敗しました。");
+                    }
+                });
+            }catch(error){
+                // console.error("Error parsing JSON response:", error);
+                alert("リクエストが失敗しました。");
+            }
         }
         if(xhr.status < 200 && xhr.status >= 300){
             alert("登録商品の削除に失敗しました。");
