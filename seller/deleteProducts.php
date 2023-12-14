@@ -28,11 +28,17 @@ if(isset($_POST['product_id'])){
     header("Location:seller_products.php");
     exit();
 }
+$error_message = true;
 
 try{
     //名前とって消した商品をわかりやすくしてもいい。
-    // $getNameSql = "SELECT productname FROM products WHERE product_id = $product_id";
-    // $getNameResult = $conn->query($getNameSql);
+    $getNameSql = "SELECT productname FROM products WHERE product_id = $product_id";
+    $getNameResult = $conn->query($getNameSql);
+    if($getNameResult && $getNameResult->num_rows > 0){
+        while($row = $getNameResult->fetch_assoc()){
+            $productname = $row['productname'];
+        }
+    }
 
     //orders_detailとの外部キー制約の兼ね合いでstatusで管理するようにするべき。
     //上記の場合、商品の検索時などの時に検索にかからないようにする修正が必要である。

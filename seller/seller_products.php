@@ -127,6 +127,7 @@ if($selectResult && $selectResult->num_rows > 0){
 
         //違う商品になったタイミング
         if(!in_array($product_id, $lastImg)){
+            //商品情報
             echo $htmlText;
 
             //form
@@ -144,10 +145,11 @@ if($selectResult && $selectResult->num_rows > 0){
             $htmlText = <<<END
             <br>
             <br>
-            商品名　　: $productname<br>
-            カテゴリ名: $big_category_name - $category_name - $small_category_name<br>
-            概要　　　: $view<br>
-            品質　　　: $quality<br>
+            <!----変更のところ鉛筆マークにできるならしてもいいかも---->
+            商品名　　: $productname<br><button type="button" onclick="changeProductName($product_id)">変更</button>
+            カテゴリ名: $big_category_name - $category_name - $small_category_name<br><button type="button" onclick="changeCategory($product_id)">変更</button>
+            概要　　　: $view<br><button type="button" onclick="changeView($product_id)">変更</button>
+            品質　　　: $quality<br><button type="button" onclick="changeQuality($product_id)">変更</button>
             出品日　　: $create_at<br>
             <br>
             END;

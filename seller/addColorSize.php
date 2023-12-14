@@ -1,6 +1,4 @@
 <?php
-// header('Content-Type: application/json'); // JSONレスポンスであることを指定
-
 include "../db_config.php";
 
 ini_set('display_errors', 1);

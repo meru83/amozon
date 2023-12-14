@@ -519,6 +519,7 @@ form.addEventListener('submit', function(event) {
         this.submit();
     } else {
         // ダイアログでキャンセルがクリックされた場合、何もしない
+        //alert("キャンセルされました。");でもいい
     }
 });
 </script>
