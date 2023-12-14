@@ -27,25 +27,45 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $colorSize = $_POST['colorSize'];
     $colorSizeArray = preg_split('/[|]+/u',$colorSize);
     $color_code = $colorSizeArray[0];
+    $colorName = getColor($conn, $color_code);
     $size = $colorSizeArray[1];
-    echo "color_code".$color_code. "size :" . $size;
 }else{
     header("Location:seller_products.php");
     exit();
 }
 
-// $selectSql = "SELECT p.productname, p.create_at, p.seller_id, p.quality, s.color_code, s.size, s.pieces, s.price, s.color_size_id, b.big_category_name, c.category_name, small_category_name, i.img_url 
-//                 FROM products p
-//                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
-//                 LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
-//                 LEFT JOIN category c ON (p.category_id = c.category_id)
-//                 LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
-//                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-//                 WHERE p.product_id = ? && s.color_code = ? && s.size = ?";
-// $selectStmt = $conn->prepare($selectSql);
-// $selectStmt->bind_param("i",$product_id);
-// $selectStmt->execute();
-// $selectResult = $selectStmt->get_result();
+$selectSql = "SELECT p.productname, p.create_at, s.pieces, s.price, s.color_size_id, i.img_url 
+                FROM products p
+                LEFT JOIN color_size s ON (p.product_id = s.product_id)
+                LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
+                WHERE p.product_id = ? && s.color_code = ? && s.size = ?";
+$selectStmt = $conn->prepare($selectSql);
+$selectStmt->bind_param("iss",$product_id,$color_code,$size);
+$selectStmt->execute();
+$selectResult = $selectStmt->get_result();
 
-// if(){}
+if($selectResult && $selectResult->num_rows > 0){
+    while($row = $selectResult->fetch_assoc()){
+        $productname = $row['productname'];
+        $create_at = $row['create_at'];
+        //$colorName
+        $pieces = $row['pieces'];
+        $price = $row['price'];
+        $color_size_id = $row['color_size_id'];
+        $img_url = $row['img_url'];
+    }
+}
+
+function getColor($conn, $color_code){
+    $colorSql = "SELECT * FROM color_name
+                WHERE color_code = ?";
+    $colorStmt = $conn->prepare($colorSql);
+    $colorStmt->bind_param("s",$color_code);
+    $colorStmt->execute();
+    $colorResult = $colorStmt->get_result();
+    if ($row = $colorResult->fetch_assoc()) {
+        $colorName = $row['colorName']; // ここで正しいカラム名を使用
+        return $colorName;
+    } 
+}
 ?>
