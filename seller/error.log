@@ -1,0 +1,21 @@
+[15-Dec-2023 02:31:42 Europe/Berlin] PHP Warning:  Undefined array key "product_id" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 9
+[15-Dec-2023 02:31:42 Europe/Berlin] PHP Warning:  Undefined array key "size" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 10
+[15-Dec-2023 02:31:42 Europe/Berlin] PHP Warning:  Undefined array key "color" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 11
+[15-Dec-2023 02:31:42 Europe/Berlin] PHP Warning:  Undefined array key "pieces" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 12
+[15-Dec-2023 02:31:42 Europe/Berlin] PHP Warning:  Undefined array key "price" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 13
+[15-Dec-2023 02:31:42 Europe/Berlin] error : Column 'product_id' cannot be null
+[15-Dec-2023 02:57:31 Europe/Berlin] PHP Warning:  Undefined array key "product_id" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 9
+[15-Dec-2023 02:57:31 Europe/Berlin] PHP Warning:  Undefined array key "size" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 10
+[15-Dec-2023 02:57:31 Europe/Berlin] PHP Warning:  Undefined array key "color" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 11
+[15-Dec-2023 02:57:32 Europe/Berlin] PHP Warning:  Undefined array key "pieces" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 12
+[15-Dec-2023 02:57:32 Europe/Berlin] PHP Warning:  Undefined array key "price" in C:\xampp\htdocs\php\amo\seller\addColorSize.php on line 13
+[15-Dec-2023 02:57:32 Europe/Berlin] error : Column 'product_id' cannot be null
+[15-Dec-2023 03:28:25 Europe/Berlin] PHP Warning:  Undefined array key "insertId" in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 25
+[15-Dec-2023 03:28:25 Europe/Berlin] PHP Deprecated:  urldecode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 25
+[15-Dec-2023 03:28:25 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 35
+[15-Dec-2023 03:28:30 Europe/Berlin] PHP Warning:  Undefined array key "insertId" in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 25
+[15-Dec-2023 03:28:30 Europe/Berlin] PHP Deprecated:  urldecode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 25
+[15-Dec-2023 03:28:30 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 35
+[15-Dec-2023 03:29:00 Europe/Berlin] PHP Warning:  Undefined array key "insertId" in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 25
+[15-Dec-2023 03:29:00 Europe/Berlin] PHP Deprecated:  urldecode(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 25
+[15-Dec-2023 03:29:00 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, null given in C:\xampp\htdocs\php\amo\seller\img_insert.php on line 35
