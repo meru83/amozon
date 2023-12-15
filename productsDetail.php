@@ -16,10 +16,12 @@ echo <<<HTML
 <body>
 
 <form action="search_results.php" method="GET">
-        <label for="search">商品を検索：</label>
+    <div class="flexBox">
+        <label for="search">商品を検索</label>
         <input type="text" id="search" name="search">
-        <button type="submit">検索</button>
-</form>
+        <button type="submit" class="btn-img"></button>
+        </div>
+    </form>
 HTML;
 
 $htmlText = "";

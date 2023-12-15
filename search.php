@@ -12,7 +12,7 @@
     <h1>商品検索</h1>
     <form action="search_results.php" method="GET">
     <div class="flexBox">
-        <label for="search">商品を検索：</label>
+        <label for="search">商品を検索</label>
         <input type="text" id="search" name="search">
         <button type="submit" class="btn-img"></button>
         </div>

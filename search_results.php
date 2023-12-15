@@ -11,9 +11,11 @@
 <body>
     <h1>商品検索</h1>
     <form action="search_results.php" method="GET">
-        <label for="search">商品を検索：</label>
+    <div class="flexBox">
+        <label for="search">商品を検索</label>
         <input type="text" id="search" name="search">
-        <button type="submit">検索</button>
+        <button type="submit" class="btn-img"></button>
+        </div>
     </form>
 <?php
 // データベース接続
