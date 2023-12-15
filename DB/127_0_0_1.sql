@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-15 01:58:04
+-- 生成日時: 2023-12-15 05:48:26
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -833,6 +833,18 @@ CREATE TABLE `messages` (
   `img_url` varchar(1024) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `messages`
+--
+
+INSERT INTO `messages` (`message_id`, `room_id`, `user_id`, `seller_id`, `message_text`, `img_url`, `timestamp`) VALUES
+(96, 2, 'test_user', NULL, 'こんにちは', NULL, '2023-12-15 04:41:34'),
+(97, 2, 'test_user', NULL, NULL, 'mirko-fabian-EY-YsX9-3EI-unsplash97.jpg', '2023-12-15 04:42:16'),
+(98, 2, 'test_user', NULL, 'こちらの像に服を着せたいのですが、お人形サイズの服は販売していますでしょうか。', NULL, '2023-12-15 04:45:08'),
+(99, 2, NULL, 'test_bank', '大変申し訳ございませんが、当店ではそのような服は販売しておりません', NULL, '2023-12-15 04:46:05'),
+(100, 2, 'test_user', NULL, 'わかりました、ありがとうございます', NULL, '2023-12-15 04:46:24'),
+(101, 2, NULL, 'test_bank', 'またの機会のご利用をお待ちしております', NULL, '2023-12-15 04:46:56');
 
 -- --------------------------------------------------------
 
@@ -4974,7 +4986,7 @@ ALTER TABLE `color_size`
 -- テーブルの AUTO_INCREMENT `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- テーブルの AUTO_INCREMENT `orders`
