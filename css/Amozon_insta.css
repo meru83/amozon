@@ -50,7 +50,7 @@
     margin-bottom: auto;
 }
 
-.menu-item {
+.menu-item, .menu-item-logo {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -113,7 +113,7 @@ a, a:hover, a:active, a:visited {
         display: none;
     }
 
-    .menu-item {
+    .menu-item, .menu-item-logo {
         justify-content: center;
         padding: 10px;
         box-sizing: border-box;   
