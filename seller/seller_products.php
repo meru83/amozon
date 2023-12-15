@@ -109,7 +109,7 @@ if($selectResult && $selectResult->num_rows > 0){
             }
             $productText .= <<<END
                 </select>
-                <input type="hidden" name="product_id" value="$product_id">
+                <input type="hidden" name="product_id" value="$lastImg[$countId]">
                 <input type="submit" value="登録内容変更">
             </form>
             <div id="addColorSizeDiv$countId">
