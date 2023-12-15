@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-12 03:55:15
+-- 生成日時: 2023-12-15 01:58:04
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -833,21 +833,6 @@ CREATE TABLE `messages` (
   `img_url` varchar(1024) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- テーブルのデータのダンプ `messages`
---
-
-INSERT INTO `messages` (`message_id`, `room_id`, `user_id`, `seller_id`, `message_text`, `img_url`, `timestamp`) VALUES
-(82, 2, 'test_user', NULL, 'hhhsehst', NULL, '2023-10-27 13:13:28'),
-(83, 2, NULL, 'test_bank', 'hsths', NULL, '2023-10-27 13:14:21'),
-(84, 2, 'test_user', NULL, 'yw45y', NULL, '2023-10-27 13:39:52'),
-(85, 2, 'test_user', NULL, 'jeagijaergg', NULL, '2023-10-28 13:25:37'),
-(86, 2, 'test_user', NULL, 'brneai', NULL, '2023-10-28 13:25:43'),
-(87, 2, 'test_user', NULL, 'apaoema', NULL, '2023-10-28 13:25:44'),
-(88, 2, 'test_user', NULL, 'aggma', NULL, '2023-10-28 13:25:45'),
-(89, 2, 'test_user', NULL, 'avaem', NULL, '2023-10-28 13:25:46'),
-(90, 2, 'test_user', NULL, 'テスト', NULL, '2023-10-28 13:26:04');
 
 -- --------------------------------------------------------
 
@@ -4989,7 +4974,7 @@ ALTER TABLE `color_size`
 -- テーブルの AUTO_INCREMENT `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- テーブルの AUTO_INCREMENT `orders`
