@@ -130,8 +130,9 @@ function changePrice(id){
 //         e.preventDefault();
 //         var color_sizeElement = document.getElementById('color_sizeInput');
 //         var color_size_id = color_sizeElement.value;
-//         var imageElement = document.getElementbyId('image-file').files;
-//         var imageFile = imageElement.value;
+//         var imageElement = document.getElementById('image-file');
+//         var imageFile = imageElement.files;
+//         // console.log(imageFile);
 
 //         const formData = new FormData();
 //         formData.append('color_size_id', color_size_id);
@@ -144,7 +145,18 @@ function changePrice(id){
 
 //         xhr.onreadystatechange = function(){
 //             if(xhr.readyState === 4 && xhr.status === 200){
-//                 imageElement.value = '';
+//                 // imageElement.value = '';
+//                 try {
+//                     const response = JSON.parse(xhr.responseText);
+//                     response.forEach(function(row) {
+//                         if(row.error_message){
+//                             console.log(row.error_message);
+//                         }
+//                     });
+//                 } catch (error) {
+//                     console.error("Error parsing JSON response:", error);
+//                     alert("リクエストが失敗しました。");
+//                 }
 //             }
 //         }
 //     });
