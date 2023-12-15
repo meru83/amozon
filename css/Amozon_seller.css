@@ -1,0 +1,70 @@
+.seller_body {
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .seller_h1{
+    padding: 0 0 0 15px;
+    font-size: 25px;
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
+}
+
+  .seller_brand {
+    height: auto;
+    width: 215px;
+}
+
+  .seller_form {
+    background-color: #fff;
+    border: 2px solid #DBDBDB; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 215px;
+  }
+  
+  .seller_label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .seller_textbox, .register_select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #DBDBDB;
+    height: 40px;
+  }
+
+  .seller_textbox, .sellerr_select:hover {
+    outline-color: #005aae;
+  }
+  
+  .seller_botton{
+    background-color: #005aae;
+    border: none;
+    border-radius: 10px; /* 画像のボタンが角丸のため */
+    width: 100%;
+    height: 40px;
+    color: white;
+    font-weight: bold; /* ボタンのテキストを太字に */
+    cursor: pointer;
+    transition: background-color 0.3s; /* クリック時のアニメーション効果の追加 */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+.seller_botton:hover {
+    background-color: #004488; /* ホバー時の色変更 */
+}
+
+.seller_botton:active {
+    background-color: #004280; /* クリック時の色変更 */
+}
