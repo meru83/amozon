@@ -43,7 +43,6 @@ $selectStmt = $conn->prepare($selectSql);
 $selectStmt->bind_param("iss",$product_id,$color_code,$size);
 $selectStmt->execute();
 $selectResult = $selectStmt->get_result();
-
 if($selectResult && $selectResult->num_rows > 0){
     while($row = $selectResult->fetch_assoc()){
         $productname = $row['productname'];
@@ -53,7 +52,26 @@ if($selectResult && $selectResult->num_rows > 0){
         $price = $row['price'];
         $color_size_id = $row['color_size_id'];
         $img_url = $row['img_url'];
+        if(!is_null($img_url)){
+            echo "<img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>";
+        }//else{
+            //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
+        //}
+        //画像にサイズと色の説明が出るようにする。
     }
+    echo <<<END
+    <button type="button" id="addImg" onclick="addImg($color_size_id)" style="display:block">写真を追加</button>
+    <form id="imgInsertForm" enctype="multipart/form-data" style="display:none">
+        <input type="text" id="color_sizeInput" name="color_sizeInput" value="$color_size_id" hidden>
+        <input type="file" id="image-file" name="img[]" multiple accept="image/*">
+        <input type="submit" name="submit" value="確定">
+    </form>
+    カラー:$colorName サイズ:$size <br>
+    　　  商品名　: $productname <br>
+    <button type="button" onclick="changePrice($color_size_id)">変更</button><p id="priceText">価格　　: $price </p><br>
+    <button type="button" onclick="changePieces($color_size_id)">変更</button><p id="piecesText">在庫数　: $pieces </p><br>
+    出品日　: $create_at <br>
+    END;
 }
 
 function getColor($conn, $color_code){
@@ -69,3 +87,66 @@ function getColor($conn, $color_code){
     } 
 }
 ?>
+<script>
+function changePrice(id){
+    newPrice = window.prompt("価格を入力してください","");
+    if(newPrice != "" && newPrice != null){
+        const formData = new FormData();
+        formData.append('color_size_id', id);
+        formData.append('newPrice', newPrice);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'changePrice.php', true);
+        xhr.send(formData);
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    response.forEach(function(row) {
+                        if(row.error_message === true){
+                            var priceElement = document.getElementById('priceText');
+                            priceElement.innerHTML = "価格　　: "+newPrice;
+                            alert("価格を変更しました。");
+                        }else{
+                                alert("価格の変更に失敗しました。");
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error parsing JSON response:", error);
+                    alert("リクエストが失敗しました。");
+                }
+            }
+        }
+    }
+}
+
+// function addImg(id){
+//     var addImg = document.getElementById('addImg');
+//     addImg.style.display = "none";
+//     var imgInsertForm = document.getElementById('imgInsertForm');
+//     imgInsertForm.style.display = "block";
+//     imgInsertForm.addEventListener('submit',function(e){
+//         e.preventDefault();
+//         var color_sizeElement = document.getElementById('color_sizeInput');
+//         var color_size_id = color_sizeElement.value;
+//         var imageElement = document.getElementbyId('image-file').files;
+//         var imageFile = imageElement.value;
+
+//         const formData = new FormData();
+//         formData.append('color_size_id', color_size_id);
+//         formData.append('imgFile', imageFile);
+
+//         const xhr = new XMLHttpRequest();
+
+//         xhr.open('POST','addImg.php',true);
+//         xhr.send(formData);
+
+//         xhr.onreadystatechange = function(){
+//             if(xhr.readyState === 4 && xhr.status === 200){
+//                 imageElement.value = '';
+//             }
+//         }
+//     });
+// }
+</script>
