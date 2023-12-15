@@ -1,10 +1,3 @@
-
-<?php
-include "db_config.php";
-
-echo "<h1>商品詳細</h1>";
-
-echo <<<HTML
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,7 +7,7 @@ echo <<<HTML
     <title>検索</title>
 </head>
 <body>
-
+<h1>商品詳細</h1>
 <form action="search_results.php" method="GET">
     <div class="flexBox">
         <label for="search">商品を検索</label>
@@ -22,7 +15,8 @@ echo <<<HTML
         <button type="submit" class="btn-img"></button>
         </div>
     </form>
-HTML;
+<?php
+include "db_config.php";
 
 $htmlText = "";
 
