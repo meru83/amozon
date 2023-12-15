@@ -53,7 +53,7 @@ if($selectResult && $selectResult->num_rows > 0){
         $color_size_id = $row['color_size_id'];
         $img_url = $row['img_url'];
         if(!is_null($img_url)){
-            echo "<img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>";
+            echo "<img src='p_img/$img_url' alt='$colorName 色,".$size."サイズ'>";
         }//else{
             //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
         //}
@@ -121,44 +121,48 @@ function changePrice(id){
     }
 }
 
-// function addImg(id){
-//     var addImg = document.getElementById('addImg');
-//     addImg.style.display = "none";
-//     var imgInsertForm = document.getElementById('imgInsertForm');
-//     imgInsertForm.style.display = "block";
-//     imgInsertForm.addEventListener('submit',function(e){
-//         e.preventDefault();
-//         var color_sizeElement = document.getElementById('color_sizeInput');
-//         var color_size_id = color_sizeElement.value;
-//         var imageElement = document.getElementById('image-file');
-//         var imageFile = imageElement.files;
-//         // console.log(imageFile);
+function addImg(id){
+    var addImg = document.getElementById('addImg');
+    addImg.style.display = "none";
+    var imgInsertForm = document.getElementById('imgInsertForm');
+    imgInsertForm.style.display = "block";
+    imgInsertForm.addEventListener('submit',function(e){
+        e.preventDefault();
+        var color_sizeElement = document.getElementById('color_sizeInput');
+        var color_size_id = color_sizeElement.value;
+        var imageElement = document.getElementById('image-file');
+        // var imageFile = imageElement.files;
+        var imageFileLength = imageElement.files.length;
+        // console.log(imageFileLength);
 
-//         const formData = new FormData();
-//         formData.append('color_size_id', color_size_id);
-//         formData.append('imgFile', imageFile);
+        const formData = new FormData();
+        formData.append('color_size_id', color_size_id);
+        for(let i = 0; i < imageFileLength; i++){
+            formData.append('imgFile['+i+']', imageElement.files[i]);
+        }
+        const xhr = new XMLHttpRequest();
 
-//         const xhr = new XMLHttpRequest();
+        xhr.open('POST','addImg.php',true);
+        xhr.send(formData);
 
-//         xhr.open('POST','addImg.php',true);
-//         xhr.send(formData);
-
-//         xhr.onreadystatechange = function(){
-//             if(xhr.readyState === 4 && xhr.status === 200){
-//                 // imageElement.value = '';
-//                 try {
-//                     const response = JSON.parse(xhr.responseText);
-//                     response.forEach(function(row) {
-//                         if(row.error_message){
-//                             console.log(row.error_message);
-//                         }
-//                     });
-//                 } catch (error) {
-//                     console.error("Error parsing JSON response:", error);
-//                     alert("リクエストが失敗しました。");
-//                 }
-//             }
-//         }
-//     });
-// }
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    response.forEach(function(row) {
+                        if(row.error_message){
+                            alert("画像が登録されました。");
+                            window.location.reload();
+                        }else{
+                            alert("画像の登録に失敗しました。");
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error parsing JSON response:", error);
+                    alert("リクエストが失敗しました。");
+                }
+            }
+        }
+    });
+}
 </script>
