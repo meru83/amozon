@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['room_id'])) {
 
     // メッセージの長さを検証
     if (strlen($message_text) > 1000) {
-        error_log("メッセージが長すぎます。",3);
+        error_log("メッセージが長すぎます。");
         exit();
     }
 
