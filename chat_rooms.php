@@ -4,18 +4,29 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// ログインセッションが存在しない場合、ログインページにリダイレクトします
-if (!isset($_SESSION['user_id']) && !isset($_SESSION['seller_id'])) {
-    header("Location: login.php"); // ログインページのURLにリダイレクト
-    exit(); // リダイレクト後、スクリプトの実行を終了
-}
-
 // データベースへの接続情報を設定します
 include 'db_config.php'; // データベース接続情報を読み込む
 
 // セッションからユーザーIDを取得します
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 $seller_id = isset($_SESSION['seller_id']) ? $_SESSION['seller_id'] : null;
+
+// ログインセッションが存在しない場合、ログインページにリダイレクトします
+if (is_null($user_id) && is_null($seller_id)) {
+    header("Location: login.php"); // ログインページのURLにリダイレクト
+    exit(); // リダイレクト後、スクリプトの実行を終了
+}
+
+//ユーザーでログインしてた時のログアウトボタン
+if(!is_null($user_id)){
+    echo '<a href="logout.php">ログアウト</a>';
+}
+//売り手側でログインしてた時のログイン
+else if(!is_null($seller_id)){
+    echo '<a href="seller/seller_out.php">ログアウト</a>';
+}
+
+
 
 // ユーザーのチャットルームを取得します
 //DISTINCTで重複レコードを一つにまとめる
@@ -53,19 +64,6 @@ if ($result === false) {
 <body>
     <div id="header">
         <h1>チャットルーム一覧</h1>
-        <!-- <form action="logout.php" method="post">
-            <input type="submit" name="logout" value="ログアウト">
-        </form> -->
-        <?php
-        //ユーザーでログインしてた時のログアウトボタン
-        if(!is_null($user_id)){
-            echo '<a href="logout.php">ログアウト</a>';
-        }
-        //売り手側でログインしてた時のログイン
-        else if(!is_null($seller_id)){
-            echo '<a href="../seller_out.php">ログアウト</a>';
-        }
-        ?>
     </div>
 
     <div id="main">
