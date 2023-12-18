@@ -53,9 +53,19 @@ if ($result === false) {
 <body>
     <div id="header">
         <h1>チャットルーム一覧</h1>
-        <form action="logout.php" method="post">
+        <!-- <form action="logout.php" method="post">
             <input type="submit" name="logout" value="ログアウト">
-        </form>
+        </form> -->
+        <?php
+        //ユーザーでログインしてた時のログアウトボタン
+        if(!is_null($user_id)){
+            echo '<a href="logout.php">ログアウト</a>';
+        }
+        //売り手側でログインしてた時のログイン
+        else if(!is_null($seller_id)){
+            echo '<a href="../seller_out.php">ログアウト</a>';
+        }
+        ?>
     </div>
 
     <div id="main">
