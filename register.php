@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録</title>
-    <link rel="stylesheet" href="css/register_style.css">
+    <link rel="stylesheet" href="css/Amozon_register.css">
 </head>
-<body>
-    <h1>新規登録</h1>
+<body class="register_body">
+
     
     <?php
     include 'db_config.php'; // データベース接続情報を読み込む
@@ -80,17 +80,19 @@
     }
     ?>
     <!---新規登録用の情報入力フォーム--->
-    <form method="POST" id ='form'>
-        <label for="user_id">ユーザーID:</label>
-        <input type="text" id="user_id" name="user_id" required><br>
+    <form method="POST" id ='form' class="register_form" >
+        <img src="img/Re.ReaD2blue.svg" class="register_brand">
+        <h1 class="register_h1">新規登録</h1>
+        <label for="user_id"></label>
+        <input type="text" id="user_id" class="register_textbox" name="user_id" placeholder="ユーザーID:" required><br>
         
-        <label for="password">パスワード:</label>
-        <input type="password" id="password" name="password" required><br>
+        <label for="password"></label>
+        <input type="password" id="password" class="register_textbox" name="password" placeholder="パスワード:" required><br>
 
-        <label for="username">ユーザー名:</label>
-        <input type="text" id="username" name="username" required><br>
+        <label for="username"></label>
+        <input type="text" id="username" class="register_textbox" name="username" placeholder="ユーザー名:" required><br>
 
-        <input type="submit" name="register" value="新規登録">
+        <input type="submit" name="register" class="register_botton" value="新規登録">
     </form>
 </body>
 </html>

@@ -1,0 +1,70 @@
+.register_body {
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .register_h1{
+    padding: 0 0 0 10px;
+    font-size: 15px;
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
+}
+
+  .register_brand {
+    height: auto;
+    width: 215px;
+}
+
+  .register_form {
+    background-color: #fff;
+    border: 2px solid #DBDBDB; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 215px;
+  }
+  
+  .register_label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .register_textbox, .register_select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #DBDBDB;
+    height: 40px;
+  }
+
+  .register_textbox, .register_select:hover {
+    outline-color: #005aae;
+  }
+  
+  .register_botton{
+    background-color: #005aae;
+    border: none;
+    border-radius: 10px; /* 画像のボタンが角丸のため */
+    width: 100%;
+    height: 40px;
+    color: white;
+    font-weight: bold; /* ボタンのテキストを太字に */
+    cursor: pointer;
+    transition: background-color 0.3s; /* クリック時のアニメーション効果の追加 */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+.register_botton:hover {
+    background-color: #004488; /* ホバー時の色変更 */
+}
+
+.register_botton:active {
+    background-color: #004280; /* クリック時の色変更 */
+}

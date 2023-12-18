@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>売り手新規登録</title>
+    <link rel="stylesheet" href="../css/Amozon_seller.css">
 </head>
-<body>
-    <h1>売り手新規登録</h1>
+<body class="seller_body">
     
     <?php
     include '../db_config.php'; // データベース接続情報を読み込む
@@ -80,17 +80,19 @@
     }
     ?>
     <!---新規登録用の情報入力フォーム--->
-    <form method="POST" id ='form'>
-        <label for="seller_id">販売専用アカウントのID:</label>
-        <input type="text" id="seller_id" name="seller_id" required><br>
+    <form method="POST" id ='form' class="seller_form">
+        <img src="../img/Re.ReaD2blue.svg" class="seller_brand">
+        <h1 class="seller_h1">売り手新規登録</h1>
+        <label for="seller_id"></label>
+        <input type="text" id="seller_id" class="seller_textbox" placeholder="販売専用アカウントID:" name="seller_id" required><br>
         
-        <label for="password">パスワード:</label>
-        <input type="password" id="password" name="password" required><br>
+        <label for="password"></label>
+        <input type="password" id="password" class="seller_textbox" placeholder="パスワード:" name="password"  required><br>
 
-        <label for="sellerName">ユーザー名:</label>
-        <input type="text" id="sellerName" name="sellerName" required><br>
+        <label for="sellerName"></label>
+        <input type="text" id="sellerName" class="seller_textbox" placeholder="ユーザー名:" name="sellerName" required><br>
 
-        <input type="submit" name="register" value="新規登録">
+        <input type="submit" name="register" class="seller_botton" value="新規登録">
     </form>
 </body>
 </html>
