@@ -9,6 +9,25 @@ $product_id = $_POST['product_id'];
 $color_size_id = $_POST['color_size_id'];
 $pieces = isset($_POST['pieces'])?$_POST['pieces']:1;
 
+
+//在庫確認
+$piecesSql = "SELECT pieces FROM color_size WHERE product_id = $product_id && color_size_id = $color_size_id";
+$piecesResult = $conn->query($piecesSql);
+if($piecesResult && $piecesResult->num_rows === 0){
+    while($row = $piecesResult->fetch_assoc()){
+        $confirmation = $row['pieces'];
+        if($confirmation < $pieces){
+            $error_message = "入荷待ちの商品です。カートに商品を登録できませんでした。";
+            header("Location:cartContents.php?error_message=$error_message");
+            exit();
+        }
+    }
+} else{
+    $error_message = "カートに商品を登録できませんでした。";
+    header("Location:cartContents.php?error_message=$error_message");
+    exit();
+}
+
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $checkSql = "SELECT user_id, product_id, color_size_id FROM cart
@@ -24,11 +43,12 @@ if (isset($_SESSION['user_id'])) {
             exit();
         }
     }else{
-        $error_message = "カートに商品を登録するのに失敗しました。";
+        $error_message = "カートに商品を登録できませんでした。";
         header("Location:cartContents.php?error_message=$error_message");
         exit();
     }
 }else{
+    //セッションでカートを管理している場合
     //すでに同じ商品が登録されているか確認する処理が必要
     $flag = true;
     if(isset($_SESSION['cart'])){
@@ -38,6 +58,8 @@ if (isset($_SESSION['user_id'])) {
             }
         }
     }
+
+    //同じ商品が登録されているか否かで処理を分ける
     if($flag === true){
         $_SESSION['cart']['product_id'][] = $product_id;
         $_SESSION['cart']['color_size_id'][] = $color_size_id;
@@ -48,9 +70,6 @@ if (isset($_SESSION['user_id'])) {
         $_SESSION['cart']['pieces'][$flag] += $pieces;
         header("Location:cartContents.php");
         exit();
-        // $error_message = "カートに商品を登録するのに失敗しました。";
-        // header("Location:cartContents.php?error_message=$error_message");
-        //exit();
     }
     
 }
