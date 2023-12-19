@@ -14,7 +14,7 @@ error_reporting(E_ALL);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/Amozon_insta.css">
-    <title>ユーザーのトップ</title>
+    <title>ユーザートップ</title>
 </head>
 <body>
     

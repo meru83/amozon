@@ -13,7 +13,7 @@ error_reporting(E_ALL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>売り手のトップ</title>
+    <title>販売者のトップ</title>
     <link rel="stylesheet" href="../css/Amozon_insta.css">
 </head>
 <body>
@@ -41,7 +41,7 @@ error_reporting(E_ALL);
         </div>
         
         <div class="right-content">
-            <h1>売り手側</h1>
+            <h1>販売者側</h1>
             <?php
             if(isset($_GET['error_message'])){
                 $error_message = $_GET['error_message'];

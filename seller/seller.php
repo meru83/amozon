@@ -82,7 +82,7 @@
     <!---新規登録用の情報入力フォーム--->
     <form method="POST" id ='form' class="seller_form">
         <img src="../img/Re.ReaD2blue.svg" class="seller_brand">
-        <h1 class="seller_h1">売り手新規登録</h1>
+        <h1 class="seller_h1">販売専用アカウント 新規登録</h1>
         <label for="seller_id"></label>
         <input type="text" id="seller_id" class="seller_textbox" placeholder="販売専用アカウントID:" name="seller_id" required><br>
         
