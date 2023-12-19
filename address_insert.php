@@ -66,15 +66,24 @@ if(isset($_POST['add'])){
 
 <script src="js/post.js"></script>
 <script>
-let form = document.getElementById('form');
+const form = document.getElementById('form');
+const search = document.getElementById('search');
+const input = document.getElementById('input');
+const tyou = document.getElementById('tyou');
+const addressname = document.getElementById('addressname');
+const address1 = document.getElementById('address1');
+const address2 = document.getElementById('address2');
+const kana2 = document.getElementById('kana2');
 form.addEventListener('keydown', (e) => {
     if(is_empty()){
         return true;
     }else if (e.key === 'Enter'){
-        event.preventDefault();
+        e.preventDefault();
         let act = document.activeElement.id;
+        if(act === 'input'){
+            tyou.focus();
+        }
         if(act === 'tyou'){
-            let addressname = document.getElementById('addressname');
             addressname.focus();
         }
         return false;
@@ -87,13 +96,7 @@ function bottonClick(){
 
 
 function is_empty(){
-    let addressname = document.getElementById('addressname');
-    let input = document.getElementById('input');
-    let address1 = document.getElementById('address1');
-    let address2 = document.getElementById('address2');
-    let kana2 = document.getElementById('kana2');
-    let tyou = document.getElementById('tyou');
-
+    //どれか一つでも空ならfalseを返す
     if(addressname.value === "" || input.value === "" || address1.value === "" || address2.value === "" || kana2.value === "" || tyou.value === ""){
         return false;
     }else{
@@ -104,11 +107,6 @@ function is_empty(){
 function callPostCode(){
     let api = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=';
     let error = document.getElementById('error');
-    let input = document.getElementById('input');
-    let address1 = document.getElementById('address1');
-    let address2 = document.getElementById('address2');
-    let kana2 = document.getElementById('kana2');
-    let tyou = document.getElementById('tyou');
     let pattern = /^[0-9]{3}[0-9]{4}$/;
     let param;
     if(!pattern.test(input.value)){
@@ -143,13 +141,11 @@ function callPostCode(){
 }
 
 //クリックの時
-let search = document.getElementById('search');
 search.addEventListener('click', ()=>{
     callPostCode();
 }, false);
 
 //Enterの時
-const input = document.getElementById("input");
 input.addEventListener('keydown', (e) => {
     // 「13」== Enterキーの番号か判定
     if( e.key === 'Enter' ){
