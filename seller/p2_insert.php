@@ -378,11 +378,14 @@ big_category.addEventListener('change', (e) => {
                     const response = JSON.parse(xhr.responseText);
                     if (response) {
                         // 成功した場合の処理を記述
-                        category.innerHTML = '<option value="" hidden>選択してください</option>';//+=は前の選択されてたぶん残る
+                        category.innerHTML = '<option value="" selected hidden>選択してください</option>';//+=は前の選択されてたぶん残る
                         response.forEach(function(row) {
                             category.innerHTML += `<option value="${row.value}">${row.text}</option>`;
                         });
                         categoryLabel.style.display = "block";
+                        smallCategoryLabel.style.display = "none";
+                        small_category.style.display = "none";
+                        small_category.options[0].selected = true;
                     } else {
                         console.error("Invalid or empty response data");
                     }
@@ -412,12 +415,14 @@ category.addEventListener('change', (e) => {
                 try{
                     const response = JSON.parse(xhr.responseText);
                     if(response){
-                        small_category.innerHTML = '<option hidden>選択してください</option>';
+                        small_category.innerHTML = '<option value="" selected hidden>選択してください</option>';
                         response.forEach(function(row){
                             small_category.innerHTML += `<option value="${row.value}">${row.text}</option>`;
                         });
+                        //その他じゃないとき
                         if(!(b_id === "1" && c_id === "19" || b_id === "2" && c_id === "33")){
                             smallCategoryLabel.style.display = "block";
+                            small_category.style.display = "block";
                         }
                     }else{
                         console.error("Error parsing JSON response data");
