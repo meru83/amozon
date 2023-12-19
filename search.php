@@ -14,8 +14,13 @@
     <div class="flexBox">
         <label for="search">商品を検索</label>
         <input type="text" id="search" name="search">
-        <button type="submit" class="btn-img"></button>
+        <button type="submit" id="submit" class="btn-img"></button>
         </div>
     </form>
 </body>
 </html>
+<!-- <script>
+const search = document.getElementById('search');
+const submit = document.getElementById('submit');
+submit.addEventListener('submit',);
+</script> -->
