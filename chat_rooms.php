@@ -93,59 +93,57 @@ if ($result === false) {
                 </ul>
             </div>
         </div>
-        
-         <div class="right-content">
         HTML;
-            echo '<p><a href="create.php">新しいチャットルームを作成</a></p>';
-            // すでに表示したチャットルームのIDを格納する配列
-            $displayedRooms = array();
-    
-            if ($result->num_rows > 0) {
-                // チャットルームが存在する場合、それらを表示します
-                while ($row = $result->fetch_assoc()) {
-                    $room_id = $row['room_id'];
-    
-                    // すでに表示したチャットルームかどうかをチェック
-                    if (!in_array($room_id, $displayedRooms)) {
-                        $displayedRooms[] = $room_id;
-    
-                        $user_id = $row['user_id'];
-                        $username = $row['username'];
-                        $seller_id = $row['seller_id'];
-                        $sellerName = $row['sellerName'];
-    
-                        if (!isset($sellerName)) {
-                            $sellerName = "不明なユーザー";
-                        }
-                        if (!isset($username)){
-                            $username = "不明なユーザー";
-                        }
-    
-                        if(isset($_SESSION['user_id'])){
-                            //user
-                            echo "<a href='chat_room.php?room_id=$room_id&sellerName=$sellerName'>$sellerName とのチャット</a><br>";
-                        }else if(isset($_SESSION['seller_id'])){
-                            //seller
-                            echo "<a href='chat_room.php?room_id=$room_id&username=$username'>$username とのチャット</a><br>";
-                        }
-                        
-                    }
-                }
-            } else {
-                echo "チャットルームがありません。";
-            }
-                    
-            // データベース接続を閉じます
-            $conn->close();
-        echo "</div>";
-        echo "</div>";
-    
-    }
-   
-    
-    else if(!is_null($seller_id)){
+    }else if(!is_null($seller_id)){
         //seller
     }
+         
+    echo '<div class="right-content">';
+    echo '<p><a href="create.php">新しいチャットルームを作成</a></p>';
+    // すでに表示したチャットルームのIDを格納する配列
+    $displayedRooms = array();
+
+    if ($result->num_rows > 0) {
+        // チャットルームが存在する場合、それらを表示します
+        while ($row = $result->fetch_assoc()) {
+            $room_id = $row['room_id'];
+
+            // すでに表示したチャットルームかどうかをチェック
+            if (!in_array($room_id, $displayedRooms)) {
+                $displayedRooms[] = $room_id;
+
+                $user_id = $row['user_id'];
+                $username = $row['username'];
+                $seller_id = $row['seller_id'];
+                $sellerName = $row['sellerName'];
+
+                if (!isset($sellerName)) {
+                    $sellerName = "不明なユーザー";
+                }
+                if (!isset($username)){
+                    $username = "不明なユーザー";
+                }
+
+                if(isset($_SESSION['user_id'])){
+                    //user
+                    echo "<a href='chat_room.php?room_id=$room_id&sellerName=$sellerName'>$sellerName とのチャット</a><br>";
+                }else if(isset($_SESSION['seller_id'])){
+                    //seller
+                    echo "<a href='chat_room.php?room_id=$room_id&username=$username'>$username とのチャット</a><br>";
+                }
+                
+            }
+        }
+    } else {
+        echo "チャットルームがありません。";
+    }
+                    
+            
+    echo "</div>";
+    echo "</div>";
+
+    // データベース接続を閉じます
+    $conn->close();
     ?>
 </body>
 </html>
