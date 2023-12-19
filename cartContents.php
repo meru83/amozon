@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/cartContentsStyle.css">
+    <!-- <link rel="stylesheet" href="css/cartContentsStyle.css"> -->
 </head>
 <body>
     
@@ -15,6 +15,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+//エラーメッセージががある場合
 if(isset($_GET['error_message'])){
     $error_message = $_GET['error_message'];
     echo $error_message;
@@ -24,7 +25,15 @@ $count = 0;
 $countMax = 0;
 $htmlText = "";
 //セッションで管理されている場合
-if(isset($_SESSION['cart'])){
+
+//echo <div id="left">(メニューバー)</div>
+//echo <div id="right">商品ないとき一番下のelseの要素が出力される</div>;
+
+if(isset($_SESSION['user_id'])){
+    //ログイン済みの時の処理を追加
+    //データベースで管理
+}else if(isset($_SESSION['cart'])){
+    //未ログの時(カートのsessionがある時)
     $lastImg = array();
     for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
         $countMax++;
@@ -65,9 +74,11 @@ if(isset($_SESSION['cart'])){
             //画像にサイズと色の説明が出るようにする。
             if(!in_array($color_size_id, $lastImg)){
                 echo $htmlText;
+                echo "<div id='divImg$i'>";
                 echo $imgText;
                 $lastImg[] = $color_size_id;
                 $htmlText = <<<END
+                </div>
                 <br>
                 <div id="divText$i">
                 <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
@@ -93,51 +104,46 @@ if(isset($_SESSION['cart'])){
         echo $htmlText;
         $htmlText = "";
     }
-    $countJS = $count;
-    //if($count !== 0){
-        //echo $count . "件";
-    //}else{
-        //0件の場合のデザイン
-    //}
 
-    //関数化の場合。
-    //countInCart();
-if($count !== 0) {
-    echo $count . "件";
-} else {
-    echo <<<HTML
-    <div class="Amozon-container">
-        <!-- Left Side Menu -->
-        <div class="left-menu">
-            <div>
-                <ul class="menu-list">
-                    <li class="menu-item"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
-                    <li class="menu-item"><a href=""><img src="img/home.png" class="logo"></span><span class="menu-item-text">ホーム</span></a></li>
-                    <li class="menu-item"><a href="search.php"><span class="menu-item-icon">🔍</span><span class="menu-item-text">検索</span></a></li>
-                    <li class="menu-item"><a href=""><span class="menu-item-icon">📸</span><span class="menu-item-text">発見</span></a></li>
-                    <li class="menu-item"><a href=""><span class="menu-item-icon">🎥</span><span class="menu-item-text">リール動画</span></li>
-                    <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-                    <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
-                    <li class="menu-item"><a href=""><span class="menu-item-icon">➕</span><span class="menu-item-text">#</span></a></li>
-                    <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
-                </ul>
+    if($count !== 0) {
+        echo $count . "件";
+    } else {
+        echo <<<HTML
+        <!-- <div class="Amozon-container"> -->
+            <!-- Left Side Menu -->
+            <!-- <div class="left-menu">
+                <div>
+                    <ul class="menu-list">
+                        <li class="menu-item"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                        <li class="menu-item"><a href=""><img src="img/home.png" class="logo"></span><span class="menu-item-text">ホーム</span></a></li>
+                        <li class="menu-item"><a href="search.php"><span class="menu-item-icon">🔍</span><span class="menu-item-text">検索</span></a></li>
+                        <li class="menu-item"><a href=""><span class="menu-item-icon">📸</span><span class="menu-item-text">発見</span></a></li>
+                        <li class="menu-item"><a href=""><span class="menu-item-icon">🎥</span><span class="menu-item-text">リール動画</span></li>
+                        <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                        <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
+                        <li class="menu-item"><a href=""><span class="menu-item-icon">➕</span><span class="menu-item-text">#</span></a></li>
+                        <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="menu-list-bottom">
+                        <li class="menu-item"><a href=""><span class="menu-item-icon">💬</span><span class="menu-item-text">Threads</span></a></li>
+                        <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
+                    </ul>
+                </div>
+            </div> 
+        ここ以上いらん-->
+            
+        <!---下のほうにも同じようなこと書かないといけない---->
+            <div class="right-content">
+                <h1 class="rigt-content-center">カート</h1>
+                <div class="rigt-content-center rigt-content-top">商品がありません</div>
+                <div class="homeBack">ホームに戻る</div>
             </div>
-            <div>
-                <ul class="menu-list-bottom">
-                    <li class="menu-item"><a href=""><span class="menu-item-icon">💬</span><span class="menu-item-text">Threads</span></a></li>
-                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="right-content">
-            <h1 class="rigt-content-center">カート</h1>
-            <div class="rigt-content-center rigt-content-top">商品がありません</div>
-            <div class="homeBack">ホームに戻る</div>
-        </div>
-    </div>
-    HTML;
-}
+        <!-- </div> -->
+        HTML;
+    }
+    //echo </div>;
 
     echo <<<END
     <script>
@@ -170,9 +176,9 @@ if($count !== 0) {
     });
     </script>
     END;
-}else if(isset($_SESSION['user_id'])){
-    //ログイン済みの時の処理を追加
-    //データベースで管理
+}else{
+    //カートのsessionもないとき
+    echo "カートに商品は登録されていません";
 }
 
 function getColor($conn, $color_code){
@@ -187,15 +193,6 @@ function getColor($conn, $color_code){
         return $colorName;
     } 
 }
-
-//関数化したログインしていないときの処理
-// function countInCart(){
-//     if($count !== 0) {
-//         echo $count . "件";
-//     } else {
-//         echo "商品がありません";
-//     }
-// }
 ?>
 <script>
     function deleteProducts(defdeleteI){
@@ -206,13 +203,7 @@ function getColor($conn, $color_code){
 
         xhr.onreadystatechange = function(){
             if(xhr.readyState === 4 && xhr.status === 200){
-                var divImgI = document.getElementById('divImg'+defdeleteI);
-                var divTextI = document.getElementById('divText'+defdeleteI);
-
-                if(divImgI != null){
-                    divImgI.remove();
-                }
-                divTextI.remove();
+                window.location.reload();
             }
         }
 

@@ -26,6 +26,7 @@ if (isset($_SESSION['user_id'])) {
     }else{
         $error_message = "カートに商品を登録するのに失敗しました。";
         header("Location:cartContents.php?error_message=$error_message");
+        exit();
     }
 }else{
     //すでに同じ商品が登録されているか確認する処理が必要
@@ -33,7 +34,7 @@ if (isset($_SESSION['user_id'])) {
     if(isset($_SESSION['cart'])){
         for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
             if($_SESSION['cart']['product_id'][$i] === $product_id && $_SESSION['cart']['color_size_id'][$i] === $color_size_id){
-                $flag = false;
+                $flag = $i;
             }
         }
     }
@@ -44,8 +45,12 @@ if (isset($_SESSION['user_id'])) {
         header("Location:cartContents.php");
         exit();
     }else{
-        $error_message = "カートに商品を登録するのに失敗しました。";
-        header("Location:cartContents.php?error_message=$error_message");
+        $_SESSION['cart']['pieces'][$flag] += $pieces;
+        header("Location:cartContents.php");
+        exit();
+        // $error_message = "カートに商品を登録するのに失敗しました。";
+        // header("Location:cartContents.php?error_message=$error_message");
+        //exit();
     }
     
 }
