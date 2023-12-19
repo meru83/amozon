@@ -10,7 +10,7 @@
         <div class="login_form">
             <div class="login_border">
                 <img src="../img/Re.ReaD2blue.svg" class="login_brand">
-                <h1 class="login_h1">セラーのログイン</h1>
+                <h1 class="login_h1">販売者のログイン</h1>
                 <div class="error-message">
                     <?php 
                     if(isset($_GET['error'])){
