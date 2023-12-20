@@ -117,6 +117,7 @@ while($row = $sizeResult->fetch_assoc()){
     if(!($size === $sizeChange)){
         $htmlText .= "<option value='$sizeChange'>$sizeChange</option>";
         if($otherSize === false){
+            //ほかのサイズがあればtrueなければfalseでscript実行
             $otherSize = true;
         }
     }
@@ -135,26 +136,37 @@ if($otherSize === false){
     });    
     </script>";
 }
-$htmlText .= <<<END
-<form action="innerCart.php" method="post">
-    <input type="hidden" name="product_id" value="$product_id">
-    <input type="hidden" name="color_size_id" value="$color_size_id">
-    <label for="pieces">数量：</label>
-    <select name="pieces" id="pieces" required>
-        <option hidden value="">選択してください</option>
-END;
 
-for($i = 1; $i <= $pieces; $i++){
-    $htmlText .= "<option value='$i'>$i</option>";
+if($pieces > 0){    
+    $htmlText .= <<<END
+    <form action="innerCart.php" method="post">
+        <input type="hidden" name="product_id" value="$product_id">
+        <input type="hidden" name="color_size_id" value="$color_size_id">
+        <label for="pieces">数量：</label>
+        <select name="pieces" id="pieces" required>
+            <option hidden value="">選択してください</option>
+    END;
+
+    for($i = 1; $i <= $pieces; $i++){
+        $htmlText .= "<option value='$i'>$i</option>";
+    }
+    $htmlText .= <<<END
+        </select>
+        <button type="submit" name="submit">カートに入れる</button>
+    </form>
+    <br>
+    <hr>
+    <br><br><br><br><br>
+    END;
+}else{
+    $htmlText .= <<<END
+    在庫なし
+    <p class="">カートに入れる</p>
+    <br>
+    <hr>
+    <br><br><br><br><br>
+    END;
 }
-$htmlText .= <<<END
-    </select>
-    <button type="submit" name="submit">カートに入れる</button>
-</form>
-<br>
-<hr>
-<br><br><br><br><br>
-END;
 
 if(!($htmlText === "")){
     echo $htmlText;
@@ -181,8 +193,9 @@ while($row = $selectResult->fetch_assoc()){
     if(!is_null($sImg_url)){
         $sImgText = "<a href='productsDetail.php?product_id=$product_id&color_size_id=$sColor_size_id'><img src='seller/p_img/$sImg_url' alt='服の写真'></a>";
     }//else{
-        //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-    //}
+    //     // ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
+    //     $sImgText = "<a><img><</a>";
+    // }
     if(!in_array($sColor_size_id, $lastColorSize)){
         echo $tentative;
         echo $sImgText;
