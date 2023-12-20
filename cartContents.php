@@ -90,24 +90,39 @@ if(isset($_SESSION['user_id'])){
                     価格　　　: $price<br>
                     </a>
                     <br>
-                    <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
-                    <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
-                    <br>
-                    <hr>
-                    </div>
                     END;
+                    if($maxPieces > 0){
+                        $htmlText .= <<<END
+                        <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
+                        <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
+                        <br>
+                        <hr>
+                        </div>
+                        END;
+                    }else{
+                        $htmlText .= <<<END
+                        在庫なし<br>
+                        商品はカートから削除されます<br>
+                        <br>
+                        <hr>
+                        </div>
+                        END;
+                        $_SESSION['cart']['product_id'][$i] = null;
+                        $_SESSION['cart']['color_size_id'][$i] = null;
+                        $_SESSION['cart']['pieces'][$i] = null;
+                    }
                     // 他の情報も必要に応じて表示
                     $count++;
                 }else{
                     echo $imgText;
                 }
             }
-        }else{
+        }else if(!($_SESSION['cart']['product_id'][$i] === null) && !($_SESSION['cart']['color_size_id'][$i] === null) && !($_SESSION['cart']['pieces'][$i] = null)){
             $htmlText = <<<END
             </div>
             <br>
             <div id="divText$i">
-            以前登録されていた商品は削除されました
+            以前登録されていた商品は販売者の都合により削除されました
             <hr>
             </div>
             END;
