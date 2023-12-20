@@ -35,7 +35,7 @@ if(isset($_POST['sizeChange'])){
                     LEFT JOIN category c ON (p.category_id = c.category_id)
                     LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
                     LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-                    WHERE p.product_id = ? && s.size = ? && color_code = ?";
+                    WHERE p.product_id = ? && s.size = ? && color_code = ? && s.service_status = true";
     $detailStmt = $conn->prepare($detailSql);
     $detailStmt->bind_param("iss",$product_id,$sizeChange,$color_code);
 }else{
@@ -45,35 +45,46 @@ if(isset($_POST['sizeChange'])){
                 LEFT JOIN category c ON (p.category_id = c.category_id)
                 LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-                WHERE p.product_id = ? && s.color_size_id = ?";
+                WHERE p.product_id = ? && s.color_size_id = ? && s.service_status = true";
     $detailStmt = $conn->prepare($detailSql);
     $detailStmt->bind_param("ii",$product_id,$color_size_id);
 }
 $detailStmt->execute();
 $detailResult = $detailStmt->get_result();
 $lastImg = array();
-while($row = $detailResult->fetch_assoc()){
-    $productName = $row['productname'];
-    $view = !is_null($row['view'])?$row['view']:"";
-    $create_at = $row['create_at'];
-    $seller_id = $row['seller_id'];
-    $big_category_name = !is_null($row['big_category_name'])?$row['big_category_name']:"";
-    $category_name = !is_null($row['category_name'])?$row['category_name']:"";
-    $small_category_name = !is_null($row['small_category_name'])?$row['small_category_name']:"";
-    $quality = $row['quality'];
-    $size = $row['size'];
-    $pieces = $row['pieces'];
-    $price = $row['price'];
-    $color_code = $row['color_code'];
-    $colorName = getColor($conn, $color_code);
-    $img_url = !is_null($row['img_url'])?$row['img_url']:null;
-    if(!is_null($img_url)){
-        echo "<img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>";
-    }//else{
-        //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-    //}
-    //画像にサイズと色の説明が出るようにする。
+if($detailResult && $detailResult->num_rows > 0){
+    while($row = $detailResult->fetch_assoc()){
+        $productName = $row['productname'];
+        $view = !is_null($row['view'])?$row['view']:"";
+        $create_at = $row['create_at'];
+        $seller_id = $row['seller_id'];
+        $big_category_name = !is_null($row['big_category_name'])?$row['big_category_name']:"";
+        $category_name = !is_null($row['category_name'])?$row['category_name']:"";
+        $small_category_name = !is_null($row['small_category_name'])?$row['small_category_name']:"";
+        $quality = $row['quality'];
+        $size = $row['size'];
+        $pieces = $row['pieces'];
+        $price = $row['price'];
+        $color_code = $row['color_code'];
+        $colorName = getColor($conn, $color_code);
+        $img_url = !is_null($row['img_url'])?$row['img_url']:null;
+        if(!is_null($img_url)){
+            echo "<img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>";
+        }//else{
+            //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
+        //}
+        //画像にサイズと色の説明が出るようにする。
+    }
+}else{
+    echo <<< END
+    <script>
+        if(!alert("該当商品が見つかりませんでした。")){
+            history.back();
+        }
+    </script>
+    END;
 }
+
 $htmlText = <<<END
 <br>
 商品名：$productName<br>
