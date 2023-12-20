@@ -94,6 +94,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $colorName = getColor($conn, $colorCode);
                     $product_id = $row['product_id'];
                     $size = $row['size'];
+                    $pieces = $row['pieces'];
                     $productname = $row['productname'];
                     $category_name = !is_null($row['category_name'])?$row['category_name']:"";
                     $price  = $row['price'];
@@ -120,13 +121,19 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         カテゴリ名: $category_name<br>
                         価格　　　: $price<br>
                         </a>
-                        <form action="innerCart.php" method="post">
-                            <input type="hidden" name="product_id" value="$product_id">
-                            <input type="hidden" name="color_size_id" value="$color_size_id">
-                            <button type="submit" name="submit">カートに入れる</button>
-                        </form>
-                        <hr>
                         END;
+                        if($pieces > 0){
+                            $htmlText .= <<<END
+                            <form action="innerCart.php" method="post">
+                                <input type="hidden" name="product_id" value="$product_id">
+                                <input type="hidden" name="color_size_id" value="$color_size_id">
+                                <button type="submit" name="submit">カートに入れる</button>
+                            </form>
+                            <hr>
+                            END;
+                        }else{
+                            $htmlText .= "<p class=''>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
+                        }
                         // 他の情報も必要に応じて表示
                         $count++;
                     }else{
