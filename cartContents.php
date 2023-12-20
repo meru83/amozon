@@ -46,61 +46,77 @@ if(isset($_SESSION['user_id'])){
                     LEFT JOIN category c ON (p.category_id = c.category_id)
                     LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
                     LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-                    WHERE p.product_id = ? && s.color_size_id = ?";
+                    WHERE p.product_id = ? && s.color_size_id = ? && s.service_status = true";
         $selectStmt = $conn->prepare($selectSql);
         $selectStmt->bind_param("ii",$product_id,$color_size_id);
         $selectStmt->execute();
         $selectResult = $selectStmt->get_result();
-        while ($row = $selectResult->fetch_assoc()) {
-            $imgText = null;
-            $colorCode = $row['color_code'];
-            $colorName = getColor($conn, $colorCode);
-            $size = $row['size'];
-            $maxPieces = $row['pieces'];
-            $productname = $row['productname'];
-            $category_name = !is_null($row['category_name'])?$row['category_name']:"";
-            $price  = $row['price'];
-            $color_size_id = $row['color_size_id'];
-            $img_url = is_null($row['img_url'])?null:$row['img_url'];
-            if(!is_null($img_url)){
-                $imgText = "
-                <div id='divImg$i'>
-                <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
-                </a>
-                </div>";
-            }//else{
-                //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-            //}
-            //画像にサイズと色の説明が出るようにする。
-            if(!in_array($color_size_id, $lastImg)){
-                echo $htmlText;
-                echo "<div id='divImg$i'>";
-                echo $imgText;
-                $lastImg[] = $color_size_id;
-                $htmlText = <<<END
-                </div>
-                <br>
-                <div id="divText$i">
-                <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-                色: $colorName
-                サイズ: $size<br>
-                商品名　　: $productname<br>
-                カテゴリ名: $category_name<br>
-                価格　　　: $price<br>
-                </a>
-                <br>
-                <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
-                <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
-                <br>
-                <hr>
-                </div>
-                END;
-                // 他の情報も必要に応じて表示
-                $count++;
-            }else{
-                echo $imgText;
+        if($selectResult && $selectResult->num_rows > 0){
+            while ($row = $selectResult->fetch_assoc()) {
+                $imgText = null;
+                $colorCode = $row['color_code'];
+                $colorName = getColor($conn, $colorCode);
+                $size = $row['size'];
+                $maxPieces = $row['pieces'];
+                $productname = $row['productname'];
+                $category_name = !is_null($row['category_name'])?$row['category_name']:"";
+                $price  = $row['price'];
+                $color_size_id = $row['color_size_id'];
+                $img_url = is_null($row['img_url'])?null:$row['img_url'];
+                if(!is_null($img_url)){
+                    $imgText = "
+                    <div id='divImg$i'>
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
+                    </a>
+                    </div>";
+                }//else{
+                    //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
+                //}
+                //画像にサイズと色の説明が出るようにする。
+                if(!in_array($color_size_id, $lastImg)){
+                    echo $htmlText;
+                    echo "<div id='divImg$i'>";
+                    echo $imgText;
+                    $lastImg[] = $color_size_id;
+                    $htmlText = <<<END
+                    </div>
+                    <br>
+                    <div id="divText$i">
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
+                    色: $colorName
+                    サイズ: $size<br>
+                    商品名　　: $productname<br>
+                    カテゴリ名: $category_name<br>
+                    価格　　　: $price<br>
+                    </a>
+                    <br>
+                    <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
+                    <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
+                    <br>
+                    <hr>
+                    </div>
+                    END;
+                    // 他の情報も必要に応じて表示
+                    $count++;
+                }else{
+                    echo $imgText;
+                }
             }
+        }else{
+            $htmlText = <<<END
+            </div>
+            <br>
+            <div id="divText$i">
+            以前登録されていた商品は削除されました
+            <hr>
+            </div>
+            END;
+            
+            $_SESSION['cart']['product_id'][$i] = null;
+            $_SESSION['cart']['color_size_id'][$i] = null;
+            $_SESSION['cart']['pieces'][$i] = null;
         }
+        
         echo $htmlText;
         $htmlText = "";
     }

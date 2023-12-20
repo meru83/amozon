@@ -22,10 +22,6 @@ if($piecesResult && $piecesResult->num_rows === 0){
             exit();
         }
     }
-} else{
-    $error_message = "カートに商品を登録できませんでした。";
-    header("Location:cartContents.php?error_message=$error_message");
-    exit();
 }
 
 if (isset($_SESSION['user_id'])) {
