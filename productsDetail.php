@@ -87,15 +87,15 @@ if($detailResult && $detailResult->num_rows > 0){
 
 $htmlText = <<<END
 <br>
-商品名：$productName<br>
-カテゴリ名：$big_category_name - $category_name - $small_category_name<br>
-概要　：$view<br>
-品質　：$quality<br>
-サイズ：$size<br>
-色　　：$colorName<br>
-価格　：$price<br>
-出品日：$create_at<br>
-出品者：$seller_id<br>
+<div>価格　　　　￥<b class="b_price">$price</b></div>
+<div>商品名　　　$productName</div>
+<div>カテゴリ　　$big_category_name - $category_name - $small_category_name</div>
+<div>概要　　　　$view</div>
+<div>品質　　　　$quality</div>
+<div>サイズ　　　$size</div>
+<div>色　　　　　$colorName</div>
+<div>出品日　　　$create_at</div>
+<div>出品者　　　$seller_id</div>
 <hr>
 
 <form name="sizeChangeForm" id="sizeChangeForm" method="post">
