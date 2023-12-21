@@ -54,7 +54,6 @@ function is_empty(){
     let user_login_id = document.getElementById('user_login_id');
     let user_login_password = document.getElementById('user_login_password');
 
-
     if(user_login_id.value === "" || user_login_password.value === ""){
         return false;
     }else{

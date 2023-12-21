@@ -111,6 +111,28 @@ const category = document.getElementById('category');
 const small_category = document.getElementById('small_category');
 const smallCategoryLabel = document.getElementById('smallCategoryLabel');
 
+//Enterで下に行く処理
+form.addEventListener('keydown', (e) => {
+    if(is_empty()){
+        return true;
+    }else if (e.key === 'Enter'){
+        e.preventDefault();
+        let act = document.activeElement.id;
+        if(act === 'productname'){
+            view.focus();
+        }
+        return false;
+    }
+});
+
+function is_empty(){
+    if(productname.value === "" || view.value === ""){
+        return false;
+    }else{
+        return true;
+    }
+}
+
 
 //セレクトボックスの値が選択されたときの処理
 //一番最初だけ通る

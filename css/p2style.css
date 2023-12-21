@@ -54,15 +54,9 @@ h1 {
     box-sizing: border-box;
 }
 
-#productname,
-#view,
-#quality,
-#big_category,
-#category,
-#small_category,
-#sizeSelect0,
-#pieces0,
-#price0:focus {
+.styleTextBox,
+.styleTextArea,
+.styleSelect:focus {
     outline-color: #005aae;
 }
 
