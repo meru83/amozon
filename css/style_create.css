@@ -1,0 +1,77 @@
+.create_body {
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.create_h3 {
+    color: #333;
+}
+
+.create_form {
+    background-color: #fff;
+    border: 2px solid #DBDBDB; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    margin-top: 20px;
+}
+
+.create_label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.create_input {
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline-color: #005aae;
+}
+
+.create_button {
+    background-color:  #005aae;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold; /* ボタンのテキストを太字に */
+    transition: background-color 0.3s; /* クリック時のアニメーション効果の追加 */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.create_input:hover {
+    outline-color: #005aae;
+}
+
+.create_button:hover {
+    background-color:  #005aae;
+}
+
+.create_modoru {
+    color:  #005aae;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-left: 95px;
+    display: inline-block;
+}
+
+.create_modoru :hover {
+    color:  #005aae;
+}
+
+.create_modoru :active {
+    background-color: #004280; /* クリック時の色変更 */
+}
