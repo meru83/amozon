@@ -95,7 +95,7 @@
         <label for="sellerName"></label>
         <input type="text" id="sellerName" class="seller_textbox" placeholder="アカウント名:" name="sellerName" required><br>
 
-        <input type="submit" name="register" class="seller_botton" value="新規登録">
+        <input type="submit" id="submit" name="register" class="seller_botton" value="新規登録">
     </form>
 </body>
 </html>
@@ -105,6 +105,7 @@ const seller_id = document.getElementById('seller_id');
 const password = document.getElementById('password');
 const rePassword = document.getElementById('rePassword');
 const sellerName = document.getElementById('sellerName');
+const submit = document.getElementById('submit');
 
 form.addEventListener('keydown',(e) => {
     if(is_empty() && (e.key === 'Enter')){
@@ -126,6 +127,8 @@ form.addEventListener('keydown',(e) => {
             rePassword.focus();
         }else if(act === 'rePassword'){
             sellerName.focus();
+        }else if(act === 'sellerName'){
+            submit.focus();
         }
         return false;
     }

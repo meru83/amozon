@@ -95,7 +95,7 @@
         <label for="username"></label>
         <input type="text" id="username" class="register_textbox" name="username" placeholder="ユーザー名:" required><br>
 
-        <input type="submit" name="register" class="register_botton" value="新規登録">
+        <input type="submit" id="submit" name="register" class="register_botton" value="新規登録">
     </form>
 </body>
 </html>
@@ -105,6 +105,7 @@ const user_id = document.getElementById('user_id');
 const password = document.getElementById('password');
 const rePassword = document.getElementById('rePassword');
 const username = document.getElementById('username');
+const submit = document.getElementById('submit');
 form.addEventListener('keydown',(e) => {
     if(is_empty() && (e.key === 'Enter')){
         //全てのフォームが入力済みの時
@@ -125,6 +126,8 @@ form.addEventListener('keydown',(e) => {
             rePassword.focus();
         }else if(act === 'rePassword'){
             username.focus();
+        }else if(act === 'username'){
+            submit.focus();
         }
         return false;
     }
