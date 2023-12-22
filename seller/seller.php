@@ -69,7 +69,7 @@
 
                     //リダイレクト先のページに移動
                     //今はチャットルームの一覧に飛ぶけど将来的にはトップページに飛ばしたい
-                    header("Location: seller_top.php");
+                    header("Location: address_insert.php");
                     exit();
 
                 } else {
@@ -89,10 +89,53 @@
         <label for="password"></label>
         <input type="password" id="password" class="seller_textbox" placeholder="パスワード:" name="password"  required><br>
 
+        <label for="rePassword"></label>
+        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認:" required><br>
+
         <label for="sellerName"></label>
-        <input type="text" id="sellerName" class="seller_textbox" placeholder="ユーザー名:" name="sellerName" required><br>
+        <input type="text" id="sellerName" class="seller_textbox" placeholder="アカウント名:" name="sellerName" required><br>
 
         <input type="submit" name="register" class="seller_botton" value="新規登録">
     </form>
 </body>
 </html>
+<script>
+const form = document.getElementById('form');
+const seller_id = document.getElementById('seller_id');
+const password = document.getElementById('password');
+const rePassword = document.getElementById('rePassword');
+const sellerName = document.getElementById('sellerName');
+
+form.addEventListener('keydown',(e) => {
+    if(is_empty() && (e.key === 'Enter')){
+        //全てのフォームが入力済みの時
+        if(password.value === rePassword.value){
+            //passとrePassがイコール
+            return true;
+        }else{
+            e.preventDefault();
+            alert("パスワードが一致しません。");
+            return false;
+        }
+    }else if(e.key === 'Enter'){
+        e.preventDefault();
+        let act = document.activeElement.id;
+        if(act === 'seller_id'){
+            password.focus();
+        }else if(act === 'password'){
+            rePassword.focus();
+        }else if(act === 'rePassword'){
+            sellerName.focus();
+        }
+        return false;
+    }
+});
+
+function is_empty(){
+    if(seller_id.value === "" || password.value === "" || rePassword.value === "" || sellerName.value === ""){
+        return false;
+    }else{
+        return true;
+    }
+}
+</script>
