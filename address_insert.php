@@ -3,7 +3,7 @@
 //     session_start();
 // }
 
-// if(!isset($_SESSION['user_id'])){
+// if(!isset($_SESSION['user_id']) && !isset($_SESSION['seller_id'])){
 //     header("Location:login.php");
 //     exit();
 // }
@@ -19,6 +19,7 @@ if(isset($_POST['add'])){
     $city_kana = $_POST['city_kana'];
     $street = $_POST['street'];
     $room_number = isset($_POST['room_number']) ? $_POST['room_number'] : null;
+    //header("Location:.php") userとsellerで飛ぶ先変える
 }
 ?>
 <!DOCTYPE html>
@@ -54,6 +55,12 @@ if(isset($_POST['add'])){
     <input type="text" name="room_number" id="room_number" class="address_textbox"><br>
 
 
+    <?php 
+    // if(isset($user_id)){
+    // }else if(isset($seller_id)){
+    // }
+    //氏名のところをsellerなら会社名などに変える
+    ?>
     <label for="addressname">氏名：</label><br>
     <input type="text" name="addressname" id="addressname" class="address_textbox" placeholder="例）山田 太郎" required><br>
     <div class="addres_flex">
