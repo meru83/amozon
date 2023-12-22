@@ -223,7 +223,14 @@ body, h1, p {
     box-shadow    : none;        /* カーソル時の影消去 */
     color         : #6666ff;     /* 背景色     */
     background    : #ffffff;     /* 文字色     */
-  }
+}
+
+.sellerChat {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 @media screen and (min-width: 1000px) {
     .chat_room_parent {

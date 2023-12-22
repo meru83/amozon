@@ -18,9 +18,14 @@
 
 .log_out {
     padding: 10px;
-    background-color: #00aeef;
+    background-color: #005aae;
     border-radius: 20px;
     margin-right: 100px;
+    color: white;
+}
+
+.log_out:hover {
+    background-color: #004488;
 }
 
 .left-menu{
