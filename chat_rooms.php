@@ -153,7 +153,7 @@ if ($result === false) {
                     echo "<a href='chat_room.php?room_id=$room_id&sellerName=$sellerName'><div class='sellerChat'>$sellerName とのチャット</div></a><br>";
                 }else if(isset($_SESSION['seller_id'])){
                     //seller
-                    echo "<a href='chat_room.php?room_id=$room_id&username=$username'>$username とのチャット</a><br>";
+                    echo "<a href='chat_room.php?room_id=$room_id&username=$username'><div class='sellerChat'>$username とのチャット</div></a><br>";
                 }
                 
             }
