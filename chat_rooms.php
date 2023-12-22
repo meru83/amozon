@@ -54,7 +54,7 @@ if ($result === false) {
 <body>
     <div id="header" class="header">
         <div class="space"></div>
-        <h1>チャットルーム一覧</h1>
+        <h1 class="h1_White">チャットルーム一覧</h1>
         <?php        
         //ユーザーでログインしてた時のログアウトボタン
         if(!is_null($user_id)){
@@ -123,7 +123,7 @@ if ($result === false) {
     }
          
     echo '<div class="right-content">';
-    echo '<p><a href="create.php">新しいチャットルームを作成</a></p>';
+    echo '<a href="create.php"><div class="NewChat">新しいチャットルームを作成</div></a><hr class="kugiri">';
     // すでに表示したチャットルームのIDを格納する配列
     $displayedRooms = array();
 
@@ -153,7 +153,7 @@ if ($result === false) {
                     echo "<a href='chat_room.php?room_id=$room_id&sellerName=$sellerName'><div class='sellerChat'>$sellerName とのチャット</div></a><br>";
                 }else if(isset($_SESSION['seller_id'])){
                     //seller
-                    echo "<a href='chat_room.php?room_id=$room_id&username=$username'>$username とのチャット</a><br>";
+                    echo "<a href='chat_room.php?room_id=$room_id&username=$username'><div class='sellerChat'>$username とのチャット</div></a><br>";
                 }
                 
             }
