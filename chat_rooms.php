@@ -123,7 +123,7 @@ if ($result === false) {
     }
          
     echo '<div class="right-content">';
-    echo '<p><a href="create.php">新しいチャットルームを作成</a></p>';
+    echo '<a href="create.php"><div class="NewChat">新しいチャットルームを作成</div></a><hr class="kugiri">';
     // すでに表示したチャットルームのIDを格納する配列
     $displayedRooms = array();
 
