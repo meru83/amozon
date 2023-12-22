@@ -12,15 +12,14 @@ if(isset($_SESSION['user_id'])){
 include "db_config.php";
 
 if(isset($_POST['add'])){
-    // $user_id = $_SESSION['user_id'];
-    $addressname = $_POST['addressname'];
     $post_code = $_POST['post_code'];
     $prefectures = $_POST['prefectures'];
     $city = $_POST['city'];
     $city_kana = $_POST['city_kana'];
     $street = $_POST['street'];
     $room_number = isset($_POST['room_number']) ? $_POST['room_number'] : null;
-    //header("Location:.php") userとsellerで飛ぶ先変える
+    $number = $_POST['number'];
+    $addressname = $_POST['addressname'];
 }
 ?>
 <!DOCTYPE html>
