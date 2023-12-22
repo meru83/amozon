@@ -89,6 +89,9 @@
         <label for="password"></label>
         <input type="password" id="password" class="register_textbox" name="password" placeholder="パスワード:" required><br>
 
+        <label for="rePassword"></label>
+        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認:" required><br>
+
         <label for="username"></label>
         <input type="text" id="username" class="register_textbox" name="username" placeholder="ユーザー名:" required><br>
 
@@ -96,3 +99,42 @@
     </form>
 </body>
 </html>
+<script>
+const form = document.getElementById('form');
+const user_id = document.getElementById('user_id');
+const password = document.getElementById('password');
+const rePassword = document.getElementById('rePassword');
+const username = document.getElementById('username');
+form.addEventListener('keydown',(e) => {
+    if(is_empty() && (e.key === 'Enter')){
+        //全てのフォームが入力済みの時
+        if(password.value === rePassword.value){
+            //passとrePassがイコール
+            return true;
+        }else{
+            e.preventDefault();
+            alert("パスワードが一致しません。");
+            return false;
+        }
+    }else if(e.key === 'Enter'){
+        e.preventDefault();
+        let act = document.activeElement.id;
+        if(act === 'user_id'){
+            password.focus();
+        }else if(act === 'password'){
+            rePassword.focus();
+        }else if(act === 'rePassword'){
+            username.focus();
+        }
+        return false;
+    }
+});
+
+function is_empty(){
+    if(user_id.value === "" || password.value === "" || rePassword.value === "" || username.value === ""){
+        return false;
+    }else{
+        return true;
+    }
+}
+</script>
