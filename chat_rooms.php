@@ -150,7 +150,7 @@ if ($result === false) {
 
                 if(isset($_SESSION['user_id'])){
                     //user
-                    echo "<a href='chat_room.php?room_id=$room_id&sellerName=$sellerName'>$sellerName とのチャット</a><br>";
+                    echo "<a href='chat_room.php?room_id=$room_id&sellerName=$sellerName'><div class='sellerChat'>$sellerName とのチャット</div></a><br>";
                 }else if(isset($_SESSION['seller_id'])){
                     //seller
                     echo "<a href='chat_room.php?room_id=$room_id&username=$username'>$username とのチャット</a><br>";
