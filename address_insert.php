@@ -18,8 +18,29 @@ if(isset($_POST['add'])){
     $city_kana = $_POST['city_kana'];
     $street = $_POST['street'];
     $room_number = isset($_POST['room_number']) ? $_POST['room_number'] : null;
-    $number = $_POST['number'];
     $addressname = $_POST['addressname'];
+    // if(isset($user_id)){
+    //     $insertSql = "INSERT INTO user_number (user_id, number) VALUES(??)";
+    //     $insertStmt = $conn->prepare($insertSql);
+    //     $insertStmt->bind_param("si",$user_id,$number);
+    //     if($insertStmt->execute()){
+    //         echo <<<HTML
+    //         <script>
+    //         if(!alert("電話番号の登録に成功しました。")){
+    //             location.href = 'user_top.php';
+    //         }
+    //         </script>
+    //         HTML;
+    //     }else{
+    //         echo <<<HTML
+    //         <script>
+    //         if(!alert("電話番号の登録に失敗しました。もう一度初めから試して下さい。")){
+    //             location.href = 'user_top.php';
+    //         }
+    //         </script>
+    //         HTML;
+    //     }
+    // }
 }
 ?>
 <!DOCTYPE html>
@@ -53,8 +74,6 @@ if(isset($_POST['add'])){
     <input type="text" name="street" id="tyou" class="address_textbox" placeholder="3-1-1" required><br>
     <label for="room_number">建物名・部屋番号：</label><br>
     <input type="text" name="room_number" id="room_number" class="address_textbox"><br>
-    <label for="number">電話番号：</label><br>
-    <input type="text" name="number" id="number" class="address_textbox" placeholder="0612345678" required><br>
 
 
     <?php 
@@ -106,8 +125,6 @@ form.addEventListener('keydown', (e) => {
         if(act === 'input'){
             tyou.focus();
         }else if(act === 'tyou'){
-            number.focus();
-        }else if(act === 'number'){
             addressname.focus();
         }else if(act === 'addressname'){
             add.focus();

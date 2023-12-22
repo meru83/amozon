@@ -83,17 +83,20 @@
     <form method="POST" id ='form' class="register_form" >
         <img src="img/Re.ReaD2blue.svg" class="register_brand">
         <h1 class="register_h1">新規登録</h1>
-        <label for="user_id"></label>
-        <input type="text" id="user_id" class="register_textbox" name="user_id" placeholder="ユーザーID:" required><br>
+        <label for="user_id">ユーザーID:</label>
+        <input type="text" id="user_id" class="register_textbox" name="user_id" placeholder="Re_read" required><br>
         
-        <label for="password"></label>
-        <input type="password" id="password" class="register_textbox" name="password" placeholder="パスワード:" required><br>
+        <label for="number">電話番号：</label><br>
+        <input type="text" name="number" id="number" class="register_textbox" class="address_textbox" placeholder="0612345678" required><br>
+        
+        <label for="password">パスワード:</label>
+        <input type="password" id="password" class="register_textbox" name="password" placeholder="8文字以上" required><br>
 
-        <label for="rePassword"></label>
-        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認:" required><br>
+        <label for="rePassword">パスワード再確認</label>
+        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="8文字以上" required><br>
 
-        <label for="username"></label>
-        <input type="text" id="username" class="register_textbox" name="username" placeholder="ユーザー名:" required><br>
+        <label for="username">ユーザー名:</label>
+        <input type="text" id="username" class="register_textbox" name="username" placeholder="り・リード" required><br>
 
         <input type="submit" id="submit" name="register" class="register_botton" value="新規登録">
     </form>
@@ -102,6 +105,7 @@
 <script>
 const form = document.getElementById('form');
 const user_id = document.getElementById('user_id');
+const number = document.getElementById('number');
 const password = document.getElementById('password');
 const rePassword = document.getElementById('rePassword');
 const username = document.getElementById('username');
@@ -121,6 +125,8 @@ form.addEventListener('keydown',(e) => {
         e.preventDefault();
         let act = document.activeElement.id;
         if(act === 'user_id'){
+            number.focus();
+        }else if(act === 'number'){
             password.focus();
         }else if(act === 'password'){
             rePassword.focus();
@@ -134,7 +140,7 @@ form.addEventListener('keydown',(e) => {
 });
 
 function is_empty(){
-    if(user_id.value === "" || password.value === "" || rePassword.value === "" || username.value === ""){
+    if(user_id.value === "" || number.value === "" || password.value === "" || rePassword.value === "" || username.value === ""){
         return false;
     }else{
         return true;
