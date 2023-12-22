@@ -62,7 +62,7 @@ if ($result === false) {
         }
         //売り手側でログインしてた時のログイン
         else if(!is_null($seller_id)){
-            echo '<a href="seller/seller_out.php">ログアウト</a>';
+            echo '<a href="seller/seller_out.php"><div class="log_out">ログアウト</div></a>';
         }
         ?>
     </div>
