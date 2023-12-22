@@ -113,25 +113,21 @@ const smallCategoryLabel = document.getElementById('smallCategoryLabel');
 
 //Enterで下に行く処理
 form.addEventListener('keydown', (e) => {
-    if(is_empty()){
-        return true;
-    }else if (e.key === 'Enter'){
+    if (e.key === 'Enter'){
         e.preventDefault();
         let act = document.activeElement.id;
         if(act === 'productname'){
             view.focus();
         }
+        for(let i = 0; i < divRadioCount; i++){
+            let actPrice = document.getElementById('price'+i);
+            if(act === 'pieces'+i){
+                actPrice.focus();
+            }
+        }
         return false;
     }
 });
-
-function is_empty(){
-    if(productname.value === "" || view.value === ""){
-        return false;
-    }else{
-        return true;
-    }
-}
 
 
 //セレクトボックスの値が選択されたときの処理
