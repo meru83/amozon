@@ -29,7 +29,8 @@ body, h1, p {
     background-color: #def7ff;
     padding: 10px;
     overflow-y: scroll;/*必須*/
-    height: calc(100vh - 118px);/*必須(※値変えてもいいけど注意必要。)*/
+    /*height: calc(100vh - 118px);必須(※値変えてもいいけど注意必要。)*/
+    height: calc(100vh - 150px);
     width: auto;
 }
 
@@ -164,10 +165,10 @@ body, h1, p {
 #footer {
     position: fixed;/*必須*/
     bottom: 0;/*必須*/
-    background-color: rebeccapurple;
+    background-color: #4a4a65;
     color: #FFF;
     width: 100%;/*必須*/
-    height: 50px;/*必須*/
+    height: 70px;/*必須*/
     display: flex;
     flex-direction: column; /* 要素を縦に配置 */
     align-items: center;
@@ -181,11 +182,13 @@ body, h1, p {
 
 /*テキスト入力フォーム*/
 #message-text {
-    margin:10px 10px 10px 10px;
-    padding: 5px;
+    margin:12px 10px;
+    padding: 10px 15px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 30px;
+    outline: none;  
     max-width: calc(100% - 80px);
+    font-size: 20px;
 }
 
 .styleFile {
@@ -220,7 +223,14 @@ body, h1, p {
     box-shadow    : none;        /* カーソル時の影消去 */
     color         : #6666ff;     /* 背景色     */
     background    : #ffffff;     /* 文字色     */
-  }
+}
+
+.sellerChat {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 @media screen and (min-width: 1000px) {
     .chat_room_parent {

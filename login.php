@@ -40,7 +40,7 @@ user_login_form.addEventListener('keydown', (e) => {
     if(is_empty()){
         return true;
     }else if (e.key === 'Enter'){
-        event.preventDefault();
+        e.preventDefault();
         let act = document.activeElement.id;
         if(act === 'user_login_id'){
             let user_login_password = document.getElementById('user_login_password');
