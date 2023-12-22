@@ -79,16 +79,17 @@ function isValidUserID($conn, $seller_id) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style_create.css">    
     <title>新しいチャットルーム作成</title>
 </head>
-<body>
-    <h1>新しいチャットルームを作成</h1>
+<body class="create_body">
     <!---チャットルーム作成フォーム--->
-    <form action="" method="POST">
-        <label for="seller_id">ユーザーIDを入力:</label>
-        <input type="text" name="seller_id" id="seller_id" required>
-        <button type="submit">チャットルームを作成</button>
+    <form class="create_form" action="" method="POST">
+        <h3 class="create_h3" >新しいチャットルームを作成</h3>
+        <label class="create_label" for="seller_id">ユーザーIDを入力:</label>
+        <input class="create_input" type="text" name="seller_id" id="seller_id" required>
+        <button class="create_button" type="submit">チャットルームを作成</button>
+        <a class="create_modoru" href="chat_rooms.php">戻る</a>
     </form>
-    <a href="chat_rooms.php">戻る</a>
 </body>
 </html>
