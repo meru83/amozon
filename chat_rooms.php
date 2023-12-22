@@ -54,7 +54,7 @@ if ($result === false) {
 <body>
     <div id="header" class="header">
         <div class="space"></div>
-        <h1>チャットルーム一覧</h1>
+        <h1 class="h1_White">チャットルーム一覧</h1>
         <?php        
         //ユーザーでログインしてた時のログアウトボタン
         if(!is_null($user_id)){

@@ -2,6 +2,10 @@
     margin: 0;
 }
 
+.h1_White{
+    color: white;
+}
+
 .header{
     background-color: #99CCFF;
     padding: 15px;
@@ -167,7 +171,8 @@ a, a:hover, a:active, a:visited {
 }
 
 .sellerChat:hover{
-    background-color: #dfdfdf;
+    background-color: #99CCFF;
+    color: white;
 }
 
 /* 1266px以下でのスタイル */
