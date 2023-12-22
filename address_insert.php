@@ -1,12 +1,13 @@
 <?php
-// if(session_status() == PHP_SESSION_NONE){
-//     session_start();
-// }
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
 
-// if(!isset($_SESSION['user_id']) && !isset($_SESSION['seller_id'])){
-//     header("Location:login.php");
-//     exit();
-// }
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+}else if(isset($_SESSION['seller_id'])){
+    $seller_id = $_SESSION['seller_id'];
+}
 
 include "db_config.php";
 
@@ -53,19 +54,33 @@ if(isset($_POST['add'])){
     <input type="text" name="street" id="tyou" class="address_textbox" placeholder="3-1-1" required><br>
     <label for="room_number">建物名・部屋番号：</label><br>
     <input type="text" name="room_number" id="room_number" class="address_textbox"><br>
+    <label for="number">電話番号：</label><br>
+    <input type="text" name="number" id="number" class="address_textbox" placeholder="0612345678" required><br>
 
 
     <?php 
-    // if(isset($user_id)){
-    // }else if(isset($seller_id)){
-    // }
+    if(isset($user_id)){
+        echo <<<HTML
+        <label for="addressname">氏名：</label><br>
+        <input type="text" name="addressname" id="addressname" class="address_textbox" placeholder="例）山田 太郎" required><br>
+        HTML;
+    }else if(isset($seller_id)){
+        echo <<<HTML
+        <label for="addressname">会社名：</label><br>
+        <input type="text" name="addressname" id="addressname" class="address_textbox" placeholder="例）Re.Read 株式会社" required><br>
+        HTML;
+    }
     //氏名のところをsellerなら会社名などに変える
     ?>
-    <label for="addressname">氏名：</label><br>
-    <input type="text" name="addressname" id="addressname" class="address_textbox" placeholder="例）山田 太郎" required><br>
     <div class="addres_flex">
-    <input class="addres_botton2" type="submit" name="add" value="登録">
-    <input type="submit" value="スキップ" class="address_skp" onclick="bottonClick()">
+    <input class="addres_botton2" type="submit" id="add" name="add" value="登録">
+    <?php
+    if(isset($user_id)){
+        echo '<input type="submit" value="スキップ" class="address_skp" onclick="buttonClick()">';
+    }else if(isset($seller_id)){
+        echo '<input type="submit" value="スキップ" class="address_skp" onclick="buttonClickSeller()">';
+    }
+    ?>
     </div>
 </form>
 
@@ -77,7 +92,9 @@ const form = document.getElementById('form');
 const search = document.getElementById('search');
 const input = document.getElementById('input');
 const tyou = document.getElementById('tyou');
+const number = document.getElementById('number');
 const addressname = document.getElementById('addressname');
+const add = document.getElementById('add');
 const address1 = document.getElementById('address1');
 const address2 = document.getElementById('address2');
 const kana2 = document.getElementById('kana2');
@@ -89,18 +106,23 @@ form.addEventListener('keydown', (e) => {
         let act = document.activeElement.id;
         if(act === 'input'){
             tyou.focus();
-        }
-        if(act === 'tyou'){
+        }else if(act === 'tyou'){
+            number.focus();
+        }else if(act === 'number'){
             addressname.focus();
+        }else if(act === 'addressname'){
+            add.focus();
         }
         return false;
     } 
 });
 
-function bottonClick(){
-    window.location = "user_top.php"
+function buttonClick(){
+    window.location = "user_top.php";
 }
-
+function buttonClickSeller(){
+    window.location = "seller/seller_top.php";
+}
 
 function is_empty(){
     //どれか一つでも空ならfalseを返す
