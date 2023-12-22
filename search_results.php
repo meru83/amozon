@@ -38,7 +38,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
         $orKeywords = array($searchText);
     }
 
-
+    echo "<div class='all'>";
     foreach($orKeywords as $orKeyword){
         $conditions = array();
         $qualityConditions = array();
@@ -102,6 +102,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
                     if(!is_null($img_url)){
                         $imgText = "
+                  
                         <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
                         </a>";
                     }//else{
@@ -129,7 +130,6 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                                 <input type="hidden" name="color_size_id" value="$color_size_id">
                                 <button type="submit" name="submit">カートに入れる</button>
                             </form>
-                            <hr>
                             END;
                         }else{
                             $htmlText .= "<p class=''>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
@@ -141,6 +141,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     }
                 }
                 echo $htmlText;
+                echo "</div>";//全体
             } else {
                 echo "該当する商品がありません。<br>";
             }
@@ -148,6 +149,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
             die('クエリ実行に失敗しました: ' . $conn->error);
         }
     }
+    echo "</div>";
     echo "該当商品が" . $count . "件見つかりました。";
 }else if(empty($searchText)){
     echo "検索キーワードを入力してください。<br>";
