@@ -53,6 +53,8 @@ $detailStmt->execute();
 $detailResult = $detailStmt->get_result();
 $lastImg = array();
 if($detailResult && $detailResult->num_rows > 0){
+    echo '<div class="targetTextAll">';//商品ごと
+    echo '<div class="targetImgAll">';//画像
     while($row = $detailResult->fetch_assoc()){
         $productName = $row['productname'];
         $view = !is_null($row['view'])?$row['view']:"";
@@ -75,6 +77,7 @@ if($detailResult && $detailResult->num_rows > 0){
         //}
         //画像にサイズと色の説明が出るようにする。
     }
+    echo '</div>';
 }else{
     echo <<< END
     <script>
@@ -170,6 +173,7 @@ if($pieces > 0){
 
 if(!($htmlText === "")){
     echo $htmlText;
+    echo '</div>';
     echo "<h2>この商品の別のカラー：</h2><br>";
 }
 
@@ -183,6 +187,8 @@ $selectStmt->execute();
 $selectResult = $selectStmt->get_result();
 $lastColorSize = array();
 $tentative = "";
+echo '<div class="textAll">';
+echo '<div class="imgAll">';
 while($row = $selectResult->fetch_assoc()){
     $sImg_url = isset($row['img_url'])?$row['img_url']:null;
     $colorCode = $row['color_code'];
@@ -197,7 +203,9 @@ while($row = $selectResult->fetch_assoc()){
     //     $sImgText = "<a><img><</a>";
     // }
     if(!in_array($sColor_size_id, $lastColorSize)){
+        echo '</div>';
         echo $tentative;
+        echo '<div class="imgAll">';
         echo $sImgText;
         $lastColorSize[] = $sColor_size_id;
         $tentative = <<<END
@@ -218,7 +226,9 @@ while($row = $selectResult->fetch_assoc()){
         echo $sImgText;
     }
 }
+echo '</div>';
 echo $tentative;
+echo '</div>';
 // 他の情報も必要に応じて表示
 
 function getColor($conn, $color_code){
