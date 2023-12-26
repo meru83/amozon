@@ -52,6 +52,8 @@ if(isset($_SESSION['user_id'])){
         $selectStmt->execute();
         $selectResult = $selectStmt->get_result();
         if($selectResult && $selectResult->num_rows > 0){
+            echo '<div class="htmlAll">';
+            echo '<div class="imgAll">';
             while ($row = $selectResult->fetch_assoc()) {
                 $imgText = null;
                 $colorCode = $row['color_code'];
@@ -65,23 +67,22 @@ if(isset($_SESSION['user_id'])){
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
                 if(!is_null($img_url)){
                     $imgText = "
-                    <div id='divImg$i'>
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
-                    </a>
-                    </div>";
+                    </a>";
                 }//else{
                     //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
                 //}
                 //画像にサイズと色の説明が出るようにする。
                 if(!in_array($color_size_id, $lastImg)){
+                    echo '</div>';
                     echo $htmlText;
-                    echo "<div id='divImg$i'>";
+                    echo '</div>';
+                    echo '<div class="htmlAll">';
+                    echo '<div class="imgAll">';
                     echo $imgText;
                     $lastImg[] = $color_size_id;
                     $htmlText = <<<END
-                    </div>
                     <br>
-                    <div id="divText$i">
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
                     色: $colorName
                     サイズ: $size<br>
@@ -97,7 +98,6 @@ if(isset($_SESSION['user_id'])){
                         <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
                         <br>
                         <hr>
-                        </div>
                         END;
                     }else{
                         $htmlText .= <<<END
@@ -105,7 +105,6 @@ if(isset($_SESSION['user_id'])){
                         商品はカートから削除されます<br>
                         <br>
                         <hr>
-                        </div>
                         END;
                         $_SESSION['cart']['product_id'][$i] = null;
                         $_SESSION['cart']['color_size_id'][$i] = null;
@@ -119,12 +118,9 @@ if(isset($_SESSION['user_id'])){
             }
         }else if(!($_SESSION['cart']['product_id'][$i] === null) && !($_SESSION['cart']['color_size_id'][$i] === null) && !($_SESSION['cart']['pieces'][$i] = null)){
             $htmlText = <<<END
-            </div>
             <br>
-            <div id="divText$i">
             以前登録されていた商品は販売者の都合により削除されました
             <hr>
-            </div>
             END;
             
             $_SESSION['cart']['product_id'][$i] = null;
@@ -132,13 +128,15 @@ if(isset($_SESSION['user_id'])){
             $_SESSION['cart']['pieces'][$i] = null;
         }
         
+        echo '</div>';
         echo $htmlText;
+        echo '</div>';
         $htmlText = "";
     }
 
     if($count !== 0) {
         echo $count . "件";
-    } else {
+    }else{
         echo <<<HTML
         <!-- <div class="Amozon-container"> -->
             <!-- Left Side Menu -->

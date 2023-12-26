@@ -11,7 +11,7 @@ $pieces = isset($_POST['pieces'])?$_POST['pieces']:1;
 
 
 //在庫確認
-$piecesSql = "SELECT pieces FROM color_size WHERE product_id = $product_id && color_size_id = $color_size_id && s.service_status = true";
+$piecesSql = "SELECT pieces FROM color_size WHERE product_id = $product_id && color_size_id = $color_size_id && service_status = true";
 $piecesResult = $conn->query($piecesSql);
 if($piecesResult && $piecesResult->num_rows > 0){
     while($row = $piecesResult->fetch_assoc()){
