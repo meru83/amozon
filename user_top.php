@@ -66,8 +66,6 @@ error_reporting(E_ALL);
                 END;
             }
             ?>
-            <a href="cartContents.php">カート</a><br>
-            <a href="chat_rooms.php">チャットルーム一覧</a>
         </div>
     </div>
 
