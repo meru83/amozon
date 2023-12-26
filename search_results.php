@@ -38,7 +38,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
         $orKeywords = array($searchText);
     }
 
-
+    echo "<div class='all'>";//全体
     foreach($orKeywords as $orKeyword){
         $conditions = array();
         $qualityConditions = array();
@@ -88,6 +88,8 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
             // 検索結果を表示
             if ($result->num_rows > 0) {
                 $lastImg = array();
+                echo '<div class="productAll">';
+                echo '<div class="imgAll">';
                 while ($row = $result->fetch_assoc()) {
                     $imgText = null;
                     $colorCode = $row['color_code'];
@@ -102,6 +104,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
                     if(!is_null($img_url)){
                         $imgText = "
+                  
                         <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
                         </a>";
                     }//else{
@@ -109,7 +112,11 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     //}
                     //画像にサイズと色の説明が出るようにする。
                     if(!in_array($color_size_id, $lastImg)){
+                        echo '</div>';
                         echo $htmlText;
+                        echo '</div>';
+                        echo '<div class="productAll">';
+                        echo '<div class="imgAll">';
                         echo $imgText;
                         $lastImg[] = $color_size_id;
                         $htmlText = <<<END
@@ -129,7 +136,6 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                                 <input type="hidden" name="color_size_id" value="$color_size_id">
                                 <button type="submit" name="submit">カートに入れる</button>
                             </form>
-                            <hr>
                             END;
                         }else{
                             $htmlText .= "<p class=''>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
@@ -140,7 +146,9 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         echo $imgText;
                     }
                 }
+                echo '</div>';
                 echo $htmlText;
+                echo '</div>';
             } else {
                 echo "該当する商品がありません。<br>";
             }
@@ -148,6 +156,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
             die('クエリ実行に失敗しました: ' . $conn->error);
         }
     }
+    echo "</div>";//全体
     echo "該当商品が" . $count . "件見つかりました。";
 }else if(empty($searchText)){
     echo "検索キーワードを入力してください。<br>";

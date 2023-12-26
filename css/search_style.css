@@ -32,3 +32,7 @@ img {
 .flexBox label {
     margin-right: 20px;
 }
+
+.flame {
+    width: fit-content;
+}
