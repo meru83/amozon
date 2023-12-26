@@ -109,7 +109,7 @@ $htmlText = <<<END
 END;
 $sizeSql = "SELECT s.size FROM products p
             LEFT JOIN color_size s ON(p.product_id = s.product_id)
-            WHERE p.product_id = ? && s.color_code = ?";
+            WHERE p.product_id = ? && s.color_code = ? && s.service_status = true";
 $sizeStmt = $conn->prepare($sizeSql);
 $sizeStmt->bind_param("is",$product_id, $color_code);
 $sizeStmt->execute();
@@ -126,19 +126,6 @@ while($row = $sizeResult->fetch_assoc()){
     }
 }  
 $htmlText .= "</select></form>";
-if($otherSize === false){
-    echo "
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sizeChange = document.getElementById('sizeChange');
-        const pSizeChange = document.getElementById('pSizeChange');
-        if (sizeChange) {
-            sizeChange.style.display = 'none';
-            pSizeChange.style.display = 'none';
-        }
-    });    
-    </script>";
-}
 
 if($pieces > 0){    
     $htmlText .= <<<END
@@ -177,10 +164,25 @@ if(!($htmlText === "")){
     echo "<h2>この商品の別のカラー：</h2><br>";
 }
 
-$selectSql = "SELECT p.productname, s.color_size_id, s.color_code, s.size, s.price, i.img_url FROM products p
+
+if($otherSize === false){
+    echo "
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sizeChange = document.getElementById('sizeChange');
+        const pSizeChange = document.getElementById('pSizeChange');
+        if (sizeChange) {
+            sizeChange.style.display = 'none';
+            pSizeChange.style.display = 'none';
+        }
+    });    
+    </script>";
+}
+
+$selectSql = "SELECT p.productname, s.color_size_id, s.color_code, s.size, s.pieces, s.price, i.img_url FROM products p
             LEFT JOIN color_size s ON (p.product_id = s.product_id)
             LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-            WHERE p.product_id = ? && s.color_code != ?";
+            WHERE p.product_id = ? && s.color_code != ? && s.service_status = true";
 $selectStmt = $conn->prepare($selectSql);
 $selectStmt->bind_param("is", $product_id, $color_code);
 $selectStmt->execute();
@@ -194,6 +196,7 @@ while($row = $selectResult->fetch_assoc()){
     $colorCode = $row['color_code'];
     $sColor_code = getColor($conn, $colorCode);
     $sSize = $row['size'];
+    $sPieces = $row['pieces'];
     $sPrice = $row['price'];
     $sColor_size_id = $row['color_size_id'];
     if(!is_null($sImg_url)){
@@ -205,6 +208,8 @@ while($row = $selectResult->fetch_assoc()){
     if(!in_array($sColor_size_id, $lastColorSize)){
         echo '</div>';
         echo $tentative;
+        echo '</div>';
+        echo '<div class="textAll">';
         echo '<div class="imgAll">';
         echo $sImgText;
         $lastColorSize[] = $sColor_size_id;
@@ -215,13 +220,18 @@ while($row = $selectResult->fetch_assoc()){
         サイズ: $sSize<br>
         価格　: $sPrice<br>
         </a>
-        <form action="innerCart.php" method="post">
-            <input type="hidden" name="product_id" value="$product_id">
-            <input type="hidden" name="color_size_id" value="$sColor_size_id">
-            <button type="submit" name="submit">カートに入れる</button>
-        </form>
-        <hr>
         END;
+        if($pieces > 0){
+            $tentative .= <<<END
+            <form action="innerCart.php" method="post">
+                <input type="hidden" name="product_id" value="$product_id">
+                <input type="hidden" name="color_size_id" value="$color_size_id">
+                <button type="submit" name="submit">カートに入れる</button>
+            </form>
+            END;
+        }else{
+            $tentative .= "<p class=''>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
+        }
     }else{
         echo $sImgText;
     }
