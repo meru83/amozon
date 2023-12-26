@@ -33,7 +33,7 @@ if ($result && $result->num_rows > 0) {
         if(isset($_SESSION['cart'])){
             try{
                 for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
-                    if($_SESSION['cart']['product_id'][$i] === null){
+                    if($_SESSION['cart']['product_id'][$i] !== null){
                         $product_id = $_SESSION['cart']['product_id'][$i];
                         $color_size_id = $_SESSION['cart']['color_size_id'][$i];
                         $pieces = $_SESSION['cart']['pieces'][$i];
