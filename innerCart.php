@@ -11,22 +11,27 @@ $pieces = isset($_POST['pieces'])?$_POST['pieces']:1;
 
 
 //在庫確認
-$piecesSql = "SELECT pieces FROM color_size WHERE product_id = $product_id && color_size_id = $color_size_id";
+$piecesSql = "SELECT pieces FROM color_size WHERE product_id = $product_id && color_size_id = $color_size_id && s.service_status = true";
 $piecesResult = $conn->query($piecesSql);
-if($piecesResult && $piecesResult->num_rows === 0){
+if($piecesResult && $piecesResult->num_rows > 0){
     while($row = $piecesResult->fetch_assoc()){
         $confirmation = $row['pieces'];
         if($confirmation < $pieces){
-            $error_message = "入荷待ちの商品です。カートに商品を登録できませんでした。";
+            $error_message = "在庫が不足しています。カートに商品を登録できませんでした。";
             header("Location:cartContents.php?error_message=$error_message");
             exit();
         }
     }
+}else{
+    $error_message = "カートに商品を登録できませんでした。";
+    header("Location:cartContents.php?error_message=$error_message");
+    exit();
 }
 
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $checkSql = "SELECT user_id, product_id, color_size_id FROM cart
+    $checkSql = "SELECT user_id, product_id, color_size_id FROM cart c
+                LEFT JOIN color_size s ON (c.color_size_id = s.color_size_id)
                 WHERE cart.user_id = '$user_id' && cart.product_id = $product_id  && cart.color_size_id = $color_size_id";
     $checkResult = $conn->query($checkSql);
     if($checkResult && $checkResult->num_rows === 0){
