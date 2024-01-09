@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2023-12-15 05:48:26
+-- 生成日時: 2024-01-09 03:16:02
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -4488,18 +4488,18 @@ CREATE TABLE `seller` (
   `sellerName` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `seller_status` tinyint(1) NOT NULL DEFAULT 1,
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `sellerPhone` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `seller`
 --
 
-INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`) VALUES
-('amozon', 'Amozon', '$2y$10$8ZTLZJfHCZnJlL7wyB6YguS0ltWpnwD2eFGfsWFDpKaD7/kkHR3N.', 1, '2023-10-03 19:52:53'),
-('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52'),
-('rion_bank', 'RIONBANK', '$2y$10$ewUhXRBhoabyns9IT.H/0uyon72fmI4hXxmttgjoby6iloFBRekJ.', 1, '2023-10-03 07:19:48'),
-('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47');
+INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`, `sellerPhone`) VALUES
+('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52', '0612345670'),
+('testRegistration', 'リ', '$2y$10$0IRE1XEKvwFsGtIq8CcRX.9/fV7C8d9mSCpH7d2V/7f.PQBTEcmzi', 1, '2024-01-09 02:12:25', '0624681357'),
+('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47', '0612345679');
 
 -- --------------------------------------------------------
 
@@ -4829,6 +4829,7 @@ CREATE TABLE `users` (
   `user_id` varchar(255) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `pass` varchar(255) NOT NULL,
+  `phone` varchar(16) NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `user_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -4837,8 +4838,8 @@ CREATE TABLE `users` (
 -- テーブルのデータのダンプ `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `pass`, `create_at`, `user_status`) VALUES
-('test_user', 'テストユーザー', '$2y$10$d2iU/xGLRhWX747O0Z3iieqyCy8tmw4qI6n0N3ewxyHkiD6J9Jqry', '2023-10-27 13:13:05', 1);
+INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `create_at`, `user_status`) VALUES
+('test_user', 'テストユーザー', '$2y$10$d2iU/xGLRhWX747O0Z3iieqyCy8tmw4qI6n0N3ewxyHkiD6J9Jqry', '0612345678', '2023-10-27 13:13:05', 1);
 
 --
 -- ダンプしたテーブルのインデックス
@@ -4939,7 +4940,8 @@ ALTER TABLE `search`
 -- テーブルのインデックス `seller`
 --
 ALTER TABLE `seller`
-  ADD PRIMARY KEY (`seller_id`);
+  ADD PRIMARY KEY (`seller_id`),
+  ADD UNIQUE KEY `sellerPhone` (`sellerPhone`);
 
 --
 -- テーブルのインデックス `small_category`
@@ -4952,7 +4954,8 @@ ALTER TABLE `small_category`
 -- テーブルのインデックス `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `phone` (`phone`);
 
 --
 -- ダンプしたテーブルの AUTO_INCREMENT
