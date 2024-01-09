@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/search_style.css">
+    <link rel="stylesheet" href="css/search_results.css">
     <title>商品検索</title>
 </head>
 
@@ -121,13 +121,15 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         $lastImg[] = $color_size_id;
                         $htmlText = <<<END
                         <br>
+                        <div class="setumei">
                         <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-                        色: $colorName
-                        サイズ: $size<br>
-                        商品名　　: $productname<br>
-                        カテゴリ名: $category_name<br>
-                        価格　　　: $price<br>
+                        <!---色: $colorName---->
+                        <!----商品名　　:------> $productname<br>
+                        <!----カテゴリ名: $category_name<br>------>
+                        <!---価格　　　: ------>¥$price<br>
+                        <!---サイズ: ------>$size サイズ<br>
                         </a>
+                        </div>
                         END;
                         if($pieces > 0){
                             $htmlText .= <<<END
@@ -149,6 +151,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                 echo '</div>';
                 echo $htmlText;
                 echo '</div>';
+                //ここ
             } else {
                 echo "該当する商品がありません。<br>";
             }
@@ -196,4 +199,5 @@ form.addEventListener('submit',(e) => {
         return true;
     }
 });
+//ここ
 </script>
