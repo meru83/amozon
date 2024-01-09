@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="css/search_results.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>商品検索</title>
+    <style>
+    .swiper {
+        width: 600px;
+        max-width: 100%; 
+        height: 400px; 
+    }
+    .swiper-slide img {
+        width: 600px;
+        height: 400px;
+    }
+</style>
 </head>
 
 <body>
@@ -90,7 +101,8 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
             if ($result->num_rows > 0) {
                 $lastImg = array();
                 echo '<div class="productAll">';
-                echo '<div class="imgAll">';
+                echo '<div class="imgAll swiper">';
+                echo '<div class="swiper-wrapper">';
                 while ($row = $result->fetch_assoc()) {
                     $imgText = null;
                     $colorCode = $row['color_code'];
@@ -104,20 +116,33 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $color_size_id = $row['color_size_id'];
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
                     if(!is_null($img_url)){
-                        $imgText = "
-                  
-                        <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
-                        </a>";
+                        $imgText = <<<END
+                        <div class="swiper-slide"><a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id"><img src="seller/p_img/$img_url"></a></div>
+                        END;
                     }//else{
                         //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
                     //}
                     //画像にサイズと色の説明が出るようにする。
                     if(!in_array($color_size_id, $lastImg)){
-                        echo '</div>';
+                        echo <<< HTML
+                            </div>
+                            <!-- If we need pagination -->
+                            <div class="swiper-pagination"></div>
+
+                            <!-- If we need navigation buttons -->
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+
+                            <!-- If we need scrollbar -->
+                            <div class="swiper-scrollbar"></div>
+                            </div>
+                        </div><!--imgAll閉じる-->
+                        HTML;
                         echo $htmlText;
                         echo '</div>';
                         echo '<div class="productAll">';
-                        echo '<div class="imgAll">';
+                        echo '<div class="imgAll swiper">';
+                        echo '<div class="swiper-wrapper">';
                         echo $imgText;
                         $lastImg[] = $color_size_id;
                         $htmlText = <<<END
@@ -149,34 +174,24 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         echo $imgText;
                     }
                 }
-                echo '</div>';
+                echo <<< HTML
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <!-- If we need scrollbar -->
+                <div class="swiper-scrollbar"></div>
+                </div>
+                HTML;
+                echo '</div>';//imgAll閉じる
                 echo $htmlText;
                 echo '</div>';
                 //ここ
                 echo <<< HTML
-                <!-- Slider main container -->
-                    <div class="swiper">
-                    <!-- Additional required wrapper -->
-                    <div class="swiper-wrapper">
-                        <!-- Slides -->
-                        <div class="swiper-slide"><img src="images/kutu.jpg" alt=""></div>
-                        <div class="swiper-slide"><img src="images/kutu2.jpg" alt=""></div>
-                        <div class="swiper-slide"><img src="images/kutu3.jpg" alt=""></div>
-                        <div class="swiper-slide"><img src="images/kutu4.jpg" alt=""></div>
-                        <div class="swiper-slide"><img src="images/kutu5.jpg" alt=""></div>
-                        <div class="swiper-slide"><img src="images/kutu6.jpg" alt=""></div>
-                    </div>
-                    <!-- If we need pagination -->
-                    <div class="swiper-pagination"></div>
-
-                    <!-- If we need navigation buttons -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
-
-                    <!-- If we need scrollbar -->
-                    <div class="swiper-scrollbar"></div>
-                    </div>
-
                     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
                     <script>
                         const swiper = new Swiper('.swiper', {
