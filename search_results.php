@@ -9,13 +9,13 @@
     <title>商品検索</title>
     <style>
     .swiper {
-        width: 600px;
+        width: 300px;
         max-width: 100%; 
-        height: 400px; 
+        height: 200px; 
     }
     .swiper-slide img {
-        width: 600px;
-        height: 400px;
+        width: 300px;
+        height: 200px;
     }
 </style>
 </head>
@@ -124,9 +124,15 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                             </a>
                         </div>
                         END;
-                    }//else{
-                        //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-                    //}
+                    }else{
+                        $imgText = <<<END
+                        <div class="swiper-slide">
+                            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">
+                                <img src="img/noImg.jpg">
+                            </a>
+                        </div>
+                        END;
+                    }
                     //画像にサイズと色の説明が出るようにする。
                     if(!in_array($color_size_id, $lastImg)){
                         echo <<< HTML
