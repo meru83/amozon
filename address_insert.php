@@ -95,8 +95,6 @@ if(isset($_POST['add'])){
     <?php
     if(isset($user_id)){
         echo '<input type="submit" value="スキップ" class="address_skp" onclick="buttonClick()">';
-    }else if(isset($seller_id)){
-        echo '<input type="submit" value="スキップ" class="address_skp" onclick="buttonClickSeller()">';
     }
     ?>
     </div>
@@ -135,9 +133,6 @@ form.addEventListener('keydown', (e) => {
 
 function buttonClick(){
     window.location = "user_top.php";
-}
-function buttonClickSeller(){
-    window.location = "seller/seller_top.php";
 }
 
 function is_empty(){

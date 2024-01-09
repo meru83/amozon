@@ -19,6 +19,7 @@
         $user_id = $_POST['user_id'];
         $password = $_POST['password'];
         $username = $_POST['username'];
+        $phone = $_POST['number'];
 
         // ユーザーIDの正規表現パターンを定義
         $user_id_pattern = '/^[a-z0-9\-_]+$/';
@@ -56,9 +57,9 @@
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                 // ユーザーをデータベースに挿入
-                $insert_sql = "INSERT INTO users (user_id, pass, username) VALUES (?, ?, ?)";
+                $insert_sql = "INSERT INTO users (user_id, pass, username, phone) VALUES (?, ?, ?, ?)";
                 $insert_stmt = $conn->prepare($insert_sql);
-                $insert_stmt->bind_param("sss", $user_id, $hashed_password, $username);
+                $insert_stmt->bind_param("ssss", $user_id, $hashed_password, $username, $phone);
                 if ($insert_stmt->execute()) {
                     //登録成功時の処理
                     echo "<p>新しいユーザーが登録されました。</p>";
@@ -108,19 +109,17 @@
         <img src="img/Re.ReaD2blue.svg" class="register_brand">
         <h1 class="register_h1">新規登録</h1>
         <label for="user_id">ユーザーID:</label>
-        <input type="text" id="user_id" class="register_textbox" name="user_id" placeholder="Re_read" required><br>
+        <input type="text" id="user_id" class="register_textbox" name="user_id" placeholder="re_read" required><br>
         
         <label for="number">電話番号：</label><br>
-        <input type="text" name="number" id="number" class="register_textbox" class="address_textbox" placeholder="0612345678" required><br>
+        <input type="text" name="number" id="number" class="register_textbox" class="address_textbox" placeholder="ハイフンなし" required><br>
         
         <label for="password">パスワード:</label>
         <input type="password" id="password" class="register_textbox" name="password" placeholder="8文字以上" required><br>
-
-        <label for="rePassword">パスワード再確認</label>
-        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="8文字以上" required><br>
+        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認" required><br>
 
         <label for="username">ユーザー名:</label>
-        <input type="text" id="username" class="register_textbox" name="username" placeholder="り・リード" required><br>
+        <input type="text" id="username" class="register_textbox" name="username" placeholder="リ・リード" required><br>
 
         <input type="submit" id="submit" name="register" class="register_botton" value="新規登録">
     </form>

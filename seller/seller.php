@@ -18,6 +18,7 @@
         $seller_id = $_POST['seller_id'];
         $password = $_POST['password'];
         $sellerName = $_POST['sellerName'];
+        $phone = $_POST['number'];
 
         // ユーザーIDの正規表現パターンを定義
         $seller_id_pattern = '/^[a-zA-Z0-9\-_]+$/';
@@ -55,9 +56,9 @@
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                 // ユーザーをデータベースに挿入
-                $insert_sql = "INSERT INTO seller (seller_id, pass, sellerName) VALUES (?, ?, ?)";
+                $insert_sql = "INSERT INTO seller (seller_id, pass, sellerName, sellerPhone) VALUES (?, ?, ?, ?)";
                 $insert_stmt = $conn->prepare($insert_sql);
-                $insert_stmt->bind_param("sss", $seller_id, $hashed_password, $sellerName);
+                $insert_stmt->bind_param("ssss", $seller_id, $hashed_password, $sellerName, $phone);
                 if ($insert_stmt->execute()) {
                     //登録成功時の処理
                     echo "<p>新しいユーザーが登録されました。</p>";
@@ -69,7 +70,7 @@
 
                     //リダイレクト先のページに移動
                     //今はチャットルームの一覧に飛ぶけど将来的にはトップページに飛ばしたい
-                    header("Location: address_insert.php");
+                    header("Location: ../address_insert.php");
                     exit();
 
                 } else {
@@ -83,17 +84,18 @@
     <form method="POST" id ='form' class="seller_form">
         <img src="../img/Re.ReaD2blue.svg" class="seller_brand">
         <h1 class="seller_h1">販売専用アカウント 新規登録</h1>
-        <label for="seller_id"></label>
-        <input type="text" id="seller_id" class="seller_textbox" placeholder="販売専用アカウントID:" name="seller_id" required><br>
+        <label for="seller_id">販売専用アカウントID:</label>
+        <input type="text" id="seller_id" class="seller_textbox" placeholder="re_read" name="seller_id" required><br>
         
-        <label for="password"></label>
-        <input type="password" id="password" class="seller_textbox" placeholder="パスワード:" name="password"  required><br>
+        <label for="number">電話番号：</label><br>
+        <input type="text" name="number" id="number" class="register_textbox" class="address_textbox" placeholder="ハイフンなし" required><br>
+        
+        <label for="password">パスワード:</label>
+        <input type="password" id="password" class="seller_textbox" placeholder="8桁以上" name="password"  required><br>
+        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認" required><br>
 
-        <label for="rePassword"></label>
-        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認:" required><br>
-
-        <label for="sellerName"></label>
-        <input type="text" id="sellerName" class="seller_textbox" placeholder="アカウント名:" name="sellerName" required><br>
+        <label for="sellerName">アカウント名:</label>
+        <input type="text" id="sellerName" class="seller_textbox" placeholder="リ・リード" name="sellerName" required><br>
 
         <input type="submit" id="submit" name="register" class="seller_botton" value="新規登録">
     </form>
