@@ -150,19 +150,11 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         <br>
                         <div class="setumei">
                         <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-<<<<<<< HEAD
-                        色: $colorName
-                        サイズ: $size<br>
-                        商品名　　: $productname<br>
-                        カテゴリ名: $category_name<br>
-                        価格　　　: $commaPrice<br>
-=======
                         <!---色: $colorName---->
                         <!----商品名　　:------> $productname<br>
                         <!----カテゴリ名: $category_name<br>------>
                         <!---価格　　　: ------>¥$price<br>
                         <!---サイズ: ------>$size サイズ<br>
->>>>>>> NewCssK1/09
                         </a>
                         </div>
                         END;
