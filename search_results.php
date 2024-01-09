@@ -118,7 +118,11 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
                     if(!is_null($img_url)){
                         $imgText = <<<END
-                        <div class="swiper-slide"><a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id"><img src="seller/p_img/$img_url"></a></div>
+                        <div class="swiper-slide">
+                            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">
+                                <img src="seller/p_img/$img_url">
+                            </a>
+                        </div>
                         END;
                     }//else{
                         //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
@@ -137,7 +141,6 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                             <!-- If we need scrollbar -->
                             <div class="swiper-scrollbar"></div>
                             </div>
-                        </div><!--imgAll閉じる-->
                         HTML;
                         echo $htmlText;
                         echo '</div>';
@@ -188,7 +191,6 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                 <div class="swiper-scrollbar"></div>
                 </div>
                 HTML;
-                echo '</div>';//imgAll閉じる
                 echo $htmlText;
                 echo '</div>';
                 //ここ
