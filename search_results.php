@@ -99,7 +99,8 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $pieces = $row['pieces'];
                     $productname = $row['productname'];
                     $category_name = !is_null($row['category_name'])?$row['category_name']:"";
-                    $price  = $row['price'];
+                    $price = $row['price'];
+                    $commaPrice = number_format($price);
                     $color_size_id = $row['color_size_id'];
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
                     if(!is_null($img_url)){
@@ -126,7 +127,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         サイズ: $size<br>
                         商品名　　: $productname<br>
                         カテゴリ名: $category_name<br>
-                        価格　　　: $price<br>
+                        価格　　　: $commaPrice<br>
                         </a>
                         END;
                         if($pieces > 0){
