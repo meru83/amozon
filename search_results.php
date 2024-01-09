@@ -4,8 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/search_style.css">
+    <link rel="stylesheet" href="css/search_results.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>商品検索</title>
+    <style>
+    .swiper {
+        width: 600px;
+        max-width: 100%; 
+        height: 400px; 
+    }
+    .swiper-slide img {
+        width: 600px;
+        height: 400px;
+    }
+</style>
 </head>
 
 <body>
@@ -89,7 +101,8 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
             if ($result->num_rows > 0) {
                 $lastImg = array();
                 echo '<div class="productAll">';
-                echo '<div class="imgAll">';
+                echo '<div class="imgAll swiper">';
+                echo '<div class="swiper-wrapper">';
                 while ($row = $result->fetch_assoc()) {
                     $imgText = null;
                     $colorCode = $row['color_code'];
@@ -104,31 +117,54 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $color_size_id = $row['color_size_id'];
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
                     if(!is_null($img_url)){
-                        $imgText = "
-                  
-                        <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
-                        </a>";
+                        $imgText = <<<END
+                        <div class="swiper-slide"><a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id"><img src="seller/p_img/$img_url"></a></div>
+                        END;
                     }//else{
                         //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
                     //}
                     //画像にサイズと色の説明が出るようにする。
                     if(!in_array($color_size_id, $lastImg)){
-                        echo '</div>';
+                        echo <<< HTML
+                            </div>
+                            <!-- If we need pagination -->
+                            <div class="swiper-pagination"></div>
+
+                            <!-- If we need navigation buttons -->
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+
+                            <!-- If we need scrollbar -->
+                            <div class="swiper-scrollbar"></div>
+                            </div>
+                        </div><!--imgAll閉じる-->
+                        HTML;
                         echo $htmlText;
                         echo '</div>';
                         echo '<div class="productAll">';
-                        echo '<div class="imgAll">';
+                        echo '<div class="imgAll swiper">';
+                        echo '<div class="swiper-wrapper">';
                         echo $imgText;
                         $lastImg[] = $color_size_id;
                         $htmlText = <<<END
                         <br>
+                        <div class="setumei">
                         <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
+<<<<<<< HEAD
                         色: $colorName
                         サイズ: $size<br>
                         商品名　　: $productname<br>
                         カテゴリ名: $category_name<br>
                         価格　　　: $commaPrice<br>
+=======
+                        <!---色: $colorName---->
+                        <!----商品名　　:------> $productname<br>
+                        <!----カテゴリ名: $category_name<br>------>
+                        <!---価格　　　: ------>¥$price<br>
+                        <!---サイズ: ------>$size サイズ<br>
+>>>>>>> NewCssK1/09
                         </a>
+                        </div>
                         END;
                         if($pieces > 0){
                             $htmlText .= <<<END
@@ -147,9 +183,53 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         echo $imgText;
                     }
                 }
-                echo '</div>';
+                echo <<< HTML
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <!-- If we need scrollbar -->
+                <div class="swiper-scrollbar"></div>
+                </div>
+                HTML;
+                echo '</div>';//imgAll閉じる
                 echo $htmlText;
                 echo '</div>';
+                //ここ
+                echo <<< HTML
+                    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+                    <script>
+                        const swiper = new Swiper('.swiper', {
+                            // Optional parameters
+                            direction: 'horizontal',
+                            loop: true,
+                            speed: 1000,
+                            effect: 'coverflow',
+
+                            // // If we need pagination
+                            // pagination: {
+                            //     el: '.swiper-pagination',
+                            //     type: 'progressbar',
+                            // },
+
+                            // Navigation arrows
+                            navigation: {
+                                nextEl: '.swiper-button-next',
+                                prevEl: '.swiper-button-prev',
+                            },
+
+                            // // And if we need scrollbar
+                            // scrollbar: {
+                            //     el: '.swiper-scrollbar',
+                            //     hide:true,
+                            // },
+                        });
+                    </script>
+                    HTML;
             } else {
                 echo "該当する商品がありません。<br>";
             }
@@ -197,4 +277,81 @@ form.addEventListener('submit',(e) => {
         return true;
     }
 });
+//ここ
 </script>
+
+
+<!--<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>    
+<style>
+    .swiper {
+        width: 600px;
+        max-width: 100%; 
+        height: 400px; 
+    }
+    .swiper-slide img {
+        width: 600px;
+        height: 400px;
+    }
+</style>
+</head>
+<body>-->
+<!-- Slider main container -->
+<!-- <div class="swiper"> -->
+  <!-- Additional required wrapper -->
+  <!-- <div class="swiper-wrapper"> -->
+    <!-- Slides -->
+    <!-- <div class="swiper-slide"><img src="images/kutu.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/kutu2.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/kutu3.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/kutu4.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/kutu5.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/kutu6.jpg" alt=""></div>
+  </div> -->
+  <!-- If we need pagination -->
+  <!-- <div class="swiper-pagination"></div> -->
+
+  <!-- If we need navigation buttons -->
+  <!-- <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div> -->
+
+  <!-- If we need scrollbar -->
+  <!-- <div class="swiper-scrollbar"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        effect: 'coverflow', -->
+
+        <!-- // // If we need pagination
+        // pagination: {
+        //     el: '.swiper-pagination',
+        //     type: 'progressbar',
+        // },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        //     hide:true,
+        // },
+    });
+</script>
+    
+</body>
+</html> -->

@@ -1,0 +1,54 @@
+.all {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+img {
+    height: 200px;
+}
+
+#search{
+    width: 300px;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 100px;
+    border: 2px solid #000;
+}
+
+.flexBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 80px 0;
+}
+
+.flexBox label {
+    margin-right: 20px;
+}
+
+.flame {
+    width: fit-content;
+}
+
+.productAll {
+    padding: 20px;
+}
+
+.imgAll {
+    background: #f5f5f5;
+    text-align: center;
+    height: 200px;
+}
+
+form {
+    text-align: center;
+}
+
+.setumei {
+    width: 300px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
