@@ -150,7 +150,44 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
             <button type="button" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　: $productname</p><br>
-            <button type="button" onclick="changeCategory($product_id)">変更</button><p id="category$product_id">カテゴリ名: $big_category_name - $category_name - $small_category_name</p><br>
+            <div id="allCategory$product_id" style="display:block">
+            <button type="button" onclick="changeCategory($product_id)">変更</button>
+            <p id="category$product_id">カテゴリ名: $big_category_name - $category_name - $small_category_name</p>
+            </div>
+            <div id="bigCate$product_id" style="display:none">
+            <label for="big_category$product_id" class="p2_label">
+                大カテゴリ：
+                <select id="big_category$product_id" class="styleSelect">
+                    <option value="" hidden>選択してください</option>
+            END;
+                    $big_sql = "SELECT big_category_id, big_category_name FROM big_category";
+                    $big_stmt = $conn->query($big_sql);
+                    if ($big_stmt) {
+                        while($row = $big_stmt->fetch_assoc()){
+                            $big_category_id = $row['big_category_id'];
+                            $big_category_name = $row['big_category_name'];
+                            $htmlText .= '<option value="'.$big_category_id.'">'.$big_category_name.'</option>';
+                        }
+                    } 
+            $htmlText .= <<<END
+                </select>
+            </label>
+            </div>
+            <div id="cate$product_id" style="display:none">
+            <label for="category$product_id" id="categoryLabel" class="p2_label">
+                中カテゴリ
+                <select id="category$product_id" class="styleSelect">
+                </select>
+            </label>
+            </div>
+            <div id="smallCate$product_id" style="display:none">
+            <label for="small_category$product_id" id="smallCategoryLabel" class="p2_label">
+                小カテゴリ
+                <select id="small_category$product_id" class="styleSelect">
+                </select>
+            </label>
+            </div>
+
             <button type="button" onclick="changeView($product_id)">変更</button><p id="view$product_id">概要　　　: $view</p><br>
             <button type="button" onclick="changeQuality($product_id)">変更</button><p id="quality$product_id">品質　　　: $quality<br>
             出品日　　: $create_at<br>
@@ -447,5 +484,34 @@ function changeProductName(number){
             }
         }
     }
+}
+
+function changeCategory(number){
+    var categoryBlock = document.getElementById('allCategory'+number);
+    categoryBlock.style.display = "none";
+    var bigCate = document.getElementById('bigCate'+number);
+    bigCate.style.display = "block";
+
+    var big_category = document.getElementById('big_category'+number);
+    var b_id;
+    big_category.addEventListener('change',(e) => {
+        var num = big_category.selectedIndex;
+        b_id = big_category.options[num].value;
+
+        const formData = new FormData();
+        formData.append('big_category',b_id);
+
+        const xhr = new FormData();
+        xhr.open('POST','p2_big.php', true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                try{
+                    const response = JSON.parse(xhr.responseText);
+                    if(response){}
+                }
+            }
+        }
+    });
 }
 </script>
