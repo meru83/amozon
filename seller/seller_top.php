@@ -7,6 +7,24 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', 'error.log'); // エラーログをerror.logファイルに記録
 error_reporting(E_ALL);
+
+// if(isset($_SESSION['seller_id'])){
+//     $foo = <<<END
+//     <form action="seller_out.php" method="post">
+//         <input type="submit" name="logout" value="ログアウト">
+//     </form>
+//     <a href="seller_products.php">登録済み商品一覧</a><br>
+//     <a href="../chat_rooms.php">チャットルーム一覧</a>
+//     END;
+// }else{
+//     $foo = <<<END
+//     <a href="seller.php">新規登録</a>
+//     <a href="seller_log.php">ログイン</a><br>
+//     ユーザー登録またはログインを完了させてください。
+//     <br>
+//     <br>
+//     END;
+// }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -36,6 +54,7 @@ error_reporting(E_ALL);
                     ?>
                     <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
                     <li class="menu-item"><a href=""><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    <?=//$foo?>
                 </ul>
             </div>
             <div>
