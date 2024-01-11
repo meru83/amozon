@@ -54,7 +54,7 @@ error_reporting(E_ALL);
                     ?>
                     <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
                     <li class="menu-item"><a href=""><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
-                    <?=//$foo?>
+                    <!--log--->
                 </ul>
             </div>
             <div>
