@@ -194,11 +194,11 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                             <form action="innerCart.php" method="post">
                                 <input type="hidden" name="product_id" value="$product_id">
                                 <input type="hidden" name="color_size_id" value="$color_size_id">
-                                <button type="submit" name="submit">カートに入れる</button>
+                                <button type="submit" name="submit" class="cart_btn">カートに入れる</button>
                             </form>
                             END;
                         }else{
-                            $htmlText .= "<p class=''>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
+                            $htmlText .= "<p class='sen'>カートに入れる</p>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
                         }
                         // 他の情報も必要に応じて表示
                         $count++;
