@@ -7,6 +7,17 @@ img {
     height: 200px;
 }
 
+.btn-img {
+    border: 0px;
+    margin-left: 5px;
+    padding: 0;
+    width:30px;
+    height:30px;
+    background: url(../img/musimegane.png) left top no-repeat;
+    background-size: contain;
+    cursor: pointer;
+}
+
 #search{
     width: 300px;
     height: 30px;
