@@ -20,7 +20,6 @@ if(isset($_SESSION['seller_id'])){
         <a href="seller.php"><div class="log_style">新規登録</div></a>
         <a href="seller_log.php"><div class="log_style">ログイン</div></a>
     </div>
-
     END;
 }
 ?>

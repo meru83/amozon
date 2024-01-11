@@ -7,6 +7,21 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', 'error.log'); // エラーログをerror.logファイルに記録
 error_reporting(E_ALL);
+
+if(isset($_SESSION['user_id'])){
+    $foo2 = <<<END
+    <form action="logout.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    END;
+}else{
+    $foo2 = <<<END
+    <div class="New_log">
+        <a href="register.php"><div class="log_style">新規登録</div></a>
+        <a href="login.php"><div class="log_style">ログイン</div></a>
+    </div>
+    END;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -17,9 +32,11 @@ error_reporting(E_ALL);
     <title>ユーザートップ</title>
 </head>
 <body>
-    
-
-    
+    <div id="header" class="header">
+        <div class="space"></div>
+        <h1 class="h1_White">トップページ</h1>
+        <?=$foo2?>
+    </div>
     <div class="Amozon-container">
         <!-- Left Side Menu -->
         <div class="left-menu">
@@ -47,20 +64,6 @@ error_reporting(E_ALL);
             if(isset($_GET['error_message'])){
                 $error_message = $_GET['error_message'];
                 echo "<p>".$error_message."</p>";
-            }
-            if(isset($_SESSION['user_id'])){
-                echo <<<END
-                <form action="logout.php" method="post">
-                    <input type="submit" name="logout" value="ログアウト">
-                </form>
-                END;
-            }else{
-                echo <<<END
-                <a href="register.php">新規登録</a>
-                <a href="login.php">ログイン</a>
-                <br>
-                <br>
-                END;
             }
             ?>
         </div>
