@@ -69,11 +69,11 @@ if(isset($_SESSION['seller_id'])){
             <?php
             if(isset($_GET['error_message'])){
                 $error_message = $_GET['error_message'];
-                echo "<p>".$error_message."</p>";
+                echo "<p class='error_red'>".$error_message."</p>";
             }
 
             if(!isset($_SESSION['seller_id'])){
-                echo '※ユーザー登録またはログインを完了させてください。';
+                echo '<div class="error_red">※ユーザー登録またはログインを完了させてください。</div>';
             }
             ?>
         </div>

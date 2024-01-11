@@ -20,7 +20,6 @@
     width: 200px;
 }
 
-
 .log_out {
     padding: 10px;
     background-color: #005aae;
@@ -42,7 +41,6 @@
 .right-content {
     margin-top: 88px;
 }
-
 
 .user_top_form {
     position: fixed;
@@ -69,6 +67,10 @@
 
 .log_style:hover {
     background-color: #004488;
+}
+
+.error_red {
+    color: red;
 }
 
 .Amozon-container {
