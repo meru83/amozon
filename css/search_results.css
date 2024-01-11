@@ -18,6 +18,10 @@ img {
     cursor: pointer;
 }
 
+.none {
+    display: none;
+}
+
 #search{
     width: 300px;
     height: 30px;
