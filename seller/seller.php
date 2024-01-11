@@ -90,7 +90,7 @@
         <input type="password" id="password" class="seller_textbox" placeholder="パスワード:" name="password"  required><br>
 
         <label for="rePassword"></label>
-        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認:" required><br>
+        <input type="password" id="rePassword" class="seller_textbox" name="rePassword" placeholder="パスワード再確認:" required><br>
 
         <label for="sellerName"></label>
         <input type="text" id="sellerName" class="seller_textbox" placeholder="アカウント名:" name="sellerName" required><br>
