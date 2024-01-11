@@ -28,13 +28,27 @@
                 </ul>
             </div>
         </div>
-    <div class="right-content">
-            <div class="amozon_profile">
-                <img src="img/cart_dake.svg" class="amozon_usericon">
-                <h1>ユーザー名</h1>
-                <p>こんにちは、私はユーザー名です。プロフィールの説明文がここに入ります。</p>
+            <div class="right-content">
+                <div class="amozon_profile">
+                    <img src="img/cart_dake.svg" class="amozon_usericon">
+                    <h1>ユーザー名</h1>
+                    <p>こんにちは、私はユーザー名です。プロフィールの説明文がここに入ります。</p>
+                    <div class="sub-content">
+                        <div class="sub-content-item">
+                            <h2>サブコンテンツ1</h2>
+                            <p>ここにサブコンテンツ1の説明が入ります。</p>
+                    </div>
+                    <div class="sub-content-item">
+                            <h2>サブコンテンツ2</h2>
+                            <p>ここにサブコンテンツ2の説明が入ります。</p>
+                    </div>
+                    <div class="sub-content-item">
+                            <h2>サブコンテンツ3</h2>
+                            <p>ここにサブコンテンツ3の説明が入ります。</p>
+                    </div>
+                </div>
             </div>
-    </div>
+        </div>
 </div>
 </body>
 </html>

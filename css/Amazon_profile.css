@@ -13,6 +13,7 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 20px;
+    border: 1px solid;
 }
 
 .profile_container{
@@ -98,8 +99,8 @@ a, a:hover, a:active, a:visited {
 }
 
 .amozon_profile {
-    max-width: 1100px;
-    margin: 8px;
+    max-width: max-content;
+    margin: auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -107,7 +108,19 @@ a, a:hover, a:active, a:visited {
     text-align: center;
 }
 
+.sub-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 
+.sub-content-item {
+    flex: 0 0 calc(33.333% - 10px);
+    background-color: #eee;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
 
 /* 1266px以下でのスタイル */
 @media screen and (max-width: 1266px) {
