@@ -7,6 +7,22 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', 'error.log'); // エラーログをerror.logファイルに記録
 error_reporting(E_ALL);
+
+if(isset($_SESSION['seller_id'])){
+    $foo = <<<END
+    <form action="seller_out.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    END;
+}else{
+    $foo = <<<END
+    <div class="New_log">
+        <a href="seller.php"><div class="log_style">新規登録</div></a>
+        <a href="seller_log.php"><div class="log_style">ログイン</div></a>
+    </div>
+
+    END;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -17,6 +33,11 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="../css/Amozon_insta.css">
 </head>
 <body>
+    <div id="header" class="header">
+        <div class="space"></div>
+        <h1 class="h1_White">販売者側トップページ</h1>
+        <?=$foo?>
+    </div>
     <div class="Amozon-container">
         <!-- Left Side Menu -->
         <div class="left-menu">
@@ -46,28 +67,14 @@ error_reporting(E_ALL);
         </div>
         
         <div class="right-content">
-            <h1>販売者側</h1>
             <?php
             if(isset($_GET['error_message'])){
                 $error_message = $_GET['error_message'];
                 echo "<p>".$error_message."</p>";
             }
-            if(isset($_SESSION['seller_id'])){
-                echo <<<END
-                <form action="seller_out.php" method="post">
-                    <input type="submit" name="logout" value="ログアウト">
-                </form>
-                <a href="seller_products.php">登録済み商品一覧</a><br>
-                <a href="../chat_rooms.php">チャットルーム一覧</a>
-                END;
-            }else{
-                echo <<<END
-                <a href="seller.php">新規登録</a>
-                <a href="seller_log.php">ログイン</a><br>
-                ユーザー登録またはログインを完了させてください。
-                <br>
-                <br>
-                END;
+
+            if(!isset($_SESSION['seller_id'])){
+                echo '※ユーザー登録またはログインを完了させてください。';
             }
             ?>
         </div>
