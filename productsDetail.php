@@ -96,7 +96,7 @@ $detailResult = $detailStmt->get_result();
 $lastImg = array();
 if($detailResult && $detailResult->num_rows > 0){
     echo '<div class="targetTextAll">';//商品ごと
-    echo '<div class="targetImgAll swiper">';//画像
+    echo '<div class="targetImgAll swiper float">';//画像
     echo '<div class="swiper-wrapper">';
     while($row = $detailResult->fetch_assoc()){
         $productName = $row['productname'];
@@ -189,7 +189,6 @@ $htmlText = <<<END
 <div>出品日　　　$create_at</div>
 <div>出品者　　　$seller_id</div>
 </div>
-<hr>
 
 <form name="sizeChangeForm" id="sizeChangeForm" method="post">
 <input type="hidden" name="product_id" value="$product_id" required>
@@ -387,7 +386,7 @@ function getColor($conn, $color_code){
 echo <<<HTML
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    const swiper = new Swiper('.swiper', {
+    const swiper2 = new Swiper('.swiper', {
         // Optional parameters
         direction: 'horizontal',
         loop: true,
