@@ -22,6 +22,7 @@ session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
+echo '<link rel="stylesheet" href="../css/seller_img.css">';
 echo "<h1>登録済み商品一覧</h1>";
 echo "<h2>$seller_name 様</h2>";
 echo "<div id='errorMessage'></div>";

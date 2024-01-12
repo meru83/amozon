@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-09 03:16:02
+-- 生成日時: 2024-01-12 08:31:48
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -215,8 +215,8 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (11, '#FFFFFF', 'L', 20, 2200, 36, 1),
 (11, '#FFFFFF', 'M', 10, 2200, 37, 1),
 (11, '#FFFFFF', 'S', 20, 2200, 38, 1),
-(12, '#AD8EEF', 'FREE', 5, 2600, 39, 1),
-(12, '#F98140', 'FREE', 10, 3000, 40, 1),
+(12, '#AD8EEF', 'FREE', 5, 2600, 39, 0),
+(12, '#F98140', 'FREE', 10, 3000, 40, 0),
 (13, '#313131', 'FREE', 20, 8000, 41, 1),
 (13, '#FFFFFF', 'FREE', 20, 8000, 42, 1),
 (14, '#9ED563', 'FREE', 30, 3500, 43, 1),
@@ -227,6 +227,7 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (17, '#313131', 'FREE', 20, 3100, 48, 1),
 (17, '#FFFFFF', 'FREE', 20, 2500, 49, 1),
 (18, '#313131', 'FREE', 15, 2600, 50, 1),
+(18, '#AAB2BE', 'M', 20, 2200, 646, 1),
 (18, '#FFFFFF', 'FREE', 5, 2600, 51, 1),
 (19, '#81604C', 'FREE', 20, 2500, 52, 1),
 (20, '#AAB2BE', 'FREE', 20, 2500, 53, 1),
@@ -4453,7 +4454,61 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (279, 642, 'santhosh-vaithiyanathan-ylHcWlrMlzs-unsplash642.jpg'),
 (280, 643, 'santhosh-vaithiyanathan-ylHcWlrMlzs-unsplash643.jpg'),
 (281, 644, 'sean-benesh-TICynpQt8uk-unsplash644.jpg'),
-(282, 645, 'sean-benesh-TICynpQt8uk-unsplash645.jpg');
+(282, 645, 'sean-benesh-TICynpQt8uk-unsplash645.jpg'),
+(283, 21, 'TsyatuPAKE4962_TP_V21.jpg'),
+(284, 23, 'lumin-6Hv2W9Q2Pw0-unsplash23.jpg'),
+(285, 24, 'alyssa-degarde-yhypwE8RKks-unsplash24.jpg'),
+(286, 28, 'tennis-3417780_128028.jpg'),
+(287, 32, 'adult-1845699_128032.jpg'),
+(288, 30, 'running-8268566_128030.jpg'),
+(289, 38, 'rui-silvestre-hAMJpesMeDE-unsplash38.jpg'),
+(290, 37, 'rui-silvestre-hAMJpesMeDE-unsplash37.jpg'),
+(291, 36, 'rui-silvestre-hAMJpesMeDE-unsplash36.jpg'),
+(292, 33, 'codi-bezouka-smith-vq_Q6AD-I2c-unsplash33.jpg'),
+(293, 34, 'codi-bezouka-smith-vq_Q6AD-I2c-unsplash34.jpg'),
+(294, 35, 'codi-bezouka-smith-vq_Q6AD-I2c-unsplash35.jpg'),
+(295, 42, 'refargotohp-Q5QPy_LyQuA-unsplash42.jpg'),
+(296, 41, 'clement-vatte-f67Caxg3akg-unsplash41.jpg'),
+(297, 44, 'alex-suprun-lM4X4TQdngo-unsplash44.jpg'),
+(298, 43, 'counselor-4305394_128043.jpg'),
+(299, 45, 'adult-1851571_128045.jpg'),
+(300, 46, 'man-8223328_128046.jpg'),
+(301, 47, 'grzegorz-rakowski-kQ8_Enn70Gk-unsplash47.jpg'),
+(302, 49, 'alora-griffiths-WX7FSaiYxK8-unsplash49.jpg'),
+(303, 48, 'alexander-redl-d3bYmnZ0ank-unsplash48.jpg'),
+(304, 646, 'prakriti-khajuria-lxIZ6HVxXOk-unsplash646.jpg'),
+(305, 50, 'luis-olmos-fuVUcX6tnag-unsplash50.jpg'),
+(306, 51, 'troy-spoelma-ux2LvytLQ-A-unsplash51.jpg'),
+(307, 52, 'fabric-2892517_128052.jpg'),
+(308, 53, 'fashion-1283863_128053.jpg'),
+(309, 54, 'rafay-ansari-lETfyhB8g4Q-unsplash54.jpg'),
+(310, 55, 'rafay-ansari-lETfyhB8g4Q-unsplash55.jpg'),
+(311, 56, 'man-5575050_128056.jpg'),
+(312, 57, 'man-5575050_128057.jpg'),
+(313, 58, 'people-2597386_128058.jpg'),
+(314, 59, 'people-2597386_128059.jpg'),
+(315, 60, 'man-6601144_128060.jpg'),
+(316, 61, 'man-6601144_128061.jpg'),
+(317, 62, 'emmanuel-acua-UP7C2st74pk-unsplash62.jpg'),
+(318, 63, 'rabie-madaci-UAQHUxuqxlo-unsplash63.jpg'),
+(319, 64, 'gelmis-bartulis-gzlfj8Fjdk0-unsplash64.jpg'),
+(320, 65, 'gelmis-bartulis-gzlfj8Fjdk0-unsplash65.jpg'),
+(321, 66, 'jovan-vasiljevic-jRfgoqGfj5U-unsplash66.jpg'),
+(322, 67, 'jovan-vasiljevic-jRfgoqGfj5U-unsplash67.jpg'),
+(323, 68, 'man-3123561_128068.jpg'),
+(324, 70, 'leather-jacket-6773269_128070.jpg'),
+(325, 69, 'leather-jacket-6773269_128069.jpg'),
+(326, 72, 'portrait-1142167_128072.jpg'),
+(327, 71, 'portrait-1142167_128071.jpg'),
+(328, 75, 'smile-1160204_128075.jpg'),
+(329, 74, 'smile-1160204_128074.jpg'),
+(330, 73, 'smile-1160204_128073.jpg'),
+(331, 80, 'iam_os-e2lIvjdqGjw-unsplash80.jpg'),
+(332, 77, 'iam_os-e2lIvjdqGjw-unsplash77.jpg'),
+(333, 79, 'lea-ochel-nsRBbE6-YLs-unsplash79.jpg'),
+(334, 76, 'lea-ochel-nsRBbE6-YLs-unsplash76.jpg'),
+(335, 81, 'colton-sturgeon-oB7lLU9dwLc-unsplash81.jpg'),
+(336, 78, 'colton-sturgeon-oB7lLU9dwLc-unsplash78.jpg');
 
 -- --------------------------------------------------------
 
@@ -4983,7 +5038,7 @@ ALTER TABLE `chatrooms`
 -- テーブルの AUTO_INCREMENT `color_size`
 --
 ALTER TABLE `color_size`
-  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=646;
+  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=647;
 
 --
 -- テーブルの AUTO_INCREMENT `messages`
@@ -5007,7 +5062,7 @@ ALTER TABLE `products`
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=283;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
