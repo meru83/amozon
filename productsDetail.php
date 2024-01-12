@@ -4,17 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/search_style.css">
+    <link rel="stylesheet" href="css/productsDetail.css">
+    <link rel="stylesheet" href="css/Amozon_insta.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>検索</title>
+    <style>
+    .swiper {
+        width: 300px;
+        max-width: 100%; 
+        height: 200px; 
+        margin-left: 100px;
+    }
+    .swiper-slide img {
+        width: 300px;
+        height: 200px;
+    }
+    </style>
 </head>
 <body>
-<h1>商品詳細</h1>
-<form action="search_results.php" method="GET">
-    <div class="flexBox">
-        <label for="search">商品を検索</label>
-        <input type="text" id="search" name="search">
-        <button type="submit" class="btn-img"></button>
+<div id="header" class="header">
+        <div class="space"></div>
+        <h1 class="h1_White">検索</h1>
+        <div class="space"></div>
+</div>
+    <div class="Amozon-container">
+        <!-- Left Side Menu -->
+        <div class="left-menu">
+            <div>
+                <ul class="menu-list">
+                    <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                    <li class="menu-item"><a href=""><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                    <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                    <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                    <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                    <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
+                    <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                </ul>
+            </div>
+            <div>
+                <ul class="menu-list-bottom">
+                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
+                </ul>
+            </div>
         </div>
-    </form>
+        
+        <div class="right-content">
+        <form action="search_results.php" method="GET">
+            <div class="flexBox">
+                <label for="search">商品を検索</label>
+                <input type="text" id="search" name="search">
+                <button type="submit" class="btn-img"></button>
+            </div>
+        </form>
 <?php
 include "db_config.php";
 
@@ -54,7 +95,8 @@ $detailResult = $detailStmt->get_result();
 $lastImg = array();
 if($detailResult && $detailResult->num_rows > 0){
     echo '<div class="targetTextAll">';//商品ごと
-    echo '<div class="targetImgAll">';//画像
+    echo '<div class="targetImgAll swiper">';//画像
+    echo '<div class="swiper-wrapper">';
     while($row = $detailResult->fetch_assoc()){
         $productName = $row['productname'];
         $view = !is_null($row['view'])?$row['view']:"";
@@ -71,13 +113,58 @@ if($detailResult && $detailResult->num_rows > 0){
         $colorName = getColor($conn, $color_code);
         $img_url = !is_null($row['img_url'])?$row['img_url']:null;
         if(!is_null($img_url)){
+            echo '<div class="swiper-slide">';
             echo "<img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>";
-        }//else{
-            //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-        //}
+            echo "</div>";
+        }else{
+            echo '<div class="swiper-slide">';
+            echo '<img src="img/noImg.jpg">';
+            echo "</div>";
+        }
         //画像にサイズと色の説明が出るようにする。
     }
     echo '</div>';
+    echo <<<HTML
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- If we need scrollbar -->
+    <div class="swiper-scrollbar"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            // Optional parameters
+            direction: 'horizontal',
+            loop: true,
+            speed: 1000,
+            effect: 'coverflow',
+
+            // // If we need pagination
+            // pagination: {
+            //     el: '.swiper-pagination',
+            //     type: 'progressbar',
+            // },
+
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // // And if we need scrollbar
+            // scrollbar: {
+            //     el: '.swiper-scrollbar',
+            //     hide:true,
+            // },
+        });
+    </script>
+    HTML;
 }else{
     echo <<< END
     <script>
@@ -90,6 +177,7 @@ if($detailResult && $detailResult->num_rows > 0){
 
 $htmlText = <<<END
 <br>
+<div class="setumei">
 <div>価格　　　　￥<b class="b_price">$price</b></div>
 <div>商品名　　　$productName</div>
 <div>カテゴリ　　$big_category_name - $category_name - $small_category_name</div>
@@ -99,6 +187,7 @@ $htmlText = <<<END
 <div>色　　　　　$colorName</div>
 <div>出品日　　　$create_at</div>
 <div>出品者　　　$seller_id</div>
+</div>
 <hr>
 
 <form name="sizeChangeForm" id="sizeChangeForm" method="post">
@@ -238,6 +327,7 @@ while($row = $selectResult->fetch_assoc()){
 }
 echo '</div>';
 echo $tentative;
+echo '</div>';
 echo '</div>';
 // 他の情報も必要に応じて表示
 
