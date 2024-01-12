@@ -302,14 +302,6 @@ while($row = $selectResult->fetch_assoc()){
                      '</div>';
     }
     if(!in_array($sColor_size_id, $lastColorSize)){
-        echo '</div>';
-        echo '</div>';
-        echo $tentative;
-        echo '</div>';
-        echo '<div class="textAll">';
-        echo '<div class="imgAll swiper">';
-        echo '<div class="swiper-wrapper">';
-        echo $sImgText;
         echo <<<HTML
         </div>
         <!-- If we need pagination -->
@@ -323,6 +315,12 @@ while($row = $selectResult->fetch_assoc()){
         <div class="swiper-scrollbar"></div>
         </div>
         HTML;
+        echo $tentative;
+        echo '</div>';
+        echo '<div class="textAll">';
+        echo '<div class="imgAll swiper">';
+        echo '<div class="swiper-wrapper">';
+        echo $sImgText;
 
         $lastColorSize[] = $sColor_size_id;
         $tentative = <<<END
@@ -349,8 +347,19 @@ while($row = $selectResult->fetch_assoc()){
     }
 }
 
-echo '</div>';
-echo '</div>';
+echo <<<HTML
+</div>
+<!-- If we need pagination -->
+<div class="swiper-pagination"></div>
+
+<!-- If we need navigation buttons -->
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
+
+<!-- If we need scrollbar -->
+<div class="swiper-scrollbar"></div>
+</div>
+HTML;
 echo $tentative;
 echo '</div>';
 // 他の情報も必要に応じて表示
