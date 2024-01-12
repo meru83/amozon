@@ -142,7 +142,7 @@ if($pieces > 0){
     }
     $htmlText .= <<<END
         </select>
-        <button type="submit" name="submit">カートに入れる</button>
+        <button type="submit" name="submit" class="cart_btn">カートに入れる</button>
     </form>
     <br>
     <hr>
@@ -226,7 +226,7 @@ while($row = $selectResult->fetch_assoc()){
             <form action="innerCart.php" method="post">
                 <input type="hidden" name="product_id" value="$product_id">
                 <input type="hidden" name="color_size_id" value="$color_size_id">
-                <button type="submit" name="submit">カートに入れる</button>
+                <button type="submit" name="submit" class="cart_btn">カートに入れる</button>
             </form>
             END;
         }else{

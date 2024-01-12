@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/search_results.css">
+    <link rel="stylesheet" href="css/Amozon_insta.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>商品検索</title>
     <style>
@@ -21,14 +22,35 @@
 </head>
 
 <body>
-    <h1>商品検索</h1>
-    <form id="form" action="search_results.php" method="GET">
-    <div class="flexBox">
-        <label for="search">商品を検索</label>
-        <input type="text" id="search" name="search">
-        <button type="submit" id="submit" class="btn-img"></button>
-    </div>
-    </form>
+    <div class="Amozon-container">
+        <!-- Left Side Menu -->
+        <div class="left-menu">
+            <div>
+                <ul class="menu-list">
+                    <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                    <li class="menu-item"><a href="user_top.php"><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                    <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                    <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                    <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                    <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
+                    <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                </ul>
+            </div>
+            <div>
+                <ul class="menu-list-bottom">
+                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="right-content">
+            <form id="form" action="search_results.php" method="GET">
+            <div class="flexBox">
+                <label for="search">商品を検索</label>
+                <input type="text" id="search" name="search">
+                <button type="submit" id="submit" class="btn-img"></button>
+            </div>
+            </form>
 <?php
 // データベース接続
 include "db_config.php";
@@ -100,7 +122,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
             // 検索結果を表示
             if ($result->num_rows > 0) {
                 $lastImg = array();
-                echo '<div class="productAll">';
+                echo '<div class="productAll none">';
                 echo '<div class="imgAll swiper">';
                 echo '<div class="swiper-wrapper">';
                 while ($row = $result->fetch_assoc()) {
@@ -172,11 +194,11 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                             <form action="innerCart.php" method="post">
                                 <input type="hidden" name="product_id" value="$product_id">
                                 <input type="hidden" name="color_size_id" value="$color_size_id">
-                                <button type="submit" name="submit">カートに入れる</button>
+                                <button type="submit" name="submit" class="cart_btn">カートに入れる</button>
                             </form>
                             END;
                         }else{
-                            $htmlText .= "<p class=''>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
+                            $htmlText .= "<p class='sen'>カートに入れる</p>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
                         }
                         // 他の情報も必要に応じて表示
                         $count++;
@@ -239,6 +261,8 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
     }
     echo "</div>";//全体
     echo "該当商品が" . $count . "件見つかりました。";
+    echo "</div>";
+    echo "</div>";
 }else if(empty($searchText)){
     echo "検索キーワードを入力してください。<br>";
 }else{
@@ -279,79 +303,3 @@ form.addEventListener('submit',(e) => {
 });
 //ここ
 </script>
-
-
-<!--<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>    
-<style>
-    .swiper {
-        width: 600px;
-        max-width: 100%; 
-        height: 400px; 
-    }
-    .swiper-slide img {
-        width: 600px;
-        height: 400px;
-    }
-</style>
-</head>
-<body>-->
-<!-- Slider main container -->
-<!-- <div class="swiper"> -->
-  <!-- Additional required wrapper -->
-  <!-- <div class="swiper-wrapper"> -->
-    <!-- Slides -->
-    <!-- <div class="swiper-slide"><img src="images/kutu.jpg" alt=""></div>
-    <div class="swiper-slide"><img src="images/kutu2.jpg" alt=""></div>
-    <div class="swiper-slide"><img src="images/kutu3.jpg" alt=""></div>
-    <div class="swiper-slide"><img src="images/kutu4.jpg" alt=""></div>
-    <div class="swiper-slide"><img src="images/kutu5.jpg" alt=""></div>
-    <div class="swiper-slide"><img src="images/kutu6.jpg" alt=""></div>
-  </div> -->
-  <!-- If we need pagination -->
-  <!-- <div class="swiper-pagination"></div> -->
-
-  <!-- If we need navigation buttons -->
-  <!-- <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div> -->
-
-  <!-- If we need scrollbar -->
-  <!-- <div class="swiper-scrollbar"></div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-    const swiper = new Swiper('.swiper', {
-        // Optional parameters
-        direction: 'horizontal',
-        loop: true,
-        speed: 1000,
-        effect: 'coverflow', -->
-
-        <!-- // // If we need pagination
-        // pagination: {
-        //     el: '.swiper-pagination',
-        //     type: 'progressbar',
-        // },
-
-        // Navigation arrows
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-
-        // // And if we need scrollbar
-        // scrollbar: {
-        //     el: '.swiper-scrollbar',
-        //     hide:true,
-        // },
-    });
-</script>
-    
-</body>
-</html> -->
