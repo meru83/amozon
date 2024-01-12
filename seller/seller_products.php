@@ -192,7 +192,7 @@ if($selectResult && $selectResult->num_rows > 0){
             </label>
             </div>
 
-            <button type="button" onclick="confirmCategory($product_id)" id="confirmCategoryButton$product_id" style="display:none">再登録</button><br>
+            <button type="button" id="confirmCategoryButton$product_id" style="display:none">再登録</button><br>
 
             <button type="button" onclick="changeView($product_id)">変更</button><p id="view$product_id">概要　　　: $view</p><br>
             <button type="button" onclick="changeQuality($product_id)">変更</button><p id="quality$product_id">品質　　　: $quality<br>
@@ -494,8 +494,9 @@ function changeProductName(number){
 
 function changeCategory(number){
     var categoryBlock = document.getElementById('allCategory'+number);
-    var confirmCategoryButton = document.getElementByID('confirmCategoryButton'+number);
-    confirmCategoryButton = "block";
+    var confirmCategoryButton = document.getElementById('confirmCategoryButton'+number);
+    var categoryText = document.getElementById('categoryText'+number);
+    confirmCategoryButton.style.display = "block";
     categoryBlock.style.display = "none";
     var bigCate = document.getElementById('bigCate'+number);
     bigCate.style.display = "block";
@@ -514,7 +515,7 @@ function changeCategory(number){
     var small_category = document.getElementById('small_category'+number);
     big_category.addEventListener('change', (e) => {
         var num = big_category.selectedIndex;
-        b_name = big_category.options[num];
+        b_name = big_category.options[num].text;
         b_id = big_category.options[num].value;
         
         const formData = new FormData();
@@ -551,7 +552,9 @@ function changeCategory(number){
     });
     category.addEventListener('change', (e) => {
         var num = category.selectedIndex;
-        c_id = category.options[num];
+        var c_name_foo = category.options[num].text;
+        var c_name_index = c_name_foo.indexOf('-') + 2;
+        c_name = c_name_foo.substring(c_name_index);
         c_id = category.options[num].value;
 
         const formData = new FormData();
@@ -589,52 +592,54 @@ function changeCategory(number){
 
     small_category.addEventListener('change', (e) => {
         var num = small_category.selectedIndex;
-        s_id = small_category.options[num];
+        var s_name_foo = small_category.options[num].text;
+        var s_name_index = s_name_foo.indexOf('-') + 2
+        s_name = s_name_foo.substring(s_name_index);
         s_id = small_category.options[num].value;
     });
+    confirmCategoryButton.addEventListener('click', (e) => {
+        const formData = new FormData();
+        formData.append('product_id',number);
+        formData.append('big_category',b_id);
+        formData.append('category',c_id);
+        formData.append('small_category',s_id);
 
-    confirmCategory(number, b_id, c_id, s_id, categoryBlock, confirmCategoryButton);
-}
-
-function confirmCategory(number, b_id, c_id, s_id, categoryBlock, confirmCategoryButton){
-    var categoryText = document.getElementByID('categoryText'+number);
-    const formData = new FormData();
-    formData.append('product_id',number);
-    formData.append('big_category',b_id);
-    formData.append('category',c_id);
-    formData.append('small_category',s_id);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'confirmCategory.php',true);
-    xhr.send(formData);
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState === 4){
-            if(xhr.status === 200){
-                try{
-                    const response = JSON.parse(xhr.responseText);
-                    if(response){
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'confirmCategory.php',true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4){
+                if(xhr.status === 200){
+                    try{
+                        const response = JSON.parse(xhr.responseText);
                         response.forEach(function(row) {
-                        if(row.error_message === true){
-                            alert("カテゴリの再登録に成功しました。");
-                            categoryBlock.style.display = "block";
-                            categoryText.innerHTML = "カテゴリ名: ";
-                            confirmCategoryButton = "none";
-                        }else{
-                            alert("カテゴリの再登録に失敗しました。");
-                            categoryBlock.style.display = "block";
-                            confirmCategoryButton = "none";
-                        }
-                    });
-                    }else{
-                        console.error("Error parsing JSON response data");
+                            if(row.error_message === true){
+                                alert("カテゴリの再登録に成功しました。");
+                                categoryBlock.style.display = "block";
+                                categoryText.innerHTML = "カテゴリ名: " + b_name + " - " + c_name + " - " + s_name;
+                                bigCate.style.display = "none";
+                                cate.style.display = "none";
+                                smallCate.style.display = "none";
+                                confirmCategoryButton.style.display = "none";
+                            }else{
+                                alert("カテゴリの再登録に失敗しました。");
+                                categoryBlock.style.display = "block";
+                                bigCate.style.display = "none";
+                                cate.style.display = "none";
+                                smallCate.style.display = "none";
+                                confirmCategoryButton.style.display = "none";
+                            }
+                        });
+                    }catch(error){
+                        console.error("Error parsing JSON response: " + error.message);
+                        alert("リクエストが失敗しました。");
                     }
-                }catch(error){
-                    console.error("Error parsing JSON response: " + error.message);
+                }else{
+                    console.error("Error: " + xhr.status);
+                    alert("リクエストが失敗しました。");
                 }
-            }else{
-                console.error("Error: " + xhr.status);
             }
         }
-    }
+    });
 }
 </script>
