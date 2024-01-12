@@ -83,18 +83,18 @@
     <!---新規登録用の情報入力フォーム--->
     <form method="POST" id ='form' class="seller_form">
         <img src="../img/Re.ReaD2blue.svg" class="seller_brand">
-        <h1 class="seller_h1">販売専用アカウント 新規登録</h1>
-        <label for="seller_id">販売専用アカウントID:</label>
-        <input type="text" id="seller_id" class="seller_textbox" placeholder="re_read" name="seller_id" required><br>
+        <h1 class="seller_h1">新規登録</h1>
+        <label for="seller_id">販売専用アカウント ID</label>
+        <input type="text" id="seller_id" class="seller_textbox" placeholder="re_bank" name="seller_id" required><br>
         
-        <label for="number">電話番号：</label><br>
-        <input type="text" name="number" id="number" class="register_textbox" class="address_textbox" placeholder="ハイフンなし" required><br>
+        <label for="number">電話番号</label><br>
+        <input type="text" name="number" id="number" class="seller_textbox" class="address_textbox" placeholder="ハイフンなし" required><br>
         
-        <label for="password">パスワード:</label>
+        <label for="password">パスワード</label>
         <input type="password" id="password" class="seller_textbox" placeholder="8桁以上" name="password"  required><br>
-        <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認" required><br>
+        <input type="password" id="rePassword" class="seller_textbox" name="rePassword" placeholder="パスワード再確認" required><br>
 
-        <label for="sellerName">アカウント名:</label>
+        <label for="sellerName">アカウント名</label>
         <input type="text" id="sellerName" class="seller_textbox" placeholder="リ・リード" name="sellerName" required><br>
 
         <input type="submit" id="submit" name="register" class="seller_botton" value="新規登録">
