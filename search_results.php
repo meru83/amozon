@@ -22,6 +22,11 @@
 </head>
 
 <body>
+<div id="header" class="header">
+        <div class="space"></div>
+        <h1 class="h1_White">検索</h1>
+        <div class="space"></div>
+</div>
     <div class="Amozon-container">
         <!-- Left Side Menu -->
         <div class="left-menu">
