@@ -36,17 +36,16 @@
             </div>
             <div class="right-content">
 
-
-
-            
-        </div>
-
 <?php
 include "db_config.php";
 
 // セッションを開始します
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
+}
+
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
 }
 
 //エラーメッセージががある場合
@@ -58,17 +57,16 @@ if(isset($_GET['error_message'])){
 $count = 0;
 $countMax = 0;
 $htmlText = "";
+$lastImg = array();
 //セッションで管理されている場合
 
-//echo <div id="left">(メニューバー)</div>
-//echo <div id="right">商品ないとき一番下のelseの要素が出力される</div>;
-
-if(isset($_SESSION['user_id'])){
+if(isset($user_id)){
     //ログイン済みの時の処理を追加
     //データベースで管理
+    // $countMax++;
+    // $logSql = "SELECT ";
 }else if(isset($_SESSION['cart'])){
     //未ログの時(カートのsessionがある時)
-    $lastImg = array();
     for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
         $countMax++;
         $product_id = isset($_SESSION['cart']['product_id'][$i])?$_SESSION['cart']['product_id'][$i]:null;
@@ -100,9 +98,10 @@ if(isset($_SESSION['user_id'])){
                 $color_size_id = $row['color_size_id'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
                 if(!is_null($img_url)){
-                    $imgText = "
-                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
-                    </a>";
+                    $imgText = <<<END
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''>
+                    </a>
+                    END;
                 }//else{
                     //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
                 //}
@@ -150,8 +149,12 @@ if(isset($_SESSION['user_id'])){
                     echo $imgText;
                 }
             }
+            echo '</div>';
+            echo $htmlText;
+            echo '</div>';
+            $htmlText = "";
         }else if(!($_SESSION['cart']['product_id'][$i] === null) && !($_SESSION['cart']['color_size_id'][$i] === null) && !($_SESSION['cart']['pieces'][$i] = null)){
-            $htmlText = <<<END
+            echo <<<END
             <br>
             以前登録されていた商品は販売者の都合により削除されました
             <hr>
@@ -161,54 +164,53 @@ if(isset($_SESSION['user_id'])){
             $_SESSION['cart']['color_size_id'][$i] = null;
             $_SESSION['cart']['pieces'][$i] = null;
         }
-        
-        echo '</div>';
-        echo $htmlText;
-        echo '</div>';
-        $htmlText = "";
     }
 
     if($count !== 0) {
         echo $count . "件";
     }else{
         //0件
+        //ここ！！！！！！！！と一緒のデザイン
     }
-
-    echo <<<END
-    <script>
-    document.addEventListener('DOMContentLoaded',function(){
-        var countMax = $countMax;
-        for(let i = 0; i < countMax; i ++){
-            var iId = document.getElementById(i);
-            if(iId !== null){
-                iId.addEventListener('change',function(){
-                    piecesValue = iId.value;
-                    console.log(piecesValue);
-    
-                    const formData = new FormData();
-                    formData.append('piecesValue',piecesValue);
-                    formData.append('i', i);
-    
-                    const xhr = new XMLHttpRequest();
-    
-                    xhr.onreadystatechange = function(){
-                        if(xhr.readyState === 4 && xhr.status === 200){
-                            //console.log(i);
-                        }
-                    }
-    
-                    xhr.open('POST','increment.php',true);
-                    xhr.send(formData);
-                });
-            }
-        }
-    });
-    </script>
-    END;
 }else{
     //カートのsessionもないとき
+    //ここ！！！！！！！！と一緒のデザイン
     echo "カートに商品は登録されていません";
 }
+
+echo '</div>';//<div class="right-content">
+echo '</div>';//<div class="Amozon-container">
+
+echo <<<HTML
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    var countMax = $countMax;
+    for(let i = 0; i < countMax; i ++){
+        var iId = document.getElementById(i);
+        if(iId !== null){
+            iId.addEventListener('change',function(){
+                piecesValue = iId.value;
+
+                const formData = new FormData();
+                formData.append('piecesValue',piecesValue);
+                formData.append('i', i);
+
+                const xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        //console.log(i);
+                    }
+                }
+
+                xhr.open('POST','increment.php',true);
+                xhr.send(formData);
+            });
+        }
+    }
+});
+</script>
+HTML;
 
 function getColor($conn, $color_code){
     $colorSql = "SELECT * FROM color_name
@@ -224,21 +226,21 @@ function getColor($conn, $color_code){
 }
 ?>
 <script>
-    function deleteProducts(defdeleteI){
-        const formData = new FormData();
-        formData.append('i', defdeleteI);
+function deleteProducts(defdeleteI){
+    const formData = new FormData();
+    formData.append('i', defdeleteI);
 
-        const xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState === 4 && xhr.status === 200){
-                window.location.reload();
-            }
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            window.location.reload();
         }
-
-        xhr.open('POST','cartDelete.php',true);
-        xhr.send(formData);
     }
+
+    xhr.open('POST','cartDelete.php',true);
+    xhr.send(formData);
+}
 </script>
 </body>
 </html>
