@@ -680,9 +680,9 @@ function changeView(number){
                             console.log("a");
                             var viewElement = document.getElementById('view'+number);
                             viewElement.innerHTML  = "概要　　　: "+changeViewPrompt;
-                            alert("商品名の変更に成功しました。");
+                            alert("商品概要の変更に成功しました。");
                         }else{
-                                alert("商品名の変更に失敗しました。");
+                                alert("商品概要の変更に失敗しました。");
                         }
                     });
                 } catch (error) {
@@ -694,22 +694,47 @@ function changeView(number){
     }
 }
 
-// function changeQuality(number){
-//     var qualityBox = document.getElementById('qualityBox'+number);
-//     var qualityText = document.getElementById('qualityText'+number);
-//     var selectQualityBox = document.getElementById('selectQualityBox'+number);
-//     var selectQuality = document.getElementById('selectQuality'+number);
-//     qualityBox.style.display = "none";
-//     selectQualityBox.style.display = "block";
-//     selectQuality.addEventListener('change', (e) => {
-//         var num = selectQuality.selectedIndex;
-//         var qualityValue = selectQuality.options[num].value;
+function changeQuality(number){
+    var qualityBox = document.getElementById('qualityBox'+number);
+    var qualityText = document.getElementById('qualityText'+number);
+    var selectQualityBox = document.getElementById('selectQualityBox'+number);
+    var selectQuality = document.getElementById('selectQuality'+number);
+    qualityBox.style.display = "none";
+    selectQualityBox.style.display = "block";
+    selectQuality.addEventListener('change', (e) => {
+        var num = selectQuality.selectedIndex;
+        var qualityValue = selectQuality.options[num].value;
 
-//         const formData = new FormData();
-//         formData.append('quality', qualityValue);
+        const formData = new FormData();
+        formData.append('product_id', number);
+        formData.append('quality', qualityValue);
 
-//         const xhr = new XMLHttpRequest();
-//         xhr.open('POST','',true);
-//     });
-// }
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST','changeQuality.php',true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    response.forEach(function(row) {
+                        if(row.error_message === true){
+                            var qualityElement = document.getElementById('qualityText'+number);
+                            qualityElement.innerHTML  = "品質　　　: "+qualityValue;
+                            alert("品質の変更に成功しました。");
+                            qualityBox.style.display = "block";
+                            selectQualityBox.style.display = "none";
+                        }else{
+                            alert("品質の変更に失敗しました。");
+                            qualityBox.style.display = "block";
+                            selectQualityBox.style.display = "none";
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error parsing JSON response:", error);
+                    alert("リクエストが失敗しました。");
+                }
+            }
+        }
+    });
+}
 </script>
