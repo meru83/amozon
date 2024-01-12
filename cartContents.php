@@ -3,10 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="css/cartContentsStyle.css"> -->
+    <link rel="stylesheet" href="css/cartContentsStyle.css">
 </head>
 <body>
-    
+
+        <div id="header" class="header">
+            <div class="space"></div>
+            <h1 class="h1_White">トップページ</h1>
+            <div class="space"></div>
+        </div>
+
+        <div class="Amozon-container">
+
+        <!-- Left Side Menu -->
+            <div class="left-menu">
+                <div>
+                    <ul class="menu-list">
+                        <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                        <li class="menu-item"><a href=""><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                        <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                        <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                        <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                        <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
+                        <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="menu-list-bottom">
+                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right-content">
+
+
+
+            
+        </div>
+
 <?php
 include "db_config.php";
 
@@ -138,37 +172,33 @@ if(isset($_SESSION['user_id'])){
         echo $count . "件";
     }else{
         echo <<<HTML
-        <!-- <div class="Amozon-container"> -->
-            <!-- Left Side Menu -->
-            <!-- <div class="left-menu">
-                <div>
-                    <ul class="menu-list">
-                        <li class="menu-item"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
-                        <li class="menu-item"><a href=""><img src="img/home.png" class="logo"></span><span class="menu-item-text">ホーム</span></a></li>
-                        <li class="menu-item"><a href="search.php"><span class="menu-item-icon">🔍</span><span class="menu-item-text">検索</span></a></li>
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">📸</span><span class="menu-item-text">発見</span></a></li>
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">🎥</span><span class="menu-item-text">リール動画</span></li>
-                        <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">➕</span><span class="menu-item-text">#</span></a></li>
-                        <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="menu-list-bottom">
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">💬</span><span class="menu-item-text">Threads</span></a></li>
-                        <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
-                    </ul>
-                </div>
-            </div> 
-        ここ以上いらん-->
-            
-        <!---下のほうにも同じようなこと書かないといけない---->
-            <div class="right-content">
-                <h1 class="rigt-content-center">カート</h1>
-                <div class="rigt-content-center rigt-content-top">商品がありません</div>
-                <div class="homeBack">ホームに戻る</div>
+        <!-- <div id="header" class="header">
+            <div class="space"></div>
+            <h1 class="h1_White">トップページ</h1>
+            <div class="space"></div>
+        </div>
+        <div class="Amozon-container"> -->
+        <!-- Left Side Menu -->
+        <!-- <div class="left-menu">
+            <div>
+                <ul class="menu-list">
+                    <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                    <li class="menu-item"><a href=""><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                    <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                    <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                    <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                    <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
+                    <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                </ul>
             </div>
+            <div>
+                <ul class="menu-list-bottom">
+                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
+                </ul>
+            </div>
+        </div>
+        
+            <div class="right-content"> -->
         <!-- </div> -->
         HTML;
     }
