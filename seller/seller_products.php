@@ -52,6 +52,7 @@ $divStart = "";
 $formFlag = false;
 $checkFlag = true;
 $count = 0;
+$qualityArray = array("新品・未使用", "良品", "やや傷あり", "不良");
 if($selectResult && $selectResult->num_rows > 0){
     $lastImg = array();
     $lastProName = array();
@@ -194,8 +195,24 @@ if($selectResult && $selectResult->num_rows > 0){
 
             <button type="button" id="confirmCategoryButton$product_id" style="display:none">再登録</button><br>
 
-            <button type="button" onclick="changeView($product_id)">変更</button><p id="view$product_id">概要　　　: $view</p><br>
-            <button type="button" onclick="changeQuality($product_id)">変更</button><p id="quality$product_id">品質　　　: $quality<br>
+            <button type="button" onclick="changeView($product_id)">変更</button>
+            <p id="view$product_id">概要　　　: $view</p><br>
+            <div id="qualityBox$product_id">
+            <button type="button" onclick="changeQuality($product_id)">変更</button>
+            <p id="qualityText$product_id">品質　　　: $quality
+            </div>
+            <div id="selectQualityBox$product_id" style="display:none">
+                <label for="selectQuality$product_id">品質</label>
+                <select id="selectQuality$product_id">
+                    <option value="" selected hidden>選択してください</option>
+            END;
+            foreach($qualityArray as $value){
+                $qualityValue = $value;
+                $htmlText .= "<option value='$qualityValue'>$qualityValue</option>";
+            }
+            $htmlText .= <<<END
+                </select>
+            </div>
             出品日　　: $create_at<br>
             <br>
             END;
@@ -460,7 +477,7 @@ function addColorSize(addCount){
 
 function changeProductName(number){
     //productnameに新しい商品名
-    productname = window.prompt("新しい商品名を入力してください", "");
+    var productname = window.prompt("新しい商品名を入力してください", "");
     if(productname != "" && productname != null){
         const formData = new FormData();
         formData.append('product_id',number);
@@ -642,4 +659,57 @@ function changeCategory(number){
         }
     });
 }
+
+function changeView(number){
+    //viewに新しい概要
+    var changeViewPrompt = window.prompt("商品の概要を入力してください", "");
+    if(changeViewPrompt != "" && changeViewPrompt != null){
+        const formData = new FormData();
+        formData.append('product_id',number);
+        formData.append('view',changeViewPrompt);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST','changeView.php',true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    response.forEach(function(row) {
+                        if(row.error_message === true){
+                            console.log("a");
+                            var viewElement = document.getElementById('view'+number);
+                            viewElement.innerHTML  = "概要　　　: "+changeViewPrompt;
+                            alert("商品名の変更に成功しました。");
+                        }else{
+                                alert("商品名の変更に失敗しました。");
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error parsing JSON response:", error);
+                    alert("リクエストが失敗しました。");
+                }
+            }
+        }
+    }
+}
+
+// function changeQuality(number){
+//     var qualityBox = document.getElementById('qualityBox'+number);
+//     var qualityText = document.getElementById('qualityText'+number);
+//     var selectQualityBox = document.getElementById('selectQualityBox'+number);
+//     var selectQuality = document.getElementById('selectQuality'+number);
+//     qualityBox.style.display = "none";
+//     selectQualityBox.style.display = "block";
+//     selectQuality.addEventListener('change', (e) => {
+//         var num = selectQuality.selectedIndex;
+//         var qualityValue = selectQuality.options[num].value;
+
+//         const formData = new FormData();
+//         formData.append('quality', qualityValue);
+
+//         const xhr = new XMLHttpRequest();
+//         xhr.open('POST','',true);
+//     });
+// }
 </script>
