@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-12 07:55:15
+-- 生成日時: 2024-01-12 08:31:48
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -4490,7 +4490,25 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (315, 60, 'man-6601144_128060.jpg'),
 (316, 61, 'man-6601144_128061.jpg'),
 (317, 62, 'emmanuel-acua-UP7C2st74pk-unsplash62.jpg'),
-(318, 63, 'rabie-madaci-UAQHUxuqxlo-unsplash63.jpg');
+(318, 63, 'rabie-madaci-UAQHUxuqxlo-unsplash63.jpg'),
+(319, 64, 'gelmis-bartulis-gzlfj8Fjdk0-unsplash64.jpg'),
+(320, 65, 'gelmis-bartulis-gzlfj8Fjdk0-unsplash65.jpg'),
+(321, 66, 'jovan-vasiljevic-jRfgoqGfj5U-unsplash66.jpg'),
+(322, 67, 'jovan-vasiljevic-jRfgoqGfj5U-unsplash67.jpg'),
+(323, 68, 'man-3123561_128068.jpg'),
+(324, 70, 'leather-jacket-6773269_128070.jpg'),
+(325, 69, 'leather-jacket-6773269_128069.jpg'),
+(326, 72, 'portrait-1142167_128072.jpg'),
+(327, 71, 'portrait-1142167_128071.jpg'),
+(328, 75, 'smile-1160204_128075.jpg'),
+(329, 74, 'smile-1160204_128074.jpg'),
+(330, 73, 'smile-1160204_128073.jpg'),
+(331, 80, 'iam_os-e2lIvjdqGjw-unsplash80.jpg'),
+(332, 77, 'iam_os-e2lIvjdqGjw-unsplash77.jpg'),
+(333, 79, 'lea-ochel-nsRBbE6-YLs-unsplash79.jpg'),
+(334, 76, 'lea-ochel-nsRBbE6-YLs-unsplash76.jpg'),
+(335, 81, 'colton-sturgeon-oB7lLU9dwLc-unsplash81.jpg'),
+(336, 78, 'colton-sturgeon-oB7lLU9dwLc-unsplash78.jpg');
 
 -- --------------------------------------------------------
 
@@ -5044,7 +5062,7 @@ ALTER TABLE `products`
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=319;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
