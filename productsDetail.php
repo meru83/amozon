@@ -1,3 +1,20 @@
+<?php
+if(isset($_SESSION['user_id'])){
+    $foo2 = <<<END
+    <form action="logout.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    END;
+}else{
+    $foo2 = <<<END
+    <div class="New_log">
+        <a href="register.php"><div class="log_style">新規登録</div></a>
+        <a href="login.php"><div class="log_style">ログイン</div></a>
+    </div>
+    END;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -24,8 +41,8 @@
 <body>
 <div id="header" class="header">
         <div class="space"></div>
-        <h1 class="h1_White">検索</h1>
-        <div class="space"></div>
+        <h1 class="h1_White">詳細</h1>
+        <?=$foo2?>
 </div>
     <div class="Amozon-container">
         <!-- Left Side Menu -->
@@ -133,8 +150,6 @@ if($detailResult && $detailResult->num_rows > 0){
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
 
-    <!-- If we need scrollbar -->
-    <div class="swiper-scrollbar"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -319,8 +334,6 @@ while($row = $selectResult->fetch_assoc()){
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       
-        <!-- If we need scrollbar -->
-        <div class="swiper-scrollbar"></div>
         </div>
         HTML;
         echo $tentative;
@@ -366,8 +379,6 @@ echo <<<HTML
 <div class="swiper-button-prev"></div>
 <div class="swiper-button-next"></div>
 
-<!-- If we need scrollbar -->
-<div class="swiper-scrollbar"></div>
 </div>
 HTML;
 echo $tentative;

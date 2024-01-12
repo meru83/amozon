@@ -1,6 +1,22 @@
+<?php
+if(isset($_SESSION['user_id'])){
+    $foo2 = <<<END
+    <form action="logout.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    END;
+}else{
+    $foo2 = <<<END
+    <div class="New_log">
+        <a href="register.php"><div class="log_style">新規登録</div></a>
+        <a href="login.php"><div class="log_style">ログイン</div></a>
+    </div>
+    END;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,8 +40,8 @@
 <body>
 <div id="header" class="header">
         <div class="space"></div>
-        <h1 class="h1_White">検索</h1>
-        <div class="space"></div>
+        <h1 class="h1_White">検索結果</h1>
+        <?=$foo2?>
 </div>
     <div class="Amozon-container">
         <!-- Left Side Menu -->
@@ -171,8 +187,6 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-button-next"></div>
 
-                            <!-- If we need scrollbar -->
-                            <div class="swiper-scrollbar"></div>
                             </div>
                         HTML;
                         echo $htmlText;
@@ -220,8 +234,6 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
 
-                <!-- If we need scrollbar -->
-                <div class="swiper-scrollbar"></div>
                 </div>
                 HTML;
                 echo $htmlText;

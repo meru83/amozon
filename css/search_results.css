@@ -35,6 +35,20 @@ img {
     cursor: pointer;
 }
 
+.log_style {
+    padding: 10px;
+    background-color: #005aae;
+    border: none;
+    border-radius: 20px;
+    margin-right: 10px;
+    color: white;
+    font-size: 16px;
+}
+
+.log_style:hover {
+    background-color: #004488;
+}
+
 button.cart_btn {
     background: black;
     color: white;
