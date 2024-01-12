@@ -278,7 +278,8 @@ $selectStmt->execute();
 $selectResult = $selectStmt->get_result();
 $lastColorSize = array();
 $tentative = "";
-echo '<div class="textAll">';
+$sImgText = null;
+echo '<div class="textAll none">';
 echo '<div class="imgAll swiper">';
 echo '<div class="swiper-wrapper">';
 while($row = $selectResult->fetch_assoc()){
@@ -290,16 +291,20 @@ while($row = $selectResult->fetch_assoc()){
     $sPrice = $row['price'];
     $sColor_size_id = $row['color_size_id'];
     if(!is_null($sImg_url)){
-        $sImgText = "<div class='swiper-slide'>";
-                        "<a href='productsDetail.php?product_id=$product_id&color_size_id=$sColor_size_id'>";
-                            "<img src='seller/p_img/$sImg_url' alt='服の写真'>";
-                        "</a>";
-                    "</div>";
+        $sImgText = <<<END
+        <div class='swiper-slide'>
+            <a href='productsDetail.php?product_id=$product_id&color_size_id=$sColor_size_id'>
+                <img src='seller/p_img/$sImg_url' alt='服の写真'>
+            </a>
+        </div>
+        END;
     }else{
          // ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-         $sImgText = '<div class="swiper-slide">';
-                        '<img src="img/noImg.jpg">';
-                     '</div>';
+        $sImgText = <<<END
+        <div class="swiper-slide">
+            <img src="img/noImg.jpg">
+        </div>
+        END;
     }
     if(!in_array($sColor_size_id, $lastColorSize)){
         echo <<<HTML
@@ -361,6 +366,7 @@ echo <<<HTML
 </div>
 HTML;
 echo $tentative;
+echo '</div>';
 echo '</div>';
 // 他の情報も必要に応じて表示
 
