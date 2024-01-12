@@ -68,8 +68,10 @@ if($selectResult && $selectResult->num_rows > 0){
     </form>
     カラー:$colorName サイズ:$size <br>
     　　  商品名　: $productname <br>
-    <button type="button" onclick="changePrice($color_size_id)">変更</button><p id="priceText">価格　　: $price </p><br>
-    <button type="button" onclick="changePieces($color_size_id)">変更</button><p id="piecesText">在庫数　: $pieces </p><br>
+    <button type="button" onclick="changePrice($color_size_id)">変更</button>
+    <p id="priceText">価格　　: $price </p><br>
+    <button type="button" onclick="changePieces($color_size_id)">変更</button>
+    <p id="piecesText">在庫数　: $pieces </p><br>
     出品日　: $create_at <br>
     END;
 }
@@ -110,6 +112,38 @@ function changePrice(id){
                             alert("価格を変更しました。");
                         }else{
                                 alert("価格の変更に失敗しました。");
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error parsing JSON response:", error);
+                    alert("リクエストが失敗しました。");
+                }
+            }
+        }
+    }
+}
+
+function changePieces(id){
+    newPieces = window.prompt("在庫数を入力してください","");
+    if(newPieces != "" && newPieces != null){
+        const formData = new FormData();
+        formData.append('color_size_id', id);
+        formData.append('pieces', newPieces);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST','changePieces.php',true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    response.forEach(function(row) {
+                        if(row.error_message === true){
+                            var piecesElement = document.getElementById('piecesText');
+                            piecesElement.innerHTML = "在庫数　: "+newPieces;
+                            alert("在庫数を変更しました。");
+                        }else{
+                                alert("在庫数の変更に失敗しました。");
                         }
                     });
                 } catch (error) {

@@ -279,8 +279,10 @@ $selectStmt->execute();
 $selectResult = $selectStmt->get_result();
 $lastColorSize = array();
 $tentative = "";
-echo '<div class="textAll">';
-echo '<div class="imgAll">';
+$sImgText = null;
+echo '<div class="textAll none">';
+echo '<div class="imgAll swiper">';
+echo '<div class="swiper-wrapper">';
 while($row = $selectResult->fetch_assoc()){
     $sImg_url = isset($row['img_url'])?$row['img_url']:null;
     $colorCode = $row['color_code'];
@@ -290,18 +292,42 @@ while($row = $selectResult->fetch_assoc()){
     $sPrice = $row['price'];
     $sColor_size_id = $row['color_size_id'];
     if(!is_null($sImg_url)){
-        $sImgText = "<a href='productsDetail.php?product_id=$product_id&color_size_id=$sColor_size_id'><img src='seller/p_img/$sImg_url' alt='服の写真'></a>";
-    }//else{
-    //     // ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-    //     $sImgText = "<a><img><</a>";
-    // }
+        $sImgText = <<<END
+        <div class='swiper-slide'>
+            <a href='productsDetail.php?product_id=$product_id&color_size_id=$sColor_size_id'>
+                <img src='seller/p_img/$sImg_url' alt='服の写真'>
+            </a>
+        </div>
+        END;
+    }else{
+         // ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
+        $sImgText = <<<END
+        <div class="swiper-slide">
+            <img src="img/noImg.jpg">
+        </div>
+        END;
+    }
     if(!in_array($sColor_size_id, $lastColorSize)){
-        echo '</div>';
+        echo <<<HTML
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+      
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      
+        <!-- If we need scrollbar -->
+        <div class="swiper-scrollbar"></div>
+        </div>
+        HTML;
         echo $tentative;
         echo '</div>';
         echo '<div class="textAll">';
-        echo '<div class="imgAll">';
+        echo '<div class="imgAll swiper">';
+        echo '<div class="swiper-wrapper">';
         echo $sImgText;
+
         $lastColorSize[] = $sColor_size_id;
         $tentative = <<<END
         <br>
@@ -326,7 +352,20 @@ while($row = $selectResult->fetch_assoc()){
         echo $sImgText;
     }
 }
-echo '</div>';
+
+echo <<<HTML
+</div>
+<!-- If we need pagination -->
+<div class="swiper-pagination"></div>
+
+<!-- If we need navigation buttons -->
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
+
+<!-- If we need scrollbar -->
+<div class="swiper-scrollbar"></div>
+</div>
+HTML;
 echo $tentative;
 echo '</div>';
 echo '</div>';
@@ -344,6 +383,37 @@ function getColor($conn, $color_code){
         return $colorName;
     } 
 }
+
+echo <<<HTML
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        effect: 'coverflow',
+
+        // // If we need pagination
+        // pagination: {
+        //     el: '.swiper-pagination',
+        //     type: 'progressbar',
+        // },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        //     hide:true,
+        // },
+    });
+</script>
+HTML;
 ?>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
