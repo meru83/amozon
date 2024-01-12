@@ -16,6 +16,10 @@
     margin-left: 0;
 }
 
+  .seller_text{
+    text-align: center;
+  }
+
   .seller_brand {
     height: auto;
     width: 215px;

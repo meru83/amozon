@@ -122,6 +122,13 @@
         <input type="text" id="username" class="register_textbox" name="username" placeholder="リ・リード" required><br>
 
         <input type="submit" id="submit" name="register" class="register_botton" value="新規登録">
+
+        <div class="register_text">
+            <a href="login.php">ログイン</a>
+        </div>
+        <div class="register_text">
+        販売希望の方は<a href="seller/seller_log.php">こちら</a>
+        </div>
     </form>
 </body>
 </html>

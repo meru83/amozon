@@ -81,6 +81,7 @@
     }
     ?>
     <!---新規登録用の情報入力フォーム--->
+    <div>
     <form method="POST" id ='form' class="seller_form">
         <img src="../img/Re.ReaD2blue.svg" class="seller_brand">
         <h1 class="seller_h1">新規登録</h1>
@@ -98,7 +99,14 @@
         <input type="text" id="sellerName" class="seller_textbox" placeholder="リ・リード" name="sellerName" required><br>
 
         <input type="submit" id="submit" name="register" class="seller_botton" value="新規登録">
-    </form>
+                <div class="seller_text">
+                    <a href="seller_log.php">ログイン</a>
+                </div>
+                <div class="seller_text">
+                    ユーザーの方は<a href="../login.php">こちら</a>
+                </div>
+        </form>
+    </div>
 </body>
 </html>
 <script>

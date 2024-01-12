@@ -16,6 +16,10 @@
     margin-left: 0;
 }
 
+ .register_text{
+   text-align: center;
+ }
+
   .register_brand {
     height: auto;
     width: 215px;
