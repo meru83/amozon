@@ -179,21 +179,22 @@ if($detailResult && $detailResult->num_rows > 0){
 $htmlText = <<<END
 <br>
 <div class="setumei">
-<div>価格　　　　￥<b class="b_price">$price</b></div>
-<div>商品名　　　$productName</div>
-<div>カテゴリ　　$big_category_name - $category_name - $small_category_name</div>
-<div>概要　　　　$view</div>
-<div>品質　　　　$quality</div>
-<div>サイズ　　　$size</div>
-<div>色　　　　　$colorName</div>
-<div>出品日　　　$create_at</div>
-<div>出品者　　　$seller_id</div>
+<div class="flex">価格　　　　<div>￥<b class="b_price">$price</b></div></div>
+<div class="flex">商品名　　　<div>$productName</div></div>
+<div class="flex">カテゴリ　　<div>$big_category_name - $category_name - $small_category_name</div></div>
+<div class="flex">概要　　　　<div>$view</div></div>
+<div class="flex">品質　　　　<div>$quality</div></div>
+<div class="flex">サイズ　　　<div>$size</div></div>
+<div class="flex">色　　　　　<div>$colorName</div></div>
+<div class="flex">出品日　　　<div>$create_at</div></div>
+<div class="flex">出品者　　　<div>$seller_id</div></div>
 </div>
 
+<div class="sonota">
 <form name="sizeChangeForm" id="sizeChangeForm" method="post">
 <input type="hidden" name="product_id" value="$product_id" required>
 <input type="hidden" name="color_code" value="$color_code" required>
-<label id="pSizeChange" for="sizeChange">ほかのサイズ：</label><select name="sizeChange" id="sizeChange">
+<label id="pSizeChange" for="sizeChange">ほかのサイズ　</label><select name="sizeChange" id="sizeChange" class="sizeChangeStyle">
     <option hidden selected>$size</option>
 END;
 $sizeSql = "SELECT s.size FROM products p
@@ -221,8 +222,8 @@ if($pieces > 0){
     <form action="innerCart.php" method="post">
         <input type="hidden" name="product_id" value="$product_id">
         <input type="hidden" name="color_size_id" value="$color_size_id">
-        <label for="pieces">数量：</label>
-        <select name="pieces" id="pieces" required>
+        <label for="pieces">数量　</label>
+        <select name="pieces" id="pieces" class="piecesStyle" required>
             <option hidden value="">選択してください</option>
     END;
 
@@ -231,8 +232,10 @@ if($pieces > 0){
     }
     $htmlText .= <<<END
         </select>
+        <br>
         <button type="submit" name="submit" class="cart_btn">カートに入れる</button>
     </form>
+    </div>
     <br>
     <hr>
     <br><br><br><br><br>
@@ -240,7 +243,7 @@ if($pieces > 0){
 }else{
     $htmlText .= <<<END
     在庫なし
-    <p class="">カートに入れる</p>
+    <p class="sen">カートに入れる</p>
     <br>
     <hr>
     <br><br><br><br><br>
@@ -250,7 +253,7 @@ if($pieces > 0){
 if(!($htmlText === "")){
     echo $htmlText;
     echo '</div>';
-    echo "<h2>この商品の別のカラー：</h2><br>";
+    echo "<h2 class='noCart'>この商品の別のカラー</h2><br>";
 }
 
 
@@ -330,10 +333,11 @@ while($row = $selectResult->fetch_assoc()){
         $lastColorSize[] = $sColor_size_id;
         $tentative = <<<END
         <br>
+        <div class="sonota">
         <a href='productsDetail.php?product_id=$product_id&color_size_id=$sColor_size_id'>
-        色　　: $sColor_code
-        サイズ: $sSize<br>
-        価格　: $sPrice<br>
+        色　　　$sColor_code<br>
+        サイズ　$sSize<br>
+        価格　　$sPrice<br>
         </a>
         END;
         if($pieces > 0){
@@ -341,11 +345,12 @@ while($row = $selectResult->fetch_assoc()){
             <form action="innerCart.php" method="post">
                 <input type="hidden" name="product_id" value="$product_id">
                 <input type="hidden" name="color_size_id" value="$color_size_id">
-                <button type="submit" name="submit" class="cart_btn">カートに入れる</button>
+                <button type="submit" name="submit" class="cart_btn2">カートに入れる</button>
             </form>
+            </div>
             END;
         }else{
-            $tentative .= "<p class=''>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
+            $tentative .= "<p class='sen noCart'>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
         }
     }else{
         echo $sImgText;
