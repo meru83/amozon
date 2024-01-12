@@ -25,7 +25,7 @@
                     <input type="submit" id="subLog" name="log" value="ログイン" class="login_button">
                 </form>
                 <div class="register">
-                    <a href="register.php">新規登録</a>
+                    <a href="seller.php">新規登録</a>
                 </div>
                 <div class="hanbai">
                     ユーザーの方は<a href="../login.php">こちら</a>

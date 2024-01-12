@@ -19,6 +19,7 @@
 include "db_config.php";
 
 $htmlText = "";
+$sImgText = "";
 
 if(isset($_GET['product_id']) && isset($_GET['color_size_id'])){
     $product_id = $_GET['product_id'];
