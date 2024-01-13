@@ -374,8 +374,6 @@ while($row = $selectResult->fetch_assoc()){
         }
     }else{
         echo $sImgText;
-        echo '</div>';
-        echo '</div>';
     }
 }
 
