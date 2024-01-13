@@ -99,7 +99,7 @@ if(isset($user_id)){
                 }else{
                     //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
                     $imgText = <<<END
-                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='img/noImg' alt=''>
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='img/noImg.jpg' alt=''>
                     </a>
                     END;
                 }

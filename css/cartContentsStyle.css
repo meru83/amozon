@@ -190,3 +190,7 @@ a, a:hover, a:active, a:visited {
 .home:hover {
     background: #004488;
 }
+
+img {
+    height: 200px;
+}
