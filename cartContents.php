@@ -98,6 +98,10 @@ if(isset($user_id)){
                     END;
                 }//else{
                     //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
+                    $imgText = <<<END
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='img/noImg' alt=''>
+                    </a>
+                    END;
                 //}
                 if(!in_array($color_size_id, $lastImg)){
                     echo '</div>';
@@ -167,6 +171,8 @@ if(isset($user_id)){
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
+        echo "<div class='cart_no'>カートに商品は登録されていません";
+        echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
     }
 }else if(isset($_SESSION['cart'])){
     //未ログの時(カートのsessionがある時)
@@ -273,11 +279,14 @@ if(isset($user_id)){
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
+        echo "<div class='cart_no'>カートに商品は登録されていません";
+        echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
     }
 }else{
     //カートのsessionもないとき
     //ここ！！！！！！！！と一緒のデザイン
-    echo "カートに商品は登録されていません";
+    echo "<div class='cart_no'>カートに商品は登録されていません";
+    echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
 }
 
 echo '</div>';//<div class="right-content">

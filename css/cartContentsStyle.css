@@ -1,3 +1,4 @@
+/*-------------------------------サイドバー--------------------------------------*/
 *{
     margin: 0;
 }
@@ -168,4 +169,24 @@ a, a:hover, a:active, a:visited {
     .right-content {
         margin-left: 110px;
     }
+}
+
+/* ------------------------right-content中身------------------------ */
+
+.cart_no {
+    width: fit-content;
+    margin: 200px auto 0 auto;
+}
+
+.home {
+    text-align: center;
+    margin: 200px 60px 0 60px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #005aae;
+    color: white;
+}
+
+.home:hover {
+    background: #004488;
 }
