@@ -177,7 +177,6 @@ if(isset($user_id)){
                 echo <<<END
                 <br>
                 以前登録されていた商品は販売者の都合により削除されました
-                <hr>
                 END;
 
                 $deleteSql = "DELETE FROM cart WHERE user_id = ? && product_id = ? && color_size_id = ?";
@@ -230,7 +229,7 @@ if(isset($user_id)){
         $selectStmt->execute();
         $selectResult = $selectStmt->get_result();
         if($selectResult && $selectResult->num_rows > 1){
-            echo '<div class="htmlAll">';
+            echo '<div class="htmlAll none">';
             echo '<div class="imgAll swiper">';
             echo '<div class="swiper-wrapper">';
             while ($row = $selectResult->fetch_assoc()) {
@@ -274,7 +273,7 @@ if(isset($user_id)){
                     echo $htmlText;
                     echo '</div>';
                     echo '<div class="htmlAll">';
-                    echo '<div class="imgAll swiper">';
+                    echo '<div class="imgAll swiper float">';
                     echo '<div class="swiper-wrapper">';
                     echo $imgText;
 
@@ -294,7 +293,6 @@ if(isset($user_id)){
                         <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
                         <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
                         <br>
-                        <hr>
                         END;
                         $count++;
                     }else{
@@ -302,7 +300,6 @@ if(isset($user_id)){
                         在庫なし<br>
                         商品はカートから削除されます<br>
                         <br>
-                        <hr>
                         END;
                         $_SESSION['cart']['product_id'][$i] = null;
                         $_SESSION['cart']['color_size_id'][$i] = null;
@@ -324,14 +321,15 @@ if(isset($user_id)){
             
             </div>
             HTML;
+            echo '<div class="textStyle">';
             echo $htmlText;
+            echo '</div>';
             echo '</div>';
             $htmlText = "";
         }else if(!($_SESSION['cart']['product_id'][$i] === null) && !($_SESSION['cart']['color_size_id'][$i] === null) && !($_SESSION['cart']['pieces'][$i] = null)){
             echo <<<END
             <br>
             以前登録されていた商品は販売者の都合により削除されました
-            <hr>
             END;
             
             $_SESSION['cart']['product_id'][$i] = null;
@@ -341,7 +339,10 @@ if(isset($user_id)){
     }
 
     if($count !== 0) {
+        echo '<div class="hr">';
+        echo '<hr>';
         echo $count . "件";
+        echo '</div>';
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン

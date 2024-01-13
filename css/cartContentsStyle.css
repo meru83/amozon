@@ -194,3 +194,15 @@ a, a:hover, a:active, a:visited {
 .none {
     display: none;
 }
+
+.float {
+    float: left;
+}
+
+.textStyle {
+    padding-top: 168px;
+}
+
+.hr {
+    margin-top: 50px;
+}
