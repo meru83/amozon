@@ -3,16 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="css/cartContentsStyle.css"> -->
+    <link rel="stylesheet" href="css/cartContentsStyle.css">
 </head>
 <body>
-    
+
+        <div id="header" class="header">
+            <div class="space"></div>
+            <h1 class="h1_White">トップページ</h1>
+            <div class="space"></div>
+        </div>
+
+        <div class="Amozon-container">
+
+        <!-- Left Side Menu -->
+            <div class="left-menu">
+                <div>
+                    <ul class="menu-list">
+                        <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                        <li class="menu-item"><a href=""><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                        <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                        <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                        <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                        <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
+                        <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="menu-list-bottom">
+                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right-content">
+
 <?php
 include "db_config.php";
 
 // セッションを開始します
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
+}
+
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
 }
 
 //エラーメッセージががある場合
@@ -24,17 +57,119 @@ if(isset($_GET['error_message'])){
 $count = 0;
 $countMax = 0;
 $htmlText = "";
+$lastImg = array();
 //セッションで管理されている場合
 
-//echo <div id="left">(メニューバー)</div>
-//echo <div id="right">商品ないとき一番下のelseの要素が出力される</div>;
-
-if(isset($_SESSION['user_id'])){
+if(isset($user_id)){
     //ログイン済みの時の処理を追加
     //データベースで管理
+    $countMax++;
+    $logSql = "SELECT c.product_id, c.color_size_id, c.pieces AS cartPieces, p.productname, p.quality, s.service_status, s.color_code, s.size, s.pieces AS maxPieces, s.price, i.img_url FROM cart c
+                LEFT JOIN products p ON (c.product_id = p.product_id)
+                LEFT JOIN color_size s ON (c.color_size_id = s.color_size_id)
+                LEFT JOIN products_img i ON (c.color_size_id = i.color_size_id)
+                WHERE c.user_id = ?";
+    $logStmt = $conn->prepare($logSql);
+    $logStmt->bind_param("s",$user_id);
+    $logStmt->execute();
+    $logResult = $logStmt->get_result();
+    if($logResult && $logResult->num_rows > 1){
+        echo '<div class="htmlAll">';
+        echo '<div class="imgAll">';
+        while($row = $logResult->fetch_assoc()){
+            $service_status = $row['service_status'];
+            if($service_status == true){
+                $imgText = null;
+                $product_id = $row['product_id'];
+                $color_size_id = $row['color_size_id'];
+                $colorCode = $row['color_code'];
+                $colorName = getColor($conn, $colorCode);
+                $size = $row['size'];
+                $cartPieces = $row['cartPieces'];
+                $maxPieces = $row['maxPieces'];
+                $price  = $row['price'];
+                $productname = $row['productname'];
+                $quality = $row['quality'];
+                $img_url = is_null($row['img_url'])?null:$row['img_url'];
+                if(!is_null($img_url)){
+                    $imgText = <<<END
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''>
+                    </a>
+                    END;
+                }//else{
+                    //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
+                //}
+                if(!in_array($color_size_id, $lastImg)){
+                    echo '</div>';
+                    echo $htmlText;
+                    echo '</div>';
+                    echo '<div class="htmlAll">';
+                    echo '<div class="imgAll">';
+                    echo $imgText;
+                    $lastImg[] = $color_size_id;
+                    $htmlText = <<<END
+                    <br>
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
+                    色: $colorName
+                    サイズ: $size<br>
+                    商品名　　: $productname<br>
+                    価格　　　: $price<br>
+                    </a>
+                    <br>
+                    END;
+                    if($maxPieces >= $cartPieces){
+                        $htmlText .= <<<END
+                        <input type="hidden" id="product_id$count" value="$product_id">
+                        <input type="hidden" id="color_size_id$count" value="$color_size_id">
+                        <input type="number" id="$count" value="$cartPieces" min="1" max="$maxPieces">
+                        <button type="button" id="delete$count" onclick="deleteProducts($count)">削除</button>
+                        <br>
+                        <hr>
+                        END;
+                        $count++;
+                    }else{
+                        $htmlText .= <<<END
+                        在庫不足<br>
+                        商品はカートから削除されます<br>
+                        <br>
+                        <hr>
+                        END;
+                        $deleteSql = "DELETE FROM cart WHERE user_id = ? && product_id = ? && color_size_id = ?";
+                        $deleteStmt = $conn->prepare($deleteSql);
+                        $deleteStmt->bind_param("sii", $user_id, $product_id, $color_size_id);
+                        $deleteStmt->execute();
+                    }
+                    // 他の情報も必要に応じて表示
+                }else{
+                    echo $imgText;
+                }
+            }else{
+                echo <<<END
+                <br>
+                以前登録されていた商品は販売者の都合により削除されました
+                <hr>
+                END;
+
+                $deleteSql = "DELETE FROM cart WHERE user_id = ? && product_id = ? && color_size_id = ?";
+                $deleteStmt = $conn->prepare($deleteSql);
+                $deleteStmt->bind_param("sii", $user_id, $product_id, $color_size_id);
+                $deleteStmt->execute();
+            }
+        }
+        echo '</div>';
+        echo $htmlText;
+        echo '</div>';
+        $htmlText = "";
+    }
+
+    if($count !== 0) {
+        echo $count . "件";
+    }else{
+        //0件
+        //ここ！！！！！！！！と一緒のデザイン
+    }
 }else if(isset($_SESSION['cart'])){
     //未ログの時(カートのsessionがある時)
-    $lastImg = array();
     for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
         $countMax++;
         $product_id = isset($_SESSION['cart']['product_id'][$i])?$_SESSION['cart']['product_id'][$i]:null;
@@ -51,7 +186,7 @@ if(isset($_SESSION['user_id'])){
         $selectStmt->bind_param("ii",$product_id,$color_size_id);
         $selectStmt->execute();
         $selectResult = $selectStmt->get_result();
-        if($selectResult && $selectResult->num_rows > 0){
+        if($selectResult && $selectResult->num_rows > 1){
             echo '<div class="htmlAll">';
             echo '<div class="imgAll">';
             while ($row = $selectResult->fetch_assoc()) {
@@ -66,9 +201,10 @@ if(isset($_SESSION['user_id'])){
                 $color_size_id = $row['color_size_id'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
                 if(!is_null($img_url)){
-                    $imgText = "
-                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt='$colorName 色,".$row['size']."サイズ'>
-                    </a>";
+                    $imgText = <<<END
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''>
+                    </a>
+                    END;
                 }//else{
                     //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
                 //}
@@ -87,18 +223,18 @@ if(isset($_SESSION['user_id'])){
                     色: $colorName
                     サイズ: $size<br>
                     商品名　　: $productname<br>
-                    カテゴリ名: $category_name<br>
                     価格　　　: $price<br>
                     </a>
                     <br>
                     END;
-                    if($maxPieces > 0){
+                    if($maxPieces >= $pieces){
                         $htmlText .= <<<END
                         <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
                         <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
                         <br>
                         <hr>
                         END;
+                        $count++;
                     }else{
                         $htmlText .= <<<END
                         在庫なし<br>
@@ -111,13 +247,16 @@ if(isset($_SESSION['user_id'])){
                         $_SESSION['cart']['pieces'][$i] = null;
                     }
                     // 他の情報も必要に応じて表示
-                    $count++;
                 }else{
                     echo $imgText;
                 }
             }
+            echo '</div>';
+            echo $htmlText;
+            echo '</div>';
+            $htmlText = "";
         }else if(!($_SESSION['cart']['product_id'][$i] === null) && !($_SESSION['cart']['color_size_id'][$i] === null) && !($_SESSION['cart']['pieces'][$i] = null)){
-            $htmlText = <<<END
+            echo <<<END
             <br>
             以前登録されていた商品は販売者の都合により削除されました
             <hr>
@@ -127,88 +266,66 @@ if(isset($_SESSION['user_id'])){
             $_SESSION['cart']['color_size_id'][$i] = null;
             $_SESSION['cart']['pieces'][$i] = null;
         }
-        
-        echo '</div>';
-        echo $htmlText;
-        echo '</div>';
-        $htmlText = "";
     }
 
     if($count !== 0) {
         echo $count . "件";
     }else{
-        echo <<<HTML
-        <!-- <div class="Amozon-container"> -->
-            <!-- Left Side Menu -->
-            <!-- <div class="left-menu">
-                <div>
-                    <ul class="menu-list">
-                        <li class="menu-item"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
-                        <li class="menu-item"><a href=""><img src="img/home.png" class="logo"></span><span class="menu-item-text">ホーム</span></a></li>
-                        <li class="menu-item"><a href="search.php"><span class="menu-item-icon">🔍</span><span class="menu-item-text">検索</span></a></li>
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">📸</span><span class="menu-item-text">発見</span></a></li>
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">🎥</span><span class="menu-item-text">リール動画</span></li>
-                        <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">❤️</span><span class="menu-item-text">お知らせ</span></a></li>
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">➕</span><span class="menu-item-text">#</span></a></li>
-                        <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="menu-list-bottom">
-                        <li class="menu-item"><a href=""><span class="menu-item-icon">💬</span><span class="menu-item-text">Threads</span></a></li>
-                        <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
-                    </ul>
-                </div>
-            </div> 
-        ここ以上いらん-->
-            
-        <!---下のほうにも同じようなこと書かないといけない---->
-            <div class="right-content">
-                <h1 class="rigt-content-center">カート</h1>
-                <div class="rigt-content-center rigt-content-top">商品がありません</div>
-                <div class="homeBack">ホームに戻る</div>
-            </div>
-        <!-- </div> -->
-        HTML;
+        //0件
+        //ここ！！！！！！！！と一緒のデザイン
     }
-    //echo </div>;
-
-    echo <<<END
-    <script>
-    document.addEventListener('DOMContentLoaded',function(){
-        var countMax = $countMax;
-        for(let i = 0; i < countMax; i ++){
-            var iId = document.getElementById(i);
-            if(iId !== null){
-                iId.addEventListener('change',function(){
-                    piecesValue = iId.value;
-                    console.log(piecesValue);
-    
-                    const formData = new FormData();
-                    formData.append('piecesValue',piecesValue);
-                    formData.append('i', i);
-    
-                    const xhr = new XMLHttpRequest();
-    
-                    xhr.onreadystatechange = function(){
-                        if(xhr.readyState === 4 && xhr.status === 200){
-                            //console.log(i);
-                        }
-                    }
-    
-                    xhr.open('POST','increment.php',true);
-                    xhr.send(formData);
-                });
-            }
-        }
-    });
-    </script>
-    END;
 }else{
     //カートのsessionもないとき
+    //ここ！！！！！！！！と一緒のデザイン
     echo "カートに商品は登録されていません";
 }
+
+echo '</div>';//<div class="right-content">
+echo '</div>';//<div class="Amozon-container">
+echo '</body>';
+echo '</html>';
+
+echo <<<HTML
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    var countMax = $countMax;
+    for(let i = 0; i < countMax; i++){
+        var iId = document.getElementById(i);
+        var productElement = document.getElementById('product_id'+i);
+        var colorSizeElement = document.getElementById('color_size_id'+i);
+        if(iId !== null){
+            iId.addEventListener('change',function(){
+                piecesValue = iId.value;
+                if(productElement !== null && colorSizeElement !== null){
+                    product_id = productElement.value;
+                    color_size_id = colorSizeElement.value;
+                }else{
+                    product_id = null;
+                    color_size_id = null;
+                }
+
+                const formData = new FormData();
+                formData.append('piecesValue', piecesValue);
+                formData.append('i', i);
+                formData.append('product_id', product_id);
+                formData.append('color_size_id', color_size_id);
+
+                const xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        //console.log(i);
+                    }
+                }
+
+                xhr.open('POST','increment.php',true);
+                xhr.send(formData);
+            });
+        }
+    }
+});
+</script>
+HTML;
 
 function getColor($conn, $color_code){
     $colorSql = "SELECT * FROM color_name
@@ -224,21 +341,21 @@ function getColor($conn, $color_code){
 }
 ?>
 <script>
-    function deleteProducts(defdeleteI){
-        const formData = new FormData();
-        formData.append('i', defdeleteI);
+function deleteProducts(defdeleteI){
+    const formData = new FormData();
+    formData.append('i', defdeleteI);
 
-        const xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState === 4 && xhr.status === 200){
-                window.location.reload();
-            }
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            window.location.reload();
         }
-
-        xhr.open('POST','cartDelete.php',true);
-        xhr.send(formData);
     }
+
+    xhr.open('POST','cartDelete.php',true);
+    xhr.send(formData);
+}
 </script>
 </body>
 </html>

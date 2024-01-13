@@ -1,3 +1,17 @@
+*{
+    margin: 0;
+}
+
+.header{
+    background-color: #99CCFF;
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+}
 
 .user_top_form {
     position: fixed;
@@ -7,8 +21,16 @@
     position: fixed;
 }
 
+.left-menu{
+    margin-top: 88px;
+}
+
+.right-content {
+    margin-top: 88px;
+}
 
 .Amozon-container {
+    display: flex;
     font-family: 'Arial', sans-serif;
     width: 100%;
     height: 100vh;
@@ -32,7 +54,7 @@
     position: fixed;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: 88%;
 }
 
 .menu-list-bottom {
@@ -49,7 +71,7 @@
     margin-bottom: auto;
 }
 
-.menu-item {
+.menu-item, .menu-item-logo {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -94,9 +116,11 @@ a, a:hover, a:active, a:visited {
 }
 
 .right-content {
-    margin-left: 250px;
+    margin-left: 280px;
+    width: 100%;
     height: 100%;
 }
+
 .rigt-content-center {
     text-align: center;
 }
@@ -130,7 +154,7 @@ a, a:hover, a:active, a:visited {
         display: none;
     }
 
-    .menu-item {
+    .menu-item, .menu-item-logo {
         justify-content: center;
         padding: 10px;
         box-sizing: border-box;   
@@ -145,7 +169,3 @@ a, a:hover, a:active, a:visited {
         margin-left: 110px;
     }
 }
-
-
-
-

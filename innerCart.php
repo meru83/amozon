@@ -30,10 +30,13 @@ if($piecesResult && $piecesResult->num_rows > 0){
 
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $checkSql = "SELECT user_id, product_id, color_size_id FROM cart c
+    $checkSql = "SELECT user_id FROM cart c
                 LEFT JOIN color_size s ON (c.color_size_id = s.color_size_id)
-                WHERE cart.user_id = '$user_id' && cart.product_id = $product_id  && cart.color_size_id = $color_size_id";
-    $checkResult = $conn->query($checkSql);
+                WHERE c.user_id = ? && c.product_id = ?  && c.color_size_id = ?";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param("sii", $user_id, $product_id, $color_size_id);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
     if($checkResult && $checkResult->num_rows === 0){
         $insertSql = "INSERT INTO cart(user_id, product_id, color_size_id, pieces)
                         VALUE(?,?,?,?)";
