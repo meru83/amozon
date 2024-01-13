@@ -231,7 +231,8 @@ if(isset($user_id)){
         $selectResult = $selectStmt->get_result();
         if($selectResult && $selectResult->num_rows > 1){
             echo '<div class="htmlAll">';
-            echo '<div class="imgAll">';
+            echo '<div class="imgAll swiper">';
+            echo '<div class="swiper-wrapper">';
             while ($row = $selectResult->fetch_assoc()) {
                 $imgText = null;
                 $colorCode = $row['color_code'];
@@ -245,20 +246,38 @@ if(isset($user_id)){
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
                 if(!is_null($img_url)){
                     $imgText = <<<END
-                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''>
-                    </a>
+                    <div class="swiper-slide">
+                        <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''></a>
+                    </div>
                     END;
-                }//else{
+                }else{
                     //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-                //}
+                    $imgText = <<<END
+                    <div class="swiper-slide">
+                        <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='img/noImg.jpg' alt=''></a>
+                    </div>
+                    END;
+                }
                 //画像にサイズと色の説明が出るようにする。
                 if(!in_array($color_size_id, $lastImg)){
                     echo '</div>';
+                    echo <<<HTML
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+                  
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+
+                    </div>
+                    HTML;
                     echo $htmlText;
                     echo '</div>';
                     echo '<div class="htmlAll">';
-                    echo '<div class="imgAll">';
+                    echo '<div class="imgAll swiper">';
+                    echo '<div class="swiper-wrapper">';
                     echo $imgText;
+
                     $lastImg[] = $color_size_id;
                     $htmlText = <<<END
                     <br>
@@ -294,7 +313,17 @@ if(isset($user_id)){
                     echo $imgText;
                 }
             }
-            echo '</div>';
+            echo <<<HTML
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+            
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            
+            </div>
+            HTML;
             echo $htmlText;
             echo '</div>';
             $htmlText = "";
@@ -392,6 +421,37 @@ echo <<<HTML
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        effect: 'coverflow',
+
+        // // If we need pagination
+        // pagination: {
+        //     el: '.swiper-pagination',
+        //     type: 'progressbar',
+        // },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        //     hide:true,
+        // },
+    });
+</script>
+HTML;
+
+echo <<<HTML
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper2 = new Swiper('.swiper', {
         // Optional parameters
         direction: 'horizontal',
         loop: true,
