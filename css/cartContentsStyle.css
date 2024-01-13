@@ -191,6 +191,6 @@ a, a:hover, a:active, a:visited {
     background: #004488;
 }
 
-img {
-    height: 200px;
+.none {
+    display: none;
 }

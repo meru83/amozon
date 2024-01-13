@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/cartContentsStyle.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <style>
+        .swiper {
+            width: 500px;
+            max-width: 100%; 
+            height: 300px; 
+        }
+        .swiper-slide img {
+            width: 500px;
+            height: 300px;
+        }
+    </style>
 </head>
 <body>
 
         <div id="header" class="header">
             <div class="space"></div>
-            <h1 class="h1_White">トップページ</h1>
+            <h1 class="h1_White">カート</h1>
             <div class="space"></div>
         </div>
 
@@ -74,8 +86,9 @@ if(isset($user_id)){
     $logStmt->execute();
     $logResult = $logStmt->get_result();
     if($logResult && $logResult->num_rows > 1){
-        echo '<div class="htmlAll">';
-        echo '<div class="imgAll">';
+        echo '<div class="htmlAll none">';
+        echo '<div class="imgAll swiper">';
+        echo '<div class="swiper-wrapper">';
         while($row = $logResult->fetch_assoc()){
             $service_status = $row['service_status'];
             if($service_status == true){
@@ -93,22 +106,35 @@ if(isset($user_id)){
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
                 if(!is_null($img_url)){
                     $imgText = <<<END
-                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''>
-                    </a>
+                    <div class="swiper-slide">
+                        <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''></a>
+                    </div>
                     END;
                 }else{
                     //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
                     $imgText = <<<END
-                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='img/noImg.jpg' alt=''>
-                    </a>
+                    <div class="swiper-slide">
+                        <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='img/noImg.jpg' alt=''></a>
+                    </div>
                     END;
                 }
                 if(!in_array($color_size_id, $lastImg)){
                     echo '</div>';
+                    echo <<<HTML
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+                  
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+
+                    </div>
+                    HTML;
                     echo $htmlText;
                     echo '</div>';
                     echo '<div class="htmlAll">';
-                    echo '<div class="imgAll">';
+                    echo '<div class="imgAll swiper">';
+                    echo '<div class="swiper-wrapper">';
                     echo $imgText;
                     $lastImg[] = $color_size_id;
                     $htmlText = <<<END
@@ -160,7 +186,17 @@ if(isset($user_id)){
                 $deleteStmt->execute();
             }
         }
-        echo '</div>';
+        echo <<<HTML
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+        
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        
+        </div>
+        HTML;
         echo $htmlText;
         echo '</div>';
         $htmlText = "";
@@ -351,6 +387,37 @@ function getColor($conn, $color_code){
         return $colorName;
     } 
 }
+
+echo <<<HTML
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        effect: 'coverflow',
+
+        // // If we need pagination
+        // pagination: {
+        //     el: '.swiper-pagination',
+        //     type: 'progressbar',
+        // },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        //     hide:true,
+        // },
+    });
+</script>
+HTML;
 ?>
 <script>
 function deleteProducts(defdeleteI){
@@ -369,5 +436,7 @@ function deleteProducts(defdeleteI){
     xhr.send(formData);
 }
 </script>
+
+
 </body>
 </html>
