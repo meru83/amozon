@@ -63,8 +63,111 @@ $lastImg = array();
 if(isset($user_id)){
     //ログイン済みの時の処理を追加
     //データベースで管理
-    // $countMax++;
-    // $logSql = "SELECT ";
+    $countMax++;
+    $logSql = "SELECT c.product_id, c.color_size_id, c.pieces AS cartPieces, p.productname, p.quality, s.service_status, s.color_code, s.size, s.pieces AS maxPieces, s.price, i.img_url FROM cart c
+                LEFT JOIN products p ON (c.product_id = p.product_id)
+                LEFT JOIN color_size s ON (c.color_size_id = s.color_size_id)
+                LEFT JOIN products_img i ON (c.color_size_id = i.color_size_id)
+                WHERE c.user_id = ?";
+    $logStmt = $conn->prepare($logSql);
+    $logStmt->bind_param("s",$user_id);
+    $logStmt->execute();
+    $logResult = $logStmt->get_result();
+    if($logResult && $logResult->num_rows > 1){
+        echo '<div class="htmlAll">';
+        echo '<div class="imgAll">';
+        while($row = $logResult->fetch_assoc()){
+            $service_status = $row['service_status'];
+            if($service_status == true){
+                $imgText = null;
+                $product_id = $row['product_id'];
+                $color_size_id = $row['color_size_id'];
+                $colorCode = $row['color_code'];
+                $colorName = getColor($conn, $colorCode);
+                $size = $row['size'];
+                $cartPieces = $row['cartPieces'];
+                $maxPieces = $row['maxPieces'];
+                $price  = $row['price'];
+                $productname = $row['productname'];
+                $quality = $row['quality'];
+                $img_url = is_null($row['img_url'])?null:$row['img_url'];
+                if(!is_null($img_url)){
+                    $imgText = <<<END
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''>
+                    </a>
+                    END;
+                }//else{
+                    //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
+                //}
+                if(!in_array($color_size_id, $lastImg)){
+                    echo '</div>';
+                    echo $htmlText;
+                    echo '</div>';
+                    echo '<div class="htmlAll">';
+                    echo '<div class="imgAll">';
+                    echo $imgText;
+                    $lastImg[] = $color_size_id;
+                    $htmlText = <<<END
+                    <br>
+                    <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
+                    色: $colorName
+                    サイズ: $size<br>
+                    商品名　　: $productname<br>
+                    価格　　　: $price<br>
+                    </a>
+                    <br>
+                    END;
+                    if($maxPieces >= $cartPieces){
+                        $htmlText .= <<<END
+                        <input type="hidden" id="product_id$count" value="$product_id">
+                        <input type="hidden" id="color_size_id$count" value="$color_size_id">
+                        <input type="number" id="$count" value="$cartPieces" min="1" max="$maxPieces">
+                        <button type="button" id="delete$count" onclick="deleteProducts($count)">削除</button>
+                        <br>
+                        <hr>
+                        END;
+                        $count++;
+                    }else{
+                        $htmlText .= <<<END
+                        在庫不足<br>
+                        商品はカートから削除されます<br>
+                        <br>
+                        <hr>
+                        END;
+                        $deleteSql = "DELETE FROM cart WHERE user_id = ? && product_id = ? && color_size_id = ?";
+                        $deleteStmt = $conn->prepare($deleteSql);
+                        $deleteStmt->bind_param("sii", $user_id, $product_id, $color_size_id);
+                        $deleteStmt->execute();
+                    }
+                    // 他の情報も必要に応じて表示
+                }else{
+                    echo $imgText;
+                }
+            }else{
+                echo <<<END
+                <br>
+                以前登録されていた商品は販売者の都合により削除されました
+                <hr>
+                END;
+
+                $deleteSql = "DELETE FROM cart WHERE user_id = ? && product_id = ? && color_size_id = ?";
+                $deleteStmt = $conn->prepare($deleteSql);
+                $deleteStmt->bind_param("sii", $user_id, $product_id, $color_size_id);
+                $deleteStmt->execute();
+            }
+        }
+        echo '</div>';
+        echo $htmlText;
+        echo '</div>';
+        $htmlText = "";
+    }
+
+    if($count !== 0) {
+        echo $count . "件";
+    }else{
+        //0件
+        //ここ！！！！！！！！と一緒のデザイン
+    }
 }else if(isset($_SESSION['cart'])){
     //未ログの時(カートのsessionがある時)
     for($i = 0; $i < count($_SESSION['cart']['product_id']); $i++){
@@ -83,7 +186,7 @@ if(isset($user_id)){
         $selectStmt->bind_param("ii",$product_id,$color_size_id);
         $selectStmt->execute();
         $selectResult = $selectStmt->get_result();
-        if($selectResult && $selectResult->num_rows > 0){
+        if($selectResult && $selectResult->num_rows > 1){
             echo '<div class="htmlAll">';
             echo '<div class="imgAll">';
             while ($row = $selectResult->fetch_assoc()) {
@@ -120,18 +223,18 @@ if(isset($user_id)){
                     色: $colorName
                     サイズ: $size<br>
                     商品名　　: $productname<br>
-                    カテゴリ名: $category_name<br>
                     価格　　　: $price<br>
                     </a>
                     <br>
                     END;
-                    if($maxPieces > 0){
+                    if($maxPieces >= $pieces){
                         $htmlText .= <<<END
                         <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
                         <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
                         <br>
                         <hr>
                         END;
+                        $count++;
                     }else{
                         $htmlText .= <<<END
                         在庫なし<br>
@@ -144,7 +247,6 @@ if(isset($user_id)){
                         $_SESSION['cart']['pieces'][$i] = null;
                     }
                     // 他の情報も必要に応じて表示
-                    $count++;
                 }else{
                     echo $imgText;
                 }
@@ -180,20 +282,33 @@ if(isset($user_id)){
 
 echo '</div>';//<div class="right-content">
 echo '</div>';//<div class="Amozon-container">
+echo '</body>';
+echo '</html>';
 
 echo <<<HTML
 <script>
 document.addEventListener('DOMContentLoaded',function(){
     var countMax = $countMax;
-    for(let i = 0; i < countMax; i ++){
+    for(let i = 0; i < countMax; i++){
         var iId = document.getElementById(i);
+        var productElement = document.getElementById('product_id'+i);
+        var colorSizeElement = document.getElementById('color_size_id'+i);
         if(iId !== null){
             iId.addEventListener('change',function(){
                 piecesValue = iId.value;
+                if(productElement !== null && colorSizeElement !== null){
+                    product_id = productElement.value;
+                    color_size_id = colorSizeElement.value;
+                }else{
+                    product_id = null;
+                    color_size_id = null;
+                }
 
                 const formData = new FormData();
-                formData.append('piecesValue',piecesValue);
+                formData.append('piecesValue', piecesValue);
                 formData.append('i', i);
+                formData.append('product_id', product_id);
+                formData.append('color_size_id', color_size_id);
 
                 const xhr = new XMLHttpRequest();
 
