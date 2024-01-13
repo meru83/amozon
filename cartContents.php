@@ -96,13 +96,13 @@ if(isset($user_id)){
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='seller/p_img/$img_url' alt=''>
                     </a>
                     END;
-                }//else{
+                }else{
                     //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
                     $imgText = <<<END
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'><img src='img/noImg' alt=''>
                     </a>
                     END;
-                //}
+                }
                 if(!in_array($color_size_id, $lastImg)){
                     echo '</div>';
                     echo $htmlText;
