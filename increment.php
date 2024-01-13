@@ -29,7 +29,6 @@ if(isset($_SESSION['user_id'])){
 }else{
     //セッションの時の処理
     $i = $_POST['i'];
-
     $_SESSION['cart']['pieces'][$i] = $piecesValue;
     //error_log($_SESSION['cart']['product_id'][$i]);
     //error_log($_SESSION['cart']['pieces'][$i]);

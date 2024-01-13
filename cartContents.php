@@ -75,7 +75,6 @@ $lastImg = array();
 if(isset($user_id)){
     //ログイン済みの時の処理を追加
     //データベースで管理
-    $countMax++;
     $logSql = "SELECT c.product_id, c.color_size_id, c.pieces AS cartPieces, p.productname, p.quality, s.service_status, s.color_code, s.size, s.pieces AS maxPieces, s.price, i.img_url FROM cart c
                 LEFT JOIN products p ON (c.product_id = p.product_id)
                 LEFT JOIN color_size s ON (c.color_size_id = s.color_size_id)
@@ -85,7 +84,7 @@ if(isset($user_id)){
     $logStmt->bind_param("s",$user_id);
     $logStmt->execute();
     $logResult = $logStmt->get_result();
-    if($logResult && $logResult->num_rows > 1){
+    if($logResult && $logResult->num_rows > 0){
         echo '<div class="htmlAll none">';
         echo '<div class="imgAll swiper">';
         echo '<div class="swiper-wrapper">';
@@ -157,6 +156,7 @@ if(isset($user_id)){
                         <hr>
                         END;
                         $count++;
+                        $countMax++;
                     }else{
                         $htmlText .= <<<END
                         在庫不足<br>
@@ -228,7 +228,7 @@ if(isset($user_id)){
         $selectStmt->bind_param("ii",$product_id,$color_size_id);
         $selectStmt->execute();
         $selectResult = $selectStmt->get_result();
-        if($selectResult && $selectResult->num_rows > 1){
+        if($selectResult && $selectResult->num_rows > 0){
             echo '<div class="htmlAll none">';
             echo '<div class="imgAll swiper">';
             echo '<div class="swiper-wrapper">';
@@ -369,14 +369,14 @@ document.addEventListener('DOMContentLoaded',function(){
     var countMax = $countMax;
     for(let i = 0; i < countMax; i++){
         var iId = document.getElementById(i);
-        var productElement = document.getElementById('product_id'+i);
-        var colorSizeElement = document.getElementById('color_size_id'+i);
         if(iId !== null){
             iId.addEventListener('change',function(){
-                piecesValue = iId.value;
+                var productElement = document.getElementById('product_id'+i);
+                var colorSizeElement = document.getElementById('color_size_id'+i);
+                piecesValue = this.value;
                 if(productElement !== null && colorSizeElement !== null){
-                    product_id = productElement.value;
-                    color_size_id = colorSizeElement.value;
+                    var product_id = productElement.value;
+                    var color_size_id = colorSizeElement.value;
                 }else{
                     product_id = null;
                     color_size_id = null;
@@ -482,8 +482,19 @@ HTML;
 ?>
 <script>
 function deleteProducts(defdeleteI){
+    var productElement = document.getElementById('product_id'+defdeleteI);
+    var colorSizeElement = document.getElementById('color_size_id'+defdeleteI);
     const formData = new FormData();
+    if(productElement !== null && colorSizeElement !== null){
+        var product_id = productElement.value;
+        var color_size_id = colorSizeElement.value;
+    }else{
+        var product_id = null;
+        var color_size_id = null;
+    }
     formData.append('i', defdeleteI);
+    formData.append('product_id', product_id);
+    formData.append('color_size_id', color_size_id);
 
     const xhr = new XMLHttpRequest();
 
