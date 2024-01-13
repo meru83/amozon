@@ -173,6 +173,7 @@ if(isset($user_id)){
         //ここ！！！！！！！！と一緒のデザイン
         echo "<div class='cart_no'>カートに商品は登録されていません";
         echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
+        echo '</div>';
     }
 }else if(isset($_SESSION['cart'])){
     //未ログの時(カートのsessionがある時)
@@ -281,12 +282,14 @@ if(isset($user_id)){
         //ここ！！！！！！！！と一緒のデザイン
         echo "<div class='cart_no'>カートに商品は登録されていません";
         echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
+        echo '</div>';
     }
 }else{
     //カートのsessionもないとき
     //ここ！！！！！！！！と一緒のデザイン
     echo "<div class='cart_no'>カートに商品は登録されていません";
     echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
+    echo '</div>';
 }
 
 echo '</div>';//<div class="right-content">
