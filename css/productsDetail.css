@@ -8,7 +8,7 @@
 
 .setumei {
     width: fit-content;
-    margin-left: 500px;
+    margin-left: 615px;
 }
 
 .flex {
@@ -16,7 +16,13 @@
 }
 
 .sonota {
-    margin-left: 100px;
+    width: 500px;
+    margin: 0 auto;
+}
+
+.sonota2 {
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .sizeChangeStyle {
@@ -73,5 +79,5 @@
 }
 
 .noCart {
-    margin-left: 100px;
+    text-align: center;
 }

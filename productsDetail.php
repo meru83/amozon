@@ -30,16 +30,15 @@ if(isset($_SESSION['user_id'])){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>検索</title>
     <style>
-    .swiper {
-        width: 300px;
-        max-width: 100%; 
-        height: 200px; 
-        margin-left: 100px;
-    }
-    .swiper-slide img {
-        width: 300px;
-        height: 200px;
-    }
+        .swiper {
+            width: 500px;
+            max-width: 100%; 
+            height: 300px; 
+        }
+        .swiper-slide img {
+            width: 500px;
+            height: 300px;
+        }
     </style>
 </head>
 <body>
@@ -207,9 +206,9 @@ $htmlText = <<<END
 <div class="flex">色　　　　　<div>$colorName</div></div>
 <div class="flex">出品日　　　<div>$create_at</div></div>
 <div class="flex">出品者　　　<div>$seller_id</div></div>
-</div>
 
-<div class="sonota">
+
+<div>
 <form name="sizeChangeForm" id="sizeChangeForm" method="post">
 <input type="hidden" name="product_id" value="$product_id" required>
 <input type="hidden" name="color_code" value="$color_code" required>
@@ -256,7 +255,6 @@ if($pieces > 0){
     </form>
     </div>
     <br>
-    <hr>
     <br><br><br><br><br>
     END;
 }else{
@@ -264,14 +262,17 @@ if($pieces > 0){
     在庫なし
     <p class="sen">カートに入れる</p>
     <br>
-    <hr>
     <br><br><br><br><br>
     END;
 }
 
+echo '</div>';
+
 if(!($htmlText === "")){
     echo $htmlText;
     echo '</div>';
+    echo '<hr>';
+    echo '<br><br><br><br><br><br>';
     echo "<h2 class='noCart'>この商品の別のカラー</h2><br>";
 }
 
@@ -351,6 +352,7 @@ while($row = $selectResult->fetch_assoc()){
         $tentative = <<<END
         <br>
         <div class="sonota">
+        <div class="sonota2">
         <a href='productsDetail.php?product_id=$product_id&color_size_id=$sColor_size_id'>
         色　　　$sColor_code<br>
         サイズ　$sSize<br>
@@ -365,12 +367,15 @@ while($row = $selectResult->fetch_assoc()){
                 <button type="submit" name="submit" class="cart_btn2">カートに入れる</button>
             </form>
             </div>
+            </div>
             END;
         }else{
-            $tentative .= "<p class='sen noCart'>カートに入れる</p><hr>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
+            $tentative .= "<p class='sen noCart'>カートに入れる</p><hr></div></div>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
         }
     }else{
         echo $sImgText;
+        echo '</div>';
+        echo '</div>';
     }
 }
 
