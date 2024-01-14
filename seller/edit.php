@@ -23,6 +23,7 @@ $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
 echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>';
+echo '<link rel="stylesheet" href="../css/edit.css">';
 echo"<style>
         .swiper {
             width: 500px;
@@ -56,6 +57,7 @@ $selectStmt = $conn->prepare($selectSql);
 $selectStmt->bind_param("iss",$product_id,$color_code,$size);
 $selectStmt->execute();
 $selectResult = $selectStmt->get_result();
+echo '<htmlAll>';
 echo '<div class="imgAll swiper">';
 echo '<div class="swiper-wrapper">';
 if($selectResult && $selectResult->num_rows > 0){
@@ -68,7 +70,11 @@ if($selectResult && $selectResult->num_rows > 0){
         $color_size_id = $row['color_size_id'];
         $img_url = $row['img_url'];
         if(!is_null($img_url)){
-            echo "<div class='swiper-slide'><img src='p_img/$img_url' alt='$colorName 色,".$size."サイズ'></div>";
+            echo <<<END
+            <div class='swiper-slide'>
+                <img src='p_img/$img_url' alt='$colorName 色,".$size."サイズ'>
+            </div>
+            END;
         }else{
             //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
             echo <<<END
@@ -90,19 +96,22 @@ if($selectResult && $selectResult->num_rows > 0){
   
     </div>
 
-    <button type="button" id="addImg" onclick="addImg($color_size_id)" style="display:block">写真を追加</button>
+    <div class="setumei">
+    <button type="button" id="addImg" class="btnStyle" onclick="addImg($color_size_id)" style="display:block">写真を追加</button>
     <form id="imgInsertForm" enctype="multipart/form-data" style="display:none">
         <input type="text" id="color_sizeInput" name="color_sizeInput" value="$color_size_id" hidden>
         <input type="file" id="image-file" name="img[]" multiple accept="image/*">
-        <input type="submit" name="submit" value="確定">
+        <input type="submit" name="submit" class="kakutei" value="確定">
     </form>
     カラー:$colorName サイズ:$size <br>
     　　  商品名　: $productname <br>
-    <button type="button" onclick="changePrice($color_size_id)">変更</button>
+    <button type="button" class="btnStyle" onclick="changePrice($color_size_id)">変更</button>
     <p id="priceText">価格　　: $price </p><br>
-    <button type="button" onclick="changePieces($color_size_id)">変更</button>
+    <button type="button" class="btnStyle" onclick="changePieces($color_size_id)">変更</button>
     <p id="piecesText">在庫数　: $pieces </p><br>
     出品日　: $create_at <br>
+    </div>
+    </div>
     END;
 }
 
