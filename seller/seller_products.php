@@ -414,6 +414,7 @@ function addColorSize(addCount){
         var radioLabel = document.createElement('label');
         radioLabel.setAttribute('for', 'radio'+i);
         radioLabel.innerHTML = radioOptions[i];
+        radioLabel.classList.add("styleRadioLabel");
         addDiv.appendChild(radioLabel);
     }
 
