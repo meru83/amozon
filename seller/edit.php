@@ -22,6 +22,19 @@ session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
+echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>';
+echo"<style>
+        .swiper {
+            width: 500px;
+            max-width: 100%; 
+            height: 300px; 
+        }
+        .swiper-slide img {
+            width: 500px;
+            height: 300px;
+        }
+    </style>";
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $product_id = $_POST['product_id'];
     $colorSize = $_POST['colorSize'];
@@ -43,6 +56,8 @@ $selectStmt = $conn->prepare($selectSql);
 $selectStmt->bind_param("iss",$product_id,$color_code,$size);
 $selectStmt->execute();
 $selectResult = $selectStmt->get_result();
+echo '<div class="imgAll swiper">';
+echo '<div class="swiper-wrapper">';
 if($selectResult && $selectResult->num_rows > 0){
     while($row = $selectResult->fetch_assoc()){
         $productname = $row['productname'];
@@ -53,13 +68,28 @@ if($selectResult && $selectResult->num_rows > 0){
         $color_size_id = $row['color_size_id'];
         $img_url = $row['img_url'];
         if(!is_null($img_url)){
-            echo "<img src='p_img/$img_url' alt='$colorName 色,".$size."サイズ'>";
-        }//else{
+            echo "<div class='swiper-slide'><img src='p_img/$img_url' alt='$colorName 色,".$size."サイズ'></div>";
+        }else{
             //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-        //}
+            echo <<<END
+            <div class='swiper-slide'>
+            <img src='../img/noImg.jpg'>
+            </div>
+            END;
+        }
         //画像にサイズと色の説明が出るようにする。
     }
     echo <<<END
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+  
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  
+    </div>
+
     <button type="button" id="addImg" onclick="addImg($color_size_id)" style="display:block">写真を追加</button>
     <form id="imgInsertForm" enctype="multipart/form-data" style="display:none">
         <input type="text" id="color_sizeInput" name="color_sizeInput" value="$color_size_id" hidden>
@@ -88,6 +118,37 @@ function getColor($conn, $color_code){
         return $colorName;
     } 
 }
+
+echo <<<HTML
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        effect: 'coverflow',
+
+        // // If we need pagination
+        // pagination: {
+        //     el: '.swiper-pagination',
+        //     type: 'progressbar',
+        // },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        //     hide:true,
+        // },
+    });
+</script>
+HTML;
 ?>
 <script>
 function changePrice(id){
