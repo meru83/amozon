@@ -22,8 +22,8 @@ session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
-echo '<link rel="stylesheet" href="../css/seller_img.css">';
 echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>';
+echo '<link rel="stylesheet" href="../css/seller_img.css">';
 echo "<h1>登録済み商品一覧</h1>";
 echo "<h2>$seller_name 様</h2>";
 echo "<div id='errorMessage'></div>";
@@ -74,7 +74,7 @@ if($selectResult && $selectResult->num_rows > 0){
     $sizeArray = array();
     $productArray = array();
     echo "<div id='div$count'>";
-    echo '<div class="imgAll swiper">';
+    echo '<div class="imgAll swiper none">';
     echo '<div class="swiper-wrapper">';
     while ($row = $selectResult->fetch_assoc()) {
         $imgText = null;
