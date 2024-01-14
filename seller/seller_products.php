@@ -79,12 +79,18 @@ if($selectResult && $selectResult->num_rows > 0){
         $countId = $count - 1;
         if(!is_null($img_url)){
             $imgText = "
+            <div class='swiper-slide'>
             <!---<a href='edit.php?product_id=$product_id>--->
             <img src='p_img/$img_url'>
-            <!---</a>----->";
-        }//else{
+            <!---</a>----->
+            </div>";
+        }else{
             //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-        //}
+            $imgText = "
+            <div class='swiper-slide'>
+            <img src='../img/noImg.jpg'>
+            </div>";
+        }
         
         if(in_array($product_id,$lastImg)){
             for($i = 0; $i < count($colorArray); $i++){
