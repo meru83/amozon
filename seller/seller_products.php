@@ -163,6 +163,8 @@ if($selectResult && $selectResult->num_rows > 0){
           
             </div>
             HTML;
+            echo '<div class="setumei">';
+
             echo $htmlText;
 
             //form
@@ -174,6 +176,7 @@ if($selectResult && $selectResult->num_rows > 0){
             $color_codeArray[] = $color_code;
             $sizeArray[] = $size;
 
+            echo '</div>';
             echo $divStart;
             echo '<div class="imgAll swiper">';
             echo '<div class="swiper-wrapper">';
