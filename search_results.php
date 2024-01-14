@@ -137,13 +137,16 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
                 LEFT JOIN category c ON (p.category_id = c.category_id)
                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
-                LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = $user_id)
+                LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
                 WHERE $andConditions && s.service_status = true";
 
         // echo "クエリ：".$sql."<br>";
 
         // クエリを実行
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $htmlText = "";
         // クエリの実行結果を確認
