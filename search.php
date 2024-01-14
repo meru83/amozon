@@ -32,7 +32,7 @@ if(isset($_SESSION['user_id'])){
 
 <body>
 <div id="header" class="header">
-        <div class="space"></div>
+    <div class="backBtn" onclick="history.back()"><img src=""></div>
         <h1 class="h1_White">検索</h1>
         <?=$foo2?>
 </div>
@@ -83,4 +83,9 @@ form.addEventListener('submit',(e) => {
         return true;
     }
 });
+
+// document.getElementById("btn").addEventListener('click', function(){
+//     history.back();
+// } )
+
 </script>
