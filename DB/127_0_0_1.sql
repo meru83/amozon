@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-14 07:22:39
--- サーバのバージョン： 10.4.32-MariaDB
--- PHP のバージョン: 8.2.12
+-- 生成日時: 2024-01-14 18:58:52
+-- サーバのバージョン： 10.4.28-MariaDB
+-- PHP のバージョン: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -289,19 +289,19 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (36, '#81604C', 'M', 10, 7500, 108, 1),
 (36, '#FFFFFF', 'L', 15, 7500, 109, 1),
 (36, '#FFFFFF', 'M', 15, 7500, 106, 1),
-(37, '#313131', 'M', 10, 7500, 116, 1),
-(37, '#313131', 'S', 15, 7500, 113, 1),
-(37, '#81604C', 'M', 10, 7500, 117, 1),
-(37, '#81604C', 'S', 5, 7500, 114, 1),
-(37, '#FFFFFF', 'M', 15, 7500, 115, 1),
-(37, '#FFFFFF', 'S', 20, 7500, 112, 1),
+(37, '#313131', 'M', 10, 7500, 116, 0),
+(37, '#313131', 'S', 15, 7500, 113, 0),
+(37, '#81604C', 'M', 10, 7500, 117, 0),
+(37, '#81604C', 'S', 5, 7500, 114, 0),
+(37, '#FFFFFF', 'M', 15, 7500, 115, 0),
+(37, '#FFFFFF', 'S', 20, 7500, 112, 0),
 (38, '#313131', 'L', 15, 9800, 120, 1),
 (38, '#313131', 'M', 15, 9800, 118, 1),
 (38, '#FFFFFF', 'L', 15, 9800, 121, 1),
 (38, '#FFFFFF', 'M', 15, 9800, 119, 1),
-(39, '#313131', 'L', 20, 9800, 124, 1),
-(39, '#313131', 'M', 10, 9800, 123, 1),
-(39, '#FFFFFF', 'M', 20, 9800, 122, 1),
+(39, '#313131', 'L', 20, 9800, 124, 0),
+(39, '#313131', 'M', 10, 9800, 123, 0),
+(39, '#FFFFFF', 'M', 20, 9800, 122, 0),
 (40, '#313131', 'L', 15, 8200, 129, 1),
 (40, '#313131', 'M', 15, 8200, 127, 1),
 (40, '#FFFFFF', 'L', 15, 8200, 128, 1),
@@ -4520,7 +4520,21 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (333, 79, 'lea-ochel-nsRBbE6-YLs-unsplash79.jpg'),
 (334, 76, 'lea-ochel-nsRBbE6-YLs-unsplash76.jpg'),
 (335, 81, 'colton-sturgeon-oB7lLU9dwLc-unsplash81.jpg'),
-(336, 78, 'colton-sturgeon-oB7lLU9dwLc-unsplash78.jpg');
+(336, 78, 'colton-sturgeon-oB7lLU9dwLc-unsplash78.jpg'),
+(337, 83, 'tyler-nix-6UEyVsw_1lU-unsplash83.jpg'),
+(338, 82, 'tyler-nix-6UEyVsw_1lU-unsplash82.jpg'),
+(339, 90, 'kevin-laminto-hgIZ8ObJnFU-unsplash90.jpg'),
+(340, 88, 'kevin-laminto-hgIZ8ObJnFU-unsplash88.jpg'),
+(341, 86, 'eugene-chystiakov-0pQ7RbMB3_k-unsplash86.jpg'),
+(342, 84, 'eugene-chystiakov-0pQ7RbMB3_k-unsplash84.jpg'),
+(343, 104, 'lubov-birina-qCQgUD063fE-unsplash104.jpg'),
+(344, 105, 'clem-onojeghuo-4fDBYLyhqbI-unsplash105.jpg'),
+(345, 111, 'patrik-velich-ejvt0UazRlU-unsplash111.jpg'),
+(346, 108, 'clem-onojeghuo-4fDBYLyhqbI-unsplash108.jpg'),
+(347, 110, 'cole-keister-0KaUuWB7Qfw-unsplash110.jpg'),
+(348, 108, 'patrik-velich-ejvt0UazRlU-unsplash108.jpg'),
+(349, 120, 'jasmine-coro-Iz8texFGeHI-unsplash120.jpg'),
+(350, 118, 'joshua-rondeau-RrseEMRZ5Bw-unsplash617118.jpg');
 
 -- --------------------------------------------------------
 
@@ -5082,7 +5096,7 @@ ALTER TABLE `products`
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
