@@ -23,9 +23,21 @@ $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
 echo '<link rel="stylesheet" href="../css/seller_img.css">';
+echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>';
 echo "<h1>登録済み商品一覧</h1>";
 echo "<h2>$seller_name 様</h2>";
 echo "<div id='errorMessage'></div>";
+echo"<style>
+        .swiper {
+            width: 500px;
+            max-width: 100%; 
+            height: 300px; 
+        }
+        .swiper-slide img {
+            width: 500px;
+            height: 300px;
+        }
+    </style>";
 
 //alertで表示に変更
 // if(isset($_GET['errorMessage'])){
@@ -62,6 +74,8 @@ if($selectResult && $selectResult->num_rows > 0){
     $sizeArray = array();
     $productArray = array();
     echo "<div id='div$count'>";
+    echo '<div class="imgAll swiper">';
+    echo '<div class="swiper-wrapper">';
     while ($row = $selectResult->fetch_assoc()) {
         $imgText = null;
         $product_id = $row['product_id'];
@@ -138,6 +152,17 @@ if($selectResult && $selectResult->num_rows > 0){
         //違う商品になったタイミング
         if(!in_array($product_id, $lastImg)){
             //商品情報
+            echo <<<HTML
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+          
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          
+            </div>
+            HTML;
             echo $htmlText;
 
             //form
@@ -150,6 +175,8 @@ if($selectResult && $selectResult->num_rows > 0){
             $sizeArray[] = $size;
 
             echo $divStart;
+            echo '<div class="imgAll swiper">';
+            echo '<div class="swiper-wrapper">';
             echo $imgText;
             $lastImg[] = $product_id;
             $lastProName[] = $productname;
@@ -229,6 +256,17 @@ if($selectResult && $selectResult->num_rows > 0){
             echo $imgText;
         }
     }
+    echo <<<HTML
+</div>
+<!-- If we need pagination -->
+<div class="swiper-pagination"></div>
+
+<!-- If we need navigation buttons -->
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
+
+</div>
+HTML;
     echo $htmlText;
     $countId = $count - 1;
     echo <<<END
@@ -272,6 +310,37 @@ function getColor($conn, $color_code){
         return $colorName;
     } 
 }
+
+echo <<<HTML
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper2 = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        effect: 'coverflow',
+
+        // // If we need pagination
+        // pagination: {
+        //     el: '.swiper-pagination',
+        //     type: 'progressbar',
+        // },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        //     hide:true,
+        // },
+    });
+</script>
+HTML;
 ?>
 <script>
 const errorMessageDiv = document.getElementById('errorMessage');
