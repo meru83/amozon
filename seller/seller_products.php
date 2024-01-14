@@ -187,16 +187,16 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
-            <button type="button" class="btnStyle" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　: $productname</p><br>
+            <button type="button" class="btnStyle" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　　$productname</p><br>
             <div id="allCategory$product_id" style="display:block">
             <button type="button" class="btnStyle" onclick="changeCategory($product_id)">変更</button>
             <div id="categoryText$product_id">
-            カテゴリ名: $big_category_name - $category_name - $small_category_name
+            カテゴリ名　$big_category_name - $category_name - $small_category_name
             </div>
             </div>
             <div id="bigCate$product_id" style="display:none">
             <label for="big_category$product_id" class="p2_label">
-                大カテゴリ：
+                大カテゴリ
                 <select id="big_category$product_id" class="styleSelect selectStyle">
                     <option value="" hidden>選択してください</option>
             END;
@@ -215,7 +215,7 @@ if($selectResult && $selectResult->num_rows > 0){
             </div>
             <div id="cate$product_id" style="display:none">
             <label for="category$product_id" id="categoryLabel" class="p2_label">
-                中カテゴリ：
+                中カテゴリ
                 <select id="category$product_id" class="styleSelect selectStyle">
                     <option value="" selected hidden>選択してください</option>
                 </select>
@@ -223,7 +223,7 @@ if($selectResult && $selectResult->num_rows > 0){
             </div>
             <div id="smallCate$product_id" style="display:none">
             <label for="small_category$product_id" id="smallCategoryLabel" class="p2_label">
-                小カテゴリ：
+                小カテゴリ
                 <select id="small_category$product_id" class="styleSelect selectStyle">
                     <option value="" selected hidden>選択してください</option>
                 </select>
@@ -233,10 +233,10 @@ if($selectResult && $selectResult->num_rows > 0){
             <button type="button" id="confirmCategoryButton$product_id" class="btnStyle" style="display:none">再登録</button><br>
 
             <button type="button" class="btnStyle" onclick="changeView($product_id)">変更</button>
-            <p id="view$product_id">概要　　　: $view</p><br>
+            <p id="view$product_id">概要　　　　 $view</p><br>
             <div id="qualityBox$product_id">
             <button type="button" class="btnStyle" onclick="changeQuality($product_id)">変更</button>
-            <p id="qualityText$product_id">品質　　　: $quality
+            <p id="qualityText$product_id">品質　　　　 $quality
             </div>
             <div id="selectQualityBox$product_id" style="display:none">
                 <label for="selectQuality$product_id">品質</label>
@@ -250,7 +250,7 @@ if($selectResult && $selectResult->num_rows > 0){
             $htmlText .= <<<END
                 </select>
             </div>
-            出品日　　: $create_at<br>
+            出品日　　　 $create_at<br>
             <br>
             END;
             // 他の情報も必要に応じて表示
@@ -408,14 +408,34 @@ function addColorSize(addCount){
         if(i === 0){
             colorRadio.required = true;
         }
-        addDiv.appendChild(colorRadio);
+
+        var colorBox = document.createElement('div');
+        colorBox.classList.add("styleColorBox");
+        addDiv.appendChild(colorBox);
+
+        //ラジオボタンとspanを入れるdivを追加
+        var divColorRadio = document.createElement('div');
+        divColorRadio.classList.add('styleDivColorRadio');
+        colorBox.appendChild(divColorRadio);
+
+        divColorRadio.appendChild(colorRadio);//ラジオボタンをspanを入れるdivに入れた
+
+        //spanを入れるlabelを生成
+        var spanLabel = document.createElement('label');
+        spanLabel.setAttribute('for', 'radio'+i);
+
+        //spanを生成
+        var colorSpan = document.createElement('span');
+        colorSpan.classList.add("span" + i);
+        spanLabel.appendChild(colorSpan);
+        divColorRadio.appendChild(spanLabel);
 
         //radioボタンのラベル生成。
         var radioLabel = document.createElement('label');
         radioLabel.setAttribute('for', 'radio'+i);
         radioLabel.innerHTML = radioOptions[i];
         radioLabel.classList.add("styleRadioLabel");
-        addDiv.appendChild(radioLabel);
+        colorBox.appendChild(radioLabel);
     }
 
     
@@ -423,13 +443,15 @@ function addColorSize(addCount){
     addDiv.appendChild(radioBr);
 
     var selectLabel = document.createElement('label');
+    selectLabel.classList.add("styleSize");
     selectLabel.setAttribute('for','sizeSelect');
-    selectLabel.innerHTML = "商品のサイズ";
+    selectLabel.innerHTML = "商品のサイズ　　";
     addDiv.appendChild(selectLabel);
 
     var selectBox = document.createElement('select');
     selectBox.name = 'size';
     selectBox.id = 'sizeSelect';
+    selectBox.classList.add("selectStyle");
     selectBox.required = true;
     addDiv.appendChild(selectBox);
 
@@ -454,13 +476,14 @@ function addColorSize(addCount){
 
     var piecesLabel = document.createElement('label');
     piecesLabel.setAttribute('for','pieces');
-    piecesLabel.innerHTML = "数量";
+    piecesLabel.innerHTML = "数量　　　　　　";
     addDiv.appendChild(piecesLabel);
 
     var inputPieces = document.createElement('input');
     inputPieces.type = "text";
     inputPieces.name = "pieces";
     inputPieces.id = "pieces";
+    inputPieces.classList.add("styleTextBox");
     inputPieces.placeholder = "数量";
     inputPieces.required = true;
     addDiv.appendChild(inputPieces);
@@ -470,13 +493,14 @@ function addColorSize(addCount){
 
     var priceLabel = document.createElement('label');
     priceLabel.setAttribute('for','price');
-    priceLabel.innerHTML = "価格";
+    priceLabel.innerHTML = "価格　　　　　　";
     addDiv.appendChild(priceLabel);
 
     var inputPrice = document.createElement('input');
     inputPrice.type = "text";
     inputPrice.name = "price";
     inputPrice.id = "price";
+    inputPrice.classList.add("styleTextBox");
     inputPrice.required = true;
     inputPrice.placeholder = "価格";
     addDiv.appendChild(inputPrice);
@@ -486,6 +510,7 @@ function addColorSize(addCount){
 
     var submitButton = document.createElement('button');
     submitButton.type = "button";
+    submitButton.classList.add("btnStyle");
     submitButton.innerHTML = "追加";
     addDiv.appendChild(submitButton);
     submitButton.addEventListener('click',function(){
@@ -574,7 +599,7 @@ function changeProductName(number){
                     response.forEach(function(row) {
                         if(row.error_message === true){
                             var nameElement = document.getElementById('name'+number);
-                            nameElement.innerHTML  = "商品名　　: "+productname;
+                            nameElement.innerHTML  = "商品名　　 "+productname;
                             alert("商品名の変更に成功しました。");
                         }else{
                                 alert("商品名の変更に失敗しました。");
