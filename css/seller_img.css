@@ -46,7 +46,8 @@
     border-radius: 4px;
 }
 
-.styleTextBox:focus {
+.styleTextBox,
+.selectStyle:focus {
     outline-color: #005aae;
 }
 
