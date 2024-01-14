@@ -83,9 +83,4 @@ form.addEventListener('submit',(e) => {
         return true;
     }
 });
-
-// document.getElementById("btn").addEventListener('click', function(){
-//     history.back();
-// } )
-
 </script>
