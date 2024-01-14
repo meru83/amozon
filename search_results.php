@@ -4,12 +4,14 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
     $foo2 = <<<END
     <form action="logout.php" method="post">
         <input type="submit" name="logout" class="log_out" value="ログアウト">
     </form>
     END;
 }else{
+    $user_id = "A";
     $foo2 = <<<END
     <div class="New_log">
         <a href="register.php"><div class="log_style">新規登録</div></a>
@@ -130,10 +132,12 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
         $andConditions = implode(' AND ', $conditions);
 
         // 検索結果を取得するクエリを作成
-        $sql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.seller_id, p.big_category_id, p.category_id, p.small_category, p.quality, s.color_code, s.size, s.pieces, s.price, s.color_size_id, c.category_name, i.img_url FROM products p
+        $sql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.seller_id, p.big_category_id, p.category_id, p.small_category, p.quality, s.color_code, s.size, s.pieces, s.price, s.color_size_id, c.category_name, i.img_url, f.user_id AS favorite_product
+                FROM products p
                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
                 LEFT JOIN category c ON (p.category_id = c.category_id)
                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
+                LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = $user_id)
                 WHERE $andConditions && s.service_status = true";
 
         // echo "クエリ：".$sql."<br>";
@@ -163,6 +167,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $commaPrice = number_format($price);
                     $color_size_id = $row['color_size_id'];
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
+                    $favorite_product = ($row['favorite_product'] === "A")?null:$row['favorite_product'];
                     if(!is_null($img_url)){
                         $imgText = <<<END
                         <div class="swiper-slide">
@@ -314,7 +319,6 @@ const form = document.getElementById('form');
 form.addEventListener('submit',(e) => {
     let searchValue = search.value;
     let str = searchValue.replace(/\s+/g, "");
-    console.log(str);
     if(str === null || str === ""){
         e.preventDefault();
         return false;
