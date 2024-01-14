@@ -3,6 +3,38 @@
 }
 
 .setumei {
-    width: fit-content;
+    width: 500px;
     margin: 0 auto;
+}
+
+.hr1 {
+    width: 500px;
+    margin: 30px 0;
+}
+
+.hr2 {
+    width: 500px;
+    margin: 30px 0;
+}
+
+.btnStyle {
+    margin-top: 5px;
+    padding: 6px 15px;
+    color: #005aae;
+    background-color: #ffffff;
+    border: 1px solid #005aae;
+    border-radius: 4px;
+}
+
+.btnStyle:hover {
+    background-color: #def7ff;
+}
+
+.selectStyle {
+    margin-top: 5px;
+    padding: 6px 15px;
+    color: #005aae;
+    background-color: #ffffff;
+    border: 1px solid #005aae;
+    border-radius: 4px;
 }

@@ -123,7 +123,7 @@ if($selectResult && $selectResult->num_rows > 0){
         if($formFlag === true){
             $productText = <<<END
             <form action="edit.php" method="post">
-                <select id="select$countId" name="colorSize" required>
+                <select id="select$countId" name="colorSize" class="selectStyle" required>
                     <option value="" hidden>選択してください</option>
             END;
             for($i = 0; $i < count($colorArray); $i++){
@@ -132,16 +132,16 @@ if($selectResult && $selectResult->num_rows > 0){
             $productText .= <<<END
                 </select>
                 <input type="hidden" name="product_id" value="$lastImg[$countId]">
-                <input type="submit" value="登録内容変更">
+                <input type="submit" class="btnStyle" value="登録内容変更">
             </form>
             <div id="addColorSizeDiv$countId">
             <!------ここに色とカラー追加のフォームを作る------->
             </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
             <input type="hidden" id="name$countId" value="$lastProName[$countId]">
-            <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)">カラー・サイズの追加</button>
-            <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
-            <hr>
+            <button type="button" name="aCS" id="aCS$countId" class="btnStyle" onclick="addColorSize($countId)">カラー・サイズの追加</button>
+            <button type="button" class="btnStyle" onclick="deleteProducts($countId)">商品の削除</button>
+            <hr class="hr1">
             </div>
             END;
             $divStart = "<div id= 'div$count'>";
@@ -187,9 +187,9 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
-            <button type="button" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　: $productname</p><br>
+            <button type="button" class="btnStyle" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　: $productname</p><br>
             <div id="allCategory$product_id" style="display:block">
-            <button type="button" onclick="changeCategory($product_id)">変更</button>
+            <button type="button" class="btnStyle" onclick="changeCategory($product_id)">変更</button>
             <div id="categoryText$product_id">
             カテゴリ名: $big_category_name - $category_name - $small_category_name
             </div>
@@ -197,7 +197,7 @@ if($selectResult && $selectResult->num_rows > 0){
             <div id="bigCate$product_id" style="display:none">
             <label for="big_category$product_id" class="p2_label">
                 大カテゴリ：
-                <select id="big_category$product_id" class="styleSelect">
+                <select id="big_category$product_id" class="styleSelect selectStyle">
                     <option value="" hidden>選択してください</option>
             END;
                     $big_sql = "SELECT big_category_id, big_category_name FROM big_category";
@@ -216,7 +216,7 @@ if($selectResult && $selectResult->num_rows > 0){
             <div id="cate$product_id" style="display:none">
             <label for="category$product_id" id="categoryLabel" class="p2_label">
                 中カテゴリ：
-                <select id="category$product_id" class="styleSelect">
+                <select id="category$product_id" class="styleSelect selectStyle">
                     <option value="" selected hidden>選択してください</option>
                 </select>
             </label>
@@ -224,23 +224,23 @@ if($selectResult && $selectResult->num_rows > 0){
             <div id="smallCate$product_id" style="display:none">
             <label for="small_category$product_id" id="smallCategoryLabel" class="p2_label">
                 小カテゴリ：
-                <select id="small_category$product_id" class="styleSelect">
+                <select id="small_category$product_id" class="styleSelect selectStyle">
                     <option value="" selected hidden>選択してください</option>
                 </select>
             </label>
             </div>
 
-            <button type="button" id="confirmCategoryButton$product_id" style="display:none">再登録</button><br>
+            <button type="button" id="confirmCategoryButton$product_id" class="btnStyle" style="display:none">再登録</button><br>
 
-            <button type="button" onclick="changeView($product_id)">変更</button>
+            <button type="button" class="btnStyle" onclick="changeView($product_id)">変更</button>
             <p id="view$product_id">概要　　　: $view</p><br>
             <div id="qualityBox$product_id">
-            <button type="button" onclick="changeQuality($product_id)">変更</button>
+            <button type="button" class="btnStyle" onclick="changeQuality($product_id)">変更</button>
             <p id="qualityText$product_id">品質　　　: $quality
             </div>
             <div id="selectQualityBox$product_id" style="display:none">
                 <label for="selectQuality$product_id">品質</label>
-                <select id="selectQuality$product_id">
+                <select id="selectQuality$product_id" class="selectStyle">
                     <option value="" selected hidden>選択してください</option>
             END;
             foreach($qualityArray as $value){
@@ -292,7 +292,7 @@ HTML;
             <input type="hidden" id="name$countId" value="$lastProName[$countId]"><!---一個前のproductname持ってくる--->
             <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)" style="display:block">カラー・サイズの追加</button>
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
-            <hr>
+            <hr class="hr2">
             </div>
             END;
     // echo "</div>";
