@@ -22,10 +22,22 @@ session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
+echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>';
 echo '<link rel="stylesheet" href="../css/seller_img.css">';
 echo "<h1>登録済み商品一覧</h1>";
-echo "<h2>$seller_name 様</h2>";
+echo "<div  class='p2'><h2>$seller_name 様</h2></div>";
 echo "<div id='errorMessage'></div>";
+echo"<style>
+        .swiper {
+            width: 500px;
+            max-width: 100%; 
+            height: 300px; 
+        }
+        .swiper-slide img {
+            width: 500px;
+            height: 300px;
+        }
+    </style>";
 
 //alertで表示に変更
 // if(isset($_GET['errorMessage'])){
@@ -62,6 +74,8 @@ if($selectResult && $selectResult->num_rows > 0){
     $sizeArray = array();
     $productArray = array();
     echo "<div id='div$count'>";
+    echo '<div class="imgAll swiper none">';
+    echo '<div class="swiper-wrapper">';
     while ($row = $selectResult->fetch_assoc()) {
         $imgText = null;
         $product_id = $row['product_id'];
@@ -79,12 +93,18 @@ if($selectResult && $selectResult->num_rows > 0){
         $countId = $count - 1;
         if(!is_null($img_url)){
             $imgText = "
+            <div class='swiper-slide'>
             <!---<a href='edit.php?product_id=$product_id>--->
             <img src='p_img/$img_url'>
-            <!---</a>----->";
-        }//else{
+            <!---</a>----->
+            </div>";
+        }else{
             //ここで商品の画像が一枚もないときに表示する写真を表示するタブを作る。
-        //}
+            $imgText = "
+            <div class='swiper-slide'>
+            <img src='../img/noImg.jpg'>
+            </div>";
+        }
         
         if(in_array($product_id,$lastImg)){
             for($i = 0; $i < count($colorArray); $i++){
@@ -103,7 +123,7 @@ if($selectResult && $selectResult->num_rows > 0){
         if($formFlag === true){
             $productText = <<<END
             <form action="edit.php" method="post">
-                <select id="select$countId" name="colorSize" required>
+                <select id="select$countId" name="colorSize" class="selectStyle" required>
                     <option value="" hidden>選択してください</option>
             END;
             for($i = 0; $i < count($colorArray); $i++){
@@ -112,16 +132,16 @@ if($selectResult && $selectResult->num_rows > 0){
             $productText .= <<<END
                 </select>
                 <input type="hidden" name="product_id" value="$lastImg[$countId]">
-                <input type="submit" value="登録内容変更">
+                <input type="submit" class="btnStyle" value="登録内容変更">
             </form>
             <div id="addColorSizeDiv$countId">
             <!------ここに色とカラー追加のフォームを作る------->
             </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
             <input type="hidden" id="name$countId" value="$lastProName[$countId]">
-            <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)">カラー・サイズの追加</button>
-            <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
-            <hr>
+            <button type="button" name="aCS" id="aCS$countId" class="btnStyle" onclick="addColorSize($countId)">カラー・サイズの追加</button>
+            <button type="button" class="btnStyle" onclick="deleteProducts($countId)">商品の削除</button>
+            <hr class="hr1">
             </div>
             END;
             $divStart = "<div id= 'div$count'>";
@@ -132,6 +152,19 @@ if($selectResult && $selectResult->num_rows > 0){
         //違う商品になったタイミング
         if(!in_array($product_id, $lastImg)){
             //商品情報
+            echo <<<HTML
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+          
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          
+            </div>
+            HTML;
+            echo '<div class="setumei">';
+
             echo $htmlText;
 
             //form
@@ -143,7 +176,10 @@ if($selectResult && $selectResult->num_rows > 0){
             $color_codeArray[] = $color_code;
             $sizeArray[] = $size;
 
+            echo '</div>';
             echo $divStart;
+            echo '<div class="imgAll swiper">';
+            echo '<div class="swiper-wrapper">';
             echo $imgText;
             $lastImg[] = $product_id;
             $lastProName[] = $productname;
@@ -151,17 +187,17 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
-            <button type="button" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　: $productname</p><br>
+            <button type="button" class="btnStyle" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　　$productname</p><br>
             <div id="allCategory$product_id" style="display:block">
-            <button type="button" onclick="changeCategory($product_id)">変更</button>
+            <button type="button" class="btnStyle" onclick="changeCategory($product_id)">変更</button>
             <div id="categoryText$product_id">
-            カテゴリ名: $big_category_name - $category_name - $small_category_name
+            カテゴリ名　$big_category_name - $category_name - $small_category_name
             </div>
             </div>
             <div id="bigCate$product_id" style="display:none">
             <label for="big_category$product_id" class="p2_label">
-                大カテゴリ：
-                <select id="big_category$product_id" class="styleSelect">
+                大カテゴリ
+                <select id="big_category$product_id" class="styleSelect selectStyle">
                     <option value="" hidden>選択してください</option>
             END;
                     $big_sql = "SELECT big_category_id, big_category_name FROM big_category";
@@ -179,32 +215,32 @@ if($selectResult && $selectResult->num_rows > 0){
             </div>
             <div id="cate$product_id" style="display:none">
             <label for="category$product_id" id="categoryLabel" class="p2_label">
-                中カテゴリ：
-                <select id="category$product_id" class="styleSelect">
+                中カテゴリ
+                <select id="category$product_id" class="styleSelect selectStyle">
                     <option value="" selected hidden>選択してください</option>
                 </select>
             </label>
             </div>
             <div id="smallCate$product_id" style="display:none">
             <label for="small_category$product_id" id="smallCategoryLabel" class="p2_label">
-                小カテゴリ：
-                <select id="small_category$product_id" class="styleSelect">
+                小カテゴリ
+                <select id="small_category$product_id" class="styleSelect selectStyle">
                     <option value="" selected hidden>選択してください</option>
                 </select>
             </label>
             </div>
 
-            <button type="button" id="confirmCategoryButton$product_id" style="display:none">再登録</button><br>
+            <button type="button" id="confirmCategoryButton$product_id" class="btnStyle" style="display:none">再登録</button><br>
 
-            <button type="button" onclick="changeView($product_id)">変更</button>
-            <p id="view$product_id">概要　　　: $view</p><br>
+            <button type="button" class="btnStyle" onclick="changeView($product_id)">変更</button>
+            <p id="view$product_id">概要　　　　 $view</p><br>
             <div id="qualityBox$product_id">
-            <button type="button" onclick="changeQuality($product_id)">変更</button>
-            <p id="qualityText$product_id">品質　　　: $quality
+            <button type="button" class="btnStyle" onclick="changeQuality($product_id)">変更</button>
+            <p id="qualityText$product_id">品質　　　　 $quality
             </div>
             <div id="selectQualityBox$product_id" style="display:none">
                 <label for="selectQuality$product_id">品質</label>
-                <select id="selectQuality$product_id">
+                <select id="selectQuality$product_id" class="selectStyle">
                     <option value="" selected hidden>選択してください</option>
             END;
             foreach($qualityArray as $value){
@@ -214,7 +250,7 @@ if($selectResult && $selectResult->num_rows > 0){
             $htmlText .= <<<END
                 </select>
             </div>
-            出品日　　: $create_at<br>
+            出品日　　　 $create_at<br>
             <br>
             END;
             // 他の情報も必要に応じて表示
@@ -223,6 +259,17 @@ if($selectResult && $selectResult->num_rows > 0){
             echo $imgText;
         }
     }
+    echo <<<HTML
+</div>
+<!-- If we need pagination -->
+<div class="swiper-pagination"></div>
+
+<!-- If we need navigation buttons -->
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
+
+</div>
+HTML;
     echo $htmlText;
     $countId = $count - 1;
     echo <<<END
@@ -245,7 +292,7 @@ if($selectResult && $selectResult->num_rows > 0){
             <input type="hidden" id="name$countId" value="$lastProName[$countId]"><!---一個前のproductname持ってくる--->
             <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)" style="display:block">カラー・サイズの追加</button>
             <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
-            <hr>
+            <hr class="hr2">
             </div>
             END;
     // echo "</div>";
@@ -266,6 +313,37 @@ function getColor($conn, $color_code){
         return $colorName;
     } 
 }
+
+echo <<<HTML
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper2 = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        effect: 'coverflow',
+
+        // // If we need pagination
+        // pagination: {
+        //     el: '.swiper-pagination',
+        //     type: 'progressbar',
+        // },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        //     hide:true,
+        // },
+    });
+</script>
+HTML;
 ?>
 <script>
 const errorMessageDiv = document.getElementById('errorMessage');
@@ -330,13 +408,34 @@ function addColorSize(addCount){
         if(i === 0){
             colorRadio.required = true;
         }
-        addDiv.appendChild(colorRadio);
+
+        var colorBox = document.createElement('div');
+        colorBox.classList.add("styleColorBox");
+        addDiv.appendChild(colorBox);
+
+        //ラジオボタンとspanを入れるdivを追加
+        var divColorRadio = document.createElement('div');
+        divColorRadio.classList.add('styleDivColorRadio');
+        colorBox.appendChild(divColorRadio);
+
+        divColorRadio.appendChild(colorRadio);//ラジオボタンをspanを入れるdivに入れた
+
+        //spanを入れるlabelを生成
+        var spanLabel = document.createElement('label');
+        spanLabel.setAttribute('for', 'radio'+i);
+
+        //spanを生成
+        var colorSpan = document.createElement('span');
+        colorSpan.classList.add("span" + i);
+        spanLabel.appendChild(colorSpan);
+        divColorRadio.appendChild(spanLabel);
 
         //radioボタンのラベル生成。
         var radioLabel = document.createElement('label');
         radioLabel.setAttribute('for', 'radio'+i);
         radioLabel.innerHTML = radioOptions[i];
-        addDiv.appendChild(radioLabel);
+        radioLabel.classList.add("styleRadioLabel");
+        colorBox.appendChild(radioLabel);
     }
 
     
@@ -344,13 +443,15 @@ function addColorSize(addCount){
     addDiv.appendChild(radioBr);
 
     var selectLabel = document.createElement('label');
+    selectLabel.classList.add("styleSize");
     selectLabel.setAttribute('for','sizeSelect');
-    selectLabel.innerHTML = "商品のサイズ";
+    selectLabel.innerHTML = "商品のサイズ　　";
     addDiv.appendChild(selectLabel);
 
     var selectBox = document.createElement('select');
     selectBox.name = 'size';
     selectBox.id = 'sizeSelect';
+    selectBox.classList.add("selectStyle");
     selectBox.required = true;
     addDiv.appendChild(selectBox);
 
@@ -375,13 +476,14 @@ function addColorSize(addCount){
 
     var piecesLabel = document.createElement('label');
     piecesLabel.setAttribute('for','pieces');
-    piecesLabel.innerHTML = "数量";
+    piecesLabel.innerHTML = "数量　　　　　　";
     addDiv.appendChild(piecesLabel);
 
     var inputPieces = document.createElement('input');
     inputPieces.type = "text";
     inputPieces.name = "pieces";
     inputPieces.id = "pieces";
+    inputPieces.classList.add("styleTextBox");
     inputPieces.placeholder = "数量";
     inputPieces.required = true;
     addDiv.appendChild(inputPieces);
@@ -391,13 +493,14 @@ function addColorSize(addCount){
 
     var priceLabel = document.createElement('label');
     priceLabel.setAttribute('for','price');
-    priceLabel.innerHTML = "価格";
+    priceLabel.innerHTML = "価格　　　　　　";
     addDiv.appendChild(priceLabel);
 
     var inputPrice = document.createElement('input');
     inputPrice.type = "text";
     inputPrice.name = "price";
     inputPrice.id = "price";
+    inputPrice.classList.add("styleTextBox");
     inputPrice.required = true;
     inputPrice.placeholder = "価格";
     addDiv.appendChild(inputPrice);
@@ -407,6 +510,7 @@ function addColorSize(addCount){
 
     var submitButton = document.createElement('button');
     submitButton.type = "button";
+    submitButton.classList.add("btnStyle");
     submitButton.innerHTML = "追加";
     addDiv.appendChild(submitButton);
     submitButton.addEventListener('click',function(){
@@ -495,7 +599,7 @@ function changeProductName(number){
                     response.forEach(function(row) {
                         if(row.error_message === true){
                             var nameElement = document.getElementById('name'+number);
-                            nameElement.innerHTML  = "商品名　　: "+productname;
+                            nameElement.innerHTML  = "商品名　　 "+productname;
                             alert("商品名の変更に成功しました。");
                         }else{
                                 alert("商品名の変更に失敗しました。");

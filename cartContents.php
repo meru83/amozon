@@ -150,8 +150,8 @@ if(isset($user_id)){
                         $htmlText .= <<<END
                         <input type="hidden" id="product_id$count" value="$product_id">
                         <input type="hidden" id="color_size_id$count" value="$color_size_id">
-                        <input type="number" id="$count" value="$cartPieces" min="1" max="$maxPieces">
-                        <button type="button" id="delete$count" onclick="deleteProducts($count)">削除</button>
+                        <input type="number" id="$count" class="selectStyle" value="$cartPieces" min="1" max="$maxPieces">
+                        <button type="button" id="delete$count" class="btnStyle"onclick="deleteProducts($count)">削除</button>
                         <br>
                         <hr>
                         END;
@@ -290,8 +290,8 @@ if(isset($user_id)){
                     END;
                     if($maxPieces >= $pieces){
                         $htmlText .= <<<END
-                        <input type="number" id="$i" value="$pieces" min="1" max="$maxPieces">
-                        <button type="button" id="delete$i" onclick="deleteProducts($i)">削除</button>
+                        <input type="number" id="$i" class="selectStyle" value="$pieces" min="1" max="$maxPieces">
+                        <button type="button" id="delete$i" class="btnStyle" onclick="deleteProducts($i)">削除</button>
                         <br>
                         END;
                         $count++;
@@ -325,6 +325,9 @@ if(isset($user_id)){
             echo $htmlText;
             echo '</div>';
             echo '</div>';
+            echo '<div class="hr">';
+            echo '<hr>';
+            echo '</div>';
             $htmlText = "";
         }else if(!($_SESSION['cart']['product_id'][$i] === null) && !($_SESSION['cart']['color_size_id'][$i] === null) && !($_SESSION['cart']['pieces'][$i] = null)){
             echo <<<END
@@ -339,10 +342,7 @@ if(isset($user_id)){
     }
 
     if($count !== 0) {
-        echo '<div class="hr">';
-        echo '<hr>';
         echo $count . "件";
-        echo '</div>';
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
