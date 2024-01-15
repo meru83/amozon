@@ -223,13 +223,14 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         //$favorite_product null か $user_id
                         if(!($favorite_product === "A")){
                             $htmlText .= <<<END
+                            <input type="checkbox" id="favorite$count" checked>
                             END;
                         }
                         if($pieces > 0){
                             $htmlText .= <<<END
                             <form action="innerCart.php" method="post">
-                                <input type="hidden" name="product_id" value="$product_id">
-                                <input type="hidden" name="color_size_id" value="$color_size_id">
+                                <input type="hidden" id="product_id$count" name="product_id" value="$product_id">
+                                <input type="hidden" id="color_size_id$count" name="color_size_id" value="$color_size_id">
                                 <button type="submit" name="submit" class="cart_btn">カートに入れる</button>
                             </form>
                             END;
@@ -318,6 +319,12 @@ function getColor($conn, $color_code){
 
 // データベース接続を閉じる
 $conn->close();
+
+echo <<<END
+<!----------<script>
+    var countMax = $count;
+</script>------>
+END;
 ?>
 <!-- <script>スライダー・Jquery</script> -->
 <script>
