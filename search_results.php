@@ -220,9 +220,12 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         </a>
                         </div>
                         END;
+                        //$favorite_product null か $user_id
+                        if(!($favorite_product === "A")){
+                            $htmlText .= <<<END
+                            END;
+                        }
                         if($pieces > 0){
-                            //$favorite_product null か $user_id
-                            //if(!$favorite_product === "A")
                             $htmlText .= <<<END
                             <form action="innerCart.php" method="post">
                                 <input type="hidden" name="product_id" value="$product_id">

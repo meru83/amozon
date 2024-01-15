@@ -14,7 +14,7 @@ import csv
 args = sys.argv
 
 # seller_id = args[1]
-seller_id = "test_bank"
+seller_id = args[1] if len(args) > 1 else None
 
 # ########################################
 # データベースから対象データ取得
@@ -142,5 +142,9 @@ for year in df['年'].unique():
     chart.width = 16  # グラフのサイズ
     chart.height = 8
     ws.add_chart(chart)
-wb.save('rireki.xlsx')
+try:
+    # 既存のコード
+    wb.save('C:/xampp/htdocs/php/amo/py/excel/rireki.xlsx')
+except Exception as e:
+    print(f"エラー: {e}")
 #python rireki.py rion_bank
