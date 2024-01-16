@@ -100,7 +100,7 @@ if($selectResult && $selectResult->num_rows > 0){
     <button type="button" id="addImg" class="btnStyle" onclick="addImg($color_size_id)" style="display:block">写真を追加</button>
     <form id="imgInsertForm" enctype="multipart/form-data" style="display:none">
         <input type="text" id="color_sizeInput" name="color_sizeInput" value="$color_size_id" hidden>
-        <input type="file" id="image-file" name="img[]" multiple accept="image/*">
+        <label for="image-file" class="styleFile"><input type="file" id="image-file" name="img[]" multiple accept="image/*"></label>
         <input type="submit" name="submit" class="kakutei" value="確定">
     </form>
     カラー:$colorName サイズ:$size <br>
