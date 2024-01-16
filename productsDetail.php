@@ -130,6 +130,7 @@ if($detailResult && $detailResult->num_rows > 0){
         $size = $row['size'];
         $pieces = $row['pieces'];
         $price = $row['price'];
+        $commaPrice = number_format($price);
         $color_code = $row['color_code'];
         $colorName = getColor($conn, $color_code);
         $img_url = !is_null($row['img_url'])?$row['img_url']:null;
@@ -197,7 +198,7 @@ if($detailResult && $detailResult->num_rows > 0){
 $htmlText = <<<END
 <br>
 <div class="setumei">
-<div class="flex">価格　　　　<div>￥<b class="b_price">$price</b></div></div>
+<div class="flex">価格　　　　<div>￥<b class="b_price">$commaPrice</b></div></div>
 <div class="flex">商品名　　　<div>$productName</div></div>
 <div class="flex">カテゴリ　　<div>$big_category_name - $category_name - $small_category_name</div></div>
 <div class="flex">概要　　　　<div>$view</div></div>
