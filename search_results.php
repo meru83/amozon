@@ -6,16 +6,18 @@ if (session_status() == PHP_SESSION_NONE) {
 if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
     $foo2 = <<<END
-    <form action="logout.php" method="post">
+    <div style="width:100%; text-align: right; height: fit-content;">
+    <form action="logout.php" method="post" class="normal">
         <input type="submit" name="logout" class="log_out" value="ログアウト">
     </form>
+    </div>
     END;
 }else{
     $user_id = "A";
     $foo2 = <<<END
     <div class="New_log">
         <a href="register.php"><div class="log_style">新規登録</div></a>
-        <a href="login.php"><div class="log_style">ログイン</div></a>
+        <a href="login.php"><div class="log_style rightM">ログイン</div></a>
     </div>
     END;
 }
@@ -45,9 +47,9 @@ if(isset($_SESSION['user_id'])){
 
 <body>
 <div id="header" class="header">
-        <div class="space"></div>
-        <h1 class="h1_White">検索結果</h1>
-        <?=$foo2?>
+    <div class="back"><div class="backBtn" onclick="history.back()" style="width:48px; height: 100%; background:#fff;"><img src=""></div></div>
+    <h1 class="h1_White">検索結果</h1>
+    <?=$foo2?>
 </div>
     <div class="Amozon-container">
         <!-- Left Side Menu -->

@@ -108,6 +108,10 @@ form {
     text-align: center;
 }
 
+.normal {
+    text-align: right;
+}
+
 .setumei {
     width: 300px;
 }
