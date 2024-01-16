@@ -70,6 +70,35 @@
     clear: both;
 }
 
+.left {
+    width: fit-content;
+}
+
+.float {
+    float: left;
+    margin: 5px 0;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.btnStyle2 {
+    height: 34px;
+    margin-left: 5px;
+    padding: 6px 15px;
+    color: #005aae;
+    background-color: #ffffff;
+    border: 1px solid #005aae;
+    border-radius: 4px;
+}
+
+.btnStyle2:hover {
+    background-color: #def7ff;
+}
+
+
 .span0 {
     width: 15px;
     height: 15px;
