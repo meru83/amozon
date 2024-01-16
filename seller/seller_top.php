@@ -11,15 +11,17 @@ error_reporting(E_ALL);
 
 if(isset($_SESSION['seller_id'])){
     $foo = <<<END
+    <div style="width:100%; text-align: right; height: fit-content;">
     <form action="seller_out.php" method="post">
         <input type="submit" name="logout" class="log_out" value="ログアウト">
     </form>
+    </div>
     END;
 }else{
     $foo = <<<END
     <div class="New_log">
         <a href="seller.php"><div class="log_style">新規登録</div></a>
-        <a href="seller_log.php"><div class="log_style">ログイン</div></a>
+        <a href="seller_log.php"><div class="log_style rightM">ログイン</div></a>
     </div>
     END;
 }
@@ -35,7 +37,7 @@ if(isset($_SESSION['seller_id'])){
 </head>
 <body>
     <div id="header" class="header">
-        <div class="space"></div>
+    <div class="back"><div class="backBtn" onclick="history.back()" style="width:48px; height: 100%; background:#fff;"><img src=""></div></div>
         <h1 class="h1_White">販売者側トップページ</h1>
         <?=$foo?>
     </div>
