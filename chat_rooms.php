@@ -41,6 +41,27 @@ if ($result === false) {
     die($errorMessage);
 }
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if(isset($_SESSION['user_id'])){
+    $foo2 = <<<END
+    <div style="width:100%; text-align: right; height: fit-content;">
+    <form action="logout.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    </div>
+    END;
+}else{
+    $foo2 = <<<END
+    <div class="New_log">
+        <a href="register.php"><div class="log_style">新規登録</div></a>
+        <a href="login.php"><div class="log_style rightM">ログイン</div></a>
+    </div>
+    END;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -52,20 +73,11 @@ if ($result === false) {
     <title>チャットルーム一覧</title>
 </head>
 <body>
-    <div id="header" class="header">
-        <div class="space"></div>
-        <h1 class="h1_White">チャットルーム一覧</h1>
-        <?php        
-        //ユーザーでログインしてた時のログアウトボタン
-        if(!is_null($user_id)){
-            echo '<a href="logout.php"><div class="log_out">ログアウト</div></a>';
-        }
-        //売り手側でログインしてた時のログイン
-        else if(!is_null($seller_id)){
-            echo '<a href="seller/seller_out.php"><div class="log_out">ログアウト</div></a>';
-        }
-        ?>
-    </div>
+<div id="header" class="header">
+    <div class="back"><div class="backBtn" onclick="history.back()" style="width:48px; height: 100%; background:#fff;"><img src=""></div></div>
+    <h1 class="h1_White">チャットルーム一覧</h1>
+    <?=$foo2?>
+</div>
     <?php        
     if(!is_null($user_id)){
         //user
