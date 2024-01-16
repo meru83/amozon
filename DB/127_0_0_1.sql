@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-14 18:58:52
+-- 生成日時: 2024-01-16 01:48:27
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -4534,7 +4534,16 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (347, 110, 'cole-keister-0KaUuWB7Qfw-unsplash110.jpg'),
 (348, 108, 'patrik-velich-ejvt0UazRlU-unsplash108.jpg'),
 (349, 120, 'jasmine-coro-Iz8texFGeHI-unsplash120.jpg'),
-(350, 118, 'joshua-rondeau-RrseEMRZ5Bw-unsplash617118.jpg');
+(350, 118, 'joshua-rondeau-RrseEMRZ5Bw-unsplash617118.jpg'),
+(351, 95, 'mike-bgs4o4CsOlw-unsplash95.jpg'),
+(352, 92, 'mike-bgs4o4CsOlw-unsplash92.jpg'),
+(353, 99, 'joshua-rondeau-A017y_hWTJc-unsplash99.jpg'),
+(354, 103, 'annika-palmari-ILoqItoEwcU-unsplash103.jpg'),
+(355, 100, 'annika-palmari-ILoqItoEwcU-unsplash100.jpg'),
+(356, 129, 'tessa-simpson-eTCogYz7kQE-unsplash129.jpg'),
+(357, 127, 'tessa-simpson-eTCogYz7kQE-unsplash127.jpg'),
+(358, 128, 'mitch-kemp-O2rHKXWTqP8-unsplash128.jpg'),
+(359, 126, 'mitch-kemp-O2rHKXWTqP8-unsplash126.jpg');
 
 -- --------------------------------------------------------
 
@@ -5096,7 +5105,7 @@ ALTER TABLE `products`
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=360;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
