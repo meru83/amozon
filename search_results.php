@@ -170,7 +170,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $commaPrice = number_format($price);
                     $color_size_id = $row['color_size_id'];
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
-                    $favorite_product = ($row['favorite_product'] === "A")?null:$row['favorite_product'];
+                    $favorite_product = ($row['favorite_product'] === null)?null:$row['favorite_product'];
                     if(!is_null($img_url)){
                         $imgText = <<<END
                         <div class="swiper-slide">
@@ -215,15 +215,23 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         <!---色: $colorName---->
                         <!----商品名　　:------> $productname<br>
                         <!----カテゴリ名: $category_name<br>------>
-                        <!---価格　　　: ------>¥$price<br>
+                        <!---価格　　　: ------>¥$commaPrice<br>
                         <!---サイズ: ------>$size サイズ<br>
                         </a>
                         </div>
                         END;
                         //$favorite_product null か $user_id
-                        if(!($favorite_product === "A")){
+                        if(!($favorite_product === null) && isset($_SESSION['user_id'])){
                             $htmlText .= <<<END
                             <input type="checkbox" id="favorite$count" checked>
+                            END;
+                        }else if(isset($_SESSION['user_id'])){
+                            $htmlText .= <<<END
+                            <input type="checkbox" id="favorite$count">
+                            END;
+                        }else{
+                            $htmlText .= <<<END
+                            <button type="button" onclick="heartButton()">ハートマーク</button>
                             END;
                         }
                         if($pieces > 0){
@@ -321,9 +329,58 @@ function getColor($conn, $color_code){
 $conn->close();
 
 echo <<<END
-<!----------<script>
-    var countMax = $count;
-</script>------>
+<script>
+var countMax = $count;
+for(let i = 0; i < countMax; i++){
+    var favorite_product = document.getElementById('favorite'+i);
+    favorite_product.addEventListener('change', (e) => {
+        console.log(favorite_product.check);
+        var product_id = document.getElementById('product_id'+i).value;
+        var color_size_id = document.getElementById('color_size_id'+i).value;
+        if(favorite_product.checked){
+            var favoriteChecked = false;//未選択
+            console.log("未選択");
+        }else{
+            var favoriteChecked = true;//選択済
+            console.log("選択済");
+        }
+    //     const formData = new FormData();
+    //     formData.append('product_id', product_id);
+    //     formData.append('color_size_id', color_size_id);
+    //     formData.append('favoriteChecked', favoriteChecked);
+    //     console.log(favoriteChecked);
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('POST','changeFavorite.php',true);
+    //     xhr.send(formData);
+    //     xhr.onreadystatechange = function(){
+    //         if(xhr.readyState === 4 && xhr.status === 200){
+    //             try {
+    //                 const response = JSON.parse(xhr.responseText);
+    //                 response.forEach(function(row) {
+    //                     if(row.error_message === true){
+    //                         if(favoriteChecked === true){
+    //                             favorite_product.checked = false;
+    //                         }else{
+    //                             favorite_product.checked = true;
+    //                         }
+    //                     }else{
+    //                         if(favoriteChecked === true){
+    //                             favorite_product.checked = true;
+    //                         }else{
+    //                             favorite_product.checked = false;
+    //                         }
+    //                         alert("お気に入り登録に失敗しました。");
+    //                     }
+    //                 });
+    //             } catch (error) {
+    //                 console.error("Error parsing JSON response:", error);
+    //                 alert("リクエストが失敗しました。");
+    //             }
+    //         }
+    //     }
+    });
+}
+</script>
 END;
 ?>
 <!-- <script>スライダー・Jquery</script> -->
@@ -341,5 +398,8 @@ form.addEventListener('submit',(e) => {
         return true;
     }
 });
-//ここ
+
+function heartButton(){
+    alert("お気に入り登録にはログインを完了させてください。");
+}
 </script>
