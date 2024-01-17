@@ -1,8 +1,0 @@
-[16-Jan-2024 04:12:22 Europe/Berlin] PHP Warning:  Undefined array key "imgFile" in C:\xampp\htdocs\php\amozon\seller\addImg.php on line 24
-[16-Jan-2024 04:12:22 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\php\amozon\seller\addImg.php on line 24
-[16-Jan-2024 04:12:22 Europe/Berlin] PHP Warning:  Undefined array key "imgFile" in C:\xampp\htdocs\php\amozon\seller\addImg.php on line 25
-[16-Jan-2024 04:12:22 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\php\amozon\seller\addImg.php on line 25
-[16-Jan-2024 04:12:22 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in C:\xampp\htdocs\php\amozon\seller\addImg.php:30
-Stack trace:
-#0 {main}
-  thrown in C:\xampp\htdocs\php\amozon\seller\addImg.php on line 30
