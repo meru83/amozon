@@ -67,6 +67,7 @@ if($selectResult && $selectResult->num_rows > 0){
         //$colorName
         $pieces = $row['pieces'];
         $price = $row['price'];
+        $commaPrice = number_format($price);
         $color_size_id = $row['color_size_id'];
         $img_url = $row['img_url'];
         if(!is_null($img_url)){
@@ -106,7 +107,7 @@ if($selectResult && $selectResult->num_rows > 0){
     カラー:$colorName サイズ:$size <br>
     　　  商品名　: $productname <br>
     <button type="button" class="btnStyle" onclick="changePrice($color_size_id)">変更</button>
-    <p id="priceText">価格　　: $price </p><br>
+    <p id="priceText">価格　　: $commaPrice </p><br>
     <button type="button" class="btnStyle" onclick="changePieces($color_size_id)">変更</button>
     <p id="piecesText">在庫数　: $pieces </p><br>
     出品日　: $create_at <br>

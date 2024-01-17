@@ -100,6 +100,7 @@ if(isset($user_id)){
                 $cartPieces = $row['cartPieces'];
                 $maxPieces = $row['maxPieces'];
                 $price  = $row['price'];
+                $commaPrice = number_format($price);
                 $productname = $row['productname'];
                 $quality = $row['quality'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
@@ -142,7 +143,7 @@ if(isset($user_id)){
                     色: $colorName
                     サイズ: $size<br>
                     商品名　　: $productname<br>
-                    価格　　　: $price<br>
+                    価格　　　: $commaPrice<br>
                     </a>
                     <br>
                     END;
@@ -241,6 +242,7 @@ if(isset($user_id)){
                 $productname = $row['productname'];
                 $category_name = !is_null($row['category_name'])?$row['category_name']:"";
                 $price  = $row['price'];
+                $commaPrice = number_format($price);
                 $color_size_id = $row['color_size_id'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
                 if(!is_null($img_url)){
@@ -284,7 +286,7 @@ if(isset($user_id)){
                     色: $colorName
                     サイズ: $size<br>
                     商品名　　: $productname<br>
-                    価格　　　: $price<br>
+                    価格　　　: $commaPrice<br>
                     </a>
                     <br>
                     END;
