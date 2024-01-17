@@ -28,8 +28,8 @@ if(isset($_SESSION['user_id'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/search_results.css">
     <link rel="stylesheet" href="css/Amozon_insta.css">
+    <link rel="stylesheet" href="css/search_results.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>商品検索</title>
     <style>
@@ -225,15 +225,21 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         //$favorite_product null か $user_id
                         if(!($favorite_product === null) && isset($_SESSION['user_id'])){
                             $htmlText .= <<<END
-                            <input type="checkbox" id="favorite$count" checked>
+                            <label class="checkHeart" for="favorite$count">
+                                <input type="checkbox" id="favorite$count" checked>
+                                <span class="spanHeart"></span>
+                            </label>
                             END;
                         }else if(isset($_SESSION['user_id'])){
                             $htmlText .= <<<END
-                            <input type="checkbox" id="favorite$count">
+                            <label class="checkHeart" for="favorite$count">
+                                <input type="checkbox" id="favorite$count">
+                                <span class="spanHeart"></span>
+                            </label>
                             END;
                         }else{
                             $htmlText .= <<<END
-                            <button type="button" onclick="heartButton()">ハートマーク</button>
+                            <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
                             END;
                         }
                         if($pieces > 0){
