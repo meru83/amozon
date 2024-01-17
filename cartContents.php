@@ -345,11 +345,17 @@ if(!($user_id === "A")){
                     //$favorite_product null か $user_id
                     if(!($favorite_product === null) && isset($_SESSION['user_id'])){
                         $htmlText .= <<<END
-                        <input type="checkbox" id="favorite$count" checked>
+                        <label class="checkHeart" for="favorite$count">
+                            <input type="checkbox" id="favorite$count" checked>
+                            <span class="spanHeart"></span>
+                        </label>
                         END;
                     }else if(isset($_SESSION['user_id'])){
                         $htmlText .= <<<END
-                        <input type="checkbox" id="favorite$count">
+                        <label class="checkHeart" for="favorite$count">
+                            <input type="checkbox" id="favorite$count">
+                            <span class="spanHeart"></span>
+                        </label>
                         END;
                     }else{
                         $htmlText .= <<<END
