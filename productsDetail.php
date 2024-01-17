@@ -214,7 +214,7 @@ $htmlText = <<<END
 <div class="flex">サイズ　　　<div>$size</div></div>
 <div class="flex">色　　　　　<div>$colorName</div></div>
 <div class="flex">出品日　　　<div>$create_at</div></div>
-<div class="flex">出品者　　　<div>$seller_id</div></div>
+<div class="flex">出品者　　　<div><a href="seller/seller_home.php?seller_id=$seller_id">$seller_id</a></div></div><!----これリンクにして売り手のトプ画に飛ぶようにする。---->
 END;
 
 //$favorite_product null か $user_id

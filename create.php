@@ -12,15 +12,18 @@ if (!isset($_SESSION['user_id'])) {
 // データベースへの接続情報を設定します（db_config.phpを適切に設定してください）
 include 'db_config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$error_message = null;
+
+if (isset($_GET['seller_id'])) {
     // フォームから送信されたユーザーIDを取得
-    $seller_id = $_POST['seller_id'];
+    $seller_id = $_GET['seller_id'];
 
     // 自分のユーザーIDを取得
     $user_id = $_SESSION['user_id'];
 
     if (!isValidUserID($conn, $seller_id)) {
-        echo "無効なユーザーIDです。";
+        $error_message = "無効なユーザーIDです。";
+        header("Location: chat_rooms.php?error_message=$error_message");
         exit();
     }
 
@@ -34,7 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($check_result->num_rows > 0) {
             // 既存のチャットルームが存在する場合
-            echo "指定した販売者とのチャットルームは既に存在します。";
+            $error_message = "指定した販売者とのチャットルームは既に存在します。";
+            header("Location: chat_rooms.php?error_message=$error_message");
+            exit();
         } else {
             // チャットルームを新しく作成
             $insert_sql = "INSERT INTO chatrooms (user_id, seller_id) VALUES (?, ?)";
@@ -49,19 +54,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // チャットルームの作成に失敗した場合のエラーハンドリング
                 //echoに比べてエラーハンドリングが柔軟
                 throw new Exception("チャットルームの作成に失敗しました。");
+                $error_message = "チャットルームの作成に失敗しました。";
+                header("Location: chat_rooms.php?error_message=$error_message");
+                exit();
             }
         }
     }catch (Exception $e) {
         // エラーハンドリング: エラーメッセージをログに記録
-        $logFile = 'error.log';
-        error_log("Error in create.php: " . $e->getMessage() . PHP_EOL, 3, $logFile);
+        error_log("Error in create.php: " . $e->getMessage() . PHP_EOL);
 
         // エラーメッセージを表示
-        echo "エラーが発生しました。申し訳ありませんが、後でもう一度試してください。";
+        $error_message = "エラーが発生しました。申し訳ありませんが、後でもう一度試してください。";
+        header("Location: chat_rooms.php?error_message=$error_message");
+        exit();
     }
-
-    // データベース接続を閉じます
-    $conn->close();
 }
 
 // 有効なユーザーIDかどうかを確認する関数
@@ -74,22 +80,3 @@ function isValidUserID($conn, $seller_id) {
     return ($result && $result->num_rows > 0);
 }
 ?>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style_create.css">    
-    <title>新しいチャットルーム作成</title>
-</head>
-<body class="create_body">
-    <!---チャットルーム作成フォーム--->
-    <form class="create_form" action="" method="POST">
-        <h3 class="create_h3" >新しいチャットルームを作成</h3>
-        <label class="create_label" for="seller_id">ユーザーIDを入力:</label>
-        <input class="create_input" type="text" name="seller_id" id="seller_id" required>
-        <button class="create_button" type="submit">チャットルームを作成</button>
-        <a class="create_modoru" href="chat_rooms.php">戻る</a>
-    </form>
-</body>
-</html>

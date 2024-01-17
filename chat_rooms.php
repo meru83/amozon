@@ -17,6 +17,8 @@ if (is_null($user_id) && is_null($seller_id)) {
     exit(); // リダイレクト後、スクリプトの実行を終了
 }
 
+$error_message = isset($_GET['error_message'])?$_GET['error_message']:null;//どっかでエラーメッセージの出力させないとダメ
+
 // ユーザーのチャットルームを取得します
 //DISTINCTで重複レコードを一つにまとめる
 $sql = "SELECT DISTINCT chatrooms.room_id, chatrooms.user_id, chatrooms.seller_id, users.username, seller.sellerName
@@ -40,11 +42,6 @@ if ($result === false) {
     
     die($errorMessage);
 }
-
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 
 if(isset($_SESSION['seller_id'])){
     $seller_chat = <<<END
@@ -145,7 +142,6 @@ if(isset($_SESSION['seller_id'])){
     }
          
     echo '<div class="right-content">';
-    echo '<a href="create.php"><div class="NewChat">新しいチャットルームを作成</div></a><hr class="kugiri">';
     // すでに表示したチャットルームのIDを格納する配列
     $displayedRooms = array();
 
