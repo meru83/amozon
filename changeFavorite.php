@@ -15,41 +15,44 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 }
 
-$error_message = false;
+$error_message = 0;
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $product_id = $_POST['product_id'];
     $color_size_id = $_POST['color_size_id'];
-    $favoriteChecked = $_POST['favoriteChecked'];
+    $favoriteChecked = intval($_POST['favoriteChecked']);
 }else{
     history.back();
     exit();
 }
 
-// try{
-    if($favoriteChecked === true){
+// error_log($favoriteChecked);
+try{
+    if($favoriteChecked === 1){
+        $insertSql = "INSERT INTO favorite VALUES(?, ?, ?)";
+        $insertStmt = $conn->prepare($insertSql);
+        $insertStmt->bind_param("sii", $user_id, $product_id, $color_size_id);
+        if($insertStmt->execute()){
+            $error_message = 1;
+            // error_log("a");
+        }
+    }else{
         $DeleteSql = "DELETE FROM favorite
                     WHERE user_id = ? && product_id = ? && color_size_id = ?";
         $DeleteStmt = $conn->prepare($DeleteSql);
         $DeleteStmt->bind_param("sii", $user_id, $product_id, $color_size_id);
         if($DeleteStmt->execute()){
-            $error_message = true;
-        }
-    }else{
-        $insertSql = "INSERT INTO favorite VALUES(?, ?, ?)";
-        $insertStmt = $conn->prepare($insertSql);
-        $insertStmt->bind_param("sii", $user_id, $product_id, $color_size_id);
-        if($insertStmt->execute()){
-            $error_message = true;
+            $error_message = 1;
+            // error_log("b");
         }
     }
-// }catch (Exception $e) {
-//     error_log("error : ".$e->getMessage());
-// }
-
-$response[] = array(
+}catch (Exception $e) {
+    error_log("error : ".$e->getMessage());
+}
+// error_log($error_message);
+$data = array(
     'error_message' => $error_message
 );
 
-echo json_encode($response); // JSON 形式のデータを出力
+echo json_encode($data); // JSON 形式のデータを出力
 ?>
