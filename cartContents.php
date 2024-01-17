@@ -56,9 +56,8 @@ if(isset($_SESSION['user_id'])){
 
         <div id="header" class="header">
             <div class="back"><div class="backBtn" onclick="history.back()" style="width:48px; height: 100%; background:#fff;"><img src=""></div></div>
-                <h1 class="h1_White">カート</h1>
-                <?=$foo2?>
-            </div>
+            <h1 class="h1_White">カート</h1>
+            <?=$foo2?>
         </div>
 
         <div class="Amozon-container">
