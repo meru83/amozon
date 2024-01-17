@@ -159,7 +159,7 @@ if(!($user_id === "A")){
                     echo $htmlText;
                     echo '</div>';
                     echo '<div class="htmlAll">';
-                    echo '<div class="imgAll swiper">';
+                    echo '<div class="imgAll swiper float">';
                     echo '<div class="swiper-wrapper">';
                     echo $imgText;
                     $lastImg[] = $color_size_id;
@@ -172,21 +172,29 @@ if(!($user_id === "A")){
                     価格　　　: $commaPrice<br>
                     </a>
                     <br>
+                    <div class="sonota">
                     END;
                     //$favorite_product null か $user_id
                     if(!($favorite_product === null) && isset($_SESSION['user_id'])){
                         $htmlText .= <<<END
-                        <input type="checkbox" id="favorite$count" checked>
+                        <label class="checkHeart" for="favorite$count">
+                            <input type="checkbox" id="favorite$count" checked>
+                            <span class="spanHeart"></span>
+                        </label>
                         END;
                     }else if(isset($_SESSION['user_id'])){
                         $htmlText .= <<<END
-                        <input type="checkbox" id="favorite$count">
+                        <label class="checkHeart" for="favorite$count">
+                            <input type="checkbox" id="favorite$count">
+                            <span class="spanHeart"></span>
+                        </label>
                         END;
                     }else{
                         $htmlText .= <<<END
                         <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
                         END;
                     }
+                    echo '</div>';
                     if($maxPieces >= $cartPieces){
                         $htmlText .= <<<END
                         <input type="hidden" id="product_id$count" value="$product_id">
@@ -194,14 +202,12 @@ if(!($user_id === "A")){
                         <input type="number" id="$count" class="selectStyle" value="$cartPieces" min="1" max="$maxPieces">
                         <button type="button" id="delete$count" class="btnStyle"onclick="deleteProducts($count)">削除</button>
                         <br>
-                        <hr>
                         END;
                     }else{
                         $htmlText .= <<<END
                         在庫不足<br>
                         商品はカートから削除されます<br>
                         <br>
-                        <hr>
                         END;
                         $deleteSql = "DELETE FROM cart WHERE user_id = ? && product_id = ? && color_size_id = ?";
                         $deleteStmt = $conn->prepare($deleteSql);
@@ -237,7 +243,12 @@ if(!($user_id === "A")){
         
         </div>
         HTML;
+        echo '<div class="textStyle">';
         echo $htmlText;
+        echo '</div>';
+        echo '</div>';
+        echo '<div class="hr">';
+        echo '<hr>';
         echo '</div>';
         $htmlText = "";
     }
