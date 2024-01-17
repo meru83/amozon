@@ -335,47 +335,49 @@ echo <<<END
 var countMax = $count;
 for(let i = 0; i < countMax; i++){
     var favorite_product = document.getElementById('favorite'+i);
-    favorite_product.addEventListener('change', function(){
-        var checkState = this.checked;
-        var product_id = document.getElementById('product_id'+i).value;
-        var color_size_id = document.getElementById('color_size_id'+i).value;
-        var favoriteChecked = checkState ? 1 : 0;
-        const formData = new FormData();
-        formData.append('product_id', product_id);
-        formData.append('color_size_id', color_size_id);
-        formData.append('favoriteChecked', favoriteChecked);
-        fetch('changeFavorite.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if(!response.ok){
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.error_message === 1) {
-                if (favoriteChecked === 1) {
-                    this.checked = true;
-                } else {
-                    this.checked = false;
+    if(favorite_product !== null){
+        favorite_product.addEventListener('change', function(){
+            var checkState = this.checked;
+            var product_id = document.getElementById('product_id'+i).value;
+            var color_size_id = document.getElementById('color_size_id'+i).value;
+            var favoriteChecked = checkState ? 1 : 0;
+            const formData = new FormData();
+            formData.append('product_id', product_id);
+            formData.append('color_size_id', color_size_id);
+            formData.append('favoriteChecked', favoriteChecked);
+            fetch('changeFavorite.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Network response was not ok');
                 }
-            } else {
-                if (favoriteChecked === 1) {
-                    alert("お気に入り登録に失敗しました。");
-                    this.checked = false;
+                return response.json();
+            })
+            .then(data => {
+                if (data.error_message === 1) {
+                    if (favoriteChecked === 1) {
+                        this.checked = true;
+                    } else {
+                        this.checked = false;
+                    }
                 } else {
-                    alert("お気に入り商品の削除に失敗しました。");
-                    this.checked = true;
+                    if (favoriteChecked === 1) {
+                        alert("お気に入り登録に失敗しました。");
+                        this.checked = false;
+                    } else {
+                        alert("お気に入り商品の削除に失敗しました。");
+                        this.checked = true;
+                    }
                 }
-            }
-        })
-        .catch(error => {
-            console.error("Fetch error:", error);
-            alert("リクエストが失敗しました。");
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+                alert("リクエストが失敗しました。");
+            });
         });
-    });
+    }
 }
 </script>
 END;
