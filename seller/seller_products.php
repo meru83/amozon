@@ -187,13 +187,18 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
-            <button type="button" class="btnStyle" onclick="changeProductName($product_id)">変更</button><p id="name$product_id">商品名　　　$productname</p><br>
-            <div id="allCategory$product_id" style="display:block">
-            <button type="button" class="btnStyle" onclick="changeCategory($product_id)">変更</button>
-            <div id="categoryText$product_id">
+            <div class="flex">
+            <div class="left"><p id="name$product_id">商品名　　　$productname</p></div>
+            <button type="butt  on" class="btnStyle2" onclick="changeProductName($product_id)">変更</button><br>
+            </div>
+
+            <div id="allCategory$product_id" class="flex" style="display:block">
+            <div id="categoryText$product_id" class="left float">
             カテゴリ名　$big_category_name - $category_name - $small_category_name
             </div>
+            <button type="button" class="btnStyle2" onclick="changeCategory($product_id)">変更</button>
             </div>
+            
             <div id="bigCate$product_id" style="display:none">
             <label for="big_category$product_id" class="p2_label">
                 大カテゴリ
@@ -231,12 +236,15 @@ if($selectResult && $selectResult->num_rows > 0){
             </div>
 
             <button type="button" id="confirmCategoryButton$product_id" class="btnStyle" style="display:none">再登録</button><br>
-
-            <button type="button" class="btnStyle" onclick="changeView($product_id)">変更</button>
-            <p id="view$product_id">概要　　　　 $view</p><br>
-            <div id="qualityBox$product_id">
-            <button type="button" class="btnStyle" onclick="changeQuality($product_id)">変更</button>
-            <p id="qualityText$product_id">品質　　　　 $quality
+            
+            <div class="flex">
+            <div class="left"><p id="view$product_id">概要　　　　 $view</p></div>
+            <button type="button" class="btnStyle2" onclick="changeView($product_id)">変更</button>
+            </div>
+            <br>
+            <div id="qualityBox$product_id" class="flex">
+            <div class="left"><p id="qualityText$product_id">品質　　　　 $quality</p></div>
+            <button type="button" class="btnStyle2" onclick="changeQuality($product_id)">変更</button>
             </div>
             <div id="selectQualityBox$product_id" style="display:none">
                 <label for="selectQuality$product_id">品質</label>
