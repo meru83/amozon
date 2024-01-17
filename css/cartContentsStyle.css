@@ -213,6 +213,7 @@ a, a:hover, a:active, a:visited {
 }
 
 .btnStyle {
+    height: 33px;
     margin-top: 5px;
     padding: 6px 15px;
     color: #005aae;
@@ -232,4 +233,17 @@ a, a:hover, a:active, a:visited {
     background-color: #ffffff;
     border: 1px solid #005aae;
     border-radius: 4px;
+}
+
+.sonota {
+    display: flex;
+    align-items: center;
+}
+
+.heartBtn {
+    height:33px;
+    margin:5px 5px 0 0;
+    padding: 0;
+    background: white;
+    border: none;
 }
