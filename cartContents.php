@@ -1,6 +1,10 @@
 <?php
-
 include "db_config.php";
+
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log'); // エラーログをerror.logファイルに記録
+error_reporting(E_ALL);
 
 // セッションを開始します
 if (session_status() == PHP_SESSION_NONE) {
@@ -8,6 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
     $foo2 = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
     <form action="logout.php" method="post">
@@ -16,6 +21,7 @@ if(isset($_SESSION['user_id'])){
     </div>
     END;
 }else{
+    $user_id = "A";
     $foo2 = <<<END
     <div class="New_log">
         <a href="register.php"><div class="log_style">新規登録</div></a>
@@ -53,6 +59,7 @@ if(isset($_SESSION['user_id'])){
                 <h1 class="h1_White">カート</h1>
                 <?=$foo2?>
             </div>
+        </div>
 
         <div class="Amozon-container">
 
@@ -78,11 +85,6 @@ if(isset($_SESSION['user_id'])){
             <div class="right-content">
 
 <?php
-
-if(isset($_SESSION['user_id'])){
-    $user_id = $_SESSION['user_id'];
-}
-
 //エラーメッセージががある場合
 if(isset($_GET['error_message'])){
     $error_message = $_GET['error_message'];
@@ -95,16 +97,17 @@ $htmlText = "";
 $lastImg = array();
 //セッションで管理されている場合
 
-if(isset($user_id)){
+if(!($user_id === "A")){
     //ログイン済みの時の処理を追加
     //データベースで管理
-    $logSql = "SELECT c.product_id, c.color_size_id, c.pieces AS cartPieces, p.productname, p.quality, s.service_status, s.color_code, s.size, s.pieces AS maxPieces, s.price, i.img_url FROM cart c
+    $logSql = "SELECT c.product_id, c.color_size_id, c.pieces AS cartPieces, p.productname, p.quality, s.service_status, s.color_code, s.size, s.pieces AS maxPieces, s.price, i.img_url, f.user_id AS favorite_product FROM cart c
                 LEFT JOIN products p ON (c.product_id = p.product_id)
                 LEFT JOIN color_size s ON (c.color_size_id = s.color_size_id)
                 LEFT JOIN products_img i ON (c.color_size_id = i.color_size_id)
+                LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
                 WHERE c.user_id = ?";
     $logStmt = $conn->prepare($logSql);
-    $logStmt->bind_param("s",$user_id);
+    $logStmt->bind_param("ss", $user_id ,$user_id);
     $logStmt->execute();
     $logResult = $logStmt->get_result();
     if($logResult && $logResult->num_rows > 0){
@@ -127,6 +130,7 @@ if(isset($user_id)){
                 $productname = $row['productname'];
                 $quality = $row['quality'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
+                $favorite_product = ($row['favorite_product'] === null)?null:$row['favorite_product'];
                 if(!is_null($img_url)){
                     $imgText = <<<END
                     <div class="swiper-slide">
@@ -170,6 +174,20 @@ if(isset($user_id)){
                     </a>
                     <br>
                     END;
+                    //$favorite_product null か $user_id
+                    if(!($favorite_product === null) && isset($_SESSION['user_id'])){
+                        $htmlText .= <<<END
+                        <input type="checkbox" id="favorite$count" checked>
+                        END;
+                    }else if(isset($_SESSION['user_id'])){
+                        $htmlText .= <<<END
+                        <input type="checkbox" id="favorite$count">
+                        END;
+                    }else{
+                        $htmlText .= <<<END
+                        <button type="button" onclick="heartButton()">ハートマーク</button>
+                        END;
+                    }
                     if($maxPieces >= $cartPieces){
                         $htmlText .= <<<END
                         <input type="hidden" id="product_id$count" value="$product_id">
@@ -313,13 +331,26 @@ if(isset($user_id)){
                     </a>
                     <br>
                     END;
+                    //$favorite_product null か $user_id
+                    if(!($favorite_product === null) && isset($_SESSION['user_id'])){
+                        $htmlText .= <<<END
+                        <input type="checkbox" id="favorite$count" checked>
+                        END;
+                    }else if(isset($_SESSION['user_id'])){
+                        $htmlText .= <<<END
+                        <input type="checkbox" id="favorite$count">
+                        END;
+                    }else{
+                        $htmlText .= <<<END
+                        <button type="button" onclick="heartButton()">ハートマーク</button>
+                        END;
+                    }
                     if($maxPieces >= $pieces){
                         $htmlText .= <<<END
                         <input type="number" id="$i" class="selectStyle" value="$pieces" min="1" max="$maxPieces">
                         <button type="button" id="delete$i" class="btnStyle" onclick="deleteProducts($i)">削除</button>
                         <br>
                         END;
-                        $count++;
                     }else{
                         $htmlText .= <<<END
                         在庫なし<br>
@@ -330,6 +361,7 @@ if(isset($user_id)){
                         $_SESSION['cart']['color_size_id'][$i] = null;
                         $_SESSION['cart']['pieces'][$i] = null;
                     }
+                    $count++;
                     // 他の情報も必要に応じて表示
                 }else{
                     echo $imgText;
@@ -429,6 +461,56 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 HTML;
+
+echo <<<END
+<script>
+var countMax = $count;
+for(let i = 0; i < countMax; i++){
+    var favorite_product = document.getElementById('favorite'+i);
+    favorite_product.addEventListener('change', function(){
+        var checkState = this.checked;
+        var product_id = document.getElementById('product_id'+i).value;
+        var color_size_id = document.getElementById('color_size_id'+i).value;
+        var favoriteChecked = checkState ? 1 : 0;
+        const formData = new FormData();
+        formData.append('product_id', product_id);
+        formData.append('color_size_id', color_size_id);
+        formData.append('favoriteChecked', favoriteChecked);
+        fetch('changeFavorite.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error_message === 1) {
+                if (favoriteChecked === 1) {
+                    this.checked = true;
+                } else {
+                    this.checked = false;
+                }
+            } else {
+                if (favoriteChecked === 1) {
+                    alert("お気に入り登録に失敗しました。");
+                    this.checked = false;
+                } else {
+                    alert("お気に入り商品の削除に失敗しました。");
+                    this.checked = true;
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            alert("リクエストが失敗しました。");
+        });
+    });
+}
+</script>
+END;
 
 function getColor($conn, $color_code){
     $colorSql = "SELECT * FROM color_name
