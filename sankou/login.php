@@ -4,7 +4,7 @@ session_regenerate_id(true);
 
 header('Content-Type: text/html; charset=utf-8');
 
-date_default_timezone_set('Asia/Tokyo');
+date_default_timezone_set('Asia/Tokyo');//ここ大事
 
 $servername = "localhost";
 $username = "rem";
