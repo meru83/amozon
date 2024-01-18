@@ -160,7 +160,7 @@ if(!($user_id === "A")){
                     echo $htmlText;                   
                     echo '</div>';
                     echo '</div>';
-                    echo '<div class="hr hr$count">';
+                    echo '<div class="hr">';
                     echo '<hr>';
                     echo '</div>';
                     echo '<div class="htmlAll">';
