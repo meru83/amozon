@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-18 07:37:40
+-- 生成日時: 2024-01-18 14:03:14
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -4717,7 +4717,8 @@ INSERT INTO `search` (`search_id`, `searchText`, `create_at`) VALUES
 (6, 'パンツ', '2024-01-18 04:12:46'),
 (7, 'シャツ', '2024-01-18 04:13:06'),
 (8, 'シャツ', '2024-01-18 04:37:20'),
-(9, 'パンツ', '2024-01-18 04:37:23');
+(9, 'パンツ', '2024-01-18 04:37:23'),
+(10, 'メンズ', '2024-01-18 12:46:29');
 
 -- --------------------------------------------------------
 
@@ -5072,6 +5073,7 @@ CREATE TABLE `users` (
   `username` varchar(255) DEFAULT NULL,
   `pass` varchar(255) NOT NULL,
   `phone` varchar(16) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `user_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -5080,8 +5082,8 @@ CREATE TABLE `users` (
 -- テーブルのデータのダンプ `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `create_at`, `user_status`) VALUES
-('test_user', 'テストユーザー', '$2y$10$d2iU/xGLRhWX747O0Z3iieqyCy8tmw4qI6n0N3ewxyHkiD6J9Jqry', '0612345678', '2023-10-27 13:13:05', 1);
+INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `email`, `create_at`, `user_status`) VALUES
+('test_user', 'テストユーザー', '$2y$10$d2iU/xGLRhWX747O0Z3iieqyCy8tmw4qI6n0N3ewxyHkiD6J9Jqry', '0612345678', '2312067@i-seifu.jp', '2023-10-27 13:13:05', 1);
 
 --
 -- ダンプしたテーブルのインデックス
@@ -5263,7 +5265,7 @@ ALTER TABLE `products_img`
 -- テーブルの AUTO_INCREMENT `search`
 --
 ALTER TABLE `search`
-  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- ダンプしたテーブルの制約
