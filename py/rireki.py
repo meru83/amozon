@@ -44,7 +44,7 @@ SELECT
     SUM(d.detail_total) AS total
 FROM
     orders_detail d
-LEFT JOIN 
+LEFT JOIN
     orders o ON (d.order_id = o.order_id)
 LEFT JOIN
     products p ON (d.product_id = p.product_id)
@@ -130,10 +130,10 @@ for year in df['年'].unique():
     src = Reference(ws, min_col=cmin+2, min_row=rmin+1, max_col=cmax, max_row=rmax)
     chart.add_data(src, titles_from_data=False)
 
-    # Y : 売上 
+    # Y : 売上
     cat = Reference(ws, min_col=cmin+1, min_row=rmin+1, max_row=rmax)  # 項目名の設定
     chart.set_categories(cat)
-    
+
     chart.title = seller_id  # グラフタイトル
     chart.x_axis.title = '月別'  # 軸ラベル
     chart.y_axis.title = '売上'
@@ -144,7 +144,10 @@ for year in df['年'].unique():
     ws.add_chart(chart)
 try:
     # 既存のコード
+    # ★★★ 変更ここから ★★★
+    # wb.save('C:/xampp/htdocs/php/amo/py/excel/rireki.xlsx')
     wb.save('rireki.xlsx')
+    # ★★★ 変更ここまで ★★★
 except Exception as e:
     print(f"エラー: {e}")
 #python rireki.py rion_bank
