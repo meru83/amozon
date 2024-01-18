@@ -20,6 +20,7 @@
         $password = $_POST['password'];
         $username = $_POST['username'];
         $phone = $_POST['number'];
+        $email = $_POST['email'];
 
         // ユーザーIDの正規表現パターンを定義
         $user_id_pattern = '/^[a-z0-9\-_]+$/';
@@ -57,9 +58,9 @@
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                 // ユーザーをデータベースに挿入
-                $insert_sql = "INSERT INTO users (user_id, pass, username, phone) VALUES (?, ?, ?, ?)";
+                $insert_sql = "INSERT INTO users (user_id, pass, username, phone, email) VALUES (?, ?, ?, ?, ?)";
                 $insert_stmt = $conn->prepare($insert_sql);
-                $insert_stmt->bind_param("ssss", $user_id, $hashed_password, $username, $phone);
+                $insert_stmt->bind_param("sssss", $user_id, $hashed_password, $username, $phone, $email);
                 if ($insert_stmt->execute()) {
                     //登録成功時の処理
                     echo "<p>新しいユーザーが登録されました。</p>";
@@ -161,9 +162,9 @@ form.addEventListener('keydown',(e) => {
         if(act === 'user_id'){
             number.focus();
         }else if(act === 'number'){
-            password.focus();
-        }else if(email){
             email.focus();
+        }else if(act === 'email'){
+            password.focus();
         }else if(act === 'password'){
             rePassword.focus();
         }else if(act === 'rePassword'){
