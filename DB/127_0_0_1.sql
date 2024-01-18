@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-16 04:31:51
+-- 生成日時: 2024-01-18 07:37:40
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -55,6 +55,15 @@ CREATE TABLE `cart` (
   `pieces` int(11) NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `cart`
+--
+
+INSERT INTO `cart` (`user_id`, `product_id`, `color_size_id`, `pieces`, `create_at`) VALUES
+('test_user', 14, 43, 1, '2024-01-18 04:13:17'),
+('test_user', 145, 531, 1, '2024-01-18 04:12:18'),
+('test_user', 153, 562, 1, '2024-01-18 04:12:54');
 
 -- --------------------------------------------------------
 
@@ -4615,7 +4624,73 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (432, 225, 'amaurys-puello-martinez-Mvs3zVK-YS4-unsplash225.jpg'),
 (433, 232, 'tony-saiko-MEoW2_Ta2u8-unsplash232.jpg'),
 (434, 230, 'tony-saiko-MEoW2_Ta2u8-unsplash230.jpg'),
-(435, 238, 'benjamin-r-Rf_wydmmbl8-unsplash238.jpg');
+(435, 238, 'benjamin-r-Rf_wydmmbl8-unsplash238.jpg'),
+(436, 235, 'michael-afonso-1XCACz2eMzY-unsplash235.jpg'),
+(437, 238, 'michael-afonso-1XCACz2eMzY-unsplash238.jpg'),
+(438, 236, 'laura-kennedy-reObdi4zpdE-unsplash236.jpg'),
+(439, 233, 'laura-kennedy-reObdi4zpdE-unsplash233.jpg'),
+(440, 237, 'sehajpal-singh-NpaIxvH4RdY-unsplash237.jpg'),
+(441, 234, 'sehajpal-singh-NpaIxvH4RdY-unsplash234.jpg'),
+(442, 242, 'motorcyle-6900329_1280242.jpg'),
+(443, 240, 'motorcyle-6900329_1280240.jpg'),
+(444, 241, 'david-todd-mccarty-NXlQ2PnzMGg-unsplash241.jpg'),
+(445, 239, 'david-todd-mccarty-NXlQ2PnzMGg-unsplash239.jpg'),
+(446, 246, 'suit-2737909_1280246.jpg'),
+(447, 244, 'suit-2737909_1280244.jpg'),
+(448, 245, 'museums-of-history-new-south-wales-mrS-bzNHiz4-unsplash245.jpg'),
+(449, 243, 'museums-of-history-new-south-wales-mrS-bzNHiz4-unsplash243.jpg'),
+(450, 252, 'man-8222531_1280252.jpg'),
+(451, 248, 'man-8222531_1280248.jpg'),
+(452, 280, 'katie-moum-yXfdoI66AtQ-unsplash280.jpg'),
+(453, 279, 'katie-moum-yXfdoI66AtQ-unsplash279.jpg'),
+(454, 282, 'sahil-moosa-m1MRYp556Ew-unsplash282.jpg'),
+(455, 282, 'vlah-dumitru-SeeiNC9snZg-unsplash282.jpg'),
+(456, 281, 'mediamodifier-0UBg7jhsSxs-unsplash281.jpg'),
+(457, 286, 'patrik-velich-AgZc04zHJ-Y-unsplash286.jpg'),
+(458, 284, 'patrik-velich-AgZc04zHJ-Y-unsplash284.jpg'),
+(459, 285, 'xu-duo-y_8CPliUdAs-unsplash285.jpg'),
+(460, 283, 'xu-duo-y_8CPliUdAs-unsplash283.jpg'),
+(461, 291, 'girl-2128298_1280291.jpg'),
+(462, 287, 'girl-2128298_1280287.jpg'),
+(463, 292, 'mens-shirt-524022_1280292.jpg'),
+(464, 288, 'jasmine-coro-Iz8texFGeHI-unsplash120288.jpg'),
+(465, 288, 'mens-shirt-524022_1280288.jpg'),
+(466, 298, 'blonde-4721865_1280298.jpg'),
+(467, 300, 'blonde-4721865_1280300.jpg'),
+(468, 301, 'anomaly-WWesmHEgXDs-unsplash301.jpg'),
+(469, 299, 'anomaly-WWesmHEgXDs-unsplash299.jpg'),
+(470, 302, 'blonde-4721865_1280302.jpg'),
+(471, 307, 'anne-peres-gxl_DD02OKs-unsplash307.jpg'),
+(472, 305, 'anne-peres-gxl_DD02OKs-unsplash305.jpg'),
+(473, 303, 'anne-peres-gxl_DD02OKs-unsplash303.jpg'),
+(474, 308, 'ian-dooley-m4XquYOTb50-unsplash308.jpg'),
+(475, 306, 'ian-dooley-m4XquYOTb50-unsplash306.jpg'),
+(476, 304, 'ian-dooley-m4XquYOTb50-unsplash304.jpg'),
+(477, 311, 'keagan-henman-xPJYL0l5Ii8-unsplash311.jpg'),
+(478, 309, 'keagan-henman-xPJYL0l5Ii8-unsplash309.jpg'),
+(479, 312, 'fashion-4056729_1280312.jpg'),
+(480, 310, 'fashion-4056729_1280310.jpg'),
+(481, 317, 'emily-studer-osrM-DQcSlo-unsplash317.jpg'),
+(482, 313, 'emily-studer-osrM-DQcSlo-unsplash313.jpg'),
+(483, 318, 'face-487069_1280318.jpg'),
+(484, 314, 'face-487069_1280314.jpg'),
+(485, 320, 'riccardo-fissore-UxY52P2KaN8-unsplash320.jpg'),
+(486, 315, 'riccardo-fissore-UxY52P2KaN8-unsplash315.jpg'),
+(487, 319, 'demian-tejeda-benitez-ZVUMF4uTlH8-unsplash319.jpg'),
+(488, 315, 'demian-tejeda-benitez-ZVUMF4uTlH8-unsplash315.jpg'),
+(489, 327, 't-shirt-1278404_1280327.jpg'),
+(490, 323, 't-shirt-1278404_1280323.jpg'),
+(491, 321, 't-shirt-1278404_1280321.jpg'),
+(492, 325, 't-shirt-1278404_1280325.jpg'),
+(493, 636, 'sincerely-media-9ShY-Tq70Mc-unsplash (1)636.jpg'),
+(494, 635, 'sincerely-media-9ShY-Tq70Mc-unsplash (1)635.jpg'),
+(495, 583, 'alessia-c_jpg-MraA7CvTxtc-unsplash583.jpg'),
+(496, 587, 'alessia-c_jpg-MraA7CvTxtc-unsplash587.jpg'),
+(497, 582, 'counselor-4305394_1280582.jpg'),
+(498, 586, 'counselor-4305394_1280586.jpg'),
+(499, 581, 'shirt-933671_1280581.jpg'),
+(500, 585, 'shirt-933671_1280585.jpg'),
+(501, 584, 'alex-suprun-lM4X4TQdngo-unsplash584.jpg');
 
 -- --------------------------------------------------------
 
@@ -4637,7 +4712,12 @@ INSERT INTO `search` (`search_id`, `searchText`, `create_at`) VALUES
 (1, 'テストNo.100', '2023-12-09 16:40:46'),
 (2, 'テスト', '2023-12-09 16:40:56'),
 (3, 'テスト', '2023-12-10 02:07:13'),
-(4, 'テスト', '2023-12-11 02:55:19');
+(4, 'テスト', '2023-12-11 02:55:19'),
+(5, 'パンツ', '2024-01-18 04:12:04'),
+(6, 'パンツ', '2024-01-18 04:12:46'),
+(7, 'シャツ', '2024-01-18 04:13:06'),
+(8, 'シャツ', '2024-01-18 04:37:20'),
+(9, 'パンツ', '2024-01-18 04:37:23');
 
 -- --------------------------------------------------------
 
@@ -5177,13 +5257,13 @@ ALTER TABLE `products`
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=436;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=502;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
 --
 ALTER TABLE `search`
-  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- ダンプしたテーブルの制約
