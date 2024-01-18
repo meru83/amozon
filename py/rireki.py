@@ -144,7 +144,7 @@ for year in df['年'].unique():
     ws.add_chart(chart)
 try:
     # 既存のコード
-    wb.save('C:/xampp/htdocs/php/amo/py/excel/rireki.xlsx')
+    wb.save('rireki.xlsx')
 except Exception as e:
     print(f"エラー: {e}")
 #python rireki.py rion_bank

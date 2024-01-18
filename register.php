@@ -114,6 +114,9 @@
         <label for="number">電話番号</label><br>
         <input type="text" name="number" id="number" class="register_textbox" class="address_textbox" placeholder="ハイフンなし" required><br>
         
+        <label for="email">メールアドレス</label><br>
+        <input type="text" name="email" id="email" class="register_textbox" class="address_textbox" placeholder="read@gmail.com" required><br>
+
         <label for="password">パスワード</label>
         <input type="password" id="password" class="register_textbox" name="password" placeholder="8桁以上" required><br>
         <input type="password" id="rePassword" class="register_textbox" name="rePassword" placeholder="パスワード再確認" required><br>
@@ -136,6 +139,7 @@
 const form = document.getElementById('form');
 const user_id = document.getElementById('user_id');
 const number = document.getElementById('number');
+const email = document.getElementById('email');
 const password = document.getElementById('password');
 const rePassword = document.getElementById('rePassword');
 const username = document.getElementById('username');
@@ -158,6 +162,8 @@ form.addEventListener('keydown',(e) => {
             number.focus();
         }else if(act === 'number'){
             password.focus();
+        }else if(email){
+            email.focus();
         }else if(act === 'password'){
             rePassword.focus();
         }else if(act === 'rePassword'){

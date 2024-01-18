@@ -18,18 +18,13 @@ if(isset($_SESSION['seller_id'])){
 }
 
 // Pythonスクリプトのパス
-$python_script_path = "C:/xampp/htdocs/php/amo/py/rireki.py";  // ここに実際のPythonスクリプトのパスをセット
-$excel_file_path = "C:/xampp/htdocs/php/amo/py/rireki.xlsx";
+$python_script_path = "rireki.py";  // ここに実際のPythonスクリプトのパスをセット
+$excel_file_path = "rireki.xlsx";
 
 // Pythonスクリプトに引数を渡して実行
 $command = "python $python_script_path $seller_id";
 // Pythonスクリプトをバックグラウンドで実行し、プロセスIDを取得
-$pid = shell_exec(sprintf('%s > /dev/null 2>&1 & echo $!', $command));
-
-// プロセスが実行中の間待機
-while (file_exists("/proc/$pid")) {
-    sleep(1);
-}
+$pid = exec($command, $output, $retval);
 
 // ダウンロード用のヘッダーを送信
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
