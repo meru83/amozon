@@ -160,9 +160,11 @@ if(!($user_id === "A")){
                     echo $htmlText;                   
                     echo '</div>';
                     echo '</div>';
-                    echo '<div class="hr">';
-                    echo '<hr>';
-                    echo '</div>';
+                    if (!($count === 0)) {
+                        echo '<div class="hr">';
+                        echo '<hr>';
+                        echo '</div>';
+                    }
                     echo '<div class="htmlAll">';
                     echo '<div class="imgAll swiper float">';
                     echo '<div class="swiper-wrapper">';
