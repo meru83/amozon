@@ -156,12 +156,18 @@ if(!($user_id === "A")){
 
                     </div>
                     HTML;
-                    echo $htmlText;
+                    echo '<div class="textStyle">';
+                    echo $htmlText;                   
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<div class="hr hr$count">';
+                    echo '<hr>';
                     echo '</div>';
                     echo '<div class="htmlAll">';
                     echo '<div class="imgAll swiper float">';
                     echo '<div class="swiper-wrapper">';
                     echo $imgText;
+
                     $lastImg[] = $color_size_id;
                     $htmlText = <<<END
                     <br>
@@ -172,11 +178,11 @@ if(!($user_id === "A")){
                     価格　　　: $commaPrice<br>
                     </a>
                     <br>
-                    <div class="sonota">
                     END;
                     //$favorite_product null か $user_id
                     if(!($favorite_product === null) && isset($_SESSION['user_id'])){
                         $htmlText .= <<<END
+                        <div class="sonota">
                         <label class="checkHeart" for="favorite$count">
                             <input type="checkbox" id="favorite$count" checked>
                             <span class="spanHeart"></span>
@@ -184,6 +190,7 @@ if(!($user_id === "A")){
                         END;
                     }else if(isset($_SESSION['user_id'])){
                         $htmlText .= <<<END
+                        <div class="sonota">
                         <label class="checkHeart" for="favorite$count">
                             <input type="checkbox" id="favorite$count">
                             <span class="spanHeart"></span>
@@ -191,10 +198,10 @@ if(!($user_id === "A")){
                         END;
                     }else{
                         $htmlText .= <<<END
+                        <div class="sonota">
                         <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
                         END;
                     }
-                    echo '</div>';
                     if($maxPieces >= $cartPieces){
                         $htmlText .= <<<END
                         <input type="hidden" id="product_id$count" value="$product_id">
@@ -340,11 +347,11 @@ if(!($user_id === "A")){
                     価格　　　: $commaPrice<br>
                     </a>
                     <br>
-                    <div class="sonota">
                     END;
                     //$favorite_product null か $user_id
                     if(!($favorite_product === null) && isset($_SESSION['user_id'])){
                         $htmlText .= <<<END
+                        <div class="sonota">
                         <label class="checkHeart" for="favorite$count">
                             <input type="checkbox" id="favorite$count" checked>
                             <span class="spanHeart"></span>
@@ -352,6 +359,7 @@ if(!($user_id === "A")){
                         END;
                     }else if(isset($_SESSION['user_id'])){
                         $htmlText .= <<<END
+                        <div class="sonota">
                         <label class="checkHeart" for="favorite$count">
                             <input type="checkbox" id="favorite$count">
                             <span class="spanHeart"></span>
@@ -359,10 +367,10 @@ if(!($user_id === "A")){
                         END;
                     }else{
                         $htmlText .= <<<END
+                        <div class="sonota">
                         <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
                         END;
                     }
-                    echo '</div>';//sonota
                     if($maxPieces >= $pieces){
                         $htmlText .= <<<END
                         <input type="number" id="$i" class="selectStyle" value="$pieces" min="1" max="$maxPieces">
@@ -398,6 +406,7 @@ if(!($user_id === "A")){
             HTML;
             echo '<div class="textStyle">';
             echo $htmlText;
+            echo '</div>';//sonota
             echo '</div>';
             echo '</div>';
             echo '<div class="hr">';
