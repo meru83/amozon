@@ -347,30 +347,10 @@ if(!($user_id === "A")){
                     価格　　　: $commaPrice<br>
                     </a>
                     <br>
+                    <div class="sonota">
+                    <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
                     END;
-                    //$favorite_product null か $user_id
-                    if(!($favorite_product === null) && isset($_SESSION['user_id'])){
-                        $htmlText .= <<<END
-                        <div class="sonota">
-                        <label class="checkHeart" for="favorite$count">
-                            <input type="checkbox" id="favorite$count" checked>
-                            <span class="spanHeart"></span>
-                        </label>
-                        END;
-                    }else if(isset($_SESSION['user_id'])){
-                        $htmlText .= <<<END
-                        <div class="sonota">
-                        <label class="checkHeart" for="favorite$count">
-                            <input type="checkbox" id="favorite$count">
-                            <span class="spanHeart"></span>
-                        </label>
-                        END;
-                    }else{
-                        $htmlText .= <<<END
-                        <div class="sonota">
-                        <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
-                        END;
-                    }
+
                     if($maxPieces >= $pieces){
                         $htmlText .= <<<END
                         <input type="number" id="$i" class="selectStyle" value="$pieces" min="1" max="$maxPieces">
