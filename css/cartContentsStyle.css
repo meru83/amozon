@@ -213,6 +213,7 @@ a, a:hover, a:active, a:visited {
 }
 
 .btnStyle {
+    height: 33px;
     margin-top: 5px;
     padding: 6px 15px;
     color: #005aae;
@@ -226,10 +227,57 @@ a, a:hover, a:active, a:visited {
 }
 
 .selectStyle {
-    margin-top: 5px;
+    margin: 5px 5px 0 0;
     padding: 8px 15px;
     color: #005aae;
     background-color: #ffffff;
     border: 1px solid #005aae;
     border-radius: 4px;
 }
+
+.sonota {
+    display: flex;
+    align-items: center;
+}
+
+.heartBtn {
+    height:33px;
+    margin:5px 5px 0 0;
+    padding: 0;
+    background: white;
+    border: none;
+}
+
+.spanHeart {
+    margin:5px 5px 0 0;
+}
+
+.checkHeart {
+    cursor: pointer;
+}
+
+.checkHeart,
+.spanHeart {
+    width: fit-content;
+    display: block;
+}
+
+.checkHeart input {
+    display: none;
+}
+
+.checkHeart input + .spanHeart::before {
+    display: block;
+    background-image: url("../img/heart2.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: "";
+    height: 33px;
+    position: relative;
+    width: 33px;
+  }
+
+  .checkHeart input:checked + .spanHeart::before {
+    background-image: url("../img/heart.png");
+  }
