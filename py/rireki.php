@@ -27,6 +27,7 @@ $excel_file_path = "rireki.xlsx";
 
 // Pythonスクリプトに引数を渡して実行
 $command = "python $python_script_path $seller_id";
+echo $command;
 // Pythonスクリプトをバックグラウンドで実行し、プロセスIDを取得
 // ★★★ 変更ここから ★★★
 // $pid = shell_exec(sprintf('%s > /dev/null 2>&1 & echo $!', $command));
