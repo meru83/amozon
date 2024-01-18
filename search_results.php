@@ -172,7 +172,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     $commaPrice = number_format($price);
                     $color_size_id = $row['color_size_id'];
                     $img_url = is_null($row['img_url'])?null:$row['img_url'];
-                    $favorite_product = ($row['favorite_product'] === null)?null:$row['favorite_product'];
+                    $favorite_product = is_null($row['favorite_product'])?null:$row['favorite_product'];
                     if(!is_null($img_url)){
                         $imgText = <<<END
                         <div class="swiper-slide">
