@@ -18,11 +18,11 @@ if(isset($_SESSION['seller_id'])){
 }
 
 // Pythonスクリプトのパス
-$python_script_path = "rireki.py";  // ここに実際のPythonスクリプトのパスをセット
-$excel_file_path = "C:/xampp/htdocs/php/amo/py/excel/rireki.xlsx";
+$python_script_path = "C:/xampp/htdocs/php/amo/py/rireki.py";  // ここに実際のPythonスクリプトのパスをセット
+$excel_file_path = "C:/xampp/htdocs/php/amo/py/rireki.xlsx";
 
 // Pythonスクリプトに引数を渡して実行
-$command = "python3 $python_script_path $seller_id";
+$command = "python $python_script_path $seller_id";
 // Pythonスクリプトをバックグラウンドで実行し、プロセスIDを取得
 $pid = shell_exec(sprintf('%s > /dev/null 2>&1 & echo $!', $command));
 
