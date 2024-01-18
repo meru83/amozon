@@ -101,6 +101,9 @@ $htmlText = "";
 $count = 0;
 if($result && $result->num_rows > 0){
     $lastImg = array();
+    echo '<div class="htmlAll none">';
+    echo '<div class="imgAll swiper">';
+    echo '<div class="swiper-wrapper">';
     while($row = $result->fetch_assoc()){
         $favorite_product = !is_null($row['favorite_product'])?$row['favorite_product']:null;
         $product_id = $row['product_id'];
@@ -129,18 +132,6 @@ if($result && $result->num_rows > 0){
         }
         if(!in_array($color_size_id, $lastImg)){
             $lastImg[] = $color_size_id;
-            echo $htmlText;
-            echo "<br>";
-            //echo '<div class="htmlAll">';
-            echo '<div class="imgAll swiper">';
-            echo '<div class="swiper-wrapper">';
-            echo $imgText;
-            $htmlText = <<<END
-            $productname<br>
-            $colorName<br>
-            $size<br>
-            $commaPrice<br>
-            END;
             echo <<<HTML
             </div>
             <!-- If we need pagination -->
@@ -152,9 +143,29 @@ if($result && $result->num_rows > 0){
             
             </div>
             HTML;
+            echo '<div class="textStyle">';
+            echo $htmlText;                   
+            echo '</div>';
+            echo '</div>';
+            if (!($count === 0)) {
+                echo '<div class="hr">';
+                echo '<hr>';
+                echo '</div>';
+            }
+            echo '<div class="htmlAll">';
+            echo '<div class="imgAll swiper float">';
+            echo '<div class="swiper-wrapper">';
+            echo $imgText;
+            $htmlText = <<<END
+            $productname<br>
+            $colorName<br>
+            $size<br>
+            ￥$commaPrice<br>
+            END;
             //$favorite_product null か $user_id
             if(!is_null($favorite_product)){
                 $htmlText .= <<<END
+                <div class="sonota">
                 <label class="checkHeart" for="favorite$count">
                     <input type="checkbox" id="favorite$count" checked>
                     <span class="spanHeart"></span>
@@ -162,6 +173,7 @@ if($result && $result->num_rows > 0){
                 END;
             }else if(isset($_SESSION['user_id'])){
                 $htmlText .= <<<END
+                <div class="sonota">
                 <label class="checkHeart" for="favorite$count">
                     <input type="checkbox" id="favorite$count">
                     <span class="spanHeart"></span>
@@ -169,6 +181,7 @@ if($result && $result->num_rows > 0){
                 END;
             }else{
                 $htmlText .= <<<END
+                <div class="sonota">
                 <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
                 END;
             }
@@ -182,13 +195,30 @@ if($result && $result->num_rows > 0){
                 END;
             }else{
                 $htmlText .= "<p class='sen'>カートに入れる</p>";//商品がないときは灰色のただの文字列にしてカートにする<<<<<<<<<  CSS  >>>>>>>>>>
-            }
+            }          
             $count++;
         }else{
             echo $imgText;
         }
     }
+    echo <<<HTML
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    </div>
+    HTML;
+    echo '<div class="textStyle">';
     echo $htmlText;
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="hr">';
+    echo '<hr>';
+    echo '</div>';
 }else{
     //お気に入り商品がないとき
 }
@@ -265,4 +295,34 @@ for(let i = 0; i < countMax; i++){
 }
 </script>
 END;
+echo <<<HTML
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        effect: 'coverflow',
+
+        // // If we need pagination
+        // pagination: {
+        //     el: '.swiper-pagination',
+        //     type: 'progressbar',
+        // },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        //     hide:true,
+        // },
+    });
+</script>
+HTML;
 ?>
