@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-18 14:03:14
+-- 生成日時: 2024-01-18 14:16:58
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -5206,8 +5206,7 @@ ALTER TABLE `small_category`
 -- テーブルのインデックス `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `phone` (`phone`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- ダンプしたテーブルの AUTO_INCREMENT
