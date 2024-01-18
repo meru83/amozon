@@ -18,6 +18,75 @@ if(isset($_SESSION['user_id'])){
     exit();
 }
 
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+    $foo2 = <<<END
+    <div style="width:100%; text-align: right; height: fit-content;">
+    <form action="logout.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    </div>
+    END;
+}else{
+    $user_id = "A";
+    $foo2 = <<<END
+    <div class="New_log">
+        <a href="register.php"><div class="log_style">新規登録</div></a>
+        <a href="login.php"><div class="log_style rightM">ログイン</div></a>
+    </div>
+    END;
+}
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Amozon_insta.css">
+    <link rel="stylesheet" href="css/favorite.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <style>
+        .swiper {
+            width: 500px;
+            max-width: 100%; 
+            height: 300px; 
+        }
+        .swiper-slide img {
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header" class="header">
+        <div class="back"><div class="backBtn" onclick="history.back()" style="width:48px; height: 100%; background:#fff;"><img src="img/return_left.png" style="width:100%;"></div></div>
+        <h1 class="h1_White">お気に入り</h1>
+        <?=$foo2?>
+    </div>
+
+        <div class="Amozon-container">
+        <!-- Left Side Menu -->
+            <div class="left-menu">
+                <div>
+                    <ul class="menu-list">
+                        <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                        <li class="menu-item"><a href="user_top.php"><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                        <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                        <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                        <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                        <li class="menu-item"><a href="favoriteProduct.php"><span class="menu-item-icon">❤️</span><span class="menu-item-text">お気に入り</span></a></li>
+                        <li class="menu-item"><a href=""><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="menu-list-bottom">
+                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right-content">
+
+<?php
 $sql = "SELECT f.user_id AS favorite_product, f.product_id, f.color_size_id, p.productname, s.color_code, s.size, s.service_status, s.pieces, s.price, i.img_url
         FROM favorite f
         LEFT JOIN products p ON (f.product_id = p.product_id)
@@ -62,6 +131,9 @@ if($result && $result->num_rows > 0){
             $lastImg[] = $color_size_id;
             echo $htmlText;
             echo "<br>";
+            //echo '<div class="htmlAll">';
+            echo '<div class="imgAll swiper">';
+            echo '<div class="swiper-wrapper">';
             echo $imgText;
             $htmlText = <<<END
             $productname<br>
@@ -69,6 +141,17 @@ if($result && $result->num_rows > 0){
             $size<br>
             $commaPrice<br>
             END;
+            echo <<<HTML
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+            
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            
+            </div>
+            HTML;
             //$favorite_product null か $user_id
             if(!is_null($favorite_product)){
                 $htmlText .= <<<END
@@ -106,7 +189,14 @@ if($result && $result->num_rows > 0){
         }
     }
     echo $htmlText;
+}else{
+    //お気に入り商品がないとき
 }
+
+echo '</div>';//<div class="right-content">
+echo '</div>';//<div class="Amozon-container">
+echo '</body>';
+echo '</html>';
 
 function getColor($conn, $color_code){
     $colorSql = "SELECT * FROM color_name
