@@ -199,7 +199,7 @@ form.addEventListener('keydown', (e) => {
     }
 
     function is_empty(){
-    if(user_id.value === "" || number.value === "" || password.value === "" || rePassword.value === "" || username.value === ""){
+    if(productname.value === "" || view.value === "" || quality.value === "" || big_category.value === "" || category.value === ""){
         return false;
     }else{
         return true;
