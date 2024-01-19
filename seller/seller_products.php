@@ -45,7 +45,6 @@ if(isset($_SESSION['seller_id'])){
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="../css/Amozon_insta.css">
 <link rel="stylesheet" href="../css/seller_img.css">
-<div id='errorMessage'></div>
     <style>
         .swiper {
             width: 500px;
@@ -96,12 +95,6 @@ if(isset($_SESSION['seller_id'])){
         <div class="right-content">
         <div  class='p2'><h2><?=$seller_name?> 様</h2></div>
 <?php
-//alertで表示に変更
-// if(isset($_GET['errorMessage'])){
-//     $errorMessage = $_GET['errorMessage'];
-//     echo $errorMessage."<br>";
-// }
-
 $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
                 FROM products p
                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
@@ -416,7 +409,6 @@ echo <<<HTML
 HTML;
 ?>
 <script>
-const errorMessageDiv = document.getElementById('errorMessage');
 function deleteProducts(deleteCount){
     var inputId = document.getElementById(deleteCount);
     var productElement = document.getElementById('name'+deleteCount);
