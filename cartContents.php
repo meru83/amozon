@@ -94,6 +94,7 @@ $countMax = 0;
 $htmlText = "";
 $lastImg = array();
 $arrayProductId = array();
+$priceMax = 0;
 //セッションで管理されている場合
 
 if(!($user_id === "A")){
@@ -125,6 +126,8 @@ if(!($user_id === "A")){
                 $cartPieces = $row['cartPieces'];
                 $maxPieces = $row['maxPieces'];
                 $price  = $row['price'];
+                $priceMax += $price;
+                $commapriceMax = number_format($priceMax);
                 $commaPrice = number_format($price);
                 $productname = $row['productname'];
                 $quality = $row['quality'];
@@ -265,6 +268,7 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
+        echo $commapriceMax . "(税込)";
         echo "<form action='buyProducts.php' method='post'>";
         for($i = 0; $i < count($lastImg); $i++){
             echo <<<END
@@ -314,6 +318,8 @@ if(!($user_id === "A")){
                 $productname = $row['productname'];
                 $category_name = !is_null($row['category_name'])?$row['category_name']:"";
                 $price  = $row['price'];
+                $priceMax += $price;
+                $commapriceMax = number_format($priceMax);
                 $commaPrice = number_format($price);
                 $color_size_id = $row['color_size_id'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
@@ -422,6 +428,7 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
+        echo $commapriceMax . "(税込)";
         echo "<form action='buyProducts.php' method='post'>";
         for($i = 0; $i < count($lastImg); $i++){
             echo <<<END
