@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-19 18:02:34
+-- 生成日時: 2024-01-19 18:19:12
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -22,6 +22,24 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `complete` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `complete`;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `address`
+--
+
+CREATE TABLE `address` (
+  `user_id` varchar(255) DEFAULT NULL,
+  `seller_id` varchar(255) DEFAULT NULL,
+  `post_code` varchar(10) NOT NULL,
+  `prefectures` varchar(5) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `city_kana` varchar(255) NOT NULL,
+  `tyou` varchar(255) NOT NULL,
+  `room_number` varchar(255) NOT NULL,
+  `addressname` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
