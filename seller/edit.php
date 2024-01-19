@@ -105,12 +105,12 @@ if($selectResult && $selectResult->num_rows > 0){
         <input type="submit" name="submit" class="kakutei" value="確定">
     </form>
     カラー:$colorName サイズ:$size <br>
-    　　  商品名　: $productname <br>
+    商品名: $productname <br>
     <button type="button" class="btnStyle" onclick="changePrice($color_size_id)">変更</button>
-    <p id="priceText">価格　　: $commaPrice </p><br>
+    <p id="priceText">価格:￥$commaPrice </p><br>
     <button type="button" class="btnStyle" onclick="changePieces($color_size_id)">変更</button>
-    <p id="piecesText">在庫数　: $pieces </p><br>
-    出品日　: $create_at <br>
+    <p id="piecesText">在庫数: $pieces </p><br>
+    出品日: $create_at <br>
     </div>
     </div>
     END;
