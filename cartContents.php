@@ -94,6 +94,7 @@ $count = 0;
 $countMax = 0;
 $htmlText = "";
 $lastImg = array();
+$arrayProductId = array();
 //セッションで管理されている場合
 
 if(!($user_id === "A")){
@@ -171,6 +172,7 @@ if(!($user_id === "A")){
                     echo $imgText;
 
                     $lastImg[] = $color_size_id;
+                    $arrayProductId[] = $product_id;
                     $htmlText = <<<END
                     <br>
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
@@ -264,6 +266,17 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
+        echo "<form action='buyProducts.php' method='post'>";
+        for($i = 0; $i < count($lastImg); $i++){
+            echo <<<END
+            <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
+            <input type="hidden" name="buyColorSize[]" value="$lastImg[$i]">
+            END;
+        }
+        echo <<<END
+        <input type="submit" value="レジに進む">
+        </form>
+        END;
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
@@ -340,6 +353,7 @@ if(!($user_id === "A")){
                     echo $imgText;
 
                     $lastImg[] = $color_size_id;
+                    $arrayProductId[] = $product_id;
                     $htmlText = <<<END
                     <br>
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
@@ -409,6 +423,17 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
+        echo "<form action='buyProducts.php' method='post'>";
+        for($i = 0; $i < count($lastImg); $i++){
+            echo <<<END
+            <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
+            <input type="hidden" name="buyColorSize[]" value="$lastImg[$i]">
+            END;
+        }
+        echo <<<END
+        <input type="submit" value="レジに進む">
+        </form>
+        END;
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
@@ -630,7 +655,5 @@ function heartButton(){
     alert("お気に入り登録にはログインを完了させてください。");
 }
 </script>
-
-
 </body>
 </html>
