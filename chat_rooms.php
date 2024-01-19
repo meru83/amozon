@@ -61,12 +61,12 @@ if(isset($_SESSION['seller_id'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style_chat_rooms.css">
+    <link rel="stylesheet" href="css/Amozon_insta.css">
     <title>チャットルーム一覧</title>
 </head>
 <body>
 <div id="header" class="header">
-    <div class="back"><div class="backBtn" onclick="history.back()" style="width:48px; height: 100%; background:#fff;"><img src=""></div></div>
-    <h1 class="h1_White">チャットルーム一覧</h1>
+    <div class="back"><div class="backBtn" onclick="history.back()"><img src="img/return_left.png" style="width:100%;"></div></div>
         <?php
         //ユーザーでログインしてた時のログアウトボタン
         if(!is_null($user_id)){
@@ -104,7 +104,7 @@ if(isset($_SESSION['seller_id'])){
                     <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
                     <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
                     <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-                    <li class="menu-item"><a href="favoriteProduct.php"><span class="menu-item-icon">❤️</span><span class="menu-item-text">お気に入り</span></a></li>
+                    <li class="menu-item"><a href="favoriteProduct.php"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">お気に入り</span></a></li>
                     <li class="menu-item"><a href="user_profile.php"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
                 </ul>
             </div>

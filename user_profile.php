@@ -1,3 +1,21 @@
+<?php
+if(isset($_SESSION['user_id'])){
+    $foo2 = <<<END
+    <div style="width:100%; text-align: right; height: fit-content;">
+    <form action="logout.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    </div>
+    END;
+}else{
+    $foo2 = <<<END
+    <div class="New_log">
+        <a href="register.php"><div class="log_style">新規登録</div></a>
+        <a href="login.php"><div class="log_style rightM">ログイン</div></a>
+    </div>
+    END;
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -8,9 +26,9 @@
 </head>
 <body>
     <div id="header" class="header">
-        <div class="space"></div>
+        <div class="back"><div class="backBtn" onclick="history.back()"><img src="img/return_left.png" style="width:100%;"></div></div>
         <h1 class="h1_White">プロフィール</h1>
-        <div class="space"></div>
+        <?=$foo2?>
     </div>
 <div class="profile_container">    
 <div class="left-menu">
@@ -21,7 +39,7 @@
                     <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
                     <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
                     <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-                    <li class="menu-item"><a href="favoriteProduct.php"><span class="menu-item-icon">❤️</span><span class="menu-item-text">お気に入り</span></a></li>
+                    <li class="menu-item"><a href="favoriteProduct.php"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">お気に入り</span></a></li>
                     <li class="menu-item"><a href="user_profile.php"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
                 </ul>
             </div>

@@ -161,8 +161,13 @@ echo <<<HTML
 HTML;
 ?>
 <script>
+const fullnums = '０１２３４５６７８９';//ここ
+const reFullnums = new RegExp('['+fullnums+']','g');//ここ
+const toHalfnums = text => text.replace(reFullnums, m=>fullnums.indexOf(m));//ここ。以上３行は関数の定義
 function changePrice(id){
-    newPrice = window.prompt("価格を入力してください","");
+    textPrice = window.prompt("価格を入力してください","");
+    text2Price = toHalfnums(textPrice);//全角数字を半角数字にする
+    var newPrice = Number(text2Price);//半角数字を数値にする
     if(newPrice != "" && newPrice != null){
         const formData = new FormData();
         formData.append('color_size_id', id);
@@ -195,7 +200,9 @@ function changePrice(id){
 }
 
 function changePieces(id){
-    newPieces = window.prompt("在庫数を入力してください","");
+    textPieces = window.prompt("在庫数を入力してください","");
+    var text2Pieces = toHalfnums(textPieces);
+    var newPieces = Number(text2Pieces);  
     if(newPieces != "" && newPieces != null){
         const formData = new FormData();
         formData.append('color_size_id', id);
