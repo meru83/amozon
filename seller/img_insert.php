@@ -51,7 +51,7 @@ if(isset($_SESSION['seller_id'])){
 <body>
     <div id="header" class="header">
         <div class="back"><div class="backBtn" onclick="history.back()"><img src="../img/return_left.png" style="width:100%;"></div></div>
-        <h1 class="h1_White">トップページ</h1>
+        <h1 class="h1_White">商品登録途中</h1>
         <?=$foo?>
     </div>
 
@@ -197,5 +197,6 @@ function getColor($conn, $color_code){
 </form>
 </div>
 </div>
+</body>
 </html>
 

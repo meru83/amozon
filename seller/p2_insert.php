@@ -16,16 +16,77 @@ include "../db_config.php";
 session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 $sellerName = $_SESSION['sellerName'];
-?>
 
-<link rel="stylesheet" href="../css/p2style.css">
-<h1>商品登録画面</h1>
-<?php
-if(isset($_GET['error'])){
-    $error_message = $_GET['error'];
-    echo $error_message;
+if(isset($_SESSION['seller_id'])){
+    $foo = <<<END
+    <div style="width:100%; text-align: right; height: fit-content;">
+    <form action="seller_out.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    </div>
+    END;
+}else{
+    $foo = <<<END
+    <div class="New_log">
+        <a href="seller.php"><div class="log_style">新規登録</div></a>
+        <a href="seller_log.php"><div class="log_style rightM">ログイン</div></a>
+    </div>
+    END;
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<link rel="stylesheet" href="../css/Amozon_insta.css">
+<link rel="stylesheet" href="../css/p2style.css">
+</head>
+<body>
+    <div id="header" class="header">
+        <div class="back"><div class="backBtn" onclick="history.back()"><img src="../img/return_left.png" style="width:100%;"></div></div>
+        <h1 class="h1_White">商品登録画面</h1>
+        <?=$foo?>
+    </div>
+
+    <div class="Amozon-container">
+
+    <!-- Left Side Menu -->
+    <div class="Amozon-container">
+    <!-- Left Side Menu -->
+    <div class="left-menu">
+        <div>
+            <ul class="menu-list">
+                <li class="menu-item-logo"><a href=""><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                <li class="menu-item"><a href="seller_top.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                <li class="menu-item"> <a href="p2_insert.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">商品情報登録</span></a></li>
+                <li class="menu-item"> <a href="seller_products.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">登録商品一覧</span></a></li>
+                <?php
+                if(isset($_SESSION['seller_id'])){
+                    echo '<li class="menu-item"><a href="../chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                }else{
+                    echo '<li class="menu-item"><a href="seller.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                }
+                ?>
+                <li class="menu-item"><a href="seller_home.php"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                <!--log--->
+            </ul>
+        </div>
+        <div>
+            <ul class="menu-list-bottom">
+            <li class="menu-item"><a href="../py/rireki.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">売上管理</span></a></li>
+
+            </ul>
+        </div>
+    </div>
+    
+    <div class="right-content">
+
+    <?php
+    if(isset($_GET['error'])){
+        $error_message = $_GET['error'];
+        echo $error_message;
+    }
+    ?>
 <form action="p2Insert.php" method="post" name="form" id="form">
     <p><?=$sellerName?></p>
     <label for="productname" class="p2_label">
