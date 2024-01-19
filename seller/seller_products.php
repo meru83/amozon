@@ -22,12 +22,31 @@ session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 $seller_name = $_SESSION['sellerName'];
 
-echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>';
-echo '<link rel="stylesheet" href="../css/seller_img.css">';
-echo "<h1>登録済み商品一覧</h1>";
-echo "<div  class='p2'><h2>$seller_name 様</h2></div>";
-echo "<div id='errorMessage'></div>";
-echo"<style>
+if(isset($_SESSION['seller_id'])){
+    $foo = <<<END
+    <div style="width:100%; text-align: right; height: fit-content;">
+    <form action="seller_out.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    </div>
+    END;
+}else{
+    $foo = <<<END
+    <div class="New_log">
+        <a href="seller.php"><div class="log_style">新規登録</div></a>
+        <a href="seller_log.php"><div class="log_style rightM">ログイン</div></a>
+    </div>
+    END;
+}
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="../css/Amozon_insta.css">
+<link rel="stylesheet" href="../css/seller_img.css">
+<div id='errorMessage'></div>
+    <style>
         .swiper {
             width: 500px;
             max-width: 100%; 
@@ -37,8 +56,46 @@ echo"<style>
             width: 500px;
             height: 300px;
         }
-    </style>";
+    </style>
+</head>
+<body>
+    <div id="header" class="header">
+        <div class="back"><div class="backBtn" onclick="history.back()" style="width:48px; height: 100%; background:#fff;"><img src="../img/return_left.png" style="width:100%;"></div></div>
+        <h1 class="h1_White">カート</h1>
+        <?=$foo?>
+    </div>
 
+    <div class="Amozon-container">
+        <!-- Left Side Menu -->
+        <div class="left-menu">
+            <div>
+                <ul class="menu-list">
+                    <li class="menu-item-logo"><a href=""><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                    <li class="menu-item"><a href="seller_top.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                    <li class="menu-item"> <a href="p2_insert.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">商品情報登録</span></a></li>
+                    <li class="menu-item"> <a href="seller_products.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">登録商品一覧</span></a></li>
+                    <?php
+                    if(isset($_SESSION['seller_id'])){
+                        echo '<li class="menu-item"><a href="../chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                    }else{
+                        echo '<li class="menu-item"><a href="seller.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                    }
+                    ?>
+                    <li class="menu-item"><a href="seller_home.php"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    <!--log--->
+                </ul>
+            </div>
+            <div>
+                <ul class="menu-list-bottom">
+                <li class="menu-item"><a href="../py/rireki.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">売上管理</span></a></li>
+
+                </ul>
+            </div>
+        </div>
+        
+        <div class="right-content">
+        <div  class='p2'><h2><?=$seller_name?> 様</h2></div>
+<?php
 //alertで表示に変更
 // if(isset($_GET['errorMessage'])){
 //     $errorMessage = $_GET['errorMessage'];
@@ -308,6 +365,11 @@ HTML;
 }else{
     echo "登録されている商品がありません。";
 }
+
+echo '</div>';//<div class="right-content">
+echo '</div>';//<div class="Amozon-container">
+echo '</body>';
+echo '</html>';
 
 function getColor($conn, $color_code){
     $colorSql = "SELECT * FROM color_name
