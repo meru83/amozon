@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-19 02:51:12
+-- 生成日時: 2024-01-19 05:42:23
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -446,6 +446,8 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (71, '#9ED563', 'M', 20, 2700, 255, 1),
 (71, '#EF5663', 'L', 20, 2700, 260, 1),
 (71, '#EF5663', 'M', 20, 2700, 256, 1),
+(71, '#FED14C', 'L', 120, 2500, 649, 1),
+(71, '#FED14C', 'M', 240, 1500, 648, 1),
 (72, '#313131', 'L', 20, 2800, 264, 1),
 (72, '#313131', 'M', 20, 2800, 262, 1),
 (72, '#FFFFFF', 'L', 20, 2800, 263, 1),
@@ -4733,7 +4735,17 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (540, 493, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash493.jpg'),
 (541, 491, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash491.jpg'),
 (542, 494, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash494.jpg'),
-(543, 492, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash492.jpg');
+(543, 492, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash492.jpg'),
+(544, 259, 'utopia-by-cho-7JWNDV2EeG0-unsplash259.jpg'),
+(545, 257, 'utopia-by-cho-7JWNDV2EeG0-unsplash257.jpg'),
+(546, 648, 'justin-essah-3LBV2nttH0I-unsplash648.jpg'),
+(547, 649, 'justin-essah-3LBV2nttH0I-unsplash649.jpg'),
+(548, 260, 'timothy-dykes-8Rx7amSLPho-unsplash260.jpg'),
+(549, 256, 'timothy-dykes-8Rx7amSLPho-unsplash256.jpg'),
+(550, 588, '20230623_201713588.jpg'),
+(551, 490, 'mediamodifier-0UBg7jhsSxs-unsplash490.jpg'),
+(552, 489, 'mediamodifier-0UBg7jhsSxs-unsplash490489.jpg'),
+(553, 488, 'olga-guryanova-8GIvE_7VjIc-unsplash488.jpg');
 
 -- --------------------------------------------------------
 
@@ -4761,7 +4773,28 @@ INSERT INTO `search` (`search_id`, `searchText`, `create_at`) VALUES
 (7, 'シャツ', '2024-01-18 04:13:06'),
 (8, 'シャツ', '2024-01-18 04:37:20'),
 (9, 'パンツ', '2024-01-18 04:37:23'),
-(10, 'メンズ', '2024-01-18 12:46:29');
+(10, 'メンズ', '2024-01-18 12:46:29'),
+(11, 'わん', '2024-01-19 02:27:55'),
+(12, 'わん', '2024-01-19 02:28:38'),
+(13, 'わん', '2024-01-19 02:28:45'),
+(14, 'わん', '2024-01-19 02:30:59'),
+(15, 'わん', '2024-01-19 02:31:11'),
+(16, 'わん', '2024-01-19 02:31:19'),
+(17, 'わん', '2024-01-19 02:32:05'),
+(18, 'わん', '2024-01-19 02:32:11'),
+(19, 'わん', '2024-01-19 02:32:24'),
+(20, 'わん', '2024-01-19 02:33:03'),
+(21, 'メンズ', '2024-01-19 02:33:16'),
+(22, 'メンズ', '2024-01-19 02:33:51'),
+(23, 'メンズ', '2024-01-19 02:39:07'),
+(24, 'メンズ', '2024-01-19 02:39:20'),
+(25, 'メンズ', '2024-01-19 02:39:26'),
+(26, 'わん', '2024-01-19 02:39:29'),
+(27, 'メンズ', '2024-01-19 02:39:31'),
+(28, 'メンズ', '2024-01-19 02:45:07'),
+(29, 'パンツ', '2024-01-19 02:57:58'),
+(30, 'あ', '2024-01-19 02:59:56'),
+(31, 'a', '2024-01-19 03:40:12');
 
 -- --------------------------------------------------------
 
@@ -5277,7 +5310,7 @@ ALTER TABLE `chatrooms`
 -- テーブルの AUTO_INCREMENT `color_size`
 --
 ALTER TABLE `color_size`
-  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=648;
+  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=650;
 
 --
 -- テーブルの AUTO_INCREMENT `messages`
@@ -5301,13 +5334,13 @@ ALTER TABLE `products`
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=544;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
 --
 ALTER TABLE `search`
-  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- ダンプしたテーブルの制約
