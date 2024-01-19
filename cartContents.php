@@ -181,7 +181,7 @@ if(!($user_id === "A")){
                     色: $colorName
                     サイズ: $size<br>
                     商品名　　: $productname<br>
-                    価格　　　: ￥. $commaPrice<br>
+                    価格　　　: ￥ $commaPrice<br>
                     </a>
                     <br>
                     END;
@@ -365,7 +365,7 @@ if(!($user_id === "A")){
                     色: $colorName
                     サイズ: $size<br>
                     商品名　　: $productname<br>
-                    価格　　　: ￥. $commaPrice<br>
+                    価格　　　: ￥ $commaPrice<br>
                     </a>
                     <br>
                     <div class="sonota">
