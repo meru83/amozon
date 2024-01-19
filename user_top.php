@@ -60,19 +60,47 @@ if(isset($_SESSION['user_id'])){
         </div>
         
         <div class="right-content">
-            <h1></h1>
-            <?php
-            if(isset($_GET['error_message'])){
-                $error_message = $_GET['error_message'];
-                echo "<p class='error_red'>".$error_message."</p>";
-            }
+        <h1></h1>
+        <?php
+        if(isset($_GET['error_message'])){
+        $error_message = $_GET['error_message'];
+        echo "<p class='error_red'>".$error_message."</p>";
+        }
 
-            if(!isset($_SESSION['user_id'])){
-                echo '<div class="error_red">※ユーザー登録またはログインを完了させてください。</div>';
-            }
-            ?>
+        if(!isset($_SESSION['user_id'])){
+        echo '<div class="error_red">※ユーザー登録またはログインを完了させてください。</div>';
+        }
+        ?>
+        <p id="current-time"></p>
         </div>
-    </div>
+        </div>
+        </div>
+        <script>
+            function updateClock() {
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+
+            // ゼロ埋め
+            minutes = (minutes < 10 ? "0" : "") + minutes;
+            seconds = (seconds < 10 ? "0" : "") + seconds;
+
+            // フォーマット（24時間制）
+            var formattedTime = hours + ":" + minutes + ":" + seconds;
+
+            // 現在の時間を表示する要素にセット
+            document.getElementById('current-time').innerHTML = formattedTime;
+
+            // 1秒ごとに更新
+            setTimeout(updateClock, 1000);
+        }
+
+        // ページ読み込み時に初回実行
+        document.addEventListener("DOMContentLoaded", function() {
+            updateClock();
+        });
+        </script>
 
 </body>
 </html>
