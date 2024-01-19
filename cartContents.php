@@ -127,7 +127,7 @@ if(!($user_id === "A")){
                 $maxPieces = $row['maxPieces'];
                 $price  = $row['price'];
                 $priceMax += $price;
-                $commapriceMax = number_format($priceMax);
+                $commaPriceMax = number_format($priceMax);
                 $commaPrice = number_format($price);
                 $productname = $row['productname'];
                 $quality = $row['quality'];
@@ -268,8 +268,9 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
-        echo $commapriceMax . "(税込)";
+        echo $commaPriceMax . "(税込)";
         echo "<form action='buyProducts.php' method='post'>";
+        echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
             echo <<<END
             <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
@@ -319,7 +320,7 @@ if(!($user_id === "A")){
                 $category_name = !is_null($row['category_name'])?$row['category_name']:"";
                 $price  = $row['price'];
                 $priceMax += $price;
-                $commapriceMax = number_format($priceMax);
+                $commaPriceMax = number_format($priceMax);
                 $commaPrice = number_format($price);
                 $color_size_id = $row['color_size_id'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
@@ -428,8 +429,9 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
-        echo $commapriceMax . "(税込)";
+        echo $commaPriceMax . "(税込)";
         echo "<form action='buyProducts.php' method='post'>";
+        echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
             echo <<<END
             <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">

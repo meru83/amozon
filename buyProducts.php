@@ -11,12 +11,20 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-isset($_SESSION['user_id']){
+if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
+}else{
+    header("Location:login.php");
+    exit();
 }
 
-if(isset($_POST['buyProductId']) && isset($_POST['lastImg'])){
-    $buyProductId = $_POST['buyProductId'];
-    $lastImg = $_POST['lastImg'];
+if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize'])){
+    print_r($_POST['buyProductId']);
+    print_r($_POST['buyColorSize']);
+    // $buyProductId = $_POST['buyProductId'];
+    // $lastImg = $_POST['lastImg'];
+
+    // print_r($buyProductId);
+    // print_r($lastImg);
 }
 ?>
