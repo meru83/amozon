@@ -94,6 +94,7 @@ $countMax = 0;
 $htmlText = "";
 $lastImg = array();
 $arrayProductId = array();
+$priceMax = 0;
 //セッションで管理されている場合
 
 if(!($user_id === "A")){
@@ -125,6 +126,8 @@ if(!($user_id === "A")){
                 $cartPieces = $row['cartPieces'];
                 $maxPieces = $row['maxPieces'];
                 $price  = $row['price'];
+                $priceMax += $price;
+                $commaPriceMax = number_format($priceMax);
                 $commaPrice = number_format($price);
                 $productname = $row['productname'];
                 $quality = $row['quality'];
@@ -265,7 +268,9 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
+        echo $commaPriceMax . "(税込)";
         echo "<form action='buyProducts.php' method='post'>";
+        echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
             echo <<<END
             <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
@@ -273,7 +278,7 @@ if(!($user_id === "A")){
             END;
         }
         echo <<<END
-        <input type="submit" value="レジに進む">
+        <input type="submit" class="btnStyle" value="レジに進む">
         </form>
         END;
     }else{
@@ -314,6 +319,8 @@ if(!($user_id === "A")){
                 $productname = $row['productname'];
                 $category_name = !is_null($row['category_name'])?$row['category_name']:"";
                 $price  = $row['price'];
+                $priceMax += $price;
+                $commaPriceMax = number_format($priceMax);
                 $commaPrice = number_format($price);
                 $color_size_id = $row['color_size_id'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
@@ -422,7 +429,9 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
+        echo $commaPriceMax . "(税込)";
         echo "<form action='buyProducts.php' method='post'>";
+        echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
             echo <<<END
             <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
@@ -430,7 +439,7 @@ if(!($user_id === "A")){
             END;
         }
         echo <<<END
-        <input type="submit" value="レジに進む">
+        <input type="submit" class="btnStyle" value="レジに進む">
         </form>
         END;
     }else{
