@@ -278,7 +278,7 @@ if(!($user_id === "A")){
             END;
         }
         echo <<<END
-        <input type="submit" value="レジに進む">
+        <input type="submit" class="btnStyle" value="レジに進む">
         </form>
         END;
     }else{
@@ -439,7 +439,7 @@ if(!($user_id === "A")){
             END;
         }
         echo <<<END
-        <input type="submit" value="レジに進む">
+        <input type="submit" class="btnStyle" value="レジに進む">
         </form>
         END;
     }else{
