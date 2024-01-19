@@ -209,6 +209,18 @@ a, a:hover, a:active, a:visited {
     }
 }
 
+.backBtn {
+    width:48px;
+    height: 100%;
+    margin-left: 64px;
+    padding-left: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.backBtn:hover {
+    background-color: white;
+}
 
 
 
