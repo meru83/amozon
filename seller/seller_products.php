@@ -59,7 +59,7 @@ if(isset($_SESSION['seller_id'])){
 </head>
 <body>
     <div id="header" class="header">
-        <div class="back"><div class="backBtn" onclick="history.back()" style="width:48px; height: 100%; background:#fff;"><img src="../img/return_left.png" style="width:100%;"></div></div>
+        <div class="back"><div class="backBtn" onclick="history.back()"><img src="../img/return_left.png" style="width:100%;"></div></div>
         <h1 class="h1_White">カート</h1>
         <?=$foo?>
     </div>
