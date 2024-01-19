@@ -58,25 +58,35 @@ if(isset($_SESSION['seller_id'])){
         <div class="Amozon-container">
 
         <!-- Left Side Menu -->
-            <div class="left-menu">
-                <div>
-                    <ul class="menu-list">
-                        <li class="menu-item-logo"><a href="#"><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
-                        <li class="menu-item"><a href="user_top.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
-                        <li class="menu-item"><a href="search.php"><img src="../img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
-                        <li class="menu-item"><a href="cartContents.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
-                        <li class="menu-item"><a href="chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-                        <li class="menu-item"><a href="favoriteProduct.php"><img src="../img/heartBlack.png" class="logo"><span class="menu-item-text">お気に入り</span></a></li>
-                        <li class="menu-item"><a href="user_profile.php"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="menu-list-bottom">
-                    <li class="menu-item"><a href=""><img src="../img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
-                    </ul>
-                </div>
+        <div class="Amozon-container">
+        <!-- Left Side Menu -->
+        <div class="left-menu">
+            <div>
+                <ul class="menu-list">
+                    <li class="menu-item-logo"><a href=""><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                    <li class="menu-item"><a href="seller_top.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                    <li class="menu-item"> <a href="p2_insert.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">商品情報登録</span></a></li>
+                    <li class="menu-item"> <a href="seller_products.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">登録商品一覧</span></a></li>
+                    <?php
+                    if(isset($_SESSION['seller_id'])){
+                        echo '<li class="menu-item"><a href="../chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                    }else{
+                        echo '<li class="menu-item"><a href="seller.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                    }
+                    ?>
+                    <li class="menu-item"><a href="seller_home.php"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    <!--log--->
+                </ul>
             </div>
-            <div class="right-content">
+            <div>
+                <ul class="menu-list-bottom">
+                <li class="menu-item"><a href="../py/rireki.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">売上管理</span></a></li>
+
+                </ul>
+            </div>
+        </div>
+        
+        <div class="right-content">
 <?php
 
 $htmlText = "";
