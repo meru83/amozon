@@ -18,7 +18,9 @@
         $seller_id = $_POST['seller_id'];
         $password = $_POST['password'];
         $sellerName = $_POST['sellerName'];
-        $phone = $_POST['number'];
+        $sellerphone = $_POST['number'];
+        $email = $_POST['email'];
+
 
         // ユーザーIDの正規表現パターンを定義
         $seller_id_pattern = '/^[a-zA-Z0-9\-_]+$/';
@@ -56,9 +58,9 @@
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                 // ユーザーをデータベースに挿入
-                $insert_sql = "INSERT INTO seller (seller_id, pass, sellerName, sellerPhone) VALUES (?, ?, ?, ?)";
+                $insert_sql = "INSERT INTO seller (seller_id, pass, sellerName, sellerPhone, email) VALUES (?, ?, ?, ?, ?)";
                 $insert_stmt = $conn->prepare($insert_sql);
-                $insert_stmt->bind_param("ssss", $seller_id, $hashed_password, $sellerName, $phone);
+                $insert_stmt->bind_param("sssss", $seller_id, $hashed_password, $sellerName, $sellerphone, $email);
                 if ($insert_stmt->execute()) {
                     //登録成功時の処理
                     echo "<p>新しいユーザーが登録されました。</p>";
