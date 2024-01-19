@@ -349,7 +349,7 @@ function addRadio(selectorNumber){
     price.type = "text";
     price.name = "colorArray["+selectorValue+"]["+divRadioCount+"][price]";
     price.id = "price"+divRadioCount;
-    price.placeholder = "数値のみ　単位：円/着"
+    price.placeholder = "数値のみ　単位：円/着　(税込)"
     price.required = true;
     price.classList.add('styleTextBox');
     divRadio.appendChild(price);
