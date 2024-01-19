@@ -180,8 +180,15 @@ form.addEventListener('keydown', (e) => {
         if(act === 'productname'){
             view.focus();
         } else if (act === 'view'){
-            quarity.focus();
+            quality.focus();
+        } else if (act === 'quality'){
+            big_category.focus();
+        } else if (act === 'big_category'){
+            category.focus();
+        } else if (act === 'category'){
+            small_category.focus();
         }
+
         for(let i = 0; i < divRadioCount; i++){
             let actPrice = document.getElementById('price'+i);
             if(act === 'pieces'+i){
@@ -190,6 +197,14 @@ form.addEventListener('keydown', (e) => {
         }
         return false;
     }
+
+    function is_empty(){
+    if(user_id.value === "" || number.value === "" || password.value === "" || rePassword.value === "" || username.value === ""){
+        return false;
+    }else{
+        return true;
+    }
+}
 });
 
 
