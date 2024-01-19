@@ -18,7 +18,10 @@ if(isset($_SESSION['user_id'])){
     exit();
 }
 
-if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize'])){
+//ヘッダーは注文内容の確認
+
+if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice'])){
+    $maxPrice = $_POST['maxPrice'];
     print_r($_POST['buyProductId']);
     print_r($_POST['buyColorSize']);
     // $buyProductId = $_POST['buyProductId'];
