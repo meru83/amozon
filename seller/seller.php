@@ -90,7 +90,10 @@
         
         <label for="number">電話番号</label><br>
         <input type="text" name="number" id="number" class="seller_textbox" class="address_textbox" placeholder="ハイフンなし" required><br>
-        
+
+        <label for="email">メールアドレス</label><br>
+        <input type="text" name="email" id="email" class="seller_textbox" class="address_textbox" placeholder="read@gmail.com" required><br>
+
         <label for="password">パスワード</label>
         <input type="password" id="password" class="seller_textbox" placeholder="8桁以上" name="password"  required><br>
         <input type="password" id="rePassword" class="seller_textbox" name="rePassword" placeholder="パスワード再確認" required><br>
