@@ -95,9 +95,17 @@ if ($result && $result->num_rows > 0) {
 
 if($flag){
     echo <<<HTML
-    <label>6桁の認証コード<label><br>
-    <input type="text" id="verification_code" name="verification_code" required><br>
-    <button type="button" onclick="submitButton()">確定</button>
+    <link rel="stylesheet" href="css/authenticate.css">
+    <div id="header" class="header">
+        <h1 class="h1_White">認証</h1>
+    </div>
+    <div class="content">
+    <img src="img/Re.ReaD2blue.svg" class="login_brand">
+    <label><div class="code1">認証コードを送信しました</div></label>
+    <label><div class="code2">6桁の認証コード</div><label><br>
+    <input type="text" id="verification_code" class="inputCode" name="verification_code" required><br>
+    <button type="button" class="btn" onclick="submitButton()">送信</button>
+    </div>
     HTML;
 }
 // }
