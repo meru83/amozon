@@ -5,8 +5,10 @@ if(session_status() == PHP_SESSION_NONE){
 
 if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
+    $seller_id = null;
 }else if(isset($_SESSION['seller_id'])){
     $seller_id = $_SESSION['seller_id'];
+    $user_id = null;
 }
 
 include "db_config.php";
@@ -19,28 +21,28 @@ if(isset($_POST['add'])){
     $street = $_POST['street'];
     $room_number = isset($_POST['room_number']) ? $_POST['room_number'] : null;
     $addressname = $_POST['addressname'];
-    // if(isset($user_id)){
-    //     $insertSql = "INSERT INTO user_number (user_id, number) VALUES(??)";
-    //     $insertStmt = $conn->prepare($insertSql);
-    //     $insertStmt->bind_param("si",$user_id,$number);
-    //     if($insertStmt->execute()){
-    //         echo <<<HTML
-    //         <script>
-    //         if(!alert("電話番号の登録に成功しました。")){
-    //             location.href = 'user_top.php';
-    //         }
-    //         </script>
-    //         HTML;
-    //     }else{
-    //         echo <<<HTML
-    //         <script>
-    //         if(!alert("電話番号の登録に失敗しました。もう一度初めから試して下さい。")){
-    //             location.href = 'user_top.php';
-    //         }
-    //         </script>
-    //         HTML;
-    //     }
-    // }
+
+    $insertSql = "INSERT INTO address (user_id, seller_id, post_code, prefectures, city, city_kana, tyou, room_number, addressname) 
+                VALUES(?,?,?,?,?,?,?,?,?)";
+    $insertStmt = $conn->prepare($insertSql);
+    $insertStmt->bind_param("sssssssss", $user_id, $seller_id, $post_code, $prefectures, $city, $city_kana, $street, $room_number, $addressname);
+    if($insertStmt->execute()){
+        echo <<<HTML
+        <script>
+        if(!alert("住所の登録に成功しました。")){
+            location.href = 'user_top.php';
+        }
+        </script>
+        HTML;
+    }else{
+        echo <<<HTML
+        <script>
+        if(!alert("住所の登録に失敗しました。")){
+            location.href = 'user_top.php';
+        }
+        </script>
+        HTML;
+    }
 }
 ?>
 <!DOCTYPE html>

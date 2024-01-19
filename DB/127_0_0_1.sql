@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-19 18:19:12
+-- 生成日時: 2024-01-19 19:03:40
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -30,6 +30,7 @@ USE `complete`;
 --
 
 CREATE TABLE `address` (
+  `address_id` int(11) NOT NULL,
   `user_id` varchar(255) DEFAULT NULL,
   `seller_id` varchar(255) DEFAULT NULL,
   `post_code` varchar(10) NOT NULL,
@@ -5316,12 +5317,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `email`, `create_at`, `user_status`) VALUES
+('a', 'あ', '$2y$10$q4ZooZaSVB.BA0boAYNeo.UJlrzUD4gX7kfDvtVtsFMoyFwZ5oadq', 'a', 'a', '2024-01-19 17:55:50', 1),
 ('mu_rata', 'mura_ta', '$2y$10$QMSH3dzKc01LI8BJlVYjIOYMtPy0ffzQneSHZ/epcvRd0USqubAoS', '00000000000', 'tanim4582@gmail.com', '2024-01-19 13:51:48', 1),
 ('test_user', 'テストユーザー', '$2y$10$d2iU/xGLRhWX747O0Z3iieqyCy8tmw4qI6n0N3ewxyHkiD6J9Jqry', '0612345678', '2312067@i-seifu.jp', '2023-10-27 13:13:05', 1);
 
 --
 -- ダンプしたテーブルのインデックス
 --
+
+--
+-- テーブルのインデックス `address`
+--
+ALTER TABLE `address`
+  ADD PRIMARY KEY (`address_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- テーブルのインデックス `big_category`
@@ -5447,6 +5456,12 @@ ALTER TABLE `users`
 --
 
 --
+-- テーブルの AUTO_INCREMENT `address`
+--
+ALTER TABLE `address`
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- テーブルの AUTO_INCREMENT `big_category`
 --
 ALTER TABLE `big_category`
@@ -5503,6 +5518,12 @@ ALTER TABLE `search`
 --
 -- ダンプしたテーブルの制約
 --
+
+--
+-- テーブルの制約 `address`
+--
+ALTER TABLE `address`
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- テーブルの制約 `cart`
