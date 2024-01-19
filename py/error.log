@@ -1,5 +1,1 @@
-[18-Jan-2024 06:52:36 Europe/Berlin] PHP Warning:  readfile(rireki.xlsx): Failed to open stream: No such file or directory in C:\xampp\htdocs\php\amo\py\rireki.php on line 35
-[18-Jan-2024 07:01:08 Europe/Berlin] PHP Warning:  readfile(rireki.xlsx): Failed to open stream: No such file or directory in C:\xampp\htdocs\php\amo\py\rireki.php on line 49
-[18-Jan-2024 07:45:58 Europe/Berlin] PHP Warning:  readfile(rireki.xlsx): Failed to open stream: No such file or directory in C:\xampp\htdocs\php\amo\py\rireki.php on line 49
-[18-Jan-2024 07:47:42 Europe/Berlin] PHP Warning:  readfile(rireki.xlsx): Failed to open stream: No such file or directory in C:\xampp\htdocs\php\amo\py\rireki.php on line 49
-[18-Jan-2024 07:50:30 Europe/Berlin] PHP Warning:  readfile(rireki.xlsx): Failed to open stream: No such file or directory in C:\xampp\htdocs\php\amo\py\rireki.php on line 49
+

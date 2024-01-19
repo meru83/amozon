@@ -6,7 +6,11 @@ from openpyxl import Workbook
 from openpyxl.chart import Reference, LineChart
 from openpyxl.utils.dataframe import dataframe_to_rows
 import csv
+import os
+import requests
+# import logging
 
+# logging.basicConfig(filename='error.log', level=logging.DEBUG)
 
 # ########################################
 # コマンドライン引数から「seller_id」取得
@@ -107,6 +111,21 @@ df = pd.DataFrame(data[1:], columns=data[0])
 wb = Workbook()
 wb.remove(wb.active)  # デフォルトのシートを削除
 
+# ダウンロードフォルダの名前を指定
+download_folder_name = "Downloads"
+
+# ユーザーのホームディレクトリを取得
+home_directory = os.path.expanduser("~")
+
+# ダウンロードフォルダのパスを結合
+download_folder_path = os.path.join(home_directory, download_folder_name)
+
+# ファイルの保存先パスを指定（例: ファイル名がexample.txtの場合）
+file_name = "rireki.xlsx"
+file_path = os.path.join(download_folder_path, file_name)
+
+print(file_path)
+
 # 年度ごとにデータを分割し、シートを作成
 for year in df['年'].unique():
     ws = wb.create_sheet(title=str(year))
@@ -146,7 +165,8 @@ try:
     # 既存のコード
     # ★★★ 変更ここから ★★★
     # wb.save('C:/xampp/htdocs/php/amo/py/excel/rireki.xlsx')
-    wb.save('rireki.xlsx')
+    wb.save(file_path)
+    # logging.warning(file_path)
     # ★★★ 変更ここまで ★★★
 except Exception as e:
     print(f"エラー: {e}")
