@@ -179,6 +179,8 @@ form.addEventListener('keydown', (e) => {
         let act = document.activeElement.id;
         if(act === 'productname'){
             view.focus();
+        } else if (act === 'view'){
+            quarity.focus();
         }
         for(let i = 0; i < divRadioCount; i++){
             let actPrice = document.getElementById('price'+i);
