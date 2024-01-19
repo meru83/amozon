@@ -181,7 +181,7 @@ if(!($user_id === "A")){
                     色: $colorName
                     サイズ: $size<br>
                     商品名　　: $productname<br>
-                    価格　　　: $commaPrice<br>
+                    価格　　　: ￥ $commaPrice<br>
                     </a>
                     <br>
                     END;
@@ -268,7 +268,7 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
-        echo $commaPriceMax . "(税込)";
+        echo "￥". $commaPriceMax . "(税込)";
         echo "<form action='buyProducts.php' method='post'>";
         echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
@@ -366,7 +366,7 @@ if(!($user_id === "A")){
                     色: $colorName
                     サイズ: $size<br>
                     商品名　　: $productname<br>
-                    価格　　　: $commaPrice<br>
+                    価格　　　: ￥ $commaPrice<br>
                     </a>
                     <br>
                     <div class="sonota">
@@ -429,7 +429,7 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
-        echo $commaPriceMax . "(税込)";
+        echo "￥". $commaPriceMax . "(税込)";
         echo "<form action='buyProducts.php' method='post'>";
         echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
