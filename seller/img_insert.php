@@ -30,6 +30,7 @@ $i = 0;
 $selectSql = "SELECT p.productname, p.quality, p.create_at, p.seller_id, c.color_size_id, c.color_code, c.size 
                 FROM color_size c
                 LEFT JOIN products p ON c.product_id = p.product_id
+                LEFT JOIN big_category b ON p.product_id = b.big_category_id
                 WHERE color_size_id = ?";
 $selectStmt = $conn->prepare($selectSql);
 foreach($insertId as $rowId){

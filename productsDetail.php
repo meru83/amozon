@@ -220,15 +220,21 @@ END;
 //$favorite_product null か $user_id
 if(!($favorite_product === null) && isset($_SESSION['user_id'])){
     $htmlText .= <<<END
-    <input type="checkbox" id="favorite$count" checked>
+    <label class="checkHeart" for="favorite$count">
+        <input type="checkbox" id="favorite$count" checked>
+        <span class="spanHeart"></span>
+    </label>
     END;
 }else if(isset($_SESSION['user_id'])){
     $htmlText .= <<<END
-    <input type="checkbox" id="favorite$count">
+    <label class="checkHeart" for="favorite$count">
+        <input type="checkbox" id="favorite$count">
+        <span class="spanHeart"></span>
+    </label>
     END;
 }else{
     $htmlText .= <<<END
-    <button type="button" onclick="heartButton()">ハートマーク</button>
+    <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
     END;
 }
 
@@ -390,15 +396,21 @@ while($row = $selectResult->fetch_assoc()){
         //$favorite_product null か $user_id
         if(!($favorite_product === null) && isset($_SESSION['user_id'])){
             $tentative .= <<<END
-            <input type="checkbox" id="favorite$count" checked>
+            <label class="checkHeart" for="favorite$count">
+                <input type="checkbox" id="favorite$count" checked>
+                <span class="spanHeart"></span>
+            </label>
             END;
         }else if(isset($_SESSION['user_id'])){
             $tentative .= <<<END
-            <input type="checkbox" id="favorite$count">
+            <label class="checkHeart" for="favorite$count">
+                <input type="checkbox" id="favorite$count">
+                <span class="spanHeart"></span>
+            </label>
             END;
         }else{
             $tentative .= <<<END
-            <button type="button" onclick="heartButton()">ハートマーク</button>
+            <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
             END;
         }
         if($pieces > 0){

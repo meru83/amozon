@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-18 14:16:58
+-- 生成日時: 2024-01-19 02:51:12
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -690,6 +690,7 @@ INSERT INTO `color_size` (`product_id`, `color_code`, `size`, `pieces`, `price`,
 (132, '#FFFFFF', 'M', 20, 4080, 501, 1),
 (133, '#4DBEE9', 'M', 20, 5500, 504, 1),
 (133, '#4DBEE9', 'S', 20, 5500, 503, 1),
+(134, '', 'XS', 0, 0, 647, 1),
 (134, '#AAB2BE', 'L', 20, 5500, 506, 1),
 (134, '#AAB2BE', 'M', 20, 5500, 505, 1),
 (135, '#AAB2BE', 'M', 20, 25000, 507, 1),
@@ -4690,7 +4691,49 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (498, 586, 'counselor-4305394_1280586.jpg'),
 (499, 581, 'shirt-933671_1280581.jpg'),
 (500, 585, 'shirt-933671_1280585.jpg'),
-(501, 584, 'alex-suprun-lM4X4TQdngo-unsplash584.jpg');
+(501, 584, 'alex-suprun-lM4X4TQdngo-unsplash584.jpg'),
+(502, 270, 'stefano-tanasi-vTcCboOw0LA-unsplash270.jpg'),
+(503, 567, 'aliaksei-lepik-xlPYtqlN99E-unsplash567.jpg'),
+(504, 565, 'aliaksei-lepik-xlPYtqlN99E-unsplash565.jpg'),
+(505, 566, 'khaled-ghareeb-pWpIhF533B0-unsplash566.jpg'),
+(506, 564, 'khaled-ghareeb-pWpIhF533B0-unsplash564.jpg'),
+(507, 524, 'jason-leung-DmD8HVOjy4c-unsplash524.jpg'),
+(508, 522, 'jason-leung-DmD8HVOjy4c-unsplash522.jpg'),
+(509, 520, 'jason-leung-DmD8HVOjy4c-unsplash520.jpg'),
+(510, 525, 'jason-leung-DmD8HVOjy4c-unsplash525.jpg'),
+(511, 523, 'jason-leung-DmD8HVOjy4c-unsplash523.jpg'),
+(512, 521, 'jason-leung-DmD8HVOjy4c-unsplash521.jpg'),
+(513, 519, 'nimble-made-Jf7JqVazm-4-unsplash519.jpg'),
+(514, 518, 'nimble-made-Jf7JqVazm-4-unsplash518.jpg'),
+(515, 517, 'nimble-made-Jf7JqVazm-4-unsplash517.jpg'),
+(516, 516, 'taras-chernus-iIjResyhhW0-unsplash516.jpg'),
+(517, 515, 'taras-chernus-iIjResyhhW0-unsplash515.jpg'),
+(518, 514, 'kristina-petrick-NiqS3Madffs-unsplash514.jpg'),
+(519, 513, 'tijana-drndarski-Ds4TsdS095U-unsplash513.jpg'),
+(520, 512, 'tijana-drndarski-Ds4TsdS095U-unsplash512.jpg'),
+(521, 511, 'camouflage-210155_1280511.jpg'),
+(522, 510, 'camouflage-210155_1280510.jpg'),
+(523, 509, 'eldo-rafael-6NHOEyrDbVg-unsplash509.jpg'),
+(524, 508, 'eldo-rafael-6NHOEyrDbVg-unsplash508.jpg'),
+(525, 507, 'samantha-gades-bFYoyKivbmg-unsplash507.jpg'),
+(526, 507, 'hardini-lestari-MujZAKea8Lw-unsplash507.jpg'),
+(527, 506, 'gwendal-cottin-3IDSZXfcQbg-unsplash506.jpg'),
+(528, 505, 'gwendal-cottin-3IDSZXfcQbg-unsplash505.jpg'),
+(529, 647, 'gwendal-cottin-3IDSZXfcQbg-unsplash647.jpg'),
+(530, 504, 'water-2322835_1280504.jpg'),
+(531, 503, 'water-2322835_1280503.jpg'),
+(532, 502, 'shirt-3737404_1280502.jpg'),
+(533, 501, 'shirt-3737404_1280501.jpg'),
+(534, 500, 'jan-szwagrzyk-LCC1CF94DBw-unsplash500.jpg'),
+(535, 499, 'saeed-mhmdi-26JLZF54pTA-unsplash499.jpg'),
+(536, 498, 'andrew-haimerl-HpVaLTP1OOA-unsplash498.jpg'),
+(537, 497, 'andrew-haimerl-HpVaLTP1OOA-unsplash497.jpg'),
+(538, 496, 'woman-6039907_1280496.jpg'),
+(539, 495, 'woman-6039907_1280495.jpg'),
+(540, 493, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash493.jpg'),
+(541, 491, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash491.jpg'),
+(542, 494, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash494.jpg'),
+(543, 492, 'henrik-hjortshoj-1VCTjIOnUQA-unsplash492.jpg');
 
 -- --------------------------------------------------------
 
@@ -5234,7 +5277,7 @@ ALTER TABLE `chatrooms`
 -- テーブルの AUTO_INCREMENT `color_size`
 --
 ALTER TABLE `color_size`
-  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=647;
+  MODIFY `color_size_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=648;
 
 --
 -- テーブルの AUTO_INCREMENT `messages`
@@ -5258,7 +5301,7 @@ ALTER TABLE `products`
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=502;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=544;
 
 --
 -- テーブルの AUTO_INCREMENT `search`

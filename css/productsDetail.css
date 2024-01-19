@@ -81,3 +81,41 @@
 .noCart {
     text-align: center;
 }
+
+.heartBtn {
+    height:33px;
+    margin:5px 5px 0 0;
+    padding: 0;
+    background: white;
+    border: none;
+}
+
+.checkHeart {
+    cursor: pointer;
+}
+
+.checkHeart,
+.spanHeart {
+    width: fit-content;
+    display: block;
+}
+
+.checkHeart input {
+    display: none;
+}
+
+.checkHeart input + .spanHeart::before {
+    display: block;
+    background-image: url("../img/heart2.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: "";
+    height: 33px;
+    position: relative;
+    width: 33px;
+  }
+
+  .checkHeart input:checked + .spanHeart::before {
+    background-image: url("../img/heart.png");
+  }
