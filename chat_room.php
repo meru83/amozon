@@ -42,7 +42,11 @@ function cssLink(){
 <body>
 <div class="chat_room_parent">
     <div id="header">
-        <?="<h1>".htmlH1()."</h1>"?>
+        <div class="header">
+            <div class="back"><div class="backBtn" onclick="history.back()"><img src="img/return_left.png" style="width:100%;"></div></div>
+            <?="<h1 class='h1'>".htmlH1()."</h1>"?>
+            <div class="space"></div>
+        </div>
     </div>
 
     <!-- チャットログを表示するエリア -->

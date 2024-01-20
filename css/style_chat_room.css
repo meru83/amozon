@@ -21,7 +21,39 @@ body, h1, p {
     text-align: center;
     height: 50px;/*必須(※値変えてもいいけど注意必要。)*/
     padding: 5px;
-    
+}
+
+.header {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.back {
+    width:100%;
+    height: 100%;
+}
+
+.backBtn {
+    width:48px;
+    height: 100%;
+    margin-left: 64px;
+    padding-left: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.backBtn:hover {
+    background-color: white;
+}
+
+.space {
+    width: 100%;
+}
+
+.h1 {
+    width: 100%;
 }
 
 /*メッセージが表示される全体の部分*/
