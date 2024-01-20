@@ -99,6 +99,10 @@
     background-color: #def7ff;
 }
 
+.countStyle {
+    width: 500px;
+    margin: 0 auto;
+}
 
 .span0 {
     width: 15px;
