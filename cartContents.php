@@ -268,7 +268,11 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
-        echo "￥". $commaPriceMax . "(税込)";
+        echo '<div class="subtotal">';
+        echo '<div class="subtotalChild">';
+        echo '小計 ('. $count. ' 個の商品) (税込)';
+        echo '</div>';
+        echo "<b>￥". $commaPriceMax . "</b>";
         echo "<form action='buyProducts.php' method='post'>";
         echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
@@ -281,6 +285,7 @@ if(!($user_id === "A")){
         <input type="submit" class="btnStyle" value="レジに進む">
         </form>
         END;
+        echo '</div>';
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
@@ -429,7 +434,11 @@ if(!($user_id === "A")){
 
     if($count !== 0) {
         echo $count . "件";
-        echo "￥". $commaPriceMax . "(税込)";
+        echo '<div class="subtotal">';
+        echo '<div class="subtotalChild">';
+        echo '小計 ('. $count. ' 個の商品) (税込)';
+        echo '</div>';
+        echo "<b>￥". $commaPriceMax . "</b>";
         echo "<form action='buyProducts.php' method='post'>";
         echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
@@ -442,6 +451,7 @@ if(!($user_id === "A")){
         <input type="submit" class="btnStyle" value="レジに進む">
         </form>
         END;
+        echo '</div>';
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
