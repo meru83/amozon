@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-20 06:18:23
+-- 生成日時: 2024-01-20 06:29:08
 -- サーバのバージョン： 10.4.32-MariaDB
 -- PHP のバージョン: 8.2.12
 
@@ -5331,7 +5331,8 @@ INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `email`, `create_at
 --
 ALTER TABLE `address`
   ADD PRIMARY KEY (`address_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `seller_id` (`seller_id`);
 
 --
 -- テーブルのインデックス `big_category`
@@ -5524,7 +5525,8 @@ ALTER TABLE `search`
 -- テーブルの制約 `address`
 --
 ALTER TABLE `address`
-  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`seller_id`);
 
 --
 -- テーブルの制約 `cart`
