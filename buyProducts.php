@@ -22,13 +22,9 @@ if(isset($_SESSION['user_id'])){
 
 if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice'])){
     $maxPrice = $_POST['maxPrice'];
-    echo "商品合計 ￥ $maxPrice";
-    // print_r($_POST['buyProductId']);
-    // print_r($_POST['buyColorSize']);
-    // $buyProductId = $_POST['buyProductId'];
-    // $lastImg = $_POST['lastImg'];
-
-    // print_r($buyProductId);
-    // print_r($lastImg);
+    echo <<<END
+    商品合計 ￥ $maxPrice<br>
+    <button>注文を確定する</button>
+    END;
 }
 ?>

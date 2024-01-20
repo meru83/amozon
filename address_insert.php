@@ -21,12 +21,24 @@ if(isset($_POST['add'])){
     $street = $_POST['street'];
     $room_number = isset($_POST['room_number']) ? $_POST['room_number'] : null;
     $addressname = $_POST['addressname'];
+    $default_status = 1;
 
-    $insertSql = "INSERT INTO address (user_id, seller_id, post_code, prefectures, city, city_kana, tyou, room_number, addressname) 
-                VALUES(?,?,?,?,?,?,?,?,?)";
+    $insertSql = "INSERT INTO address (user_id, seller_id, post_code, prefectures, city, city_kana, tyou, room_number, addressname, default_status) 
+                VALUES(?,?,?,?,?,?,?,?,?,?)";
     $insertStmt = $conn->prepare($insertSql);
-    $insertStmt->bind_param("sssssssss", $user_id, $seller_id, $post_code, $prefectures, $city, $city_kana, $street, $room_number, $addressname);
+    $insertStmt->bind_param("sssssssssi", $user_id, $seller_id, $post_code, $prefectures, $city, $city_kana, $street, $room_number, $addressname, $default_status);
     if($insertStmt->execute()){
+        $last_id = $conn->insert_id;
+        if($_SESSION['user_id']){
+            $updateSql = "UPDATE address SET default_status = false WHERE address_id <> ? AND user_id = ? AND seller_id IS NULL";
+            $updateStmt = $conn->prepare($updateSql);
+            $updateStmt->bind_param("is",$last_id,$user_id);
+        }else if($_SESSION['seller_id']){
+            $updateSql = "UPDATE address SET default_status = false WHERE address_id <> ? AND seller_id = ? AND user_id IS NULL";
+            $updateStmt = $conn->prepare($updateSql);
+            $updateStmt->bind_param("is",$last_id,$seller_id);
+        }
+        $updateStmt->execute();
         echo <<<HTML
         <script>
         if(!alert("住所の登録に成功しました。")){
