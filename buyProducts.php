@@ -21,8 +21,24 @@ if(isset($_SESSION['user_id'])){
 //ヘッダーは注文内容の確認
 
 if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice'])){
+    $addressSql = "SELECT * FROM address WHERE user_id = ? && default_status = 1";
+    $addressStmt = $conn->prepare($addressSql);
+    $addressStmt->bind_param("s", $user_id);
+    $addressStmt->execute();
+    $addressResult = $addressStmt->get_result();
+    if($addressResult && $addressResult_num_rows > 0){
+        $addressRow = $addressResult->fetch_assoc();
+        $post_code = $addressRow['post_code'];
+        $prefectures = $addressRow['prefectures'];
+        $city = $addressRow['city'];
+        // $city_kana = $addressRow['city_kana'];
+        $tyou = $addressRow['tyou'];
+        $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:null;
+        $addressname = $addressRow['addressname'];
+    }
     $maxPrice = $_POST['maxPrice'];
     echo <<<END
+    お届け先　：$addressname , 〒$post_code, $prefectures $city $tyou $room_number
     商品合計 ￥ $maxPrice<br>
     <button>注文を確定する</button>
     END;
