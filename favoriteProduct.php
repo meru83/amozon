@@ -220,6 +220,9 @@ if($result && $result->num_rows > 0){
     echo '</div>';
 }else{
     //お気に入り商品がないとき
+    echo "<div class='favorite_no'>お気に入りに商品は登録されていません";
+    echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
+    echo '</div>';
 }
 
 echo '</div>';//<div class="right-content">
