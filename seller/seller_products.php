@@ -92,6 +92,13 @@ if(isset($_SESSION['seller_id'])){
         </div>
         
         <div class="right-content">
+            <form id="form" action=".php" method="GET">
+                <div class="flexBox">
+                    <label for="search">商品を検索</label>
+                    <input type="text" id="search" name="search">
+                    <button type="submit" id="submit" class="btn-img"></button>
+                </div>
+            </form>
         <div  class='p2'><h2><?=$seller_name?> 様</h2></div>
 <?php
 $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
