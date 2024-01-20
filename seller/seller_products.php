@@ -238,9 +238,7 @@ if($selectResult && $selectResult->num_rows > 0){
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
             <div class="flex">
             <div class="left"><p id="name$product_id">商品名　　　$productname</p></div>
-            <button type="butt  on" class="btnStyle2" onclick="changeProductName($product_id)">変更</button><br>
-            </div>
-
+            <button type="butt  on" class="btnStyle2" onclick="changeProductName($product_id)">変更</button><br></div>
             <div id="allCategory$product_id" class="flex" style="display:block">
             <div id="categoryText$product_id" class="left float">
             カテゴリ名　$big_category_name - $category_name - $small_category_name

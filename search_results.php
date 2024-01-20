@@ -67,7 +67,6 @@ if(isset($_SESSION['user_id'])){
             </div>
             <div>
                 <ul class="menu-list-bottom">
-                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
                 </ul>
             </div>
         </div>

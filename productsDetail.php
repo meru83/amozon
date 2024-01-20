@@ -68,7 +68,6 @@ if(isset($_SESSION['user_id'])){
             </div>
             <div>
                 <ul class="menu-list-bottom">
-                    <li class="menu-item"><a href=""><img src="img/haguruma.svg" class="logo"></span><span class="menu-item-text">その他</span></a></li>
                 </ul>
             </div>
         </div>
@@ -214,9 +213,9 @@ $htmlText = <<<END
 <div class="flex">サイズ　　　<div>$size</div></div>
 <div class="flex">色　　　　　<div>$colorName</div></div>
 <div class="flex">出品日　　　<div>$create_at</div></div>
-<div class="flex">出品者　　　<div><a href="seller/seller_home.php?seller_id=$seller_id">$seller_id</a></div></div><!----これリンクにして売り手のトプ画に飛ぶようにする。---->
+<div class="flex">出品者　　　<div>$seller_id</a></div></div>
+<div class="flex">チャット　　<div><a href="create.php?seller_id=$seller_id">チャット開始</a></div></div>
 END;
-
 //$favorite_product null か $user_id
 if(!($favorite_product === null) && isset($_SESSION['user_id'])){
     $htmlText .= <<<END
