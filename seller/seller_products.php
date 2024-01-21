@@ -849,7 +849,6 @@ function changeView(number){
                     const response = JSON.parse(xhr.responseText);
                     response.forEach(function(row) {
                         if(row.error_message === true){
-                            console.log("a");
                             var viewElement = document.getElementById('view'+number);
                             viewElement.innerHTML  = "概要　　　: "+changeViewPrompt;
                             alert("商品概要の変更に成功しました。");

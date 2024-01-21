@@ -26,21 +26,36 @@ if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POS
     $addressStmt->bind_param("s", $user_id);
     $addressStmt->execute();
     $addressResult = $addressStmt->get_result();
-    if($addressResult && $addressResult_num_rows > 0){
+    if($addressResult && $addressResult->num_rows > 0){
         $addressRow = $addressResult->fetch_assoc();
         $post_code = $addressRow['post_code'];
+        $postBefore = substr($post_code, 0,3);//前3桁
+        $postAfter = substr($post_code, -4);//後ろ4桁
+        $post_code2 = $postBefore." - ".$postAfter;
         $prefectures = $addressRow['prefectures'];
         $city = $addressRow['city'];
         // $city_kana = $addressRow['city_kana'];
-        $tyou = $addressRow['tyou'];
+        $tyou = $addressRow['tyou'];//登録されたままの表示　例：１丁目１番１号、2-21-4 どちらもそのまま出力
         $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:null;
         $addressname = $addressRow['addressname'];
+        $means = $addressRow['means'];
+        if($means === true){
+            $means_result = "対面で受け渡し";
+        }else{
+            $means_result = "置き配";
+        }
+        $maxPrice = $_POST['maxPrice'];
+        echo <<<END
+        お届け先　：$addressname , 〒$post_code, $prefectures $city $tyou $room_number<br>
+        受取り方法：$means_result<br>
+        支払い方法：readPAY <a href="chargePay.php">チャージ</a><br>
+        <h3>商品合計 ￥ $maxPrice</h3><br>
+        <button>注文を確定する</button>
+        END;
+    }else{
+        echo "住所の登録を済ませてください。";
+        echo "<a href='address_insert.php'>住所登録へ</a>";
+        exit();
     }
-    $maxPrice = $_POST['maxPrice'];
-    echo <<<END
-    お届け先　：$addressname , 〒$post_code, $prefectures $city $tyou $room_number
-    商品合計 ￥ $maxPrice<br>
-    <button>注文を確定する</button>
-    END;
 }
 ?>
