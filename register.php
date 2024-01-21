@@ -206,27 +206,22 @@ function hisButton(){
     var username = usernameElement.value
     
     if(user_id === ""){
-        alert("アカウントIDを入力してください");
         var his = document.getElementById('his');
         his.style.display = 'block';
         return false;
     } else if(number === ""){
-        alert("電話番号を入力してください");
         var his = document.getElementById('his1');
         his.style.display = 'block';
         return false;
     } else if(email === ""){
-        alert("メールアドレスを入力してください");
         var his = document.getElementById('his2');
         his.style.display = 'block';
         return false;
     } else if(password === ""){
-        alert("パスワードを入力してください");
         var his = document.getElementById('his3');
         his.style.display = 'block';
         return false;
     } else if(username === ""){
-        alert("アカウント名を入力してください");
         var his = document.getElementById('his4');
         his.style.display = 'block';
         return false;

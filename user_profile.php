@@ -60,10 +60,12 @@ if(isset($_SESSION['user_id'])){
                         <p>ここにサブコンテンツ1の説明が入ります。</p>
                     </div>
                 </a>
+                <a href="chargePay.php">
                 <div class="sub-content-item">
-                    <h2>サブコンテンツ2</h2>
+                    <h2>チャージする</h2>
                     <p>ここにサブコンテンツ2の説明が入ります。</p>
                 </div>
+                </a>
                 <div class="sub-content-item">
                     <h2>サブコンテンツ3</h2>
                     <p>ここにサブコンテンツ3の説明が入ります。</p>
