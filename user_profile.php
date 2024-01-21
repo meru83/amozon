@@ -11,23 +11,24 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if(isset($_SESSION['user_id']) || $_SESSION['seller_id']){
+if(isset($_SESSION['user_id']) || isset($_SESSION['seller_id'])){
     $foo2 = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
     <form action="logout.php" method="post">
         <input type="submit" name="logout" class="log_out" value="ログアウト">
     </form>
     </div>
-    END;
-}else{
+END;
+} else {
     $foo2 = <<<END
     <div class="New_log">
         <a href="register.php"><div class="log_style">新規登録</div></a>
         <a href="login.php"><div class="log_style rightM">ログイン</div></a>
     </div>
-    END;
+END;
 }
-// ログイン中のユーザーの情報を取得（例としてユーザーIDを仮定）
+
+// ログイン中のユーザーの情報を取得
 if(isset($_SESSION['user_id'])){
     $user = $_SESSION['user_id'];
     $sql = "SELECT total_pay FROM pay WHERE user_id = '$user'";
@@ -45,13 +46,12 @@ if(isset($_SESSION['user_id'])){
         if (isset($row["total_pay"])) {
             // チャージ情報をHTMLに表示
             $zandaka =<<<END
-            <a href='chargePay.php'>
                 <div class='sub-content-item'>
                     <h2>残高<h2>
                     <p>{$row["total_pay"]}</p>
                 </div>
             </a>
-            END;
+END;
         } else {
             //0円の時
             $zandaka =<<<END
@@ -61,21 +61,22 @@ if(isset($_SESSION['user_id'])){
                     <p>0</p>
                 </div>
             </a>
-            END;
+END;
         }
     } else {
         // チャージ情報が存在しない場合
-        echo "<a href='chargePay.php'>
+        $zandaka = <<<END
+            <a href='chargePay.php'>
                 <div class='sub-content-item'>
                     <h2>チャージする</h2>
                 </div>
-            </a>";
+            </a>
+END;
     }
 } else {
     // ログインしていない場合
-    echo "<p>ログインしていません</p>";
+    $zandaka = "<p>ログインしていません</p>";
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -124,7 +125,6 @@ if(isset($_SESSION['user_id'])){
                 <a href="chargePay.php">
                 <div class="sub-content-item">
                     <h2>チャージする</h2>
-                    <p>a<p>
                 </div>
                 </a>
                 <div class="sub-content-item">
