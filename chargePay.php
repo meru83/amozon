@@ -19,7 +19,14 @@ if (!isset($_SESSION['user_id'])) {
 ?>
 
 <!-- 金額の入力 -->
-<label for="chargePrice">金額<input name="chargePrice" id="chargePrice" type="text" placeholder="0">円</label><br>
+<label for="chargePrice">
+金額
+<input name="chargePrice" id="chargePrice" type="text" placeholder="0">
+円
+<div id="his" style="display:none; color:red">必須</div>
+</label>
+<br>
+
 
 <button type="button" onclick="autoCharge(2000)">2,000</button>
 <button type="button" onclick="autoCharge(3000)">3,000</button>
@@ -39,6 +46,7 @@ if (!isset($_SESSION['user_id'])) {
     <option value="西原bank">西原bank</option>
     <option value="readBank">readBank</option>
 </select>
+<div id="his2" style="display:none; color:red">必須</div>
 <br>
 
 
@@ -73,10 +81,18 @@ function chargeButton(){
     var bank = bankElement.options[num].value;
     if(chargePrice === ""){
         alert("金額を入力してください");
+        var his = document.getElementById('his');
+        var his2 = document.getElementById('his2');
+        his.style.display = 'block';
+        his2.style.display = 'block';
         return false;
     }
     if(bank === ""){
         alert("銀行を選択してください");
+        var his = document.getElementById('his');
+        var his2 = document.getElementById('his2');
+        his.style.display = 'block';
+        his2.style.display = 'block';
         return false;
     }
     if(window.confirm(chargePrice+"円をチャージします。")){
