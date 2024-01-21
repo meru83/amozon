@@ -1,4 +1,16 @@
 <?php
+include "db_config.php";
+
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log'); // エラーログをerror.logファイルに記録
+error_reporting(E_ALL);
+
+// セッションを開始します
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if(isset($_SESSION['user_id']) || $_SESSION['seller_id']){
     $foo2 = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
