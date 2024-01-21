@@ -98,7 +98,7 @@ if(isset($_SESSION['user_id'])){
      // 未登録の場合
      echo "<a href='address_insert.php'>
              <div class='sub-content-item'>
-                 <h2>住所登録</h2>
+                 <h2>住所登録を完了させてください</h2>
              </div>
          </a>";
  }
