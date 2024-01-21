@@ -91,6 +91,7 @@ if(isset($_SESSION['seller_id'])){
     <p><?=$sellerName?></p>
     <label for="productname" class="p2_label">
         商品名
+        <div id="his" style="display:none; color:red">必須</div>
         <input type="text" name="productname" id="productname" class="styleTextBox" placeholder="商品名" required>
     </label><br>
     <label for="view" class="p2_label">
@@ -99,6 +100,7 @@ if(isset($_SESSION['seller_id'])){
     </label><br>
     <label for="quality" class="p2_label">
         品質
+        <div id="his2" style="display:none; color:red">必須</div>
         <select name="quality" id="quality" class="styleSelect" required>
             <option value="" hidden>選択してください</option>
             <option value="新品・未使用">新品・未使用</option>
@@ -158,7 +160,7 @@ if(isset($_SESSION['seller_id'])){
     <hr>
     <button type="button" id="addSelectButton" onclick="addSelectBox()" style="display:none;">サイズを追加</button><br><br>
 
-    <input type="submit" name="register" id="register" class="register"  value="登録">
+    <input type="submit" name="register" id="register" class="register" onclick="hisButton()" value="登録">
 </form>
 
 <script>
@@ -623,4 +625,23 @@ form.addEventListener('submit', function(event) {
         //alert("キャンセルされました。");でもいい
     }
 });
+
+function hisButton(){
+    var productnameElement = document.getElementById('productname');
+    var productname = productnameElement.value
+
+    var qualityElement = document.getElementById('quality');
+    var quality = qualityElement.selectedIndex;
+    
+    if(productname === ""){
+        var his = document.getElementById('his');
+        his.style.display = 'block';
+        return false;
+    } else if(quality === ""){
+        var his = document.getElementById('his2');
+        his.style.display = 'block';
+        return false;
+
+    }
+}
 </script>
