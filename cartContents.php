@@ -442,18 +442,9 @@ if(!($user_id === "A")){
         echo '<div class="subtotalChild">';
         echo '小計 ('. $count. ' 個の商品) (税込)';
         echo '</div>';
-        echo "<b>￥". $commaPriceMax . "</b>";
-        echo "<form action='buyProducts.php' method='post'>";
-        echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
-        for($i = 0; $i < count($lastImg); $i++){
-            echo <<<END
-            <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
-            <input type="hidden" name="buyColorSize[]" value="$lastImg[$i]">
-            END;
-        }
+        echo "<div><b>￥". $commaPriceMax . "</b></div>";
         echo <<<END
-        <input type="submit" class="btnStyle" value="レジに進む">
-        </form>
+        <input type="submit" class="btnStyle" onclick="buttonClick()" value="レジに進む">
         END;
         echo '</div>';
     }else{
@@ -675,6 +666,10 @@ function deleteProducts(defdeleteI){
 
 function heartButton(){
     alert("お気に入り登録にはログインを完了させてください。");
+}
+
+function buttonClick(){
+    window.location.href = "user_top.php";
 }
 </script>
 </body>

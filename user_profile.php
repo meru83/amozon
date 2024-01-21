@@ -11,21 +11,103 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if(isset($_SESSION['user_id']) || $_SESSION['seller_id']){
+if(isset($_SESSION['user_id']) || isset($_SESSION['seller_id'])){
     $foo2 = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
     <form action="logout.php" method="post">
         <input type="submit" name="logout" class="log_out" value="ログアウト">
     </form>
     </div>
-    END;
-}else{
+END;
+} else {
     $foo2 = <<<END
     <div class="New_log">
         <a href="register.php"><div class="log_style">新規登録</div></a>
         <a href="login.php"><div class="log_style rightM">ログイン</div></a>
     </div>
-    END;
+END;
+}
+
+// ログイン中のユーザーの情報を取得
+if(isset($_SESSION['user_id'])){
+    $user = $_SESSION['user_id'];
+    $sql = "SELECT total_pay FROM pay WHERE user_id = '$user'";
+    $result = $conn->query($sql);
+
+    // クエリの実行にエラーがある場合
+    if (!$result) {
+        die("クエリの実行にエラーがあります: " . $conn->error);
+    }
+
+    // データが存在する場合、データを1行だけ取得して表示
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        // "total_pay" キーが存在するか確認してから表示
+        if (isset($row["total_pay"])) {
+            // チャージ情報をHTMLに表示
+            $zandaka =<<<END
+                <div class='sub-content-item'>
+                    <h2>残高<h2>
+                    <p>{$row["total_pay"]}</p>
+                </div>
+            </a>
+END;
+        } else {
+            //0円の時
+            $zandaka =<<<END
+            <a href='chargePay.php'>
+                <div class='sub-content-item'>
+                    <h2>残高<h2>
+                    <p>0</p>
+                </div>
+            </a>
+END;
+        }
+    } else {
+        // チャージ情報が存在しない場合
+        $zan =<<<END
+            <a href='chargePay.php'>
+                <div class='sub-content-item'>
+                    <h2>チャージする</h2>
+                </div>
+            </a>
+END;
+    }
+} 
+// ログイン中のユーザーIDを取得
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+    
+    // ユーザーの住所情報を取得
+    $sql = "SELECT * FROM address WHERE user_id = '$user_id'";
+    $result = $conn->query($sql);
+
+    // クエリの実行にエラーがある場合
+    if (!$result) {
+        die("クエリの実行にエラーがあります: " . $conn->error);
+    }
+
+    // 住所が登録されているか確認
+    if ($result->num_rows > 0) {
+        // 認証済みの場合
+        $nisyou =<<<END
+        <p>認証済み</p>
+        END;
+    } else {
+        // 未登録の場合
+        $jusyoNone =<<<END
+        <a href='address_insert.php'>
+                <div class='sub-content-item'>
+                    <h2>(未登録)</h2>
+                </div>
+            </a>
+        END;
+    }
+} else {
+ // ログインしていない場合
+ $addLogin =<<<END
+ <p>ログインしていません</p>
+ END;
 }
 ?>
 <!DOCTYPE html>
@@ -63,19 +145,65 @@ if(isset($_SESSION['user_id']) || $_SESSION['seller_id']){
     <div class="right-content">
         <div class="amozon_profile">
             <img src="img/cart_dake.svg" class="amozon_usericon">
-            <h1>ユーザー名</h1>
-            <p>こんにちは、私はユーザー名です。プロフィールの説明文がここに入ります。</p>
+            <?php
+             // ログイン中のユーザーIDを取得
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            $sql_user = "SELECT username FROM users WHERE user_id = '$user_id'";
+        $result_user = $conn->query($sql_user);
+
+        // クエリの実行にエラーがある場合
+        if (!$result_user) {
+            die("クエリの実行にエラーがあります: " . $conn->error);
+        }
+
+        // ユーザー名が取得できた場合は表示
+        if ($result_user->num_rows > 0) {
+            $row_user = $result_user->fetch_assoc();
+            echo "<h1>{$row_user['username']}</h1>";
+        }           
+        // データベース接続を閉じる
+            $conn->close();
+        } else {
+            // ログインしていない場合
+            echo "<p>ログインしていません</p>";
+        }
+        ?>
+        
+        <?php if(isset($nisyou )){
+                echo $nisyou;
+            }?>
             <div class="sub-content">
-                <a href="address_insert.php">
+                <?php if(isset($addLogin )){
+                    echo <<<END
+                    <a href="login.php">
                     <div class="sub-content-item">
-                        <h2>住所登録</h2>
-                        <p>ここにサブコンテンツ1の説明が入ります。</p>
+                        <h2>$addLogin</h2>
+                        <p>ログインまたは新規登録してください。</p>
                     </div>
-                </a>
+                    </a>
+                    END;
+                } else {
+                    echo <<<END
+                    <a href="address_insert.php">
+                    <div class="sub-content-item">
+                        <h2>住所変更</h2>
+                    END;
+                    if(isset($nisyou)){
+                        echo $nisyou ;
+                    }
+                    if(isset($jusyoNone)) {
+                        echo $jusyoNone;
+                    }
+                    echo <<<END
+                    </div>
+                    </a>
+                END;
+                }?>
+
                 <a href="chargePay.php">
                 <div class="sub-content-item">
                     <h2>チャージする</h2>
-                    <p>ここにサブコンテンツ2の説明が入ります。</p>
                 </div>
                 </a>
                 <div class="sub-content-item">
@@ -83,6 +211,9 @@ if(isset($_SESSION['user_id']) || $_SESSION['seller_id']){
                     <p>ここにサブコンテンツ3の説明が入ります。</p>
                 </div>
             </div>
+            <?php if(isset($zandaka)){
+                echo $zandaka;
+            } ?>
         </div>
     </div>
 </div>
