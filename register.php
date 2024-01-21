@@ -21,7 +21,8 @@
         $username = $_POST['username'];
         $phone = $_POST['number'];
         $email = $_POST['email'];
-
+        $phone = mb_convert_kana($phone, 'a', 'UTF-8');
+        $email = mb_convert_kana($email, 'a', 'UTF-8');
         // ユーザーIDの正規表現パターンを定義
         $user_id_pattern = '/^[a-z0-9\-_]+$/';
 
