@@ -72,3 +72,8 @@
 .seller_botton:active {
     background-color: #004280; /* クリック時の色変更 */
 }
+
+.existence {
+  color: red;
+  font-size: 10px;
+}
