@@ -60,7 +60,7 @@ if (!isset($_SESSION['user_id'])) {
         <p>チャージ先：readPay</p>
 
         <!-- チャージ確定ボタン -->
-        <button type="button" id="chargeButton" onclick="chargeButton()">チャージする</button>
+
     </section>
 
 <!-- チャージする銀行 -->
