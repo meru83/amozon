@@ -112,7 +112,11 @@
         <img src="img/Re.ReaD2blue.svg" class="register_brand">
         <h1 class="register_h1">新規登録</h1>
         <label for="user_id">ユーザーID</label>
-        <?= $user_existence ?>
+        <?php
+        if(isset($user_existence)){
+            echo $user_existence;
+        }
+        ?>
         <div id="his" style="display:none; color:red">必須</div>
         <input type="text" id="user_id" class="register_textbox" name="user_id" placeholder="re_read" required><br>
         
