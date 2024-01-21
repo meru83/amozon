@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-20 08:58:22
+-- 生成日時: 2024-01-21 07:38:42
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -40,8 +40,16 @@ CREATE TABLE `address` (
   `tyou` varchar(255) NOT NULL,
   `room_number` varchar(255) NOT NULL,
   `addressname` varchar(255) NOT NULL,
-  `default_status` tinyint(1) NOT NULL DEFAULT 0
+  `default_status` tinyint(1) NOT NULL DEFAULT 0,
+  `means` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `address`
+--
+
+INSERT INTO `address` (`address_id`, `user_id`, `seller_id`, `post_code`, `prefectures`, `city`, `city_kana`, `tyou`, `room_number`, `addressname`, `default_status`, `means`) VALUES
+(3, 'test_user', NULL, '５４６－００２１', '大阪府', '大阪市東住吉区照ケ丘矢田', 'ｵｵｻｶｼﾋｶﾞｼｽﾐﾖｼｸﾃﾙｶﾞｵｶﾔﾀ', '3-1-1', '', 'ニシハラ　リオン', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -81,9 +89,11 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`user_id`, `product_id`, `color_size_id`, `pieces`, `create_at`) VALUES
-('test_user', 14, 43, 1, '2024-01-18 04:13:17'),
+('test_user', 7, 18, 1, '2024-01-21 02:50:14'),
+('test_user', 14, 43, 3, '2024-01-18 04:13:17'),
 ('test_user', 145, 531, 1, '2024-01-18 04:12:18'),
-('test_user', 153, 562, 1, '2024-01-18 04:12:54');
+('test_user', 153, 562, 1, '2024-01-18 04:12:54'),
+('test_user', 163, 597, 1, '2024-01-21 02:50:38');
 
 -- --------------------------------------------------------
 
@@ -4149,6 +4159,46 @@ INSERT INTO `orders_detail` (`order_id`, `product_id`, `color_size_id`, `order_p
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `pay`
+--
+
+CREATE TABLE `pay` (
+  `user_id` varchar(255) NOT NULL,
+  `total_pay` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `pay`
+--
+
+INSERT INTO `pay` (`user_id`, `total_pay`) VALUES
+('test_user', 200000);
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `pay_history`
+--
+
+CREATE TABLE `pay_history` (
+  `pay_id` int(11) NOT NULL,
+  `user_id` varchar(255) NOT NULL,
+  `charge_pay` int(11) NOT NULL,
+  `bank` varchar(100) NOT NULL,
+  `create_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `pay_history`
+--
+
+INSERT INTO `pay_history` (`pay_id`, `user_id`, `charge_pay`, `bank`, `create_at`) VALUES
+(2, 'test_user', 100000, '西原bank', '2024-01-21 05:40:30'),
+(3, 'test_user', 100000, 'readBank', '2024-01-21 05:40:54');
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `products`
 --
 
@@ -4990,7 +5040,32 @@ INSERT INTO `search` (`search_id`, `searchText`, `create_at`) VALUES
 (28, 'メンズ', '2024-01-19 02:45:07'),
 (29, 'パンツ', '2024-01-19 02:57:58'),
 (30, 'あ', '2024-01-19 02:59:56'),
-(31, 'a', '2024-01-19 03:40:12');
+(31, 'a', '2024-01-19 03:40:12'),
+(32, '夏シーズンに最適な', '2024-01-21 02:34:57'),
+(33, '夏シーズンに最適な', '2024-01-21 02:35:07'),
+(34, '夏シーズンに最適な', '2024-01-21 02:35:08'),
+(35, '夏シーズンに最適な', '2024-01-21 02:35:08'),
+(36, '夏のシーズンに', '2024-01-21 02:35:27'),
+(37, 'ベーシックタンクトップ　新品', '2024-01-21 02:36:28'),
+(38, 'サンプル', '2024-01-21 02:36:48'),
+(39, 'サンプル', '2024-01-21 02:37:53'),
+(40, 'サンプル', '2024-01-21 02:37:56'),
+(41, 'テスト', '2024-01-21 02:39:49'),
+(42, 'メンズ', '2024-01-21 02:39:55'),
+(43, 'ベスト', '2024-01-21 02:40:37'),
+(44, 'ロングダウンコート', '2024-01-21 02:41:27'),
+(45, 'ベーシックタンクトップ', '2024-01-21 02:41:55'),
+(46, 'ベーシックタンクトップ', '2024-01-21 02:42:33'),
+(47, 'ベーシックタンクトップ', '2024-01-21 02:44:12'),
+(48, 'ロングダウンコート', '2024-01-21 02:44:13'),
+(49, 'ベスト', '2024-01-21 02:44:14'),
+(50, 'メンズ', '2024-01-21 02:44:16'),
+(51, 'テスト', '2024-01-21 02:44:21'),
+(52, 'メンズ', '2024-01-21 02:46:42'),
+(53, 'メンズ', '2024-01-21 02:47:24'),
+(54, 'メンズ', '2024-01-21 02:48:13'),
+(55, 'ロングコート', '2024-01-21 02:50:33'),
+(56, 'スカート', '2024-01-21 03:16:18');
 
 -- --------------------------------------------------------
 
@@ -5447,6 +5522,18 @@ ALTER TABLE `orders_detail`
   ADD KEY `color_size_id` (`color_size_id`);
 
 --
+-- テーブルのインデックス `pay`
+--
+ALTER TABLE `pay`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- テーブルのインデックス `pay_history`
+--
+ALTER TABLE `pay_history`
+  ADD PRIMARY KEY (`pay_id`);
+
+--
 -- テーブルのインデックス `products`
 --
 ALTER TABLE `products`
@@ -5497,7 +5584,7 @@ ALTER TABLE `users`
 -- テーブルの AUTO_INCREMENT `address`
 --
 ALTER TABLE `address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- テーブルの AUTO_INCREMENT `big_category`
@@ -5536,6 +5623,12 @@ ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=762;
 
 --
+-- テーブルの AUTO_INCREMENT `pay_history`
+--
+ALTER TABLE `pay_history`
+  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- テーブルの AUTO_INCREMENT `products`
 --
 ALTER TABLE `products`
@@ -5551,7 +5644,7 @@ ALTER TABLE `products_img`
 -- テーブルの AUTO_INCREMENT `search`
 --
 ALTER TABLE `search`
-  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `search_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- ダンプしたテーブルの制約
