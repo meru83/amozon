@@ -101,9 +101,6 @@ if(isset($_SESSION['user_id'])){
              </div>
          </a>";
  }
-
- // データベース接続を閉じる
- $conn->close();
 } else {
  // ログインしていない場合
  $addLogin =<<<END
@@ -146,9 +143,32 @@ if(isset($_SESSION['user_id'])){
     <div class="right-content">
         <div class="amozon_profile">
             <img src="img/cart_dake.svg" class="amozon_usericon">
-            <h1>ユーザー名</h1>
-            <p>こんにちは、私はユーザー名です。プロフィールの説明文がここに入ります。</p>
-            <?php if(isset($nisyou )){
+            <?php
+             // ログイン中のユーザーIDを取得
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            $sql_user = "SELECT username FROM users WHERE user_id = '$user_id'";
+        $result_user = $conn->query($sql_user);
+
+        // クエリの実行にエラーがある場合
+        if (!$result_user) {
+            die("クエリの実行にエラーがあります: " . $conn->error);
+        }
+
+        // ユーザー名が取得できた場合は表示
+        if ($result_user->num_rows > 0) {
+            $row_user = $result_user->fetch_assoc();
+            echo "<h1>{$row_user['username']}</h1>";
+        }           
+        // データベース接続を閉じる
+            $conn->close();
+        } else {
+            // ログインしていない場合
+            echo "<p>ログインしていません</p>";
+        }
+        ?>
+        
+        <?php if(isset($nisyou )){
                 echo $nisyou;
             }?>
             <div class="sub-content">
