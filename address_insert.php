@@ -146,6 +146,8 @@ form.addEventListener('keydown', (e) => {
             addressname.focus();
         }else if(act === 'addressname'){
             add.focus();
+        }else if(act === 'add'){
+            input.focus();
         }
         return false;
     } 

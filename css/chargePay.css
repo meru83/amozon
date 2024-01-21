@@ -50,14 +50,18 @@ body {
     margin:0 5px;
 }
 
+.charginput:focus {
+    outline-color: #005aae;
+}
+
 .chargebox {
     width: 660px;
     background-color: #fff;
+    border-radius: 8px;
     padding: 24px;
     margin: 0 auto 20px; /* 中央揃え */
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
 }
 
 .chargemoney{
@@ -91,6 +95,7 @@ section {
     margin: 98px auto 20px auto;
     padding: 20px;
     background-color: #fff;
+    border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     display: inline-block; /* 子要素を中央寄せに */
