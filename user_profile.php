@@ -165,7 +165,7 @@ if(isset($_SESSION['user_id'])){
                     echo <<<END
                     <a href="address_insert.php">
                     <div class="sub-content-item">
-                        <h2>住所登録</h2>
+                        <h2>住所変更</h2>
                         <p>ここにサブコンテンツ1の説明が入ります。</p>
                     </div>
                     </a>
