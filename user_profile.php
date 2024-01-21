@@ -77,6 +77,38 @@ END;
     // ログインしていない場合
     $zandaka = "<p>ログインしていません</p>";
 }
+// ログイン中のユーザーIDを取得
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+    
+ // ユーザーの住所情報を取得
+ $sql = "SELECT * FROM address WHERE user_id = '$user_id'";
+ $result = $conn->query($sql);
+
+ // クエリの実行にエラーがある場合
+ if (!$result) {
+     die("クエリの実行にエラーがあります: " . $conn->error);
+ }
+
+ // 住所が登録されているか確認
+ if ($result->num_rows > 0) {
+     // 認証済みの場合
+     echo "<p>認証済み</p>";
+ } else {
+     // 未登録の場合
+     echo "<a href='address_insert.php'>
+             <div class='sub-content-item'>
+                 <h2>住所登録</h2>
+             </div>
+         </a>";
+ }
+
+ // データベース接続を閉じる
+ $conn->close();
+} else {
+ // ログインしていない場合
+ echo "<p>ログインしていません</p>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
