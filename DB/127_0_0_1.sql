@@ -5493,6 +5493,12 @@ ALTER TABLE `users`
 --
 
 --
+-- テーブルの AUTO_INCREMENT `address`
+--
+ALTER TABLE `address`
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- テーブルの AUTO_INCREMENT `big_category`
 --
 ALTER TABLE `big_category`
