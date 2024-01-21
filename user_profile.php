@@ -98,7 +98,7 @@ if(isset($_SESSION['user_id'])){
         $jusyoNone =<<<END
         <a href='address_insert.php'>
                 <div class='sub-content-item'>
-                    <h2>住所登録を完了させてください</h2>
+                    <h2>(未登録)</h2>
                 </div>
             </a>
         END;
