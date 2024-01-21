@@ -170,7 +170,7 @@ form.addEventListener('keydown',(e) => {
         }else if(act === 'rePassword'){
             username.focus();
         }else if(act === 'username'){
-            submit.focus();
+            form.submit();
         }
         return false;
     }
