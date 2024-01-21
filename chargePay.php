@@ -39,7 +39,8 @@ if (!isset($_SESSION['user_id'])) {
         <!-- 金額の入力 -->
         <label for="chargePrice">
             金額
-            <input name="chargePrice" id="chargePrice" type="text" placeholder="0">円
+            <input name="chargePrice" class="charginput" id="chargePrice" type="text" placeholder="0">
+            円
             <div id="his">必須</div>
         </label>
         <br>

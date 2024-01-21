@@ -46,6 +46,10 @@ body {
     background-color: white;
 }
 
+.charginput{
+    margin:0 5px;
+}
+
 .chargebox {
     width: 500px;
     background-color: #fff;
