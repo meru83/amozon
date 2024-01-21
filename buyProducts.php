@@ -18,7 +18,7 @@ if(isset($_SESSION['user_id'])){
     exit();
 }
 
-//ヘッダーは注文内容の確認
+//ヘッダーは「注文内容の確認」
 
 if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice'])){
     $addressSql = "SELECT * FROM address WHERE user_id = ? && default_status = 1";
@@ -56,6 +56,14 @@ if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POS
         echo "住所の登録を済ませてください。";
         echo "<a href='address_insert.php'>住所登録へ</a>";
         exit();
+    }
+    for($i = 0; $i < count($_POST['buyProductId']); $i++){
+        $product_id = $_POST['buyProductId'][$i];
+        $color_size_id = $_POST['buyColorSize'][$i];
+        // echo $product_id;
+        // echo $color_size_id;
+        echo "<input type='hidden' name='buyProductId[]' value='$product_id'>";
+        echo "<input type='hidden' name='buyColorSize[]' value='$color_size_id'>";
     }
 }
 ?>
