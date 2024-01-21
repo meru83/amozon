@@ -36,11 +36,11 @@
 
         //falseの場合にエラーメッセージ表示
         if (!$is_valid_password && !$is_valid_seller_id) {
-            echo "<p>パスワードは大文字、小文字、数字をすべて含む8文字以上である必要があり、ユーザーIDには半角英数字、ハイフン、アンダーバーが利用できます。</p>";
+            echo "<p class='center'>パスワードは大文字、小文字、数字をすべて含む8文字以上である必要があり、ユーザーIDには半角英数字、ハイフン、アンダーバーが利用できます。</p>";
         } elseif (!$is_valid_password) {
-            echo "<p>パスワードは大文字、小文字、数字をすべて含む8文字以上である必要があります。</p>";
+            echo "<p class='center'>パスワードは大文字、小文字、数字をすべて含む8文字以上である必要があります。</p>";
         } elseif (!$is_valid_seller_id) {
-            echo "<p>ユーザーIDには半角英数字、ハイフン、アンダーバーが利用できます。</p>";
+            echo "<p class='center'>ユーザーIDには半角英数字、ハイフン、アンダーバーが利用できます。</p>";
         } else {
             // ユーザーIDの重複をチェック
             $check_sql = "SELECT seller_id FROM seller WHERE seller_id = ?
@@ -52,9 +52,7 @@
             $check_result = $check_stmt->get_result();
 
             if ($check_result && $check_result->num_rows > 0) {
-                $user_existence =<<<END
-                <div class="existence">ユーザーIDがすでに存在します。</div>
-                END;
+                echo '<div class="existence">ユーザーIDがすでに存在します。</div>';
             } else {
                 // パスワードをハッシュ化
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -90,22 +88,27 @@
         <img src="../img/Re.ReaD2blue.svg" class="seller_brand">
         <h1 class="seller_h1">新規登録</h1>
         <label for="seller_id">販売専用アカウント ID</label>
+        <div id="his" style="display:none; color:red">必須</div>
         <input type="text" id="seller_id" class="seller_textbox" placeholder="re_bank" name="seller_id" required><br>
         
         <label for="number">電話番号</label><br>
+        <div id="his1" style="display:none; color:red">必須</div>
         <input type="text" name="number" id="number" class="seller_textbox" class="address_textbox" placeholder="ハイフンなし" required><br>
 
         <label for="email">メールアドレス</label><br>
+        <div id="his2" style="display:none; color:red">必須</div>
         <input type="text" name="email" id="email" class="seller_textbox" class="address_textbox" placeholder="read@gmail.com" required><br>
 
         <label for="password">パスワード</label>
+        <div id="his3" style="display:none; color:red">必須</div>
         <input type="password" id="password" class="seller_textbox" placeholder="8桁以上" name="password"  required><br>
         <input type="password" id="rePassword" class="seller_textbox" name="rePassword" placeholder="パスワード再確認" required><br>
 
         <label for="sellerName">アカウント名</label>
+        <div id="his4" style="display:none; color:red">必須</div>
         <input type="text" id="sellerName" class="seller_textbox" placeholder="リ・リード" name="sellerName" required><br>
 
-        <input type="submit" id="submit" name="register" class="seller_botton" value="新規登録">
+        <input type="submit" id="submit" name="register" class="seller_botton" onclick="hisButton()" value="新規登録">
                 <div class="seller_text">
                     <a href="seller_log.php">ログイン</a>
                 </div>
@@ -162,6 +165,45 @@ function is_empty(){
         return false;
     }else{
         return true;
+    }
+}
+
+function hisButton(){
+    var seller_idElement = document.getElementById('seller_id');
+    var seller_id = seller_idElement.value
+
+    var numberElement = document.getElementById('number');
+    var number = numberElement.value
+
+    var emailElement = document.getElementById('email');
+    var email = emailElement.value
+
+    var passwordElement = document.getElementById('password');
+    var password = passwordElement.value
+
+    var sellerNameElement = document.getElementById('sellerName');
+    var sellerName = sellerNameElement.value
+    
+    if(seller_id === ""){
+        var his = document.getElementById('his');
+        his.style.display = 'block';
+        return false;
+    } else if(number === ""){
+        var his = document.getElementById('his1');
+        his.style.display = 'block';
+        return false;
+    } else if(email === ""){
+        var his = document.getElementById('his2');
+        his.style.display = 'block';
+        return false;
+    } else if(password === ""){
+        var his = document.getElementById('his3');
+        his.style.display = 'block';
+        return false;
+    } else if(sellerName === ""){
+        var his = document.getElementById('his4');
+        his.style.display = 'block';
+        return false;
     }
 }
 </script>

@@ -1,13 +1,3 @@
-.seller_body {
-    -webkit-tap-highlight-color: transparent;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
   .seller_h1{
     padding: 0 0 0 10px;
     font-size: 15px;
@@ -30,6 +20,8 @@
     border: 2px solid #DBDBDB; 
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    margin-top: 200px;
     padding: 20px;
     width: 215px;
   }
@@ -76,4 +68,9 @@
 .existence {
   color: red;
   font-size: 10px;
+}
+
+.center {
+  text-align:center;
+  margin: 0;
 }

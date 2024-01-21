@@ -24,6 +24,26 @@
     z-index: 100;
 }
 
+.log_out {
+    padding: 10px;
+    background-color: #005aae;
+    border: none;
+    border-radius: 20px;
+    margin-right: 100px;
+    color: white;
+    font-size: 16px;
+}
+
+.log_out:hover {
+    background-color: #004488;
+}
+
+.New_log {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
 
 .logo_moji{
     height: 40px;
@@ -177,7 +197,7 @@ a, a:hover, a:active, a:visited {
 }
 
 .amozon_profile {
-    max-width: max-content;
+    max-width: 70%;
     margin: auto;
     padding: 20px;
     background-color: #fff;
@@ -195,6 +215,7 @@ a, a:hover, a:active, a:visited {
 .sub-content-item {
     flex: 0 0 calc(33.333% - 10px);
     background-color: #eee;
+    margin: 5px;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
@@ -227,6 +248,10 @@ a, a:hover, a:active, a:visited {
     }
 }
 
+.back {
+    width:100%;
+    height: 100%;
+}
 
 .backBtn {
     width:48px;

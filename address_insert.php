@@ -68,10 +68,12 @@ if(isset($_POST['add'])){
 <body class="address_body">
 <form method="post" id="form" class="address_form">
     <label for="post_code" class="address_label">郵便番号：</label><br>
+    <div id="his" style="display:none; color:red">必須</div>
     <input type="text" name="post_code" id="input" class="address_textbox" maxlength=8 placeholder="例)1234567（ハイフンなし）" required>
     <button id="search" class="address_botton1" type="button">住所検索</button><br>
     <p id="error"></p>
     <label for="prefectures">都道府県：</label><br>
+    <div id="his2" style="display:none; color:red">必須</div>
     <select name="prefectures" id="address1" class="address_select" required>
         <option hidden>選択してください</option>
     <?php 
@@ -82,9 +84,11 @@ if(isset($_POST['add'])){
     ?>
     </select><br>
     <label for="city">住所：</label><br>
+    <div id="his3" style="display:none; color:red">必須</div>
     <input type="text" name="city" id="address2" class="address_textbox" placeholder="大阪市北区梅田" value="" required><br>
     <input type="text" name="city_kana" id="kana2" class="address_textbox" placeholder="オオサカシキタクウメダ" value="" required><br>
     <label for="street">丁・番地：</label><br>
+    <div id="his4" style="display:none; color:red">必須</div>
     <input type="text" name="street" id="tyou" class="address_textbox" placeholder="3-1-1" required><br>
     <label for="room_number">建物名・部屋番号：</label><br>
     <input type="text" name="room_number" id="room_number" class="address_textbox"><br>
@@ -94,18 +98,20 @@ if(isset($_POST['add'])){
     if(isset($user_id)){
         echo <<<HTML
         <label for="addressname">氏名：</label><br>
+        <div id="his5" style="display:none; color:red">必須</div>
         <input type="text" name="addressname" id="addressname" class="address_textbox" placeholder="例）山田 太郎" required><br>
         HTML;
     }else if(isset($seller_id)){
         echo <<<HTML
         <label for="addressname">会社名：</label><br>
+        <div id="his5" style="display:none; color:red">必須</div>
         <input type="text" name="addressname" id="addressname" class="address_textbox" placeholder="例）Re.Read 株式会社" required><br>
         HTML;
     }
     //氏名のところをsellerなら会社名などに変える
     ?>
     <div class="addres_flex">
-    <input class="addres_botton2" type="submit" id="add" name="add" value="登録">
+    <input class="addres_botton2" type="submit" id="add" name="add" onclick="hisButton()" value="登録">
     <?php
     if(isset($user_id)){
         echo '<input type="submit" value="スキップ" class="address_skp" onclick="buttonClick()">';
@@ -207,6 +213,47 @@ input.addEventListener('keydown', (e) => {
         callPostCode();
     }
 });
+
+function hisButton(){
+    var inputElement = document.getElementById('input');
+    var input = inputElement.value
+
+    var address1Element = document.getElementById('address1');
+    var address1 = address1Element.selectedIndex;
+
+    var address2Element = document.getElementById('address2');
+    var address2 = address2Element.value
+
+    var tyouElement = document.getElementById('tyou');
+    var tyou = tyouElement.value
+
+    var addressnameElement = document.getElementById('addressname');
+    var addressname = addressnameElement.value
+    
+    if(input === ""){
+        var his = document.getElementById('his');
+        his.style.display = 'block';
+        return false;
+    } else if(address1 === ""){
+        var his = document.getElementById('his2');
+        his.style.display = 'block';
+        return false;
+    } else if(address2 === ""){
+        var his = document.getElementById('his3');
+        his.style.display = 'block';
+        return false;
+    } else if(tyou === ""){
+        var his = document.getElementById('his4');
+        his.style.display = 'block';
+        return false;
+    } else if(addressname=== ""){
+        var his = document.getElementById('his5');
+        his.style.display = 'block';
+        return false;
+    }
+}
 </script>
+
+
 </body>
 </html>
