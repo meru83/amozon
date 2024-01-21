@@ -20,7 +20,7 @@ if(isset($_SESSION['user_id'])){
 
 //ヘッダーは「注文内容の確認」
 
-if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice'])){
+if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice']) && isset($_POST['arrayPieces']) && isset($_POST['arrayPrice'])){
     $addressSql = "SELECT * FROM address WHERE user_id = ? && default_status = 1";
     $addressStmt = $conn->prepare($addressSql);
     $addressStmt->bind_param("s", $user_id);
@@ -61,14 +61,22 @@ if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POS
     for($i = 0; $i < count($_POST['buyProductId']); $i++){
         $product_id = $_POST['buyProductId'][$i];
         $color_size_id = $_POST['buyColorSize'][$i];
+        $pieces = $_POST['arrayPieces'][$i];
+        $price = $_POST['arrayPrice'][$i];
         // echo $product_id;
         // echo $color_size_id;
+        // echo $pieces;
         echo <<<END
+        <input type="hidden" name="arrayPieces[]" value="$pieces">
+        <input type="hidden" name="arrayPrice[]" value="$price">
         <input type="hidden" name="buyProductId[]" value="$product_id">
         <input type="hidden" name="buyColorSize[]" value="$color_size_id">
         END;
     }
-    echo "</form>";
+    echo <<<END
+    <input type="hidden" name="maxPrice" value="$maxPrice">
+    </form>
+    END;;
 }
 ?>
 <script>

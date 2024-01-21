@@ -94,6 +94,8 @@ $countMax = 0;
 $htmlText = "";
 $lastImg = array();
 $arrayProductId = array();
+$arrayPieces = array();
+$arrayPrice = array();
 $priceMax = 0;
 //セッションで管理されている場合
 
@@ -126,8 +128,7 @@ if(!($user_id === "A")){
                 $cartPieces = $row['cartPieces'];
                 $maxPieces = $row['maxPieces'];
                 $price  = $row['price'];
-                $priceMax += $price;
-                $commaPriceMax = number_format($priceMax);
+                $priceMax += $price * $cartPieces;
                 $commaPrice = number_format($price);
                 $productname = $row['productname'];
                 $quality = $row['quality'];
@@ -175,6 +176,8 @@ if(!($user_id === "A")){
 
                     $lastImg[] = $color_size_id;
                     $arrayProductId[] = $product_id;
+                    $arrayPieces[] = $cartPieces;
+                    $arrayPrice[] = $price;
                     $htmlText = <<<END
                     <br>
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
@@ -265,7 +268,7 @@ if(!($user_id === "A")){
         echo '</div>';
         $htmlText = "";
     }
-
+    $commaPriceMax = number_format($priceMax);
     if($count !== 0) {
         echo $count . "件";
         echo '<div class="subtotal">';
@@ -274,9 +277,11 @@ if(!($user_id === "A")){
         echo '</div>';
         echo "<b>￥". $commaPriceMax . "</b>";
         echo "<form action='buyProducts.php' method='post'>";
-        echo "<input type='hidden' name='maxPrice' value='$commaPriceMax'>";
+        echo "<input type='hidden' name='maxPrice' value='$priceMax'>";
         for($i = 0; $i < count($lastImg); $i++){
             echo <<<END
+            <input type="hidden" name="arrayPieces[]" value="$arrayPieces[$i]">
+            <input type="hidden" name="arrayPrice[]" value="$arrayPrice[$i]">
             <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
             <input type="hidden" name="buyColorSize[]" value="$lastImg[$i]">
             END;
@@ -324,8 +329,7 @@ if(!($user_id === "A")){
                 $productname = $row['productname'];
                 $category_name = !is_null($row['category_name'])?$row['category_name']:"";
                 $price  = $row['price'];
-                $priceMax += $price;
-                $commaPriceMax = number_format($priceMax);
+                $priceMax += $price * $pieces;
                 $commaPrice = number_format($price);
                 $color_size_id = $row['color_size_id'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
@@ -431,7 +435,7 @@ if(!($user_id === "A")){
             $_SESSION['cart']['pieces'][$i] = null;
         }
     }
-
+    $commaPriceMax = number_format($priceMax);
     if($count !== 0) {
         echo $count . "件";
         echo '<div class="subtotal">';
