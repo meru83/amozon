@@ -52,7 +52,9 @@
             $check_result = $check_stmt->get_result();
 
             if ($check_result && $check_result->num_rows > 0) {
-                echo "<p>ユーザーIDがすでに存在します。</p>";
+                $user_existence =<<<END
+                <div class="existence">ユーザーIDがすでに存在します。</div>
+                END;
             } else {
                 // パスワードをハッシュ化
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -117,6 +119,8 @@
 <script>
 const form = document.getElementById('form');
 const seller_id = document.getElementById('seller_id');
+const number = document.getElementById('number');
+const email = document.getElementById('email');
 const password = document.getElementById('password');
 const rePassword = document.getElementById('rePassword');
 const sellerName = document.getElementById('sellerName');
@@ -137,13 +141,17 @@ form.addEventListener('keydown',(e) => {
         e.preventDefault();
         let act = document.activeElement.id;
         if(act === 'seller_id'){
+            number.focus();
+        }else if(act === 'number'){
+            email.focus();
+        }else if(act === 'email'){
             password.focus();
         }else if(act === 'password'){
             rePassword.focus();
         }else if(act === 'rePassword'){
             sellerName.focus();
         }else if(act === 'sellerName'){
-            submit.focus();
+            form.submit();
         }
         return false;
     }
