@@ -1,5 +1,5 @@
 <?php
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) || $_SESSION['seller_id']){
     $foo2 = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
     <form action="logout.php" method="post">
