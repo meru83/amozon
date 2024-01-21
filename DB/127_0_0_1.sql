@@ -26,6 +26,26 @@ USE `complete`;
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `address`
+--
+
+CREATE TABLE `address` (
+  `address_id` int(11) NOT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  `seller_id` varchar(255) DEFAULT NULL,
+  `post_code` varchar(10) NOT NULL,
+  `prefectures` varchar(5) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `city_kana` varchar(255) NOT NULL,
+  `tyou` varchar(255) NOT NULL,
+  `room_number` varchar(255) NOT NULL,
+  `addressname` varchar(255) NOT NULL,
+  `default_status` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `big_category`
 --
 
@@ -4236,7 +4256,6 @@ INSERT INTO `products` (`product_id`, `productname`, `view`, `create_at`, `selle
 (85, 'シンプルプレーンTシャツ', 'シンプルで着回しやすい基本のTシャツ。', '2023-11-23 15:41:53', 'test_bank', 2, 20, 161, '新品・未使用'),
 (86, 'グラフィックプリントカジュアルTシャツ', 'ユニークなグラフィックプリントが目を引く。', '2023-11-23 15:43:05', 'test_bank', 2, 20, 161, '新品・未使用'),
 (87, 'ストライプ柄半袖カットソー', 'カジュアルで爽やかなストライプ柄。', '2023-11-23 15:43:59', 'test_bank', 2, 20, 161, '新品・未使用'),
-(88, 'ベーシックタンクトップ', '夏のシーズンに最適なシンプルなタンクトップ。', '2023-11-23 15:47:00', 'test_bank', 0, 0, 0, '新品・未使用'),
 (89, 'ヴィンテージロゴ袖なしTシャツ', 'ヴィンテージ風のロゴが印象的な袖なしTシャツ。', '2023-11-23 15:47:56', 'test_bank', 2, 20, 161, '新品・未使用'),
 (90, 'レースアップサイドカットソー', 'サイドにレースアップが施された個性的なデザイン。', '2023-11-23 15:49:01', 'test_bank', 2, 20, 161, '新品・未使用'),
 (91, 'ボーダーパターンハイネックTシャツ', 'ハイネックでおしゃれな印象のボーダーパターン。\r\n\r\n', '2023-11-23 15:50:29', 'test_bank', 2, 20, 161, '新品・未使用'),
@@ -4984,18 +5003,17 @@ CREATE TABLE `seller` (
   `pass` varchar(255) NOT NULL,
   `seller_status` tinyint(1) NOT NULL DEFAULT 1,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `sellerPhone` varchar(16) NOT NULL
+  `sellerPhone` varchar(16) NOT NULL,
+  `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `seller`
 --
 
-INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`, `sellerPhone`) VALUES
-('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52', '0612345670'),
-('mura_ta', 'らいる', '$2y$10$shDQDBZtM1UG7Bm1y6GwYucTGwdk6MeTULu8h/1YlrJ6mZ2sPWKqy', 1, '2024-01-19 13:50:11', '00000000000'),
-('testRegistration', 'リ', '$2y$10$0IRE1XEKvwFsGtIq8CcRX.9/fV7C8d9mSCpH7d2V/7f.PQBTEcmzi', 1, '2024-01-09 02:12:25', '0624681357'),
-('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47', '0612345679');
+INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`, `sellerPhone`, `email`) VALUES
+('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52', '0612345670', ''),
+('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47', '0612345679', '2312067@i-seifu.jp');
 
 -- --------------------------------------------------------
 
