@@ -27,6 +27,45 @@ if(isset($_SESSION['user_id']) || $_SESSION['seller_id']){
     </div>
     END;
 }
+// ログイン中のユーザーの情報を取得（例としてユーザーIDを仮定）
+if(isset($_SESSION['user_id'])){
+    $user = $_SESSION['user_id'];
+    $sql = "SELECT total_pay FROM pay WHERE user_id = '$user'";
+    $result = $conn->query($sql);
+
+    // クエリの実行にエラーがある場合
+    if (!$result) {
+        die("クエリの実行にエラーがあります: " . $conn->error);
+    }
+
+    // データが存在する場合、データを1行だけ取得して表示
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        // "total_pay" キーが存在するか確認してから表示
+        if (isset($row["total_pay"])) {
+            // チャージ情報をHTMLに表示
+            echo "<a href='chargePay.php'>
+                    <div class='sub-content-item'>
+                        <h2>残高<h2>
+                        <p>{$row["total_pay"]}</p>
+                    </div>
+                </a>";
+        } else {
+            echo "<p>total_payが見つかりません</p>";
+        }
+    } else {
+        // チャージ情報が存在しない場合
+        echo "<a href='chargePay.php'>
+                <div class='sub-content-item'>
+                    <h2>チャージする</h2>
+                </div>
+            </a>";
+    }
+} else {
+    // ログインしていない場合
+    echo "<p>ログインしていません</p>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -75,7 +114,7 @@ if(isset($_SESSION['user_id']) || $_SESSION['seller_id']){
                 <a href="chargePay.php">
                 <div class="sub-content-item">
                     <h2>チャージする</h2>
-                    <p>ここにサブコンテンツ2の説明が入ります。</p>
+                    <p>a<p>
                 </div>
                 </a>
                 <div class="sub-content-item">
