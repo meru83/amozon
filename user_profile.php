@@ -65,7 +65,7 @@ END;
         }
     } else {
         // チャージ情報が存在しない場合
-        $zandaka = <<<END
+        $zan =<<<END
             <a href='chargePay.php'>
                 <div class='sub-content-item'>
                     <h2>チャージする</h2>
@@ -73,10 +73,7 @@ END;
             </a>
 END;
     }
-} else {
-    // ログインしていない場合
-    $zandaka = "<p>ログインしていません</p>";
-}
+} 
 // ログイン中のユーザーIDを取得
 if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
@@ -93,7 +90,9 @@ if(isset($_SESSION['user_id'])){
  // 住所が登録されているか確認
  if ($result->num_rows > 0) {
      // 認証済みの場合
-     echo "<p>認証済み</p>";
+     $nisyou =<<<END
+     <p>認証済み</p>
+     END;
  } else {
      // 未登録の場合
      echo "<a href='address_insert.php'>
@@ -107,7 +106,9 @@ if(isset($_SESSION['user_id'])){
  $conn->close();
 } else {
  // ログインしていない場合
- echo "<p>ログインしていません</p>";
+ $addLogin =<<<END
+ <p>ログインしていません</p>
+ END;
 }
 ?>
 <!DOCTYPE html>
@@ -147,13 +148,30 @@ if(isset($_SESSION['user_id'])){
             <img src="img/cart_dake.svg" class="amozon_usericon">
             <h1>ユーザー名</h1>
             <p>こんにちは、私はユーザー名です。プロフィールの説明文がここに入ります。</p>
+            <?php if(isset($nisyou )){
+                echo $nisyou;
+            }?>
             <div class="sub-content">
-                <a href="address_insert.php">
+                <?php if(isset($addLogin )){
+                    echo <<<END
+                    <a href="login.php">
+                    <div class="sub-content-item">
+                        <h2>$addLogin</h2>
+                        <p>ログインまたは新規登録してください。</p>
+                    </div>
+                    </a>
+                    END;
+                } else {
+                    echo <<<END
+                    <a href="address_insert.php">
                     <div class="sub-content-item">
                         <h2>住所登録</h2>
                         <p>ここにサブコンテンツ1の説明が入ります。</p>
                     </div>
-                </a>
+                    </a>
+                END;
+                }?>
+
                 <a href="chargePay.php">
                 <div class="sub-content-item">
                     <h2>チャージする</h2>
@@ -164,7 +182,9 @@ if(isset($_SESSION['user_id'])){
                     <p>ここにサブコンテンツ3の説明が入ります。</p>
                 </div>
             </div>
-            <?= $zandaka ?>
+            <?php if(isset($zandaka)){
+                echo $zandaka;
+            } ?>
         </div>
     </div>
 </div>
