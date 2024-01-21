@@ -44,14 +44,24 @@ if(isset($_SESSION['user_id'])){
         // "total_pay" キーが存在するか確認してから表示
         if (isset($row["total_pay"])) {
             // チャージ情報をHTMLに表示
-            echo "<a href='chargePay.php'>
-                    <div class='sub-content-item'>
-                        <h2>残高<h2>
-                        <p>{$row["total_pay"]}</p>
-                    </div>
-                </a>";
+            $zandaka =<<<END
+            <a href='chargePay.php'>
+                <div class='sub-content-item'>
+                    <h2>残高<h2>
+                    <p>{$row["total_pay"]}</p>
+                </div>
+            </a>
+            END;
         } else {
-            echo "<p>total_payが見つかりません</p>";
+            //0円の時
+            $zandaka =<<<END
+            <a href='chargePay.php'>
+                <div class='sub-content-item'>
+                    <h2>残高<h2>
+                    <p>0</p>
+                </div>
+            </a>
+            END;
         }
     } else {
         // チャージ情報が存在しない場合
@@ -122,6 +132,7 @@ if(isset($_SESSION['user_id'])){
                     <p>ここにサブコンテンツ3の説明が入ります。</p>
                 </div>
             </div>
+            <?= $zandaka ?>
         </div>
     </div>
 </div>
