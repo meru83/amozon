@@ -5557,6 +5557,13 @@ ALTER TABLE `search`
 --
 
 --
+-- テーブルの制約 `address`
+--
+ALTER TABLE `address`
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`seller_id`);
+
+--
 -- テーブルの制約 `cart`
 --
 ALTER TABLE `cart`
