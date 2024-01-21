@@ -23,3 +23,35 @@
     justify-content: space-between;
     z-index: 100;
 }
+
+.ALL {
+    padding-top: 100px;
+}
+
+.box {
+    margin: 0 auto;
+    width: 70%;
+    border: 2px solid #DBDBDB;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+p {
+    margin-left: 10px;
+}
+
+.BTN {
+    width: 90%;
+    margin: 0 5% 20px 5%;
+    padding: 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #005aae;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.BTN:hover {
+    background-color:#004280;
+}
