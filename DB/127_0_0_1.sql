@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-20 06:29:08
--- サーバのバージョン： 10.4.32-MariaDB
--- PHP のバージョン: 8.2.12
+-- 生成日時: 2024-01-20 08:58:22
+-- サーバのバージョン： 10.4.28-MariaDB
+-- PHP のバージョン: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,26 +22,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `complete` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `complete`;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `address`
---
-
-CREATE TABLE `address` (
-  `address_id` int(11) NOT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
-  `seller_id` varchar(255) DEFAULT NULL,
-  `post_code` varchar(10) NOT NULL,
-  `prefectures` varchar(5) NOT NULL,
-  `city` varchar(255) NOT NULL,
-  `city_kana` varchar(255) NOT NULL,
-  `tyou` varchar(255) NOT NULL,
-  `room_number` varchar(255) NOT NULL,
-  `addressname` varchar(255) NOT NULL,
-  `default_status` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -4256,7 +4236,7 @@ INSERT INTO `products` (`product_id`, `productname`, `view`, `create_at`, `selle
 (85, 'シンプルプレーンTシャツ', 'シンプルで着回しやすい基本のTシャツ。', '2023-11-23 15:41:53', 'test_bank', 2, 20, 161, '新品・未使用'),
 (86, 'グラフィックプリントカジュアルTシャツ', 'ユニークなグラフィックプリントが目を引く。', '2023-11-23 15:43:05', 'test_bank', 2, 20, 161, '新品・未使用'),
 (87, 'ストライプ柄半袖カットソー', 'カジュアルで爽やかなストライプ柄。', '2023-11-23 15:43:59', 'test_bank', 2, 20, 161, '新品・未使用'),
-(88, 'ベーシックタンクトップ', '夏のシーズンに最適なシンプルなタンクトップ。', '2023-11-23 15:47:00', 'test_bank', 2, 20, 161, '新品・未使用'),
+(88, 'ベーシックタンクトップ', '夏のシーズンに最適なシンプルなタンクトップ。', '2023-11-23 15:47:00', 'test_bank', 0, 0, 0, '新品・未使用'),
 (89, 'ヴィンテージロゴ袖なしTシャツ', 'ヴィンテージ風のロゴが印象的な袖なしTシャツ。', '2023-11-23 15:47:56', 'test_bank', 2, 20, 161, '新品・未使用'),
 (90, 'レースアップサイドカットソー', 'サイドにレースアップが施された個性的なデザイン。', '2023-11-23 15:49:01', 'test_bank', 2, 20, 161, '新品・未使用'),
 (91, 'ボーダーパターンハイネックTシャツ', 'ハイネックでおしゃれな印象のボーダーパターン。\r\n\r\n', '2023-11-23 15:50:29', 'test_bank', 2, 20, 161, '新品・未使用'),
@@ -4904,7 +4884,44 @@ INSERT INTO `products_img` (`img_id`, `color_size_id`, `img_url`) VALUES
 (689, 277, 'evelina-friman-XyKX2wJ1jkI-unsplash277.jpg'),
 (690, 277, 'mahdi-bafande-LXlnrIwLl4Y-unsplash277.jpg'),
 (691, 274, 'evelina-friman-XyKX2wJ1jkI-unsplash274.jpg'),
-(692, 274, 'mahdi-bafande-LXlnrIwLl4Y-unsplash274.jpg');
+(692, 274, 'mahdi-bafande-LXlnrIwLl4Y-unsplash274.jpg'),
+(693, 328, 'ian-dooley-kkj9iKxsdhY-unsplash328.jpg'),
+(694, 328, 'meysam-jarahkar-NMYG69BG_Jg-unsplash328.jpg'),
+(695, 324, 'ian-dooley-kkj9iKxsdhY-unsplash324.jpg'),
+(696, 324, 'meysam-jarahkar-NMYG69BG_Jg-unsplash324.jpg'),
+(697, 322, 'ian-dooley-kkj9iKxsdhY-unsplash322.jpg'),
+(698, 322, 'man-8223328_1280322.jpg'),
+(699, 326, 'ian-dooley-kkj9iKxsdhY-unsplash326.jpg'),
+(700, 326, 'meysam-jarahkar-NMYG69BG_Jg-unsplash326.jpg'),
+(701, 327, 'mediamodifier-fTDWpCxLA0k-unsplash327.jpg'),
+(702, 327, 'sahil-moosa-s27B05TjXxw-unsplash327.jpg'),
+(703, 327, 't-shirt-1278404_1280327.jpg'),
+(704, 323, 'mediamodifier-fTDWpCxLA0k-unsplash323.jpg'),
+(705, 323, 'sahil-moosa-s27B05TjXxw-unsplash323.jpg'),
+(706, 321, 'mediamodifier-fTDWpCxLA0k-unsplash321.jpg'),
+(707, 321, 'sahil-moosa-s27B05TjXxw-unsplash321.jpg'),
+(708, 325, 'mediamodifier-fTDWpCxLA0k-unsplash325.jpg'),
+(709, 325, 'sahil-moosa-s27B05TjXxw-unsplash325.jpg'),
+(710, 332, 'jusdevoyage-nvZ4NubOIZE-unsplash332.jpg'),
+(711, 332, 'kevin-gil-musngi-n42oEca5WXI-unsplash332.jpg'),
+(712, 330, 'jusdevoyage-nvZ4NubOIZE-unsplash330.jpg'),
+(713, 330, 'kevin-gil-musngi-n42oEca5WXI-unsplash330.jpg'),
+(714, 334, 'jusdevoyage-nvZ4NubOIZE-unsplash334.jpg'),
+(715, 334, 'kevin-gil-musngi-n42oEca5WXI-unsplash334.jpg'),
+(716, 331, 'kobu-agency-3sszEuAA_Ks-unsplash331.jpg'),
+(717, 331, 'kobu-agency-uNsuVTlasLo-unsplash331.jpg'),
+(718, 329, 'kobu-agency-3sszEuAA_Ks-unsplash329.jpg'),
+(719, 329, 'kobu-agency-uNsuVTlasLo-unsplash329.jpg'),
+(720, 333, 'kobu-agency-3sszEuAA_Ks-unsplash333.jpg'),
+(721, 333, 'kobu-agency-uNsuVTlasLo-unsplash333.jpg'),
+(722, 337, 'lkszy-dgtl-oK7agFHGIhk-unsplash337.jpg'),
+(723, 337, 'malcolm-brostrom-Vt9QbB6iAyI-unsplash337.jpg'),
+(724, 335, 'lkszy-dgtl-oK7agFHGIhk-unsplash335.jpg'),
+(725, 335, 'malcolm-brostrom-Vt9QbB6iAyI-unsplash335.jpg'),
+(726, 338, 'alireza-attari-srx8Cax6QBc-unsplash338.jpg'),
+(727, 338, 'malcolm-brostrom-Vt9QbB6iAyI-unsplash338.jpg'),
+(728, 336, 'alireza-attari-srx8Cax6QBc-unsplash336.jpg'),
+(729, 336, 'firdaus-roslan-JzAgQ3pHUCw-unsplash336.jpg');
 
 -- --------------------------------------------------------
 
@@ -4967,17 +4984,18 @@ CREATE TABLE `seller` (
   `pass` varchar(255) NOT NULL,
   `seller_status` tinyint(1) NOT NULL DEFAULT 1,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `sellerPhone` varchar(16) NOT NULL,
-  `email` varchar(255) NOT NULL
+  `sellerPhone` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `seller`
 --
 
-INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`, `sellerPhone`, `email`) VALUES
-('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52', '0612345670', ''),
-('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47', '0612345679', '2312067@i-seifu.jp');
+INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`, `sellerPhone`) VALUES
+('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52', '0612345670'),
+('mura_ta', 'らいる', '$2y$10$shDQDBZtM1UG7Bm1y6GwYucTGwdk6MeTULu8h/1YlrJ6mZ2sPWKqy', 1, '2024-01-19 13:50:11', '00000000000'),
+('testRegistration', 'リ', '$2y$10$0IRE1XEKvwFsGtIq8CcRX.9/fV7C8d9mSCpH7d2V/7f.PQBTEcmzi', 1, '2024-01-09 02:12:25', '0624681357'),
+('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47', '0612345679');
 
 -- --------------------------------------------------------
 
@@ -5318,21 +5336,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `email`, `create_at`, `user_status`) VALUES
-('a', 'あ', '$2y$10$q4ZooZaSVB.BA0boAYNeo.UJlrzUD4gX7kfDvtVtsFMoyFwZ5oadq', 'a', 'a', '2024-01-19 17:55:50', 1),
 ('mu_rata', 'mura_ta', '$2y$10$QMSH3dzKc01LI8BJlVYjIOYMtPy0ffzQneSHZ/epcvRd0USqubAoS', '00000000000', 'tanim4582@gmail.com', '2024-01-19 13:51:48', 1),
 ('test_user', 'テストユーザー', '$2y$10$d2iU/xGLRhWX747O0Z3iieqyCy8tmw4qI6n0N3ewxyHkiD6J9Jqry', '0612345678', '2312067@i-seifu.jp', '2023-10-27 13:13:05', 1);
 
 --
 -- ダンプしたテーブルのインデックス
 --
-
---
--- テーブルのインデックス `address`
---
-ALTER TABLE `address`
-  ADD PRIMARY KEY (`address_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `seller_id` (`seller_id`);
 
 --
 -- テーブルのインデックス `big_category`
@@ -5458,12 +5467,6 @@ ALTER TABLE `users`
 --
 
 --
--- テーブルの AUTO_INCREMENT `address`
---
-ALTER TABLE `address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- テーブルの AUTO_INCREMENT `big_category`
 --
 ALTER TABLE `big_category`
@@ -5509,7 +5512,7 @@ ALTER TABLE `products`
 -- テーブルの AUTO_INCREMENT `products_img`
 --
 ALTER TABLE `products_img`
-  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=693;
+  MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=730;
 
 --
 -- テーブルの AUTO_INCREMENT `search`
@@ -5520,13 +5523,6 @@ ALTER TABLE `search`
 --
 -- ダンプしたテーブルの制約
 --
-
---
--- テーブルの制約 `address`
---
-ALTER TABLE `address`
-  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`seller_id`);
 
 --
 -- テーブルの制約 `cart`
