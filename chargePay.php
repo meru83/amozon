@@ -41,7 +41,7 @@ if (!isset($_SESSION['user_id'])) {
             金額
             <input name="chargePrice" class="charginput" id="chargePrice" type="text" placeholder="0">
             円
-            <div id="his">必須</div>
+            <div id="his" style="display:none; color:red">必須</div>
         </label>
         <br>
 
@@ -75,30 +75,30 @@ if (!isset($_SESSION['user_id'])) {
                 <option value="西原bank">西原bank</option>
                 <option value="readBank">readBank</option>
             </select>
-            <div id="his2">必須</div>
+            <div id="his2" style="display:none; color:red">必須</div>
         </label>
         <br>
     </div>
 
     <div class="chargebox">
 
-        <?php
-        //現在の残高取得
-        $user_id = $_SESSION['user_id'];
+<?php
+//現在の残高取得
+$user_id = $_SESSION['user_id'];
 
-        $sql = "SELECT total_pay FROM pay WHERE user_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if($result && $result->num_rows > 0){
-            $row = $result->fetch_assoc();
-            $totalPay = $row['total_pay'];
-            echo "<div class='chargemoney'><p>現在のreadPay残高：$totalPay 円</p></div>";
-        }else{
-            echo "<div class='chargemoney'><p>現在のreadPay残高：0 円</p></div>";
-        }
-        ?>
+$sql = "SELECT total_pay FROM pay WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+if($result && $result->num_rows > 0){
+    $row = $result->fetch_assoc();
+    $totalPay = $row['total_pay'];
+    echo "<div class='chargemoney'><p>現在のreadPay残高：$totalPay 円</p></div>";
+}else{
+    echo "<div class='chargemoney'><p>現在のreadPay残高：0 円</p></div>";
+}
+?>
 
         <div class="charglocation">
             <p>チャージ先：</p>
