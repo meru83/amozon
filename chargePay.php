@@ -66,8 +66,9 @@ if (!isset($_SESSION['user_id'])) {
 <!-- チャージする銀行 -->
 <!-- もとから無限にチャージできる怪しい銀行を用意する。 -->
 <!-- どんな銀行足してもいいよ -->
+    <div class="chargebox">
         <label for="bank">
-            チャージする銀行
+            選択した銀行からチャージ
             <br>
             <select name="bank" id="bank">
                 <option value="" hidden>選択してください</option>
@@ -77,6 +78,7 @@ if (!isset($_SESSION['user_id'])) {
             <div id="his2">必須</div>
         </label>
         <br>
+    </div>
 
     <div class="chargebox">
 
