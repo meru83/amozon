@@ -50,20 +50,30 @@ if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POS
         受取り方法：$means_result<br>
         支払い方法：readPAY <a href="chargePay.php">チャージ</a><br>
         <h3>商品合計 ￥ $maxPrice</h3><br>
-        <button>注文を確定する</button>
+        <button type="button" onclick="orderButton()">注文を確定する</button><br>
         END;
     }else{
         echo "住所の登録を済ませてください。";
         echo "<a href='address_insert.php'>住所登録へ</a>";
         exit();
     }
+    echo "<form action='orderConfirm.php' method='post' id='form'>";
     for($i = 0; $i < count($_POST['buyProductId']); $i++){
         $product_id = $_POST['buyProductId'][$i];
         $color_size_id = $_POST['buyColorSize'][$i];
         // echo $product_id;
         // echo $color_size_id;
-        echo "<input type='hidden' name='buyProductId[]' value='$product_id'>";
-        echo "<input type='hidden' name='buyColorSize[]' value='$color_size_id'>";
+        echo <<<END
+        <input type="hidden" name="buyProductId[]" value="$product_id">
+        <input type="hidden" name="buyColorSize[]" value="$color_size_id">
+        END;
     }
+    echo "</form>";
 }
 ?>
+<script>
+function orderButton(){
+    var form = document.getElementById('form');
+    form.submit();
+}
+</script>
