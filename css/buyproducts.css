@@ -12,3 +12,14 @@
 .top {
     margin-top: 20px;
 }
+
+.header {
+    background-color: #99CCFF;
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+}

@@ -18,7 +18,15 @@ if(isset($_SESSION['user_id'])){
     exit();
 }
 
-echo '<link rel="stylesheet" href="css/buyproducts.css">';
+echo <<<END
+<link rel="stylesheet" href="css/buyproducts.css">
+
+<div id="header" class="header">
+<div class="space">
+<h1 class="h1_White">注文内容の確認</h1>
+<div class="space">
+</div>
+END;
 
 //ヘッダーは「注文内容の確認」
 
