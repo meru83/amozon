@@ -78,29 +78,31 @@ END;
 if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
     
- // ユーザーの住所情報を取得
- $sql = "SELECT * FROM address WHERE user_id = '$user_id'";
- $result = $conn->query($sql);
+    // ユーザーの住所情報を取得
+    $sql = "SELECT * FROM address WHERE user_id = '$user_id'";
+    $result = $conn->query($sql);
 
- // クエリの実行にエラーがある場合
- if (!$result) {
-     die("クエリの実行にエラーがあります: " . $conn->error);
- }
+    // クエリの実行にエラーがある場合
+    if (!$result) {
+        die("クエリの実行にエラーがあります: " . $conn->error);
+    }
 
- // 住所が登録されているか確認
- if ($result->num_rows > 0) {
-     // 認証済みの場合
-     $nisyou =<<<END
-     <p>認証済み</p>
-     END;
- } else {
-     // 未登録の場合
-     echo "<a href='address_insert.php'>
-             <div class='sub-content-item'>
-                 <h2>住所登録を完了させてください</h2>
-             </div>
-         </a>";
- }
+    // 住所が登録されているか確認
+    if ($result->num_rows > 0) {
+        // 認証済みの場合
+        $nisyou =<<<END
+        <p>認証済み</p>
+        END;
+    } else {
+        // 未登録の場合
+        $jusyoNone =<<<END
+        <a href='address_insert.php'>
+                <div class='sub-content-item'>
+                    <h2>住所登録を完了させてください</h2>
+                </div>
+            </a>
+        END;
+    }
 } else {
  // ログインしていない場合
  $addLogin =<<<END
@@ -189,6 +191,9 @@ if(isset($_SESSION['user_id'])){
                     END;
                     if(isset($nisyou)){
                         echo $nisyou ;
+                    }
+                    if(isset($jusyoNone)) {
+                        echo $jusyoNone;
                     }
                     echo <<<END
                     </div>
