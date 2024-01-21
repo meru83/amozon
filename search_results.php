@@ -85,7 +85,7 @@ include "db_config.php";
 
 // 検索キーワードを取得し、空白で分割
 $searchText = isset($_GET['search']) ? trim($_GET['search']) : '';
-$searchSql = "INSERT INTO search(searchText) VALUES(?)";
+$searchSql = "INSERT INTO search(searchText) VALUES(?)";//要修正
 $searchStmt = $conn->prepare($searchSql);
 $searchStmt->bind_param("s", $searchText);
 $searchStmt->execute();
