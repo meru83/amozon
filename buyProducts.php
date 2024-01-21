@@ -18,6 +18,23 @@ if(isset($_SESSION['user_id'])){
     exit();
 }
 
+echo <<<HTML
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<link rel="stylesheet" href="css/buyproducts.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注文内容の確認</title>
+</head>
+<body>
+<div id="header" class="header">
+<div class="space"></div>
+<h1 class="h1_White">注文内容の確認</h1>
+<div class="space"></div>
+</div>
+HTML;
+
 //ヘッダーは「注文内容の確認」
 
 if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice']) && isset($_POST['arrayPieces']) && isset($_POST['arrayPrice'])){
@@ -46,11 +63,21 @@ if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POS
         }
         $maxPrice = $_POST['maxPrice'];
         echo <<<END
-        お届け先　：$addressname , 〒$post_code, $prefectures $city $tyou $room_number<br>
-        受取り方法：$means_result<br>
-        支払い方法：readPAY <a href="chargePay.php">チャージ</a><br>
-        <h3>商品合計 ￥ $maxPrice</h3><br>
-        <button type="button" onclick="orderButton()">注文を確定する</button><br>
+        <div class="ALL">
+        <div class="box">
+        <div class="title top"><p>お届け先</p></div>
+        <div class="parent">
+        <div><p>$addressname 様</p></div>
+        <div><p>〒$post_code</p></div>
+        <div><p>$prefectures $city $tyou $room_number</p></div>
+        </div>
+        <div class="title"><p>受取り方法</p></div>
+        <div><p>$means_result</p></div>
+        <div class="title"><p>支払い方法</p></div><p>readPAY <a href="chargePay.php">チャージ</a></p><br>
+        <h3><p>合計 (税込) ￥ $maxPrice</p></h3><br>
+        <button class="BTN" type="button" onclick="orderButton()">注文を確定する</button><br>
+        </div>
+        </div>
         END;
     }else{
         echo "住所の登録を済ませてください。";
@@ -78,6 +105,9 @@ if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POS
     </form>
     END;;
 }
+
+echo "</body>";
+echo "</html>";
 ?>
 <script>
 function orderButton(){
