@@ -18,37 +18,69 @@ if (!isset($_SESSION['user_id'])) {
 }
 ?>
 
-<!-- 金額の入力 -->
-<label for="chargePrice">
-金額
-<input name="chargePrice" id="chargePrice" type="text" placeholder="0">
-円
-<div id="his" style="display:none; color:red">必須</div>
-</label>
-<br>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/chargePay.css">
+    <title>残金チャージ</title>
+
+<!-- 金額の入力 --><body>
 
 
-<button type="button" onclick="autoCharge(2000)">2,000</button>
-<button type="button" onclick="autoCharge(3000)">3,000</button>
-<button type="button" onclick="autoCharge(5000)">5,000</button>
-<button type="button" onclick="autoCharge(10000)">10,000</button>
-<button type="button" onclick="autoCharge(20000)">20,000</button>
-<button type="button" onclick="autoCharge(30000)">30,000</button>
-<button type="button" onclick="autoCharge(50000)">50,000</button>
-<button type="button" onclick="autoCharge(100000)">100,000</button>
-<br>
+    <div id="header" class="header">
+        <div class="back"><div class="backBtn" onclick="history.back()"><img src="img/return_left.png" style="width:100%;"></div></div>
+        <h1 class="h1_White">残金チャージ</h1>
+        <div class="space"></div>
+    </div>
+
+    <section>
+        <!-- 金額の入力 -->
+        <label for="chargePrice">
+            金額
+            <input name="chargePrice" class="charginput" id="chargePrice" type="text" placeholder="0">
+            円
+            <div id="his" style="display:none; color:red">必須</div>
+        </label>
+        <br>
+
+        <button type="button" onclick="autoCharge(2000)">2,000</button>
+        <button type="button" onclick="autoCharge(3000)">3,000</button>
+        <button type="button" onclick="autoCharge(5000)">5,000</button>
+        <button type="button" onclick="autoCharge(10000)">10,000</button>
+        <button type="button" onclick="autoCharge(20000)">20,000</button>
+        <button type="button" onclick="autoCharge(30000)">30,000</button>
+        <button type="button" onclick="autoCharge(50000)">50,000</button>
+        <button type="button" onclick="autoCharge(100000)">100,000</button>
+        <br>
+
+        <!-- チャージする銀行 -->
+        
+        <p>チャージ先：readPay</p>
+
+        <!-- チャージ確定ボタン -->
+        <button type="button" id="chargeButton" onclick="chargeButton()">チャージする</button>
+    </section>
 
 <!-- チャージする銀行 -->
 <!-- もとから無限にチャージできる怪しい銀行を用意する。 -->
 <!-- どんな銀行足してもいいよ -->
-<select name="bank" id="bank">
-    <option value="" hidden>選択してください</option>
-    <option value="西原bank">西原bank</option>
-    <option value="readBank">readBank</option>
-</select>
-<div id="his2" style="display:none; color:red">必須</div>
-<br>
+    <div class="chargebox">
+        <label for="bank">
+            選択した銀行からチャージ
+            <br>
+            <select name="bank" id="bank">
+                <option value="" hidden>選択してください</option>
+                <option value="西原bank">西原bank</option>
+                <option value="readBank">readBank</option>
+            </select>
+            <div id="his2" style="display:none; color:red">必須</div>
+        </label>
+        <br>
+    </div>
 
+    <div class="chargebox">
 
 <?php
 //現在の残高取得
@@ -62,17 +94,25 @@ $result = $stmt->get_result();
 if($result && $result->num_rows > 0){
     $row = $result->fetch_assoc();
     $totalPay = $row['total_pay'];
-    echo "<p>現在のreadPay残高：$totalPay 円</p>";
+    echo "<div class='chargemoney'><p>現在のreadPay残高：$totalPay 円</p></div>";
 }else{
-    echo "<p>現在のreadPay残高：0 円</p>";
+    echo "<div class='chargemoney'><p>現在のreadPay残高：0 円</p></div>";
 }
 ?>
 
-<p>チャージ先：readPay</p>
+        <div class="charglocation">
+            <p>チャージ先：</p>
+            <p>readPay</p>
+        </div>
 
-<!-- チャージ確定ボタン -->
-<button type="button" id="chargeButton" onclick="chargeButton()">チャージする</button>
 
+        <!-- チャージ確定ボタン -->
+        <button type="button" id="chargeButton" onclick="chargeButton()">チャージする</button>
+
+    </div>
+
+</body>
+</html>
 <!-- js -->
 <script>
 function chargeButton(){

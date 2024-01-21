@@ -1,0 +1,142 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* 全体を中央寄せ */
+}
+
+.h1_White{
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.header{
+    background-color: #99CCFF;
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.space {
+    width: 100%;
+}
+
+.back {
+    width:100%;
+    height: 100%;
+}
+
+.backBtn {
+    width:48px;
+    height: 100%;
+    margin-left: 64px;
+    padding-left: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.backBtn:hover {
+    background-color: white;
+}
+
+.charginput{
+    margin:0 5px;
+}
+
+.chargebox {
+    width: 660px;
+    background-color: #fff;
+    padding: 24px;
+    margin: 0 auto 20px; /* 中央揃え */
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.chargemoney{
+    width: 300px;
+    background-color: #fff;
+    padding: 10px;
+    margin: 0 auto 20px; /* 中央揃え */
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.charglocation {
+    width: 300px;
+    margin: 0 auto 10px; /* 中央揃え */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.charglocation p {
+    margin: 0;
+    font-size: 16px;
+}
+
+section {
+    max-width: 700px;
+    margin: 98px auto 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: inline-block; /* 子要素を中央寄せに */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, select {
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+}
+
+select{
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+select:focus {
+    outline-color: #005aae;
+}
+
+
+button {
+    background-color: #005aae;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #004488;
+}
+
+#his,
+#his2 {
+    color: red;
+    display: none;
+}
