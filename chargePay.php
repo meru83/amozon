@@ -18,61 +18,98 @@ if (!isset($_SESSION['user_id'])) {
 }
 ?>
 
-<!-- 金額の入力 -->
-<label for="chargePrice">
-金額
-<input name="chargePrice" id="chargePrice" type="text" placeholder="0">
-円
-<div id="his" style="display:none; color:red">必須</div>
-</label>
-<br>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/chargePay.css">
+    <title>残金チャージ</title>
+
+<!-- 金額の入力 --><body>
 
 
-<button type="button" onclick="autoCharge(2000)">2,000</button>
-<button type="button" onclick="autoCharge(3000)">3,000</button>
-<button type="button" onclick="autoCharge(5000)">5,000</button>
-<button type="button" onclick="autoCharge(10000)">10,000</button>
-<button type="button" onclick="autoCharge(20000)">20,000</button>
-<button type="button" onclick="autoCharge(30000)">30,000</button>
-<button type="button" onclick="autoCharge(50000)">50,000</button>
-<button type="button" onclick="autoCharge(100000)">100,000</button>
-<br>
+    <div id="header" class="header">
+        <div class="back"><div class="backBtn" onclick="history.back()"><img src="img/return_left.png" style="width:100%;"></div></div>
+        <h1 class="h1_White">残金チャージ</h1>
+        <div class="space"></div>
+    </div>
+
+    <section>
+        <!-- 金額の入力 -->
+        <label for="chargePrice">
+            金額
+            <input name="chargePrice" id="chargePrice" type="text" placeholder="0">円
+            <div id="his">必須</div>
+        </label>
+        <br>
+
+        <button type="button" onclick="autoCharge(2000)">2,000</button>
+        <button type="button" onclick="autoCharge(3000)">3,000</button>
+        <button type="button" onclick="autoCharge(5000)">5,000</button>
+        <button type="button" onclick="autoCharge(10000)">10,000</button>
+        <button type="button" onclick="autoCharge(20000)">20,000</button>
+        <button type="button" onclick="autoCharge(30000)">30,000</button>
+        <button type="button" onclick="autoCharge(50000)">50,000</button>
+        <button type="button" onclick="autoCharge(100000)">100,000</button>
+        <br>
+
+        <!-- チャージする銀行 -->
+        
+        <p>チャージ先：readPay</p>
+
+        <!-- チャージ確定ボタン -->
+        <button type="button" id="chargeButton" onclick="chargeButton()">チャージする</button>
+    </section>
 
 <!-- チャージする銀行 -->
 <!-- もとから無限にチャージできる怪しい銀行を用意する。 -->
 <!-- どんな銀行足してもいいよ -->
-<select name="bank" id="bank">
-    <option value="" hidden>選択してください</option>
-    <option value="西原bank">西原bank</option>
-    <option value="readBank">readBank</option>
-</select>
-<div id="his2" style="display:none; color:red">必須</div>
-<br>
+        <label for="bank">
+            チャージする銀行
+            <br>
+            <select name="bank" id="bank">
+                <option value="" hidden>選択してください</option>
+                <option value="西原bank">西原bank</option>
+                <option value="readBank">readBank</option>
+            </select>
+            <div id="his2">必須</div>
+        </label>
+        <br>
+
+    <div class="chargebox">
+
+        <?php
+        //現在の残高取得
+        $user_id = $_SESSION['user_id'];
+
+        $sql = "SELECT total_pay FROM pay WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if($result && $result->num_rows > 0){
+            $row = $result->fetch_assoc();
+            $totalPay = $row['total_pay'];
+            echo "<div class='chargemoney'><p>現在のreadPay残高：$totalPay 円</p></div>";
+        }else{
+            echo "<div class='chargemoney'><p>現在のreadPay残高：0 円</p></div>";
+        }
+        ?>
+
+        <div class="charglocation">
+            <p>チャージ先：</p>
+            <p>readPay</p>
+        </div>
 
 
-<?php
-//現在の残高取得
-$user_id = $_SESSION['user_id'];
+        <!-- チャージ確定ボタン -->
+        <button type="button" id="chargeButton" onclick="chargeButton()">チャージする</button>
 
-$sql = "SELECT total_pay FROM pay WHERE user_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if($result && $result->num_rows > 0){
-    $row = $result->fetch_assoc();
-    $totalPay = $row['total_pay'];
-    echo "<p>現在のreadPay残高：$totalPay 円</p>";
-}else{
-    echo "<p>現在のreadPay残高：0 円</p>";
-}
-?>
+    </div>
 
-<p>チャージ先：readPay</p>
-
-<!-- チャージ確定ボタン -->
-<button type="button" id="chargeButton" onclick="chargeButton()">チャージする</button>
-
+</body>
+</html>
 <!-- js -->
 <script>
 function chargeButton(){
