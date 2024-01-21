@@ -162,6 +162,7 @@ if($selectResult && $selectResult->num_rows > 0){
             </div>";
         }
         
+        //同じidが来た時に同じカラーかつ同じサイズがあるか確認
         if(in_array($product_id,$lastImg)){
             for($i = 0; $i < count($colorArray); $i++){
                 if($colorArray[$i] === $colorName && $sizeArray[$i] === $size){
@@ -341,7 +342,7 @@ HTML;
                     <option value="" hidden>選択してください</option>
             END;
             for($i = 0; $i < count($colorArray); $i++){
-                echo "<option value='$colorArray[$i]|$sizeArray[$i]'>$colorArray[$i] - $sizeArray[$i]</option>";
+                echo "<option value='$color_codeArray[$i]|$sizeArray[$i]'>$colorArray[$i] - $sizeArray[$i]</option>";
             }
             echo <<<END
                 </select>

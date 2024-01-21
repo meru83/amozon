@@ -38,10 +38,13 @@ echo"<style>
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $product_id = $_POST['product_id'];
+    // echo $product_id;
     $colorSize = $_POST['colorSize'];
+    // echo $colorSize;
     $colorSizeArray = preg_split('/[|]+/u',$colorSize);
     $color_code = $colorSizeArray[0];
     $colorName = getColor($conn, $color_code);
+    // echo $colorName;
     $size = $colorSizeArray[1];
 }else{
     header("Location:seller_products.php");
