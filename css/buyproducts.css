@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+}
+
+.title {
+    background-color: #e6e6e6;
+    border-top:2px solid #b3b3b3;
+    border-bottom:2px solid #b3b3b3;
+    margin: 5px 0;
+}
+
+.top {
+    margin-top: 20px;
+}

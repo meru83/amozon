@@ -18,6 +18,8 @@ if(isset($_SESSION['user_id'])){
     exit();
 }
 
+echo '<link rel="stylesheet" href="css/buyproducts.css">';
+
 //ヘッダーは「注文内容の確認」
 
 if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice'])){
@@ -46,10 +48,16 @@ if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POS
         }
         $maxPrice = $_POST['maxPrice'];
         echo <<<END
-        お届け先　：$addressname , 〒$post_code, $prefectures $city $tyou $room_number<br>
-        受取り方法：$means_result<br>
-        支払い方法：readPAY <a href="chargePay.php">チャージ</a><br>
-        <h3>商品合計 ￥ $maxPrice</h3><br>
+        <div class="title top"><p>お届け先</p></div>
+        <div class="parent">
+        <div><p>$addressname 様</p></div>
+        <div><p>〒$post_code</p></div>
+        <div><p>$prefectures $city $tyou $room_number</p></div>
+        </div>
+        <div class="title"><p>受取り方法</p></div>
+        <div><p>$means_result</p></div>
+        <div class="title"><p>支払い方法</p></div><p>readPAY <a href="chargePay.php">チャージ</a></p><br>
+        <h3><p>商品合計 ￥ $maxPrice</p></h3><br>
         <button type="button" onclick="orderButton()">注文を確定する</button><br>
         END;
     }else{
