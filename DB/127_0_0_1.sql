@@ -5362,6 +5362,14 @@ INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `email`, `create_at
 --
 
 --
+-- テーブルのインデックス `address`
+--
+ALTER TABLE `address`
+  ADD PRIMARY KEY (`address_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `seller_id` (`seller_id`);
+
+--
 -- テーブルのインデックス `big_category`
 --
 ALTER TABLE `big_category`
