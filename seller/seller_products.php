@@ -92,6 +92,13 @@ if(isset($_SESSION['seller_id'])){
         </div>
         
         <div class="right-content">
+            <form id="form" action=".php" method="GET">
+                <div class="flexBox">
+                    <label for="search">商品を検索</label>
+                    <input type="text" id="search" name="search">
+                    <button type="submit" id="submit" class="btn-img"></button>
+                </div>
+            </form>
         <div  class='p2'><h2><?=$seller_name?> 様</h2></div>
 <?php
 $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
@@ -325,11 +332,12 @@ if($selectResult && $selectResult->num_rows > 0){
 
 </div>
 HTML;
+    echo '<div class="setumei">';
     echo $htmlText;
     $countId = $count - 1;
     echo <<<END
             <form action="edit.php" method="post">
-                <select id="select$countId" name="colorSize" required>
+                <select id="select$countId" class="selectStyle" name="colorSize" required>
                     <option value="" hidden>選択してください</option>
             END;
             for($i = 0; $i < count($colorArray); $i++){
@@ -338,20 +346,20 @@ HTML;
             echo <<<END
                 </select>
                 <input type="hidden" name="product_id" value="$product_id">
-                <input type="submit" value="登録内容変更">
+                <input type="submit" class="btnStyle" value="登録内容変更">
             </form>
             <div id="addColorSizeDiv$countId">
             <!------ここにフォーム作る------->
             </div>
             <input type="hidden" id="$countId" value="$lastImg[$countId]">
             <input type="hidden" id="name$countId" value="$lastProName[$countId]"><!---一個前のproductname持ってくる--->
-            <button type="button" name="aCS" id="aCS$countId" onclick="addColorSize($countId)" style="display:block">カラー・サイズの追加</button>
-            <button type="button" onclick="deleteProducts($countId)">商品の削除</button>
+            <button type="button" name="aCS" id="aCS$countId" class="btnStyle" onclick="addColorSize($countId)" style="display:block">カラー・サイズの追加</button>
+            <button type="button" class="btnStyle" onclick="deleteProducts($countId)">商品の削除</button>
             <hr class="hr2">
             </div>
             END;
-    // echo "</div>";
-    echo "登録商品は".$count."件です。";
+    echo "</div>";
+    echo "<div class='countStyle'>登録商品は".$count."件です。</div>";
 }else{
     echo "登録されている商品がありません。";
 }
