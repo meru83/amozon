@@ -51,6 +51,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
 <?php
+//現在の残高取得
 $user_id = $_SESSION['user_id'];
 
 $sql = "SELECT total_pay FROM pay WHERE user_id = ?";
@@ -61,11 +62,12 @@ $result = $stmt->get_result();
 if($result && $result->num_rows > 0){
     $row = $result->fetch_assoc();
     $totalPay = $row['total_pay'];
+    echo "<p>現在のreadPay残高：$totalPay 円</p>";
+}else{
+    echo "<p>現在のreadPay残高：0 円</p>";
 }
 ?>
 
-<!-- 現在の残高 -->
-<p>現在のreadPay残高：<?=$totalPay?></p>
 <p>チャージ先：readPay</p>
 
 <!-- チャージ確定ボタン -->
