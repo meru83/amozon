@@ -52,9 +52,7 @@
             $check_result = $check_stmt->get_result();
 
             if ($check_result && $check_result->num_rows > 0) {
-                $user_existence =<<<END
-                <div class="existence">ユーザーIDがすでに存在します。</div>
-                END;
+                echo '<div class="existence">ユーザーIDがすでに存在します。</div>';
             } else {
                 // パスワードをハッシュ化
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -112,7 +110,6 @@
         <img src="img/Re.ReaD2blue.svg" class="register_brand">
         <h1 class="register_h1">新規登録</h1>
         <label for="user_id">ユーザーID</label>
-        <?= $user_existence ?>
         <input type="text" id="user_id" class="register_textbox" name="user_id" placeholder="re_read" required><br>
         
         <label for="number">電話番号</label><br>
