@@ -107,13 +107,13 @@ if($selectResult && $selectResult->num_rows > 0){
         <label for="image-file" class="styleFile"><input type="file" id="image-file" name="img[]" multiple accept="image/*"></label>
         <input type="submit" name="submit" class="kakutei" value="確定">
     </form>
-    カラー:$colorName サイズ:$size <br>
-    商品名: $productname <br>
+    <b>カラー</b>:$colorName <b>サイズ</b>:$size <br>
+    <b>商品名</b>: $productname <br>
     <button type="button" class="btnStyle" onclick="changePrice($color_size_id)">変更</button>
-    <p id="priceText">価格:￥$commaPrice </p><br>
+    <p id="priceText"><b>価格</b>:￥$commaPrice </p><br>
     <button type="button" class="btnStyle" onclick="changePieces($color_size_id)">変更</button>
-    <p id="piecesText">在庫数: $pieces </p><br>
-    出品日: $create_at <br>
+    <p id="piecesText"><b>在庫数</b>: $pieces </p><br>
+    <b>出品日</b>: $create_at <br>
     </div>
     </div>
     END;

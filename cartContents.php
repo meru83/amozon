@@ -72,6 +72,7 @@ if(isset($_SESSION['user_id'])){
                         <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
                         <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
                         <li class="menu-item"><a href="favoriteProduct.php"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">お気に入り</span></a></li>
+                        <li class="menu-item"><a href="favoriteProduct.php"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">購入履歴</span></a></li>
                         <li class="menu-item"><a href="user_profile.php"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
                     </ul>
                 </div>
@@ -183,10 +184,10 @@ if(!($user_id === "A")){
                     $htmlText = <<<END
                     <br>
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-                    色: $colorName
-                    サイズ: $size<br>
-                    商品名　　: $productname<br>
-                    価格　　　: ￥ $commaPrice<br>
+                    <b>色</b>: $colorName
+                    <b>サイズ</b>: $size<br>
+                    <b>商品名</b>　　: $productname<br>
+                    <b>価格</b>　　　: ￥ $commaPrice<br>
                     </a>
                     <br>
                     END;
@@ -382,10 +383,10 @@ if(!($user_id === "A")){
                     $htmlText = <<<END
                     <br>
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-                    色: $colorName
-                    サイズ: $size<br>
-                    商品名　　: $productname<br>
-                    価格　　　: ￥ $commaPrice<br>
+                    <b>色</b>: $colorName
+                    <b>サイズ</b>: $size<br>
+                    <b>商品名</b>　　: $productname<br>
+                    <b>価格</b>　　　: ￥ $commaPrice<br>
                     </a>
                     <br>
                     <div class="sonota">

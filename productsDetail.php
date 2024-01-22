@@ -63,6 +63,7 @@ if(isset($_SESSION['user_id'])){
                     <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
                     <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
                     <li class="menu-item"><a href="favoriteProduct.php"><span class="menu-item-icon">❤️</span><span class="menu-item-text">お気に入り</span></a></li>
+                    <li class="menu-item"><a href="favoriteProduct.php"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">購入履歴</span></a></li>
                     <li class="menu-item"><a href="user_profile.php"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
                 </ul>
             </div>
@@ -205,16 +206,16 @@ if($detailResult && $detailResult->num_rows > 0){
 $htmlText = <<<END
 <br>
 <div class="setumei">
-<div class="flex">価格　　　　<div>￥<b class="b_price">$commaPrice</b></div></div>
-<div class="flex">商品名　　　<div>$productName</div></div>
-<div class="flex">カテゴリ　　<div>$big_category_name - $category_name - $small_category_name</div></div>
-<div class="flex">概要　　　　<div>$view</div></div>
-<div class="flex">品質　　　　<div>$quality</div></div>
-<div class="flex">サイズ　　　<div>$size</div></div>
-<div class="flex">色　　　　　<div>$colorName</div></div>
-<div class="flex">出品日　　　<div>$create_at</div></div>
-<div class="flex">出品者　　　<div>$seller_id</a></div></div>
-<div class="flex">チャット　　<div><a href="create.php?seller_id=$seller_id">チャット開始</a></div></div>
+<div class="flex"><b>価格</b>　　　　<div>￥<b class="b_price">$commaPrice</b></div></div>
+<div class="flex"><b>商品名</b>　　　<div>$productName</div></div>
+<div class="flex"><b>カテゴリ</b>　　<div>$big_category_name - $category_name - $small_category_name</div></div>
+<div class="flex"><b>概要</b>　　　　<div>$view</div></div>
+<div class="flex"><b>品質</b>　　　　<div>$quality</div></div>
+<div class="flex"><b>サイズ</b>　　　<div>$size</div></div>
+<div class="flex"><b>色</b>　　　　　<div>$colorName</div></div>
+<div class="flex"><b>出品日</b>　　　<div>$create_at</div></div>
+<div class="flex"><b>出品者</b>　　　<div>$seller_id</a></div></div>
+<div class="flex"><b>チャット</b>　　<div><a href="create.php?seller_id=$seller_id">チャット開始</a></div></div>
 END;
 //$favorite_product null か $user_id
 if(!($favorite_product === null) && isset($_SESSION['user_id'])){
