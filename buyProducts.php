@@ -61,7 +61,18 @@ if($addressResult && $addressResult->num_rows > 0){
     }else{
         $means_result = "置き配";
     }
-    $maxPrice = $_GET['maxPrice'];
+
+    $cartSql = "SELECT c.pieces AS cartPieces, s.price FROM cart c
+                LEFT JOIN color_size s ON (c.color_size_id = s.color_size_id)
+                WHERE user_id = ?";
+    $cartStmt = $conn->prepare($cartSql);
+    $cartStmt->bind_param("s",$user_id);
+    $cartStmt->execute();
+    $cartResult = $cartStmt->get_result();
+    $maxPrice = 0;
+    while($cartRow = $cartResult->fetch_assoc()){
+        $maxPrice += $cartRow['price'] * $cartRow['cartPieces'];
+    }
     $commaPriceMax = number_format($maxPrice);
     echo <<<END
     <div class="ALL">
@@ -76,7 +87,24 @@ if($addressResult && $addressResult->num_rows > 0){
     <div><p>$means_result</p></div>
     <div class="title"><p>支払い方法</p></div><p>readPAY <a href="chargePay.php">チャージ</a></p><br>
     <h3><p>合計 (税込) ￥ $commaPriceMax</p></h3><br>
-    <button class="BTN" type="button" onclick="location.href='orderConfirm.php?maxPrice=$maxPrice'">注文を確定する</button><br>
+    END;
+    $totalPaySql = "SELECT total_pay FROM pay WHERE user_id = ?";
+    $totalPayStmt = $conn->prepare($totalPaySql);
+    $totalPayStmt->bind_param("s",$user_id);
+    $totalPayStmt->execute();
+    $totalPayResult = $totalPayStmt->get_result();
+    $totalPayRow = $totalPayResult->fetch_assoc();
+    $totalPay = $totalPayRow['total_pay'];
+    if($totalPay >= $maxPrice){
+        echo<<<END
+        <button class="BTN" type="button" onclick="location.href='orderConfirm.php?maxPrice=$maxPrice'">注文を確定する</button><br>
+        END;
+    }else{
+        echo<<<END
+        <button class="BTN" type="button" onclick="orderAlert()">注文を確定する</button><br>
+        END;
+    }
+    echo<<<END
     </div>
     </div>
     END;
@@ -108,5 +136,16 @@ if($addressResult && $addressResult->num_rows > 0){
 // }
 
 echo "</body>";
+
+echo<<<END
+<script>
+function orderAlert(){
+    if(!alert("残高不足です。チャージしてください。")){
+        window.location.href = "chargePay.php";
+    }
+}
+</script>
+END;
+
 echo "</html>";
 ?>

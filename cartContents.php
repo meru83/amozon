@@ -297,7 +297,7 @@ if(!($user_id === "A")){
         // END;
         echo <<<END
         <br>
-        <button type="button" class="btnStyle" onclick="location.href='buyProducts.php?maxPrice=$priceMax'">レジに進む</button>
+        <button type="button" class="btnStyle" onclick="location.href='buyProducts.php'">レジに進む</button>
         </div>
         END;
     }else{

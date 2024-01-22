@@ -117,7 +117,33 @@ try{
             $deleteStmt->bind_param("sii",$user_id,$product_id,$color_size_id);
             $deleteStmt->execute();
         }
-        print_r($arraySellerId);
+        
+        //残高修正
+        $selectSql = "SELECT user_id FROM pay WHERE user_id = ?";
+        $selectStmt = $conn->prepare($selectSql);
+        $selectStmt->bind_param("s",$user_id);
+        $selectStmt->execute();
+        $selectResult = $selectStmt->get_result();
+        if($selectResult && $selectResult->num_rows > 0){
+            $sql = "UPDATE pay SET total_pay = total_pay - ? WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("si",$maxPrice,$user_id);
+        }else{
+            echo <<<HTML
+            <script>
+            if(!alert("購入処理が強制終了しました。カート画面に戻ります。2")){
+                window.location.href = "cartContents.php";
+            }
+            </script>
+            HTML;
+        }
+        if($stmt->execute()){
+            $insertSql = "INSERT INTO pay_history2 (user_id, pay_pay) VALUES(?, ?)";
+            $insertStmt = $conn->prepare($insertSql);
+            $insertStmt->bind_param("si", $user_id, $maxPrice);
+            $insertStmt->execute();
+        }
+        
     }
 
     echo <<<HTML
