@@ -1,3 +1,43 @@
+<?php
+include "../db_config.php";
+
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log'); // エラーログをerror.logファイルに記録
+error_reporting(E_ALL);
+
+// セッションを開始します
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+}else{
+    header("Location:login.php");
+    exit();
+}
+
+$sql = "SELECT create_at FROM orders WHERE user_id = ? && create_at < CURRENT_TIMESTAMP - INTERVAL 2 MINUTE";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s",$user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+if($result && $result->num_rows > 0){
+    // 現在の日時を取得
+    $currentDateTime = new DateTime();
+    while($row = $result->fetch_assoc()){
+        $create_at = $row['create_at'];
+        $createDateTime = new DateTime($create_at);
+        $timeGap = $currentDateTime->diff($createDateTime);
+        if($timeGap->days > 0){
+            echo "過去の時間です。";
+        }
+    }
+}else{
+    error_log("5");
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
