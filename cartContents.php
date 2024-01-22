@@ -91,6 +91,7 @@ if(isset($_GET['error_message'])){
 
 $count = 0;
 $countMax = 0;
+$piecesCount = 0;
 $htmlText = "";
 $lastImg = array();
 $arrayProductId = array();
@@ -126,6 +127,7 @@ if(!($user_id === "A")){
                 $colorName = getColor($conn, $colorCode);
                 $size = $row['size'];
                 $cartPieces = $row['cartPieces'];
+                $piecesCount += $cartPieces;
                 $maxPieces = $row['maxPieces'];
                 $price  = $row['price'];
                 $priceMax += $price * $cartPieces;
@@ -215,6 +217,7 @@ if(!($user_id === "A")){
                         $htmlText .= <<<END
                         <input type="hidden" id="product_id$count" value="$product_id">
                         <input type="hidden" id="color_size_id$count" value="$color_size_id">
+                        <input type="hidden" id="price$count" value="$price">
                         <input type="number" id="$count" class="selectStyle" value="$cartPieces" min="1" max="$maxPieces">
                         <button type="button" id="delete$count" class="btnStyle"onclick="deleteProducts($count)">削除</button>
                         <br>
@@ -270,27 +273,33 @@ if(!($user_id === "A")){
     }
     $commaPriceMax = number_format($priceMax);
     if($count !== 0) {
-        echo $count . "件";
+        //ヒアドキュメントで書けよ
         echo '<div class="subtotal">';
         echo '<div class="subtotalChild">';
-        echo '小計 ('. $count. ' 個の商品) (税込)';
+        echo "小計 (<b id='piecesCountElement'>$piecesCount</b> 個の商品) (税込)";
+        echo "<input type='hidden' name='piecesCount' id='piecesCount' value='$piecesCount'>";
         echo '</div>';
-        echo "<b>￥". $commaPriceMax . "</b>";
-        echo "<form action='buyProducts.php' method='post'>";
-        echo "<input type='hidden' name='maxPrice' value='$priceMax'>";
-        for($i = 0; $i < count($lastImg); $i++){
-            echo <<<END
-            <input type="hidden" name="arrayPieces[]" value="$arrayPieces[$i]">
-            <input type="hidden" name="arrayPrice[]" value="$arrayPrice[$i]">
-            <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
-            <input type="hidden" name="buyColorSize[]" value="$lastImg[$i]">
-            END;
-        }
+        echo "<b>￥</b><b id='commaPriceMax'>$commaPriceMax</b>";
+        echo "<input type='hidden' name='maxPrice' id='maxPrice' value='$priceMax'>";
+        // echo "<form action='buyProducts.php' method='post'>";
+        // echo "<input type='hidden' name='maxPrice' id='maxPrice' value='$priceMax'>";
+        // for($i = 0; $i < count($lastImg); $i++){
+        //     echo <<<END
+        //     <input type="hidden" name="arrayPieces[]" value="$arrayPieces[$i]">
+        //     <input type="hidden" name="arrayPrice[]" value="$arrayPrice[$i]">
+        //     <input type="hidden" name="buyProductId[]" value="$arrayProductId[$i]">
+        //     <input type="hidden" name="buyColorSize[]" value="$lastImg[$i]">
+        //     END;
+        // }
+        // echo <<<END
+        // <input type="submit" class="btnStyle" value="レジに進む">
+        // </form>
+        // END;
         echo <<<END
-        <input type="submit" class="btnStyle" value="レジに進む">
-        </form>
+        <br>
+        <button type="button" class="btnStyle" onclick="location.href='buyProducts.php?maxPrice=$priceMax'">レジに進む</button>
+        </div>
         END;
-        echo '</div>';
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
@@ -305,6 +314,7 @@ if(!($user_id === "A")){
         $product_id = isset($_SESSION['cart']['product_id'][$i])?$_SESSION['cart']['product_id'][$i]:null;
         $color_size_id = isset($_SESSION['cart']['color_size_id'][$i])?$_SESSION['cart']['color_size_id'][$i]:null;
         $pieces = isset($_SESSION['cart']['pieces'][$i])?$_SESSION['cart']['pieces'][$i]:null;
+        $piecesCount += $pieces;
         $selectSql = "SELECT p.productname, p.view, p.create_at, p.seller_id, p.quality, s.color_size_id, s.color_code, s.size, s.pieces, s.price, i.img_url, b.big_category_name, c.category_name, sc.small_category_name FROM products p
                     LEFT JOIN color_size s ON (p.product_id = s.product_id)
                     LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
@@ -384,6 +394,9 @@ if(!($user_id === "A")){
 
                     if($maxPieces >= $pieces){
                         $htmlText .= <<<END
+                        <input type="hidden" id="product_id$i" value="$product_id">
+                        <input type="hidden" id="color_size_id$i" value="$color_size_id">
+                        <input type="hidden" id="price$i" value="$price">
                         <input type="number" id="$i" class="selectStyle" value="$pieces" min="1" max="$maxPieces">
                         <button type="button" id="delete$i" class="btnStyle" onclick="deleteProducts($i)">削除</button>
                         <br>
@@ -437,16 +450,18 @@ if(!($user_id === "A")){
     }
     $commaPriceMax = number_format($priceMax);
     if($count !== 0) {
-        echo $count . "件";
         echo '<div class="subtotal">';
         echo '<div class="subtotalChild">';
-        echo '小計 ('. $count. ' 個の商品) (税込)';
+        echo "小計 (<b id='piecesCountElement'>$piecesCount</b> 個の商品) (税込)";
+        echo "<input type='hidden' name='piecesCount' id='piecesCount' value='$piecesCount'>";
         echo '</div>';
-        echo "<div><b>￥". $commaPriceMax . "</b></div>";
-        echo <<<END
-        <input type="submit" class="btnStyle" onclick="buttonClick()" value="レジに進む">
-        END;
-        echo '</div>';
+        echo "<b>￥</b><b id='commaPriceMax'>$commaPriceMax</b>";
+        echo "<input type='hidden' name='maxPrice' id='maxPrice' value='$priceMax'>";
+        echo <<<HTML
+        <br>
+        <button type="button" class="btnStyle" onclick="buttonClick()">レジに進む</button>
+        </div>
+        HTML;
     }else{
         //0件
         //ここ！！！！！！！！と一緒のデザイン
@@ -471,20 +486,29 @@ echo <<<HTML
 <script>
 document.addEventListener('DOMContentLoaded',function(){
     var countMax = $countMax;
+    var iIdValue = [];
     for(let i = 0; i < countMax; i++){
-        var iId = document.getElementById(i);
+        var iId = document.getElementById(i);//在庫数
+        iIdValue[i] = iId.value;//元の在庫数を格納する配列
         if(iId !== null){
             iId.addEventListener('change',function(){
                 var productElement = document.getElementById('product_id'+i);
                 var colorSizeElement = document.getElementById('color_size_id'+i);
+                var priceElement = document.getElementById('price'+i);
+                // console.log(priceElement);
                 piecesValue = this.value;
-                if(productElement !== null && colorSizeElement !== null){
+                // console.log(piecesValue);
+                // console.log(iIdValue[i]);
+                if(productElement !== null && colorSizeElement !== null && priceElement !== null){
                     var product_id = productElement.value;
                     var color_size_id = colorSizeElement.value;
+                    var price = Number(priceElement.value);
                 }else{
                     product_id = null;
                     color_size_id = null;
+                    price = null
                 }
+                // console.log(price);
 
                 const formData = new FormData();
                 formData.append('piecesValue', piecesValue);
@@ -496,7 +520,31 @@ document.addEventListener('DOMContentLoaded',function(){
 
                 xhr.onreadystatechange = function(){
                     if(xhr.readyState === 4 && xhr.status === 200){
-                        //console.log(i);
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            response.forEach(function(row) {
+                                if(row.error_message){
+                                    var commaPriceMaxElement = document.getElementById('commaPriceMax');
+                                    var maxPrice = Number(document.getElementById('maxPrice').value);
+                                    var piecesCountElement = document.getElementById('piecesCountElement');
+                                    var piecesCount = Number(document.getElementById('piecesCount').value);
+                                    // console.log(piecesCountElement);
+                                    // console.log(piecesCount);
+                                    // console.log(maxPrice);
+                                    // console.log(piecesValue);
+                                    // console.log(iIdValue[i]);
+                                    maxPrice +=  price * (piecesValue - iIdValue[i]);
+                                    piecesCount += piecesValue - iIdValue[i];
+                                    piecesCountElement.textContent = piecesCount;
+                                    // console.log(maxPrice);
+                                    commaPriceMax = maxPrice.toLocaleString();//コンマ区切り
+                                    commaPriceMaxElement.textContent = commaPriceMax;
+                                }
+                            });
+                        } catch (error) {
+                            console.error("Error parsing JSON response:", error);
+                            alert("リクエストが失敗しました。");
+                        }
                     }
                 }
 

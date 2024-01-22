@@ -37,81 +37,76 @@ HTML;
 
 //ヘッダーは「注文内容の確認」
 
-if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice']) && isset($_POST['arrayPieces']) && isset($_POST['arrayPrice'])){
-    $addressSql = "SELECT * FROM address WHERE user_id = ? && default_status = 1";
-    $addressStmt = $conn->prepare($addressSql);
-    $addressStmt->bind_param("s", $user_id);
-    $addressStmt->execute();
-    $addressResult = $addressStmt->get_result();
-    if($addressResult && $addressResult->num_rows > 0){
-        $addressRow = $addressResult->fetch_assoc();
-        $post_code = $addressRow['post_code'];
-        $postBefore = substr($post_code, 0,3);//前3桁
-        $postAfter = substr($post_code, -4);//後ろ4桁
-        $post_code2 = $postBefore." - ".$postAfter;
-        $prefectures = $addressRow['prefectures'];
-        $city = $addressRow['city'];
-        // $city_kana = $addressRow['city_kana'];
-        $tyou = $addressRow['tyou'];//登録されたままの表示　例：１丁目１番１号、2-21-4 どちらもそのまま出力
-        $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:null;
-        $addressname = $addressRow['addressname'];
-        $means = $addressRow['means'];
-        if($means === true){
-            $means_result = "対面で受け渡し";
-        }else{
-            $means_result = "置き配";
-        }
-        $maxPrice = $_POST['maxPrice'];
-        echo <<<END
-        <div class="ALL">
-        <div class="box">
-        <div class="title top"><p>お届け先</p></div>
-        <div class="parent">
-        <div><p>$addressname 様</p></div>
-        <div><p>〒$post_code</p></div>
-        <div><p>$prefectures $city $tyou $room_number</p></div>
-        </div>
-        <div class="title"><p>受取り方法</p></div>
-        <div><p>$means_result</p></div>
-        <div class="title"><p>支払い方法</p></div><p>readPAY <a href="chargePay.php">チャージ</a></p><br>
-        <h3><p>合計 (税込) ￥ $maxPrice</p></h3><br>
-        <button class="BTN" type="button" onclick="orderButton()">注文を確定する</button><br>
-        </div>
-        </div>
-        END;
+// if(isset($_POST['buyProductId']) && isset($_POST['buyColorSize']) && isset($_POST['maxPrice']) && isset($_POST['arrayPieces']) && isset($_POST['arrayPrice'])){
+$addressSql = "SELECT * FROM address WHERE user_id = ? && default_status = 1";
+$addressStmt = $conn->prepare($addressSql);
+$addressStmt->bind_param("s", $user_id);
+$addressStmt->execute();
+$addressResult = $addressStmt->get_result();
+if($addressResult && $addressResult->num_rows > 0){
+    $addressRow = $addressResult->fetch_assoc();
+    $post_code = $addressRow['post_code'];
+    $postBefore = substr($post_code, 0,3);//前3桁
+    $postAfter = substr($post_code, -4);//後ろ4桁
+    $post_code2 = $postBefore." - ".$postAfter;
+    $prefectures = $addressRow['prefectures'];
+    $city = $addressRow['city'];
+    // $city_kana = $addressRow['city_kana'];
+    $tyou = $addressRow['tyou'];//登録されたままの表示　例：１丁目１番１号、2-21-4 どちらもそのまま出力
+    $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:null;
+    $addressname = $addressRow['addressname'];
+    $means = $addressRow['means'];
+    if($means === true){
+        $means_result = "対面で受け渡し";
     }else{
-        echo "住所の登録を済ませてください。";
-        echo "<a href='address_insert.php'>住所登録へ</a>";
-        exit();
+        $means_result = "置き配";
     }
-    echo "<form action='orderConfirm.php' method='post' id='form'>";
-    for($i = 0; $i < count($_POST['buyProductId']); $i++){
-        $product_id = $_POST['buyProductId'][$i];
-        $color_size_id = $_POST['buyColorSize'][$i];
-        $pieces = $_POST['arrayPieces'][$i];
-        $price = $_POST['arrayPrice'][$i];
-        // echo $product_id;
-        // echo $color_size_id;
-        // echo $pieces;
-        echo <<<END
-        <input type="hidden" name="arrayPieces[]" value="$pieces">
-        <input type="hidden" name="arrayPrice[]" value="$price">
-        <input type="hidden" name="buyProductId[]" value="$product_id">
-        <input type="hidden" name="buyColorSize[]" value="$color_size_id">
-        END;
-    }
+    $maxPrice = $_GET['maxPrice'];
+    $commaPriceMax = number_format($maxPrice);
     echo <<<END
-    <input type="hidden" name="maxPrice" value="$maxPrice">
-    </form>
-    END;;
+    <div class="ALL">
+    <div class="box">
+    <div class="title top"><p>お届け先</p></div>
+    <div class="parent">
+    <div><p>$addressname 様</p></div>
+    <div><p>〒$post_code</p></div>
+    <div><p>$prefectures $city $tyou $room_number</p></div>
+    </div>
+    <div class="title"><p>受取り方法</p></div>
+    <div><p>$means_result</p></div>
+    <div class="title"><p>支払い方法</p></div><p>readPAY <a href="chargePay.php">チャージ</a></p><br>
+    <h3><p>合計 (税込) ￥ $commaPriceMax</p></h3><br>
+    <button class="BTN" type="button" onclick="location.href='orderConfirm.php?maxPrice=$maxPrice'">注文を確定する</button><br>
+    </div>
+    </div>
+    END;
+}else{
+    echo "住所の登録を済ませてください。";
+    echo "<a href='address_insert.php'>住所登録へ</a>";
+    exit();
 }
+// echo "<form action='orderConfirm.php' method='post' id='form'>";
+// for($i = 0; $i < count($_POST['buyProductId']); $i++){
+//     $product_id = $_POST['buyProductId'][$i];
+//     $color_size_id = $_POST['buyColorSize'][$i];
+//     $pieces = $_POST['arrayPieces'][$i];
+//     $price = $_POST['arrayPrice'][$i];
+//     // echo $product_id;
+//     // echo $color_size_id;
+//     // echo $pieces;
+//     echo <<<END
+//     <input type="hidden" name="arrayPieces[]" value="$pieces">
+//     <input type="hidden" name="arrayPrice[]" value="$price">
+//     <input type="hidden" name="buyProductId[]" value="$product_id">
+//     <input type="hidden" name="buyColorSize[]" value="$color_size_id">
+//     END;
+// }
+// echo <<<END
+// <input type="hidden" name="maxPrice" value="$maxPrice">
+// </form>
+// END;
+// }
 
 echo "</body>";
 echo "</html>";
 ?>
-<script>
-function orderButton(){
-    var form = document.getElementById('form');
-    form.submit();
-}
-</script>

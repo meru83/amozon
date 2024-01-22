@@ -21,7 +21,7 @@ if(isset($_SESSION['user_id'])){
 
 try{
     //select insert チャットなかったら作成してチャットへあったらチャットへ
-    $maxPrice = $_POST['maxPrice'];
+    $maxPrice = $_GET['maxPrice'];
     $arraySellerId = array();
     $order_status = "出荷準備中";
 
@@ -39,26 +39,28 @@ try{
             HTML;
         }
     }
-    $last_id = $conn->insert_id;
+    $last_id = $conn->insert_id;//order_id取得
 
-    for($i = 0; $i < count($_POST['buyProductId']); $i++){
-        $product_id = $_POST['buyProductId'][$i];
-        $color_size_id = $_POST['buyColorSize'][$i];
-        $pieces = $_POST['arrayPieces'][$i];
-        $price = $_POST['arrayPrice'][$i];
-        
-        $checkSql = "SELECT s.service_status, p.seller_id FROM color_size s
-                    LEFT JOIN products p ON (s.product_id = p.product_id)
-                    WHERE s.color_size_id = ?";
-        $checkStmt = $conn->prepare($checkSql);
-        $checkStmt->bind_param("i",$color_size_id);
-        $checkStmt->execute();
-        $checkResult = $checkStmt->get_result();
-        if($checkResult && $checkResult->num_rows > 0){
-            $checkRow = $checkResult->fetch_assoc();
-            $service_status = $checkRow['service_status'];
-            $seller_id = $checkRow['seller_id'];
-            if(!$service_status){
+
+    $cartSql = "SELECT c.product_id, c.color_size_id, c.pieces AS cartPieces, p.seller_id, s.pieces AS maxPieces, s.price, s.service_status FROM cart c
+            LEFT JOIN products p ON (c.product_id = p.product_id)
+            LEFT JOIN color_size s ON (c.color_size_id = s.color_size_id)
+            WHERE c.user_id = ?";
+    $cartStmt = $conn->prepare($cartSql);
+    $cartStmt->bind_param("s",$user_id);
+    $cartStmt->execute();
+    $cartResult = $cartStmt->get_result();
+    if($cartResult && $cartResult->num_rows > 0){
+        while($cartRow = $cartResult->fetch_assoc()){
+            $service_status = $cartRow['service_status'];
+            $seller_id = $cartRow['seller_id'];
+            $cartPieces = $cartRow['cartPieces'];
+            $maxPieces = $cartRow['maxPieces'];
+            $price = $cartRow['price'];
+            $product_id = $cartRow['product_id'];
+            $color_size_id = $cartRow['color_size_id'];
+            $price *= $cartPieces;
+            if(!($service_status) || ($cartPieces > $maxPieces)){
                 echo <<<HTML
                 <script>
                 if(!alert("在庫が不足している商品がありました。カート画面に戻ります。")){
@@ -67,9 +69,10 @@ try{
                 </script>      
                 HTML;
             }
+
             $insert2Sql = "INSERT INTO orders_detail VALUES (?, ?, ?, ?, ?)";
             $insert2Stmt = $conn->prepare($insert2Sql);
-            $insert2Stmt->bind_param("iiiii",$last_id,$product_id,$color_size_id,$pieces,$price);
+            $insert2Stmt->bind_param("iiiii",$last_id,$product_id,$color_size_id,$cartPieces,$price);
             $insert2Stmt->execute();
 
             // チャットルームが既に存在するか確認
@@ -86,23 +89,23 @@ try{
                 $insert_stmt->bind_param("ss", $user_id, $seller_id);
                 $insert_stmt->execute();
             }
+        }
+        $chatroomSql = "SELECT room_id FROM chatrooms WHERE user_id = ? && seller_id = ?";
+        $chatroomStmt = $conn->prepare($chatroomSql);
+        $chatroomStmt->bind_param("ss",$user_id,$seller_id);
+        $chatroomStmt->execute();
+        $chatroomResult = $chatroomStmt->get_result();
+        if($chatroomResult && $chatroomResult->num_rows > 0){
+            $chatroomRow = $chatroomResult->fetch_assoc();
+            $room_id = $chatroomRow['room_id'];
+            $nullVar = null;
+            $message_text = "商品を購入しました！";
 
-            $chatroomSql = "SELECT room_id FROM chatroom WHERE user_id = ? && seller_id = ?";
-            $chatroomStmt = $conn->prepare($chatroomSql);
-            $chatroomStmt->bind_param("ss",$user_id,$seller_id);
-            $chatroomStmt->execute();
-            $chatroomResult = $chatroomStmt->get_result();
-            if($chatroomResult && $chatroomResult->num_rows > 0){
-                $chatroomRow = $chatroomResult->fetch_assoc();
-                $room_id = $chatroomRow['room_id'];
-                $message_text = "商品を購入しました！";
-
-                $chatSql = "INSERT INTO messages (room_id, user_id, seller_id, message_text)
-                            VALUES(?, ?, ?, ?)";
-                $chatStmt = $conn->prepare($chatSql);
-                $chatStmt->bind_param("isss",$room_id,$user_id,$seller_id,$message_text);
-                $chatStmt->execute();
-            }
+            $chatSql = "INSERT INTO messages (room_id, user_id, seller_id, message_text)
+                        VALUES(?, ?, ?, ?)";
+            $chatStmt = $conn->prepare($chatSql);
+            $chatStmt->bind_param("isss",$room_id,$user_id,$nullVar,$message_text);
+            $chatStmt->execute();
         }
     }
 
@@ -114,6 +117,7 @@ try{
     </script>  
     HTML;
 }catch(Exception $e){
+    error_log("Error in orderConfirm.php: " . $e->getMessage() . PHP_EOL);
     echo <<<HTML
     <script>
     if(!alert("購入処理が強制終了しました。カート画面に戻ります。")){
