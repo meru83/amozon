@@ -138,3 +138,15 @@ h2 {
 .button:hover {
     background-color: #004488;
 }
+
+#status1 {
+    display: none;
+}
+
+#status3{
+    display: none;
+}
+
+#status4{
+    display: none;
+}
