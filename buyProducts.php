@@ -93,12 +93,18 @@ if($addressResult && $addressResult->num_rows > 0){
     $totalPayStmt->bind_param("s",$user_id);
     $totalPayStmt->execute();
     $totalPayResult = $totalPayStmt->get_result();
-    $totalPayRow = $totalPayResult->fetch_assoc();
-    $totalPay = $totalPayRow['total_pay'];
-    if($totalPay >= $maxPrice){
-        echo<<<END
-        <button class="BTN" type="button" onclick="location.href='orderConfirm.php?maxPrice=$maxPrice'">注文を確定する</button><br>
-        END;
+    if($totalPayResult && $totalPayResult->num_rows > 0){
+        $totalPayRow = $totalPayResult->fetch_assoc();
+        $totalPay = $totalPayRow['total_pay'];
+        if($totalPay >= $maxPrice){
+            echo<<<END
+            <button class="BTN" type="button" onclick="location.href='orderConfirm.php?maxPrice=$maxPrice'">注文を確定する</button><br>
+            END;
+        }else{
+            echo<<<END
+            <button class="BTN" type="button" onclick="orderAlert()">注文を確定する</button><br>
+            END;
+        }
     }else{
         echo<<<END
         <button class="BTN" type="button" onclick="orderAlert()">注文を確定する</button><br>
