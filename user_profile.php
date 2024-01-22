@@ -47,8 +47,10 @@ if(isset($_SESSION['user_id'])){
             // チャージ情報をHTMLに表示
             $zandaka =<<<END
                 <div class='sub-content-item'>
+                <div class="flexBox">
                     <h2>残高<h2>
-                    <p>{$row["total_pay"]}</p>
+                    <p>￥{$row["total_pay"]}</p>
+                </div>
                 </div>
             </a>
 END;
@@ -57,8 +59,10 @@ END;
             $zandaka =<<<END
             <a href='chargePay.php'>
                 <div class='sub-content-item'>
+                <div class="flexBox">
                     <h2>残高<h2>
-                    <p>0</p>
+                    <p>￥0</p>
+                </div>
                 </div>
             </a>
 END;
@@ -68,7 +72,9 @@ END;
         $zan =<<<END
             <a href='chargePay.php'>
                 <div class='sub-content-item'>
+                <div class="flexBox">
                     <h2>チャージする</h2>
+                </div>
                 </div>
             </a>
 END;
