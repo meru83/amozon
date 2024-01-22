@@ -30,11 +30,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                         $product_id = $_SESSION['cart']['product_id'][$i];
                         $color_size_id = $_SESSION['cart']['color_size_id'][$i];
                         $pieces = $_SESSION['cart']['pieces'][$i];
-                        
-                        $insertSql = "INSERT INTO cart(user_id, product_id, color_size_id, pieces) VALUES(?,?,?,?)";
-                        $insertStmt = $conn->prepare($insertSql);
-                        $insertStmt->bind_param("siii",$_SESSION['user_id'], $product_id, $color_size_id, $pieces);
-                        $insertStmt->execute();
+
+                        //判定
+                        $selectSql = "SELECT user_id, product_id, color_size_id FROM cart
+                                    WHERE user_id = ? && product_id = ? && color_size_id = ?";
+                        $selectStmt = $conn->prepare($selectSql);
+                        $selectStmt->bind_param("sii",$_SESSION['user_id'],$product_id,$color_size_id);
+                        $selectStmt->execute();
+                        $selectResult = $selectStmt->get_result();
+                        if(!($selectResult && $selectResult->num_rows > 0)){
+                            $insertSql = "INSERT INTO cart(user_id, product_id, color_size_id, pieces) VALUES(?,?,?,?)";
+                            $insertStmt = $conn->prepare($insertSql);
+                            $insertStmt->bind_param("siii",$_SESSION['user_id'], $product_id, $color_size_id, $pieces);
+                            $insertStmt->execute();
+                        }
                     }
                 }
                 $_SESSION['cart'] = null;
@@ -42,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $error_message = true;
         }
     }catch (Exception $e) {
-        error_log("error : ".$e->getMessage());
+        error_log("error 2fa.php: ".$e->getMessage());
     }
 }
 

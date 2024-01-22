@@ -486,17 +486,19 @@ echo <<<HTML
 <script>
 document.addEventListener('DOMContentLoaded',function(){
     var countMax = $countMax;
+    var maxPrice = Number(document.getElementById('maxPrice').value);
+    var piecesCount = Number(document.getElementById('piecesCount').value);
     var iIdValue = [];
     for(let i = 0; i < countMax; i++){
         var iId = document.getElementById(i);//在庫数
-        iIdValue[i] = iId.value;//元の在庫数を格納する配列
         if(iId !== null){
+            iIdValue[i] = iId.value;//元の在庫数を格納する配列
             iId.addEventListener('change',function(){
                 var productElement = document.getElementById('product_id'+i);
                 var colorSizeElement = document.getElementById('color_size_id'+i);
                 var priceElement = document.getElementById('price'+i);
                 // console.log(priceElement);
-                piecesValue = this.value;
+                piecesValue = this.value;//変更後の値
                 // console.log(piecesValue);
                 // console.log(iIdValue[i]);
                 if(productElement !== null && colorSizeElement !== null && priceElement !== null){
@@ -525,9 +527,7 @@ document.addEventListener('DOMContentLoaded',function(){
                             response.forEach(function(row) {
                                 if(row.error_message){
                                     var commaPriceMaxElement = document.getElementById('commaPriceMax');
-                                    var maxPrice = Number(document.getElementById('maxPrice').value);
                                     var piecesCountElement = document.getElementById('piecesCountElement');
-                                    var piecesCount = Number(document.getElementById('piecesCount').value);
                                     // console.log(piecesCountElement);
                                     // console.log(piecesCount);
                                     // console.log(maxPrice);
@@ -535,10 +535,15 @@ document.addEventListener('DOMContentLoaded',function(){
                                     // console.log(iIdValue[i]);
                                     maxPrice +=  price * (piecesValue - iIdValue[i]);
                                     piecesCount += piecesValue - iIdValue[i];
+                                    iIdValue[i] = piecesValue;
                                     piecesCountElement.textContent = piecesCount;
                                     // console.log(maxPrice);
                                     commaPriceMax = maxPrice.toLocaleString();//コンマ区切り
                                     commaPriceMaxElement.textContent = commaPriceMax;
+                                    console.log(maxPrice);
+                                    console.log(piecesCount);
+                                    console.log(piecesValue);
+                                    console.log(iIdValue[i]);
                                 }
                             });
                         } catch (error) {
