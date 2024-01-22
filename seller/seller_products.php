@@ -92,10 +92,11 @@ if(isset($_SESSION['seller_id'])){
         </div>
         
         <div class="right-content">
-            <form id="form" action=".php" method="GET">
+            <form id="form" action="" method="GET">
                 <div class="flexBox">
                     <label for="search">商品を検索</label>
                     <input type="text" id="search" name="search">
+                    <input type="hidden" name="flag" value="flag">
                     <button type="submit" id="submit" class="btn-img"></button>
                 </div>
             </form>
@@ -415,6 +416,22 @@ echo <<<HTML
 HTML;
 ?>
 <script>
+const search = document.getElementById('search');
+const submit = document.getElementById('submit');
+const form = document.getElementById('form');
+form.addEventListener('submit',(e) => {
+    let searchValue = search.value;
+    let str = searchValue.replace(/\s+/g, "");
+    console.log(str);
+    if(str === null || str === ""){
+        e.preventDefault();
+        return false;
+    }else{
+        return true;
+    }
+});
+
+
 function deleteProducts(deleteCount){
     var inputId = document.getElementById(deleteCount);
     var productElement = document.getElementById('name'+deleteCount);
