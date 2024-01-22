@@ -18,9 +18,66 @@ if(isset($_SESSION['user_id'])){
     exit();
 }
 
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+    $foo2 = <<<END
+    <div style="width:100%; text-align: right; height: fit-content;">
+    <form action="logout.php" method="post">
+        <input type="submit" name="logout" class="log_out" value="ログアウト">
+    </form>
+    </div>
+    END;
+}else{
+    $user_id = "A";
+    $foo2 = <<<END
+    <div class="New_log">
+        <a href="register.php"><div class="log_style">新規登録</div></a>
+        <a href="login.php"><div class="log_style rightM">ログイン</div></a>
+    </div>
+    END;
+}
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Amozon_insta.css">
+    <link rel="stylesheet" href="css/buyHistory.css">
+</head>
+<body>
+    <div id="header" class="header">
+        <div class="back"><div class="backBtn" onclick="history.back()"><img src="img/return_left.png" style="width:100%;"></div></div>
+        <h1 class="h1_White">購入履歴</h1>
+        <?=$foo2?>
+    </div>
+
+        <div class="Amozon-container">
+        <!-- Left Side Menu -->
+            <div class="left-menu">
+                <div>
+                    <ul class="menu-list">
+                        <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                        <li class="menu-item"><a href="user_top.php"><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                        <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                        <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                        <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                        <li class="menu-item"><a href="favoriteProduct.php"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">お気に入り</span></a></li>
+                        <li class="menu-item"><a href="buyHistory.php"><img src="img/meisi.png" class="logo"><span class="menu-item-text">購入履歴</span></a></li>
+                        <li class="menu-item"><a href="user_top.php"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="menu-list-bottom">
+                    </ul>
+                </div>
+            </div>
+            <div class="right-content">
+
+<?php
 $arrayProductId = array();
 $count = 0;
-$buyDetail = "購入明細<br>";
+$buyDetail = "<div>購入明細</div><br>";
 $totalTtext = "";
 $colorSizeText = "";
 $buyDetailFlag = false;
@@ -74,12 +131,12 @@ if($orderResult && $orderResult->num_rows > 0){
                 $colorSizeText .= <<<END
                 <input type="hidden" id="product_id$count" name="product_id" value="$product_id">
                 <input type="hidden" id="color_size_id$count" name="color_size_id" value="$color_size_id">
-                $productname $colorName $size  単価$price ＊ $order_pieces  　計　$detail_total 販売者：<a href="seller_profile.php?seller_id=$seller_id">$seller_id</a><br>
+                $productname $colorName $size  <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：<a href="seller_profile.php?seller_id=$seller_id">$seller_id</a></div><br>
                 END;
             }else{
                 //お気に入りボタン未設置
                 $colorSizeText .= <<<END
-                $productname $colorName $size  単価$price ＊ $order_pieces  　計　$detail_total 販売者：$seller_id<br>
+                $productname $colorName $size  <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：$seller_id</div><br>
                 END;
             }
 
@@ -108,10 +165,10 @@ if($orderResult && $orderResult->num_rows > 0){
                 END;
             }
             $totalTtext .= <<<END
-            <br>
-            合計購入金額：$total<br>
-            配達状況　　：<a href="huzai/huzai.php">$order_status</a><br>
-            購入日時　　：$create_at<br>
+            
+            <div>合計購入金額：$total</div>
+            <div>配達状況　　：<a href="huzai/huzai.php">$order_status</a></div>
+            <div>購入日時　　：$create_at</div>
             <hr>
             END;
 
@@ -121,6 +178,10 @@ if($orderResult && $orderResult->num_rows > 0){
     }
 }
 
+echo '</div>';//<div class="right-content">
+echo '</div>';//<div class="Amozon-container">
+echo '</body>';
+echo '</html>';
 
 function getColor($conn, $color_code){
     $colorSql = "SELECT * FROM color_name
