@@ -140,3 +140,15 @@ width: 400px;
 .button:hover {
     background-color: #004488;
 }
+
+#status2 {
+    display: none;
+}
+
+#status3{
+    display: none;
+}
+
+#status4{
+    display: none;
+}

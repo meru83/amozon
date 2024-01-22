@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style-ready.css"> 出荷準備中まで
+    <link rel="stylesheet" href="css/style-ready.css"> <!-- 出荷準備中まで -->
     <!-- <link rel="stylesheet" href="css/style-set.css"> 発送済みまで -->
     <!-- <link rel="stylesheet" href="css/style-go.css">  配達中まで -->
     <!-- <link rel="stylesheet" href="css/style-goru.css"> 配達済みまで -->
@@ -43,8 +43,12 @@
             </div>
             <p>荷物番号: 1234567890</p>
         </div>
-        <p>詳しい配達状況を確認するには以下のボタンをクリックしてください。</p>
-        <a href="" class="button">配達状況を確認する</a>
+        <!-- <p>詳しい配達状況を確認するには以下のボタンをクリックしてください。</p>
+        <a href="" class="button">配達状況を確認する</a> -->
+        <p id="status1">現在、出荷準備中です。</p>
+        <p id="status2">現在、発送済みです。</p>
+        <p id="status3">現在、配達中です。</p>
+        <p id="status4">配達済みです。商品が届かない場合は不在票が投函されていないかご確認ください。</p>
     </section>
 
     <script>
