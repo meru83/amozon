@@ -1,4 +1,11 @@
 <?php
+include "../db_config.php";
+
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log'); // エラーログをerror.logファイルに記録
+error_reporting(E_ALL);
+
 // セッションを開始します
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -63,16 +70,38 @@ END;
             </div>
         </div>
 
-        <div class="right-content">
-            <div class="amozon_profile">
-                <img src="../img/cart_dake.svg" class="amozon_usericon">
-                <h1>名前</h1>
-                <a href='chargePay.php'>
-                <div class="sub-content">
-                    <div class="sub-content-item1"></div>
-                    <div class="sub-content-item1"></div>
-                    <div class="sub-content-item1"></div>
-                </div>>
+        <div class="amozon_profile">
+        <img src="../img/cart_dake.svg" class="amozon_usericon">
+        <?php
+             // ログイン中のユーザーIDを取得
+        if (isset($_SESSION['seller_id'])) {
+            $seller_id = $_SESSION['seller_id'];
+            $sql_seller = "SELECT sellerName FROM seller WHERE seller_id = '$seller_id'";
+            $result_seller = $conn->query($sql_seller);
+
+        // クエリの実行にエラーがある場合
+        if (!$result_seller) {
+            die("クエリの実行にエラーがあります: " . $conn->error);
+        }
+
+        // ユーザー名が取得できた場合は表示
+        if ($result_seller->num_rows > 0) {
+            $row_seller = $result_seller->fetch_assoc();
+            echo "<h1>{$row_seller['sellerName']}</h1>";
+        }           
+        // データベース接続を閉じる
+            $conn->close();
+        } else {
+            // ログインしていない場合
+            echo "<p>ログインしていません</p>";
+        }
+        ?>
+        <a href='chargePay.php'>
+            <div class="sub-content">
+                <div class="sub-content-item1"></div>
+                <div class="sub-content-item1"></div>
+                <div class="sub-content-item1"></div>
+                    </div>>
                 </a>
             </div>
         </div>  
