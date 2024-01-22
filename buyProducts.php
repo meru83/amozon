@@ -81,8 +81,10 @@ if($addressResult && $addressResult->num_rows > 0){
     </div>
     END;
 }else{
-    echo "住所の登録を済ませてください。";
-    echo "<a href='address_insert.php'>住所登録へ</a>";
+    echo '<div class="addBox">';
+    echo "<div class='touroku'>住所の登録を済ませてください。</div>";
+    echo "<a href='address_insert.php'><div class='addBtn'>住所登録へ</div></a>";
+    echo '</div>';
     exit();
 }
 // echo "<form action='orderConfirm.php' method='post' id='form'>";

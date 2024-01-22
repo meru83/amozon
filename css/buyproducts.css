@@ -55,3 +55,32 @@ p {
 .BTN:hover {
     background-color:#004280;
 }
+
+
+.touroku {
+    padding-top: 80px;
+}
+
+.addBox {
+    width: fit-content;
+    margin: 0 auto;
+    padding-top: 200px;
+}
+
+.addBtn {
+    text-align: center;
+    margin: 200px 60px 0 60px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #005aae;
+    color: white;
+}
+
+.addBtn:hover {
+    background-color: #004488;
+}
+
+a, a:hover, a:active, a:visited {
+    color: #000;
+    text-decoration: none;
+}
