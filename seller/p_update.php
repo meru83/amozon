@@ -61,20 +61,20 @@ if($result){
             <p><?=$product_id?></p>
             <input type="hidden" name="product_id" id="product_id" value="<?=$product_id?>">
             <label for="productname">
-                商品名　：
+            <b>商品名</b>　：
                 <input type="text" name="productname" id="productname" value="<?=$productname?>" placeholder="商品名" required>
             </label><br>
             <label for="view">
-                　概要　：
+            <b>概要</b>　：
                 <textarea name="view" id="view" cols="25" rows="10" placeholder="概要"><?=$view?></textarea>
             </label><br>
             <label for="seller_id">
-                販売者ID:
+            <b>販売者ID</b>:
                 <input type="text" name="seller_id" id="seller_id" value="<?=$seller_id?>" placeholder="id" required>
             </label><br><br>
 
             <label for="big_category">
-                大カテゴリ：
+            <b>大カテゴリ</b>：
                 <select name="big_category" id="big_category">
                     <option hidden value="<?=$big_category_id1?>"><?=$big_category_name1?></option>
                     <?php 

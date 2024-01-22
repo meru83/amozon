@@ -245,18 +245,18 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
             <div class="flex">
-            <div class="left"><p id="name$product_id">商品名　　　$productname</p></div>
+            <div class="left"><p id="name$product_id"><b>商品名</b>　　　$productname</p></div>
             <button type="butt  on" class="btnStyle2" onclick="changeProductName($product_id)">変更</button><br></div>
             <div id="allCategory$product_id" class="flex" style="display:block">
             <div id="categoryText$product_id" class="left float">
-            カテゴリ名　$big_category_name - $category_name - $small_category_name
+            <b>カテゴリ名</b>　$big_category_name - $category_name - $small_category_name
             </div>
             <button type="button" class="btnStyle2" onclick="changeCategory($product_id)">変更</button>
             </div>
             
             <div id="bigCate$product_id" style="display:none">
             <label for="big_category$product_id" class="p2_label">
-                大カテゴリ
+            <b>大カテゴリ</b>
                 <select id="big_category$product_id" class="styleSelect selectStyle">
                     <option value="" hidden>選択してください</option>
             END;
@@ -293,12 +293,12 @@ if($selectResult && $selectResult->num_rows > 0){
             <button type="button" id="confirmCategoryButton$product_id" class="btnStyle" style="display:none">再登録</button><br>
             
             <div class="flex">
-            <div class="left"><p id="view$product_id">概要　　　　 $view</p></div>
+            <div class="left"><p id="view$product_id"><b>概要</b>　　　　 $view</p></div>
             <button type="button" class="btnStyle2" onclick="changeView($product_id)">変更</button>
             </div>
             <br>
             <div id="qualityBox$product_id" class="flex">
-            <div class="left"><p id="qualityText$product_id">品質　　　　 $quality</p></div>
+            <div class="left"><p id="qualityText$product_id"><b>品質</b>　　　　 $quality</p></div>
             <button type="button" class="btnStyle2" onclick="changeQuality($product_id)">変更</button>
             </div>
             <div id="selectQualityBox$product_id" style="display:none">
@@ -313,7 +313,7 @@ if($selectResult && $selectResult->num_rows > 0){
             $htmlText .= <<<END
                 </select>
             </div>
-            出品日　　　 $create_at<br>
+            <b>出品日</b>　　　 $create_at<br>
             <br>
             END;
             // 他の情報も必要に応じて表示

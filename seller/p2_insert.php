@@ -90,16 +90,16 @@ if(isset($_SESSION['seller_id'])){
 <form action="p2Insert.php" method="post" name="form" id="form">
     <p><?=$sellerName?></p>
     <label for="productname" class="p2_label">
-        商品名
+    <b>商品名</b>
         <div id="his" style="display:none; color:red">必須</div>
         <input type="text" name="productname" id="productname" class="styleTextBox" placeholder="商品名" required>
     </label><br>
     <label for="view" class="p2_label">
-        概要
+    <b>概要</b>
         <textarea name="view" id="view" class="styleTextArea" cols="25" rows="10" placeholder="概要"></textarea>
     </label><br>
     <label for="quality" class="p2_label">
-        品質
+    <b>品質</b>
         <div id="his2" style="display:none; color:red">必須</div>
         <select name="quality" id="quality" class="styleSelect" required>
             <option value="" hidden>選択してください</option>
@@ -111,7 +111,7 @@ if(isset($_SESSION['seller_id'])){
     </label><br>
 
     <label for="big_category" class="p2_label">
-        大カテゴリ：
+    <b>大カテゴリ</b>：
         <select name="big_category" id="big_category" class="styleSelect">
             <option value="" hidden>選択してください</option>
             <?php 
@@ -140,7 +140,7 @@ if(isset($_SESSION['seller_id'])){
 
     <div id="selectBoxesContainer">
         <div id="selector0">    
-            <label for="sizeSelect0">商品のサイズ</label>
+            <label for="sizeSelect0"><b>商品のサイズ</b></label>
             <select name="selectorArray[]" id="sizeSelect0" class="styleSelect" required>
                 <option value="" hidden>選択してください</option>
                 <option value="FREE">FREE</option>

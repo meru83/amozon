@@ -113,12 +113,12 @@ foreach($insertId as $rowId){
             $colorCode = $row['color_code'];
             $colorName = getColor($conn, $colorCode);
             $htmlText .= <<<END
-            商品名：$productname<br>
-            カラー：$colorName<br>
-            サイズ：$size<br>
-            品質　：$quality<br>
-            登録日：$create_at<br>
-            販売者：$seller_id<br>
+            <b>商品名</b>：$productname<br>
+            <b>カラー</b>：$colorName<br>
+            <b>サイズ</b>：$size<br>
+            <b>品質</b>　：$quality<br>
+            <b>登録日</b>：$create_at<br>
+            <b>販売者</b>：$seller_id<br>
             <input type="file" name="img[$i][]" multiple accept="image/*"><br>
             <hr>
             END;

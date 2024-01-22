@@ -183,10 +183,10 @@ if(!($user_id === "A")){
                     $htmlText = <<<END
                     <br>
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-                    色: $colorName
-                    サイズ: $size<br>
-                    商品名　　: $productname<br>
-                    価格　　　: ￥ $commaPrice<br>
+                    <b>色</b>: $colorName
+                    <b>サイズ</b>: $size<br>
+                    <b>商品名</b>　　: $productname<br>
+                    <b>価格</b>　　　: ￥ $commaPrice<br>
                     </a>
                     <br>
                     END;
@@ -382,10 +382,10 @@ if(!($user_id === "A")){
                     $htmlText = <<<END
                     <br>
                     <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-                    色: $colorName
-                    サイズ: $size<br>
-                    商品名　　: $productname<br>
-                    価格　　　: ￥ $commaPrice<br>
+                    <b>色</b>: $colorName
+                    <b>サイズ</b>: $size<br>
+                    <b>商品名</b>　　: $productname<br>
+                    <b>価格</b>　　　: ￥ $commaPrice<br>
                     </a>
                     <br>
                     <div class="sonota">
