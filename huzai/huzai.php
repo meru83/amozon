@@ -17,25 +17,43 @@ if(isset($_SESSION['user_id'])){
     header("Location:login.php");
     exit();
 }
-
-$sql = "SELECT create_at FROM orders WHERE user_id = ? && create_at < CURRENT_TIMESTAMP - INTERVAL 2 MINUTE";
+$order_id = 763;//テスト用
+$orderStatusText1 = "出荷準備中";
+$orderStatusText2 = "発送済み";
+$orderStatusText3 = "配達中";
+$orderStatusText4 = "配達完了";
+$sql = "SELECT order_status FROM orders WHERE order_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s",$user_id);
+$stmt->bind_param("i",$order_id);
 $stmt->execute();
 $result = $stmt->get_result();
 if($result && $result->num_rows > 0){
-    // 現在の日時を取得
-    $currentDateTime = new DateTime();
-    while($row = $result->fetch_assoc()){
-        $create_at = $row['create_at'];
-        $createDateTime = new DateTime($create_at);
-        $timeGap = $currentDateTime->diff($createDateTime);
-        if($timeGap->days > 0){
-            echo "過去の時間です。";
-        }
+    $updateSql = "UPDATE orders SET order_status = ? WHERE order_id = ?";
+    $updateRow = $result->fetch_assoc();
+    $order_status = $updateRow['order_status'];
+    $updateStmt = $conn->prepare($updateSql);
+    if($order_status === $orderStatusText1){
+        $cssLink = '<link rel="stylesheet" href="css/style-ready.css">';//出荷準備中まで
+        $updateStmt->bind_param("si",$orderStatusText2,$order_id);
+        $updateStmt->execute();
+    }else if($order_status === $orderStatusText2){
+        $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
+        $updateStmt->bind_param("si",$orderStatusText3,$order_id);
+        $updateStmt->execute();
+    }else if($order_status === $orderStatusText3){
+        $cssLink = '<link rel="stylesheet" href="css/style-go.css">';//配達中まで
+        $updateStmt->bind_param("si",$orderStatusText4,$order_id);
+        $updateStmt->execute();
+    }else{
+        $cssLink = '<link rel="stylesheet" href="css/style-goru.css">';//配達済みまで
     }
 }else{
-    error_log("5");
+    // error_log("a");
+    // echo <<<HTML
+    // <script>
+    // if(!alert("")){}
+    // </script>
+    // HTML;
 }
 ?>
 <!DOCTYPE html>
@@ -43,10 +61,7 @@ if($result && $result->num_rows > 0){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style-ready.css"> <!-- 出荷準備中まで -->
-    <!-- <link rel="stylesheet" href="css/style-set.css"> 発送済みまで -->
-    <!-- <link rel="stylesheet" href="css/style-go.css">  配達中まで -->
-    <!-- <link rel="stylesheet" href="css/style-goru.css"> 配達済みまで -->
+    <?= $cssLink ?>
     <title>荷物の配達状況確認</title>
 </head>
 <body>
@@ -78,7 +93,7 @@ if($result && $result->num_rows > 0){
                 </label>
                 <label class="status4">
                     <div class="circle4"></div>
-                    <p>配達済み</p>
+                    <p>配達完了</p>
                 </label>
             </div>
             <p>荷物番号: 1234567890</p>
