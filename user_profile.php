@@ -156,7 +156,7 @@ if(isset($_SESSION['user_id'])){
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
             $sql_user = "SELECT username FROM users WHERE user_id = '$user_id'";
-        $result_user = $conn->query($sql_user);
+            $result_user = $conn->query($sql_user);
 
         // クエリの実行にエラーがある場合
         if (!$result_user) {
@@ -215,7 +215,7 @@ if(isset($_SESSION['user_id'])){
                 <a href="#">
                 <div class="sub-content-item1">
                     <h2>サブコンテンツ3</h2>
-                    <p>ここにサブコンテンツ3の説明が入ります。</p>
+                    <p></p>
                 </div>
                 </a>
             </div>
