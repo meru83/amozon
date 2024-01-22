@@ -127,10 +127,8 @@ if(!($user_id === "A")){
                 $colorName = getColor($conn, $colorCode);
                 $size = $row['size'];
                 $cartPieces = $row['cartPieces'];
-                $piecesCount += $cartPieces;
                 $maxPieces = $row['maxPieces'];
                 $price  = $row['price'];
-                $priceMax += $price * $cartPieces;
                 $commaPrice = number_format($price);
                 $productname = $row['productname'];
                 $quality = $row['quality'];
@@ -151,6 +149,8 @@ if(!($user_id === "A")){
                     END;
                 }
                 if(!in_array($color_size_id, $lastImg)){
+                    $piecesCount += $cartPieces;
+                    $priceMax += $price * $cartPieces;
                     echo '</div>';
                     echo <<<HTML
                     <!-- If we need pagination -->
@@ -314,7 +314,6 @@ if(!($user_id === "A")){
         $product_id = isset($_SESSION['cart']['product_id'][$i])?$_SESSION['cart']['product_id'][$i]:null;
         $color_size_id = isset($_SESSION['cart']['color_size_id'][$i])?$_SESSION['cart']['color_size_id'][$i]:null;
         $pieces = isset($_SESSION['cart']['pieces'][$i])?$_SESSION['cart']['pieces'][$i]:null;
-        $piecesCount += $pieces;
         $selectSql = "SELECT p.productname, p.view, p.create_at, p.seller_id, p.quality, s.color_size_id, s.color_code, s.size, s.pieces, s.price, i.img_url, b.big_category_name, c.category_name, sc.small_category_name FROM products p
                     LEFT JOIN color_size s ON (p.product_id = s.product_id)
                     LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
@@ -339,7 +338,6 @@ if(!($user_id === "A")){
                 $productname = $row['productname'];
                 $category_name = !is_null($row['category_name'])?$row['category_name']:"";
                 $price  = $row['price'];
-                $priceMax += $price * $pieces;
                 $commaPrice = number_format($price);
                 $color_size_id = $row['color_size_id'];
                 $img_url = is_null($row['img_url'])?null:$row['img_url'];
@@ -359,6 +357,8 @@ if(!($user_id === "A")){
                 }
                 //画像にサイズと色の説明が出るようにする。
                 if(!in_array($color_size_id, $lastImg)){
+                    $priceMax += $price * $pieces;
+                    $piecesCount += $pieces;
                     echo '</div>';
                     echo <<<HTML
                     <!-- If we need pagination -->

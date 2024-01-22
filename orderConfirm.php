@@ -89,24 +89,35 @@ try{
                 $insert_stmt->bind_param("ss", $user_id, $seller_id);
                 $insert_stmt->execute();
             }
-        }
-        $chatroomSql = "SELECT room_id FROM chatrooms WHERE user_id = ? && seller_id = ?";
-        $chatroomStmt = $conn->prepare($chatroomSql);
-        $chatroomStmt->bind_param("ss",$user_id,$seller_id);
-        $chatroomStmt->execute();
-        $chatroomResult = $chatroomStmt->get_result();
-        if($chatroomResult && $chatroomResult->num_rows > 0){
-            $chatroomRow = $chatroomResult->fetch_assoc();
-            $room_id = $chatroomRow['room_id'];
-            $nullVar = null;
-            $message_text = "商品を購入しました！";
 
-            $chatSql = "INSERT INTO messages (room_id, user_id, seller_id, message_text)
-                        VALUES(?, ?, ?, ?)";
-            $chatStmt = $conn->prepare($chatSql);
-            $chatStmt->bind_param("isss",$room_id,$user_id,$nullVar,$message_text);
-            $chatStmt->execute();
+            if(!in_array($seller_id, $arraySellerId)){
+                $chatroomSql = "SELECT room_id FROM chatrooms WHERE user_id = ? && seller_id = ?";
+                $chatroomStmt = $conn->prepare($chatroomSql);
+                $chatroomStmt->bind_param("ss",$user_id,$seller_id);
+                $chatroomStmt->execute();
+                $chatroomResult = $chatroomStmt->get_result();
+                if($chatroomResult && $chatroomResult->num_rows > 0){
+                    $chatroomRow = $chatroomResult->fetch_assoc();
+                    $room_id = $chatroomRow['room_id'];
+                    $nullVar = null;
+                    $message_text = "商品を購入しました！";
+
+                    $chatSql = "INSERT INTO messages (room_id, user_id, seller_id, message_text)
+                                VALUES(?, ?, ?, ?)";
+                    $chatStmt = $conn->prepare($chatSql);
+                    $chatStmt->bind_param("isss",$room_id,$user_id,$nullVar,$message_text);
+                    $chatStmt->execute();
+                }
+                $arraySellerId[] = $seller_id;
+                
+            }
+
+            $deleteSql = "DELETE FROM cart WHERE user_id = ? && product_id = ? && color_size_id = ?";
+            $deleteStmt = $conn->prepare($deleteSql);
+            $deleteStmt->bind_param("sii",$user_id,$product_id,$color_size_id);
+            $deleteStmt->execute();
         }
+        print_r($arraySellerId);
     }
 
     echo <<<HTML
