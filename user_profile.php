@@ -27,91 +27,6 @@ END;
     </div>
 END;
 }
-
-// ログイン中のユーザーの情報を取得
-if(isset($_SESSION['user_id'])){
-    $user = $_SESSION['user_id'];
-    $sql = "SELECT total_pay FROM pay WHERE user_id = '$user'";
-    $result = $conn->query($sql);
-
-    // クエリの実行にエラーがある場合
-    if (!$result) {
-        die("クエリの実行にエラーがあります: " . $conn->error);
-    }
-
-    // データが存在する場合、データを1行だけ取得して表示
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        // "total_pay" キーが存在するか確認してから表示
-        if (isset($row["total_pay"])) {
-            // チャージ情報をHTMLに表示
-            $zandaka =<<<END
-                <div class='sub-content-item'>
-                <div class="flexBox">
-                    <h2>残高<h2>
-                    <p>￥{$row["total_pay"]}</p>
-                </div>
-                </div>
-            </a>
-END;
-        } else {
-            //0円の時
-            $zandaka =<<<END
-            <a href='chargePay.php'>
-                <div class='sub-content-item'>
-                <div class="flexBox">
-                    <h2>残高<h2>
-                    <p>￥0</p>
-                </div>
-                </div>
-            </a>
-END;
-        }
-    } else {
-        // チャージ情報が存在しない場合
-        $zan =<<<END
-            <a href='chargePay.php'>
-                <div class='sub-content-item'>
-                <div class="flexBox">
-                    <h2>残高<h2>
-                    <p>￥0</p>
-                </div>
-                </div>
-            </a>
-END;
-    }
-} 
-// ログイン中のユーザーIDを取得
-if(isset($_SESSION['user_id'])){
-    $user_id = $_SESSION['user_id'];
-    
-    // ユーザーの住所情報を取得
-    $sql = "SELECT * FROM address WHERE user_id = '$user_id'";
-    $result = $conn->query($sql);
-
-    // クエリの実行にエラーがある場合
-    if (!$result) {
-        die("クエリの実行にエラーがあります: " . $conn->error);
-    }
-
-    // 住所が登録されているか確認
-    if ($result->num_rows > 0) {
-        // 認証済みの場合
-        $nisyou =<<<END
-        <p>認証済み</p>
-        END;
-    } else {
-        // 未登録の場合
-        $jusyoNone =<<<END
-                    <h2>(未登録)</h2>
-        END;
-    }
-} else {
- // ログインしていない場合
- $addLogin =<<<END
- <p>ログインしていません</p>
- END;
-}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -146,83 +61,26 @@ if(isset($_SESSION['user_id'])){
         </div>
     </div>
     <div class="right-content">
-        <div class="amozon_profile">
-            <img src="img/cart_dake.svg" class="amozon_usericon">
-            <?php
-             // ログイン中のユーザーIDを取得
-        if (isset($_SESSION['user_id'])) {
-            $user_id = $_SESSION['user_id'];
-            $sql_user = "SELECT username FROM users WHERE user_id = '$user_id'";
-            $result_user = $conn->query($sql_user);
-
-        // クエリの実行にエラーがある場合
-        if (!$result_user) {
-            die("クエリの実行にエラーがあります: " . $conn->error);
-        }
-
-        // ユーザー名が取得できた場合は表示
-        if ($result_user->num_rows > 0) {
-            $row_user = $result_user->fetch_assoc();
-            echo "<h1>{$row_user['username']}</h1>";
-        }           
-        // データベース接続を閉じる
-            $conn->close();
-        } else {
-            // ログインしていない場合
-            echo "<p>ログインしていません</p>";
-        }
-        ?>
-        
-        <?php if(isset($nisyou )){
-                echo $nisyou;
-            }?>
-            <div class="sub-content">
-                <?php if(isset($addLogin )){
-                    echo <<<END
-                    <a href="login.php">
-                    <div class="sub-content-item1">
-                        <h2>$addLogin</h2>
-                        <p>ログインまたは新規登録してください。</p>
-                    </div>
-                    </a>
-                    END;
-                } else {
-                    echo <<<END
-                    <a href="address_insert.php">
-                    <div class="sub-content-item1">
-                        <h2>住所変更</h2>
-                    END;
-                    if(isset($nisyou)){
-                        echo $nisyou ;
-                    }
-                    if(isset($jusyoNone)) {
-                        echo $jusyoNone;
-                    }
-                    echo <<<END
-                    </div>
-                    </a>
-                END;
-                }?>
-
-                <a href="chargePay.php">
-                <div class="sub-content-item1">
-                    <h2>チャージする</h2>
+            <div class="amozon_profile">
+                <img src="img/cart_dake.svg" class="amozon_usericon">
+                <h1>名前</h1>
+                <a href='chargePay.php'>
+                <div class="sub-content">
+                    <div class="sub-content-item1"></div>
+                    <div class="sub-content-item1"></div>
+                    <div class="sub-content-item1"></div>
                 </div>
                 </a>
-                <a href="#">
-                <div class="sub-content-item1">
-                    <h2>サブコンテンツ3</h2>
-                    <p></p>
+                
+                <a href='chargePay.php'>
+                <div class='sub-content-item'>
+                    <div class="flexBox">
+                        <h2>残高<h2>
+                        <p>￥0</p>
+                    </div>
                 </div>
                 </a>
             </div>
-            <?php if(isset($zandaka)){
-                echo $zandaka;
-            } else {
-                echo $zan;
-            } ?>
-        </div>
-    </div>
-</div>
-</body>
+        </div>  
+    </body>
 </html>
