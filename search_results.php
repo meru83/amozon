@@ -311,8 +311,11 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
     }
     echo "</div>";//全体
     echo "該当商品が" . $count . "件見つかりました。";
+    echo '<a href="#" id="topButton">トップへ</a>';
     echo "</div>";
     echo "</div>";
+    echo "</body>";
+    echo "</html>";
 }else if(empty($searchText)){
     echo "検索キーワードを入力してください。<br>";
 }else{

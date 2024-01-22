@@ -47,8 +47,10 @@ if(isset($_SESSION['user_id'])){
             // チャージ情報をHTMLに表示
             $zandaka =<<<END
                 <div class='sub-content-item'>
+                <div class="flexBox">
                     <h2>残高<h2>
-                    <p>{$row["total_pay"]}</p>
+                    <p>￥{$row["total_pay"]}</p>
+                </div>
                 </div>
             </a>
 END;
@@ -57,8 +59,10 @@ END;
             $zandaka =<<<END
             <a href='chargePay.php'>
                 <div class='sub-content-item'>
+                <div class="flexBox">
                     <h2>残高<h2>
-                    <p>0</p>
+                    <p>￥0</p>
+                </div>
                 </div>
             </a>
 END;
@@ -68,7 +72,9 @@ END;
         $zan =<<<END
             <a href='chargePay.php'>
                 <div class='sub-content-item'>
+                <div class="flexBox">
                     <h2>チャージする</h2>
+                </div>
                 </div>
             </a>
 END;
@@ -150,7 +156,7 @@ if(isset($_SESSION['user_id'])){
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
             $sql_user = "SELECT username FROM users WHERE user_id = '$user_id'";
-        $result_user = $conn->query($sql_user);
+            $result_user = $conn->query($sql_user);
 
         // クエリの実行にエラーがある場合
         if (!$result_user) {
@@ -177,7 +183,7 @@ if(isset($_SESSION['user_id'])){
                 <?php if(isset($addLogin )){
                     echo <<<END
                     <a href="login.php">
-                    <div class="sub-content-item">
+                    <div class="sub-content-item1">
                         <h2>$addLogin</h2>
                         <p>ログインまたは新規登録してください。</p>
                     </div>
@@ -186,7 +192,7 @@ if(isset($_SESSION['user_id'])){
                 } else {
                     echo <<<END
                     <a href="address_insert.php">
-                    <div class="sub-content-item">
+                    <div class="sub-content-item1">
                         <h2>住所変更</h2>
                     END;
                     if(isset($nisyou)){
@@ -202,14 +208,16 @@ if(isset($_SESSION['user_id'])){
                 }?>
 
                 <a href="chargePay.php">
-                <div class="sub-content-item">
+                <div class="sub-content-item1">
                     <h2>チャージする</h2>
                 </div>
                 </a>
-                <div class="sub-content-item">
+                <a href="#">
+                <div class="sub-content-item1">
                     <h2>サブコンテンツ3</h2>
-                    <p>ここにサブコンテンツ3の説明が入ります。</p>
+                    <p></p>
                 </div>
+                </a>
             </div>
             <?php if(isset($zandaka)){
                 echo $zandaka;

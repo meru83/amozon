@@ -55,7 +55,7 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 20px;
-    border: 1px solid;
+    border: 1px solid #bdbdbd;
 }
 
 .profile_container{
@@ -70,7 +70,7 @@
 }
 
 .right-content {
-    margin-top: 88px;
+    margin-top: 76px;
 }
 
 .user_top_form {
@@ -188,6 +188,7 @@
 a, a:hover, a:active, a:visited {
     color: #000;
     text-decoration: none;
+    width: 100%
 }
 
 .right-content {
@@ -208,17 +209,38 @@ a, a:hover, a:active, a:visited {
 
 .sub-content {
     display: flex;
-    justify-content: space-between;
+    /* align-items: center; */
     margin-top: 20px;
+    width: 100%;
 }
 
-.sub-content-item {
-    flex: 0 0 calc(33.333% - 10px);
-    background-color: #eee;
+.sub-content-item1 {
+    width: 97%;
+    height: 100px;
+    background-color: #e2f1ff;
     margin: 5px;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
+}
+
+.sub-content-item {
+    /* flex: 0 0 calc(33.333% - 10px); */
+    width: 99%;
+    height: 100px;
+    background-color: #e2f1ff;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.flexBox {
+    display: flex;
+    justify-content: space-between;
+    margin: 21px 100px;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 /* 1266px以下でのスタイル */

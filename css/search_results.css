@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .all {
     display: flex;
     flex-wrap: wrap;
@@ -157,3 +161,17 @@ a {
     text-decoration: none;
     color: black;
 }
+
+#topButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  #topButton:hover {
+    background-color: #555;
+  }
