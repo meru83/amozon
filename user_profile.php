@@ -73,7 +73,8 @@ END;
             <a href='chargePay.php'>
                 <div class='sub-content-item'>
                 <div class="flexBox">
-                    <h2>チャージする</h2>
+                    <h2>残高<h2>
+                    <p>￥0</p>
                 </div>
                 </div>
             </a>
@@ -102,11 +103,7 @@ if(isset($_SESSION['user_id'])){
     } else {
         // 未登録の場合
         $jusyoNone =<<<END
-        <a href='address_insert.php'>
-                <div class='sub-content-item'>
                     <h2>(未登録)</h2>
-                </div>
-            </a>
         END;
     }
 } else {
@@ -221,6 +218,8 @@ if(isset($_SESSION['user_id'])){
             </div>
             <?php if(isset($zandaka)){
                 echo $zandaka;
+            } else {
+                echo $zan;
             } ?>
         </div>
     </div>
