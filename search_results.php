@@ -223,6 +223,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                         END;
                         //$favorite_product null か $user_id
                         if(!($favorite_product === null) && isset($_SESSION['user_id'])){
+                            //ログイン済みでお気に入り商品があった場合
                             $htmlText .= <<<END
                             <label class="checkHeart" for="favorite$count">
                                 <input type="checkbox" id="favorite$count" checked>
@@ -230,6 +231,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                             </label>
                             END;
                         }else if(isset($_SESSION['user_id'])){
+                            //ログインはしてるけどお気に入り商品ではない
                             $htmlText .= <<<END
                             <label class="checkHeart" for="favorite$count">
                                 <input type="checkbox" id="favorite$count">
@@ -237,6 +239,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                             </label>
                             END;
                         }else{
+                            //未ログイン状態のとき
                             $htmlText .= <<<END
                             <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
                             END;
