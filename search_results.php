@@ -86,10 +86,23 @@ include "db_config.php";
 
 // 検索キーワードを取得し、空白で分割
 $searchText = isset($_GET['search']) ? trim($_GET['search']) : '';
-$searchSql = "INSERT INTO search(searchText) VALUES(?)";//要修正
-$searchStmt = $conn->prepare($searchSql);
-$searchStmt->bind_param("s", $searchText);
-$searchStmt->execute();
+$searchSelectSql = "SELECT searchText FROM search WHERE searchText = ?";
+$searchSelectStmt = $conn->prepare($searchSelectSql);
+$searchSelectStmt->bind_param("s",$searchText);
+$searchSelectStmt->execute();
+$searchSelectResult = $searchSelectStmt->get_result();
+if($searchSelectResult && $searchSelectResult->num_rows > 0){
+    $searchSelectRow = $searchSelectResult->fetch_assoc();
+    $searchSql = "UPDATE search SET search_count = search_count + 1 WHERE searchText = ?";
+    $searchStmt = $conn->prepare($searchSql);
+    $searchStmt->bind_param("s",$searchText);
+    $searchStmt->execute();
+}else{
+    $searchSql = "INSERT INTO search(searchText, search_count) VALUES(?, 1)";//要修正
+    $searchStmt = $conn->prepare($searchSql);
+    $searchStmt->bind_param("s", $searchText);
+    $searchStmt->execute();
+}
 $count = 0;
 
 $sizeArray = array('FREE','フリー','フリーサイズ','ふりー','ふりーさいず','FREEサイズ','FREEさいず','XS','XSサイズ','XSさいず','S','S','Sサイズ','Sさいず','えす','えすさいず','M','Mサイズ','Mさいず','えむ','えむさいず','L','Lサイズ','Lさいず','える','えるさいず','XL','XLサイズ','XLさいず','2XL','2XLサイズ','2XLさいず');
