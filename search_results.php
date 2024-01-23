@@ -118,11 +118,11 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
             if(in_array($keyword,$qualityArray)){
                 if (in_array($keyword, ['中古', '中古品', 'ちゅうこ'])) {
                     $qualityConditions[] = "(p.quality = '良品' OR p.quality = 'やや傷あり' OR p.quality = '不良')";
-                } elseif (in_array($keyword, ['新品', '未使用', '新品未使用', 'しんぴん' ,'みしよう'])) {
-                    $qualityConditions[] = "p.quality = '新品、未使用'";
-                } elseif (in_array($keyword, ['傷あり'])) {
+                }else if(in_array($keyword, ['新品', '未使用', '新品未使用', 'しんぴん' ,'みしよう'])) {
+                    $qualityConditions[] = "p.quality = '新品・未使用'";
+                }else if(in_array($keyword, ['傷あり'])) {
                     $qualityConditions[] = "p.quality = 'やや傷あり'";
-                } else {
+                }else{
                     $qualityConditions[] = "p.quality = '$keyword'";
                 }
             }else if(in_array($keyword,$colorArray)){
@@ -216,7 +216,7 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                 LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
                 WHERE $andConditions && s.service_status = true";
 
-        // echo "クエリ：".$sql."<br>";
+        echo "クエリ：".$sql."<br>";
 
         // クエリを実行
         $stmt = $conn->prepare($sql);
@@ -288,11 +288,11 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                         <br>
                         <div class="setumei">
                         <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-                        <!---色: $colorName---->
                         <!----商品名　　:------> $productname<br>
                         <!----カテゴリ名: $category_name<br>------>
                         <!---価格　　　: ------>¥$commaPrice<br>
                         <!---サイズ: ------>$size サイズ<br>
+                        <!---色: ---->$colorName
                         </a>
                         </div>
                         END;
