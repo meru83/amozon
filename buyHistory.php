@@ -81,21 +81,84 @@ $buyDetail = "<div>購入明細</div><br>";
 $totalTtext = "";
 $colorSizeText = "";
 $buyDetailFlag = false;
+$deliStatusSql = array();
+$deliStatusFlag = array(false,false,false,false);
 
-$orderSql = "SELECT o.order_id, o.total, o.order_status, o.create_at, d.order_pieces, d.detail_total, 
-p.product_id, p.productname, p.seller_id, s.color_size_id, s.color_code, s.size, s.price, s.service_status, f.user_id AS favorite_product
-            FROM orders o 
-            LEFT JOIN orders_detail d ON (o.order_id = d.order_id)
-            LEFT JOIN products p ON (d.product_id = p.product_id)
-            LEFT JOIN color_size s ON (d.color_size_id = s.color_size_id)
-            LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
-            WHERE o.user_id = ?
-            ORDER BY o.create_at DESC";
+if(isset($_GET['deliStatus'])){
+    $deliStatus = $_GET['deliStatus'];
+    foreach($deliStatus as $value){
+        if($value === "出荷準備中"){
+            $deliStatusSql[] = "o.order_status = '出荷準備中'";
+            $deliStatusFlag[0] = true;
+        }else if($value === "発送済み"){
+            $deliStatusSql[] = "o.order_status = '発送済み'";
+            $deliStatusFlag[1] = true;
+        }else if($value === "配達中"){
+            $deliStatusSql[] = "o.order_status = '配達中'";
+            $deliStatusFlag[2] = true;
+        }else if($value === "配達完了"){
+            $deliStatusSql[] = "o.order_status = '配達完了'";
+            $deliStatusFlag[3] = true;
+        }
+    }
+
+    $deliStatusSqlText = "(" . implode(' OR ', $deliStatusSql) . ")";
+
+    $orderSql = "SELECT o.order_id, o.total, o.order_status, o.create_at, d.order_pieces, d.detail_total, 
+    p.product_id, p.productname, p.seller_id, s.color_size_id, s.color_code, s.size, s.price, s.service_status, f.user_id AS favorite_product
+                FROM orders o 
+                LEFT JOIN orders_detail d ON (o.order_id = d.order_id)
+                LEFT JOIN products p ON (d.product_id = p.product_id)
+                LEFT JOIN color_size s ON (d.color_size_id = s.color_size_id)
+                LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
+                WHERE o.user_id = ? && $deliStatusSqlText
+                ORDER BY o.create_at DESC";
+}else{
+    $orderSql = "SELECT o.order_id, o.total, o.order_status, o.create_at, d.order_pieces, d.detail_total, 
+    p.product_id, p.productname, p.seller_id, s.color_size_id, s.color_code, s.size, s.price, s.service_status, f.user_id AS favorite_product
+                FROM orders o 
+                LEFT JOIN orders_detail d ON (o.order_id = d.order_id)
+                LEFT JOIN products p ON (d.product_id = p.product_id)
+                LEFT JOIN color_size s ON (d.color_size_id = s.color_size_id)
+                LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
+                WHERE o.user_id = ?
+                ORDER BY o.create_at DESC";
+}
+
 $orderStmt = $conn->prepare($orderSql);
 $orderStmt->bind_param("ss",$user_id,$user_id);
 $orderStmt->execute();
 $orderResult = $orderStmt->get_result();
 if($orderResult && $orderResult->num_rows > 0){
+    echo <<<HTML
+    配達状況で絞り込む
+    <form id="deliStatusForm" method="get" action="">
+    HTML;
+    if($deliStatusFlag[0] === true){
+        echo '<input type="checkbox" id="deli1" name="deliStatus[]" value="出荷準備中" checked><label for="deli1">出荷準備中</label>';
+    }else{
+        echo '<input type="checkbox" id="deli1" name="deliStatus[]" value="出荷準備中"><label for="deli1">出荷準備中</label>';
+    }
+
+    if($deliStatusFlag[1] === true){
+        echo '<input type="checkbox" id="deli2" name="deliStatus[]" value="発送済み" checked><label for="deli2">発送済み</label>';
+    }else{
+        echo '<input type="checkbox" id="deli2" name="deliStatus[]" value="発送済み"><label for="deli2">発送済み</label>';
+    }
+
+    if($deliStatusFlag[2] === true){
+        echo '<input type="checkbox" id="deli3" name="deliStatus[]" value="配達中" checked><label for="deli3">配達中</label>';
+    }else{
+        echo '<input type="checkbox" id="deli3" name="deliStatus[]" value="配達中"><label for="deli3">配達中</label>';
+    }
+
+    if($deliStatusFlag[3] === true){
+        echo '<input type="checkbox" id="deli4" name="deliStatus[]" value="配達完了" checked><label for="deli4">配達済み</label>';
+    }else{
+        echo '<input type="checkbox" id="deli4" name="deliStatus[]" value="配達完了"><label for="deli4">配達済み</label>';
+    }
+        
+    echo "</form>";
     while($orderRow = $orderResult->fetch_assoc()){
         $order_id = $orderRow['order_id'];
         $total = $orderRow['total'];
@@ -258,6 +321,25 @@ for(let i = 0; i < countMax; i++){
 END;
 ?>
 <script>
+document.addEventListener('DOMContentLoaded',function(){
+    const deliStatusForm = document.getElementById('deliStatusForm');
+    const deli1 = document.getElementById('deli1');
+    const deli2 = document.getElementById('deli2');
+    const deli3 = document.getElementById('deli3');
+    const deli4 = document.getElementById('deli4');
+    deli1.addEventListener('change',function(){
+        deliStatusForm.submit();
+    });
+    deli2.addEventListener('change',function(){
+        deliStatusForm.submit();
+    });
+    deli3.addEventListener('change',function(){
+        deliStatusForm.submit();
+    });
+    deli4.addEventListener('change',function(){
+        deliStatusForm.submit();
+    });
+});
 function heartButton(){
     alert("お気に入り登録にはログインを完了させてください。");
 }
