@@ -30,8 +30,8 @@ if(isset($_SESSION['user_id'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/search_style.css">
-    <link rel="stylesheet" href="css/productsDetail.css">
     <link rel="stylesheet" href="css/Amozon_insta.css">
+    <link rel="stylesheet" href="css/productsDetail.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>検索</title>
     <style>
@@ -215,7 +215,7 @@ $htmlText = <<<END
 <div class="flex"><b>色</b>　　　　　<div>$colorName</div></div>
 <div class="flex"><b>出品日</b>　　　<div>$create_at</div></div>
 <div class="flex"><b>出品者</b>　　　<div>$seller_id</a></div></div>
-<div class="flex"><b>チャット</b>　　<div><a href="create.php?seller_id=$seller_id">チャット開始</a></div></div>
+<div class="flex"><b>チャット</b>　　<div><a href="create.php?seller_id=$seller_id" class="aBtn">チャット開始</a></div></div>
 END;
 //$favorite_product null か $user_id
 if(!($favorite_product === null) && isset($_SESSION['user_id'])){
