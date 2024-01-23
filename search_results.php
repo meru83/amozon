@@ -140,40 +140,40 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                 }
             }else if(in_array($keyword,$colorArray)){
                 //色
-                if(in_array($keyword,['ホワイト','白','白色','白っぽい','white','しろ','しろいろ'])){
+                if(in_array($keyword,['ホワイト','白','白色','白っぽい','white','WHITE','White','しろ','しろいろ'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#FFFFFF'";
-                }else if(in_array($keyword,['黒','黒色','ブラック','黒っぽい','black','くろ','くろいろ'])){
+                }else if(in_array($keyword,['黒','黒色','ブラック','黒っぽい','black','BLACK','Black','くろ','くろいろ'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#313131'";
-                }else if(in_array($keyword,['グレー','灰色','灰','灰っぽい','gray','はい','はいいろ'])){
+                }else if(in_array($keyword,['グレー','灰色','灰','灰っぽい','gray','GRAY','Gray','はい','はいいろ','#7d7d7d','#adadad','#d3d3d3','#797979'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#AAB2BE'";
-                }else if(in_array($keyword,['ブラウン','茶','茶色','茶っぽい','brown','ちゃ','ちゃいろ'])){
+                }else if(in_array($keyword,['ブラウン','茶','茶色','茶っぽい','brown','BROWN','Brown','ちゃ','ちゃいろ','#726250','#8c6450','#734e30','#b38e6f'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#81604C'";
-                }else if(in_array($keyword,['ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','くりーむいろ','beige'])){
+                }else if(in_array($keyword,['ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','くりーむいろ','beige','BEIGE','Beige','#f6e5cc','#e8d3ca','#eedcb3'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#E0D1AD'";
-                }else if(in_array($keyword,['グリーン','緑','緑色','深緑','みどり','みどりいろ','ふかみどり','green'])){
+                }else if(in_array($keyword,['グリーン','緑','緑色','深緑','みどり','みどりいろ','ふかみどり','green','Green','GREEN','#005739','#798543','#005133','#5D8165','#547443'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#9ED563'";
-                }else if(in_array($keyword,['ブルー','青色','青','あお','あおいろ','blue'])){
+                }else if(in_array($keyword,['ブルー','青色','青','あお','あおいろ','blue','Blue','BLUE','#0F5474','#243250','#475189','#23274F','#283446'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#4DBEE9'";
-                }else if(in_array($keyword,['パープル','紫','紫色','むらさき','むらさきいろ','purple'])){
+                }else if(in_array($keyword,['パープル','紫','紫色','むらさき','むらさきいろ','purple','Purple','PURPLE','#6658A6','#C77EB5','#6F51A1','#7D415E','#9E76B4'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#AD8EEF'";
-                }else if(in_array($keyword,['イエロー','黄色','黄','きいろ','yellow'])){
+                }else if(in_array($keyword,['イエロー','黄色','黄','きいろ','yellow','Yellow','YELLOW','#FFC800','#F4E511','#FAC61E','#FFD700','#CBC547'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#FED14C'";
-                }else if(in_array($keyword,['ピンク','ピンク色','ピンクいろ','ぴんくいろ','ぴんく','pink'])){
+                }else if(in_array($keyword,['ピンク','ピンク色','ピンクいろ','ぴんくいろ','ぴんく','pink','Pink','PINK','#F067A6','#CD4187','#FF3399','#E761A4','#EC008C'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#F8AFD7'";
-                }else if(in_array($keyword,['レッド','赤','赤色','red','あか','あかいろ'])){
+                }else if(in_array($keyword,['レッド','赤','赤色','あか','あかいろ','red','Red','RED','#ED1A3D','#ED1A3D','#C22047','#EF4123','#D11C2C'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#EF5663'";
-                }else if(in_array($keyword,['オレンジ','オレンジ色','オレンジいろ','おれんじ','おれんじいろ','orange'])){
+                }else if(in_array($keyword,['オレンジ','オレンジ色','オレンジいろ','おれんじ','おれんじいろ','orange','Orange','ORANGE','#F15A22','#E15A28','#F58220','#F36C21','#F68B1F'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#F98140'";
                 }else{
@@ -186,7 +186,7 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                     $sizeCondition[] = "s.size = 'FREE'";
                 }else if(in_array($keyword,['XS','XSサイズ','XSさいず'])){
                     $sizeCondition[] = "s.size = 'XS'";
-                }else if(in_array($keyword,['S','S','Sサイズ','Sさいず','えす','えすさいず','エス','エスサイズ'])){
+                }else if(in_array($keyword,['S','Sサイズ','Sさいず','えす','えすさいず','エス','エスサイズ'])){
                     $sizeCondition[] = "s.size = 'S'";
                 }else if(in_array($keyword,['M','Mサイズ','Mさいず','えむ','えむさいず','エム','エムサイズ'])){
                     $sizeCondition[] = "s.size = 'M'";

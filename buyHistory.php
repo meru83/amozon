@@ -166,6 +166,8 @@ if($orderResult && $orderResult->num_rows > 0){
             }
             $totalTtext .= <<<END
             
+            <br>
+            <hr class="hr_hasen">
             <div>合計購入金額：$total</div>
             <div>配達状況　　：<a href="huzai/huzai.php">$order_status</a></div>
             <div>購入日時　　：$create_at</div>
@@ -176,6 +178,11 @@ if($orderResult && $orderResult->num_rows > 0){
             $count++;
         }
     }
+}else{
+    //購入履歴がないとき
+    echo "<div class='buyHistory_no'><p class='p_history'>購入履歴がありません</p>";
+    echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
+    echo '</div>';
 }
 
 echo '</div>';//<div class="right-content">
