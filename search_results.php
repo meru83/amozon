@@ -92,9 +92,12 @@ $searchStmt->bind_param("s", $searchText);
 $searchStmt->execute();
 $count = 0;
 
-$colorArray = arrya('ホワイト','白','白色','白っぽい','黒','黒色','ブラック','黒っぽい','グレー','灰色','灰','ブラウン','茶','茶色','ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','グリーン','緑','緑色','深緑');
+$sizeArray = array('FREE','XS','S','M','L','XL','2XL');
+$colorArray = array('ホワイト','白','白色','白っぽい','white','しろ','しろいろ','黒','黒色','ブラック','黒っぽい','グレー','灰色','灰','ブラウン','茶','茶色','ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','グリーン','緑','緑色','深緑','ブルー','青色','青','パープル','紫','紫色','イエロー','黄色','黄','きいろ','ピンク','ピンク色','ピンクいろ','レッド','赤','赤色','red','オレンジ','オレンジ色','オレンジいろ');
+$qualityArray = array('新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり');
 //検索された文字列が品質のみか否かのif文
-if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり',"ホワイト","ブラック","グレー","ブラウン","ベージュ","グリーン","ブルー","パープル","イエロー","ピンク","レッド","オレンジ"])){
+if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($searchText,$colorArray) && !in_array($searchText,$sizeArray)){
+    // if(!empty($searchText)  && !in_array($searchText,$qualityArray)){
     if(preg_match('/[|]+/u',$searchText)){
         //`|`があったらOR検索として扱いそこで区切る。
         $orKeywords = preg_split('/[|]+/u', $searchText);
@@ -108,10 +111,11 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
         $conditions = array();
         $qualityConditions = array();
         $colorConditions = array();
+        $sizeCondition = array();
         $keywords = preg_split('/\s+/u',$orKeyword);
         foreach ($keywords as $keyword) {
             //品質で検索された場合品質の項目を品質の配列($qualityConditions[])に格納
-            if(in_array($keyword,['新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり'])){
+            if(in_array($keyword,$qualityArray)){
                 if (in_array($keyword, ['中古', '中古品'])) {
                     $qualityConditions[] = "(p.quality = '良品' OR p.quality = 'やや傷あり' OR p.quality = '不良')";
                 } elseif (in_array($keyword, ['新品', '未使用', '新品未使用'])) {
@@ -121,9 +125,9 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                 } else {
                     $qualityConditions[] = "p.quality = '$keyword'";
                 }
-            }else if(in_array($keyword,["ホワイト","ブラック","グレー","ブラウン","ベージュ","グリーン","ブルー","パープル","イエロー","ピンク","レッド","オレンジ"])){
+            }else if(in_array($keyword,$colorArray)){
                 //色
-                if(in_array($keyword,['ホワイト','白','白色','白っぽい'])){
+                if(in_array($keyword,['ホワイト','白','白色','白っぽい','white','しろ','しろいろ'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#FFFFFF'";
                 }else if(in_array($keyword,['黒','黒色','ブラック','黒っぽい'])){
@@ -163,6 +167,23 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                     //sql
                     $colorConditions[] = "s.color_code = $keyword";
                 }
+            }else if(in_array($keyword,$sizeArray)){
+                //サイズ
+                if(in_array($keyword,['FREE'])){
+                    $sizeCondition[] = "s.size = 'FREE'";
+                }else if(in_array($keyword,['XS'])){
+                    $sizeCondition[] = "s.size = 'XS'";
+                }else if(in_array($keyword,['S'])){
+                    $sizeCondition[] = "s.size = 'S'";
+                }else if(in_array($keyword,['M'])){
+                    $sizeCondition[] = "s.size = 'M'";
+                }else if(in_array($keyword,['L'])){
+                    $sizeCondition[] = "s.size = 'L'";
+                }else if(in_array($keyword,['XL'])){
+                    $sizeCondition[] = "s.size = 'XL'";
+                }else if(in_array($keyword,['2XL'])){
+                    $sizeCondition[] = "s.size = '2XL'";
+                }
             }else{
                 //品質以外の検索はここへ入る
                 //マッチ文字数の多い文字を検索上位に表示させたい
@@ -178,6 +199,9 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
         }
         if(!empty($colorConditions)){
             $conditions[] = "(" . implode(' OR ', $colorConditions) . ")";
+        }
+        if(!empty($sizeCondition)){
+            $conditions[] = "(" . implode(' OR ', $sizeCondition) . ")";
         }
         $andConditions = implode(' AND ', $conditions);
 
