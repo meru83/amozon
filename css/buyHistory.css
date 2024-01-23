@@ -62,3 +62,8 @@
 .p_history {
     text-align: center;
 }
+
+.hr_hasen {
+    border:none;
+    border-top: 2px dashed #d3d3d3; 
+}

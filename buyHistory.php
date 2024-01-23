@@ -166,6 +166,8 @@ if($orderResult && $orderResult->num_rows > 0){
             }
             $totalTtext .= <<<END
             
+            <br>
+            <hr class="hr_hasen">
             <div>合計購入金額：$total</div>
             <div>配達状況　　：<a href="huzai/huzai.php">$order_status</a></div>
             <div>購入日時　　：$create_at</div>
