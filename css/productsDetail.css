@@ -119,3 +119,10 @@
   .checkHeart input:checked + .spanHeart::before {
     background-image: url("../img/heart.png");
   }
+
+.aBtn {
+    color: #0000EE;
+}
+.aBtn:visited {
+    color: #0000EE;
+}
