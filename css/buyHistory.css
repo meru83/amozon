@@ -35,8 +35,30 @@
     height: 33px;
     position: relative;
     width: 33px;
-  }
+}
 
   .checkHeart input:checked + .spanHeart::before {
     background-image: url("../img/heart.png");
-  }
+}
+
+.buyHistory_no {
+    width: fit-content;
+    margin: 200px auto 0 auto;
+}
+
+.home {
+    text-align: center;
+    margin: 200px 60px 0 60px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #005aae;
+    color: white;
+}
+
+.home:hover {
+    background: #004488;
+}
+
+.p_history {
+    text-align: center;
+}

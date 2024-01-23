@@ -176,6 +176,11 @@ if($orderResult && $orderResult->num_rows > 0){
             $count++;
         }
     }
+}else{
+    //購入履歴がないとき
+    echo "<div class='buyHistory_no'><p class='p_history'>購入履歴がありません</p>";
+    echo '<a href="user_top.php"><div class="home">ホームに戻る</div></a>';
+    echo '</div>';
 }
 
 echo '</div>';//<div class="right-content">
