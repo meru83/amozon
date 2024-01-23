@@ -91,8 +91,10 @@ $searchStmt = $conn->prepare($searchSql);
 $searchStmt->bind_param("s", $searchText);
 $searchStmt->execute();
 $count = 0;
+
+$colorArray = arrya('ホワイト','白','白色','白っぽい','黒','黒色','ブラック','黒っぽい','グレー','灰色','灰','ブラウン','茶','茶色','ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','グリーン','緑','緑色','深緑');
 //検索された文字列が品質のみか否かのif文
-if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり'])){
+if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり',"ホワイト","ブラック","グレー","ブラウン","ベージュ","グリーン","ブルー","パープル","イエロー","ピンク","レッド","オレンジ"])){
     if(preg_match('/[|]+/u',$searchText)){
         //`|`があったらOR検索として扱いそこで区切る。
         $orKeywords = preg_split('/[|]+/u', $searchText);
@@ -105,6 +107,7 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
     foreach($orKeywords as $orKeyword){
         $conditions = array();
         $qualityConditions = array();
+        $colorConditions = array();
         $keywords = preg_split('/\s+/u',$orKeyword);
         foreach ($keywords as $keyword) {
             //品質で検索された場合品質の項目を品質の配列($qualityConditions[])に格納
@@ -118,6 +121,48 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
                 } else {
                     $qualityConditions[] = "p.quality = '$keyword'";
                 }
+            }else if(in_array($keyword,["ホワイト","ブラック","グレー","ブラウン","ベージュ","グリーン","ブルー","パープル","イエロー","ピンク","レッド","オレンジ"])){
+                //色
+                if(in_array($keyword,['ホワイト','白','白色','白っぽい'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#FFFFFF'";
+                }else if(in_array($keyword,['黒','黒色','ブラック','黒っぽい'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#313131'";
+                }else if(in_array($keyword,['グレー','灰色','灰'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#AAB2BE'";
+                }else if(in_arrya($keyword,['ブラウン','茶','茶色'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#81604C'";
+                }else if(in_arrya($keyword,['ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#E0D1AD'";
+                }else if(in_arrya($keyword,['グリーン','緑','緑色','深緑'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#9ED563'";
+                }else if(in_array($keyword,['ブルー','青色','青'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#4DBEE9'";
+                }else if(in_arrya($keyword,['パープル','紫','紫色'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#AD8EEF'";
+                }else if(in_array($keyword,['イエロー','黄色','黄','きいろ'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#FED14C'";
+                }else if(in_array($keyword,['ピンク','ピンク色','ピンクいろ'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#F8AFD7'";
+                }else if(in_array($keyword,['レッド','赤','赤色','red'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#EF5663'";
+                }else if(in_array($keyword,['オレンジ','オレンジ色','オレンジいろ'])){
+                    //sql
+                    $colorConditions[] = "s.color_code = '#F98140'";
+                }else{
+                    //sql
+                    $colorConditions[] = "s.color_code = $keyword";
+                }
             }else{
                 //品質以外の検索はここへ入る
                 //マッチ文字数の多い文字を検索上位に表示させたい
@@ -130,6 +175,9 @@ if(!empty($searchText)  && !in_array($searchText, ['新品', '未使用', '新�
         }
         if(!empty($qualityConditions)){
             $conditions[] = "(" . implode(' OR ', $qualityConditions) . ")";
+        }
+        if(!empty($colorConditions)){
+            $conditions[] = "(" . implode(' OR ', $colorConditions) . ")";
         }
         $andConditions = implode(' AND ', $conditions);
 
