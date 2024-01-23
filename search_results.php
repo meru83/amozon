@@ -136,19 +136,19 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                 }else if(in_array($keyword,['グレー','灰色','灰','灰っぽい','gray','はい','はいいろ'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#AAB2BE'";
-                }else if(in_arrya($keyword,['ブラウン','茶','茶色','茶っぽい','brown','ちゃ','ちゃいろ'])){
+                }else if(in_array($keyword,['ブラウン','茶','茶色','茶っぽい','brown','ちゃ','ちゃいろ'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#81604C'";
-                }else if(in_arrya($keyword,['ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','くりーむいろ','beige'])){
+                }else if(in_array($keyword,['ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','くりーむいろ','beige'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#E0D1AD'";
-                }else if(in_arrya($keyword,['グリーン','緑','緑色','深緑','みどり','みどりいろ','ふかみどり','green'])){
+                }else if(in_array($keyword,['グリーン','緑','緑色','深緑','みどり','みどりいろ','ふかみどり','green'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#9ED563'";
                 }else if(in_array($keyword,['ブルー','青色','青','あお','あおいろ','blue'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#4DBEE9'";
-                }else if(in_arrya($keyword,['パープル','紫','紫色','むらさき','むらさきいろ','purple'])){
+                }else if(in_array($keyword,['パープル','紫','紫色','むらさき','むらさきいろ','purple'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#AD8EEF'";
                 }else if(in_array($keyword,['イエロー','黄色','黄','きいろ','yellow'])){
@@ -165,7 +165,7 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                     $colorConditions[] = "s.color_code = '#F98140'";
                 }else{
                     //sql
-                    $colorConditions[] = "s.color_code = $keyword";
+                    $colorConditions[] = "s.color_code = '$keyword'";
                 }
             }else if(in_array($keyword,$sizeArray)){
                 //サイズ
@@ -183,6 +183,8 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                     $sizeCondition[] = "s.size = 'XL'";
                 }else if(in_array($keyword,['2XL','2XLサイズ','2XLさいず'])){
                     $sizeCondition[] = "s.size = '2XL'";
+                }else{
+                    $sizeCondition[] = "s.size = '$keyword'";
                 }
             }else{
                 //品質以外の検索はここへ入る
