@@ -36,6 +36,7 @@ if($result && $result->num_rows > 0){
         $cssLink = '<link rel="stylesheet" href="css/style-ready.css">';//出荷準備中まで
         $updateStmt->bind_param("si",$orderStatusText2,$order_id);
         $updateStmt->execute();
+        //上2行コメントアウトしてseller側に発送完了ボダン設置に変えたい
     }else if($order_status === $orderStatusText2){
         $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
         $updateStmt->bind_param("si",$orderStatusText3,$order_id);
@@ -48,6 +49,7 @@ if($result && $result->num_rows > 0){
         $cssLink = '<link rel="stylesheet" href="css/style-goru.css">';//配達済みまで
     }
 }else{
+    //ここに入ることが基本あり得ない必要あればエラー処理追加
     // error_log("a");
     // echo <<<HTML
     // <script>
