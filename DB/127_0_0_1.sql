@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-01-23 11:10:11
+-- 生成日時: 2024-01-23 13:03:41
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -5057,16 +5057,17 @@ CREATE TABLE `seller` (
   `seller_status` tinyint(1) NOT NULL DEFAULT 1,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `sellerPhone` varchar(16) NOT NULL,
-  `email` varchar(255) NOT NULL
+  `email` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `seller`
 --
 
-INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`, `sellerPhone`, `email`) VALUES
-('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52', '0612345670', ''),
-('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47', '0612345679', '2312067@i-seifu.jp');
+INSERT INTO `seller` (`seller_id`, `sellerName`, `pass`, `seller_status`, `create_at`, `sellerPhone`, `email`, `icon`) VALUES
+('matchacp', 'matcha', '$2y$10$FP6Fymb4mYqFRag8Zi2bTuzoKa.YfYSwJGicg6L9MGGRx4FtSeIeq', 1, '2023-12-12 02:43:52', '0612345670', '', NULL),
+('test_bank', 'テスト垢', '$2y$10$WMJXN12rmz6DNgJ9Xbq0gu8zjugUF0Pnor3/FVw61gxe/hzmzh6F.', 1, '2023-10-25 14:14:47', '0612345679', '2312067@i-seifu.jp', NULL);
 
 -- --------------------------------------------------------
 
@@ -5399,16 +5400,17 @@ CREATE TABLE `users` (
   `phone` varchar(16) NOT NULL,
   `email` varchar(255) NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `user_status` tinyint(1) NOT NULL DEFAULT 1
+  `user_status` tinyint(1) NOT NULL DEFAULT 1,
+  `icon` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `email`, `create_at`, `user_status`) VALUES
-('mu_rata', 'mura_ta', '$2y$10$QMSH3dzKc01LI8BJlVYjIOYMtPy0ffzQneSHZ/epcvRd0USqubAoS', '00000000000', 'tanim4582@gmail.com', '2024-01-19 13:51:48', 1),
-('test_user', 'テストユーザー', '$2y$10$d2iU/xGLRhWX747O0Z3iieqyCy8tmw4qI6n0N3ewxyHkiD6J9Jqry', '0612345678', '2312067@i-seifu.jp', '2023-10-27 13:13:05', 1);
+INSERT INTO `users` (`user_id`, `username`, `pass`, `phone`, `email`, `create_at`, `user_status`, `icon`) VALUES
+('mu_rata', 'mura_ta', '$2y$10$QMSH3dzKc01LI8BJlVYjIOYMtPy0ffzQneSHZ/epcvRd0USqubAoS', '00000000000', 'tanim4582@gmail.com', '2024-01-19 13:51:48', 1, NULL),
+('test_user', 'テストユーザー', '$2y$10$d2iU/xGLRhWX747O0Z3iieqyCy8tmw4qI6n0N3ewxyHkiD6J9Jqry', '0612345678', '2312067@i-seifu.jp', '2023-10-27 13:13:05', 1, NULL);
 
 --
 -- ダンプしたテーブルのインデックス
@@ -5546,7 +5548,8 @@ ALTER TABLE `search`
 --
 ALTER TABLE `seller`
   ADD PRIMARY KEY (`seller_id`),
-  ADD UNIQUE KEY `sellerPhone` (`sellerPhone`);
+  ADD UNIQUE KEY `sellerPhone` (`sellerPhone`),
+  ADD UNIQUE KEY `icon` (`icon`);
 
 --
 -- テーブルのインデックス `small_category`
@@ -5559,7 +5562,8 @@ ALTER TABLE `small_category`
 -- テーブルのインデックス `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `icon` (`icon`);
 
 --
 -- ダンプしたテーブルの AUTO_INCREMENT
