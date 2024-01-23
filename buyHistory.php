@@ -75,7 +75,7 @@ if(isset($_SESSION['user_id'])){
             <div class="right-content">
 
 <?php
-$arrayProductId = array();
+$arrayOrderId = array();
 $count = 0;
 $buyDetail = "<div>購入明細</div><br>";
 $totalTtext = "";
@@ -114,37 +114,18 @@ if($orderResult && $orderResult->num_rows > 0){
         $service_status = $orderRow['service_status'];
         $favorite_product = $orderRow['favorite_product'];
 
-        if(!in_array($product_id, $arrayProductId)){
-            if($buyDetailFlag){
-                echo $buyDetail;
-            }else{
-                $buyDetailFlag = true;
-            }
-
-            echo $colorSizeText;
-            
-            echo $totalTtext;
-
-            //明細内容
-            if($service_status){
-                //お気に入りボタン設置の有無
-                $colorSizeText .= <<<END
-                <input type="hidden" id="product_id$count" name="product_id" value="$product_id">
-                <input type="hidden" id="color_size_id$count" name="color_size_id" value="$color_size_id">
-                $productname $colorName $size  <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：<a href="seller_profile.php?seller_id=$seller_id">$seller_id</a></div><br>
-                END;
-            }else{
-                //お気に入りボタン未設置
-                $colorSizeText .= <<<END
-                $productname $colorName $size  <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：$seller_id</div><br>
-                END;
-            }
-
-            //箱の右下
+        //明細内容
+        if($service_status){
+            //お気に入りボタン設置の有無
+            $colorSizeText = <<<END
+            <input type="hidden" id="product_id$count" name="product_id" value="$product_id">
+            <input type="hidden" id="color_size_id$count" name="color_size_id" value="$color_size_id">
+            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$order_id $productname $colorName $size</a>  <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：<a href="seller_profile.php?seller_id=$seller_id">$seller_id</a></div><br>
+            END;
             //$favorite_product null か $user_id
             if(!($favorite_product === null) && isset($_SESSION['user_id'])){
                 //ログイン済みでお気に入り商品があった場合
-                $totalTtext = <<<END
+                $colorSizeText .= <<<END
                 <label class="checkHeart" for="favorite$count">
                     <input type="checkbox" id="favorite$count" checked>
                     <span class="spanHeart"></span>
@@ -152,7 +133,7 @@ if($orderResult && $orderResult->num_rows > 0){
                 END;
             }else if(isset($_SESSION['user_id'])){
                 //ログインはしてるけどお気に入り商品ではない
-                $totalTtext = <<<END
+                $colorSizeText .= <<<END
                 <label class="checkHeart" for="favorite$count">
                     <input type="checkbox" id="favorite$count">
                     <span class="spanHeart"></span>
@@ -160,11 +141,25 @@ if($orderResult && $orderResult->num_rows > 0){
                 END;
             }else{
                 //未ログイン状態のとき
-                $totalTtext = <<<END
+                $colorSizeText .= <<<END
                 <button type="button" class="heartBtn" onclick="heartButton()"><img src="img/heart2.png" style="height: 100%;"></button>
                 END;
             }
-            $totalTtext .= <<<END
+        }else{
+            //お気に入りボタン未設置
+            $colorSizeText = <<<END
+            $productname $colorName $size  <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：$seller_id</div><br>
+            END;
+        }
+
+        if(!in_array($order_id, $arrayOrderId)){
+            echo $totalTtext;
+
+            echo $buyDetail;
+
+            echo $colorSizeText;
+
+            $totalTtext = <<<END
             
             <br>
             <hr class="hr_hasen">
@@ -172,10 +167,14 @@ if($orderResult && $orderResult->num_rows > 0){
             <div>配達状況　　：<a href="huzai/huzai.php">$order_status</a></div>
             <div>購入日時　　：$create_at</div>
             <hr>
+            <br>
+            <hr>
             END;
 
-            $arrayProductId[] = $product_id;
+            $arrayOrderId[] = $order_id;
             $count++;
+        }else{
+            echo $colorSizeText;
         }
     }
 }else{
