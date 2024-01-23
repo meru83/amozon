@@ -216,7 +216,7 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                 LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
                 WHERE $andConditions && s.service_status = true";
 
-        echo "クエリ：".$sql."<br>";
+        // echo "クエリ：".$sql."<br>";
 
         // クエリを実行
         $stmt = $conn->prepare($sql);
