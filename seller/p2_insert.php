@@ -111,7 +111,7 @@ if(isset($_SESSION['seller_id'])){
     </label><br>
 
     <label for="big_category" class="p2_label">
-    <b>大カテゴリ</b>：
+    <b>大カテゴリ</b>
         <select name="big_category" id="big_category" class="styleSelect">
             <option value="" hidden>選択してください</option>
             <?php 
@@ -128,12 +128,12 @@ if(isset($_SESSION['seller_id'])){
         </select>
     </label><br>
     <label for="category" id="categoryLabel" class="p2_label" style="display:none;">
-        中カテゴリ
+    <b>中カテゴリ</b>
         <select name="category" id="category" class="styleSelect">
         </select>
     </label><br>
     <label for="small_category" id="smallCategoryLabel" class="p2_label" style="display:none;">
-        小カテゴリ
+    <b>小カテゴリ</b>
         <select name="small_category" id="small_category" class="styleSelect">
         </select>
     </label><br><br><br>
@@ -326,7 +326,7 @@ function addRadio(selectorNumber){
     //数量のラベル生成
     var piecesLabel = document.createElement('label');
     piecesLabel.setAttribute('for',"pieces"+divRadioCount);
-    piecesLabel.innerHTML = "数量";
+    piecesLabel.innerHTML = "<b>数量</b>";
     piecesLabel.classList.add('stylePieces');
     divRadio.appendChild(piecesLabel);
 
@@ -343,7 +343,7 @@ function addRadio(selectorNumber){
     //価格のラベル
     var priceLabel = document.createElement('label');
     priceLabel.setAttribute('for',"price"+divRadioCount);
-    priceLabel.innerHTML = "価格";
+    priceLabel.innerHTML = "<b>価格</b>";
     divRadio.appendChild(priceLabel);
 
     //価格の入力フォーム生成
@@ -392,7 +392,7 @@ function addSelectBox(){
 
     var selectLabel = document.createElement('label');
     selectLabel.setAttribute('for','sizeSelect'+divSelectCount);
-    selectLabel.innerHTML = "商品のサイズ";
+    selectLabel.innerHTML = "<b>商品のサイズ</b>";
     divSelect.appendChild(selectLabel);
 
     var selectBox = document.createElement('select');
