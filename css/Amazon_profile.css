@@ -44,7 +44,6 @@
     justify-content: flex-end;
 }
 
-
 .logo_moji{
     height: 40px;
 }
@@ -79,11 +78,6 @@
 
 .seller_top_form {
     position: fixed;
-}
-
-.New_log {
-    display: flex;
-    margin-right: 100px;
 }
 
 .log_style {
@@ -188,7 +182,6 @@
 a, a:hover, a:active, a:visited {
     color: #000;
     text-decoration: none;
-    width: 100%
 }
 
 .right-content {
@@ -286,4 +279,8 @@ a, a:hover, a:active, a:visited {
 
 .backBtn:hover {
     background-color: white;
+}
+
+.rightM {
+    margin-right: 100px;
 }
