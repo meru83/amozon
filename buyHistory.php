@@ -76,7 +76,7 @@ if(isset($_SESSION['user_id'])){
 <?php
 $arrayOrderId = array();
 $count = 0;
-$buyDetail = "<div>購入明細</div><br>";
+$buyDetail = "<hr><div class='backG'><div>購入明細</div><br>";
 $totalTtext = "";
 $colorSizeText = "";
 $buyDetailFlag = false;
@@ -227,9 +227,9 @@ if($orderResult && $orderResult->num_rows > 0){
             <div>合計購入金額：$total</div>
             <div>配達状況　　：<a href="huzai/huzai.php">$order_status</a></div>
             <div>購入日時　　：$create_at</div>
+            </div>
             <hr>
             <br>
-            <hr>
             END;
 
             $arrayOrderId[] = $order_id;
