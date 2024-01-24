@@ -147,8 +147,8 @@ if($notYetDeliResult && $notYetDeliResult->num_rows > 0){
         $address_id = $notYetDeliRow['address_id'];
 
         $htmlText = <<<HTML
-        <div class='backG'><b>商品ID</b>$product_id$color_size_id<br>
-        <b>商品名</b>$productname $colorName $size<div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div>
+        <div class='backG'><b>商品ID</b>　$product_id$color_size_id<br>
+        <b>商品名</b>　$productname $colorName $size<div><b>単価</b>　　$price  ＊ $order_pieces  </div><div><b>計</b>　　　$detail_total</div>
         HTML;
 
         if(!in_array($order_id,$arrayOrderId)){
