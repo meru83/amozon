@@ -222,7 +222,7 @@ if(isset($_GET['flag'])){
             $andConditions = implode(' AND ', $conditions);
 
             // 検索結果を取得するクエリを作成
-            $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
+            $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_size_id, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
                     FROM products p
                     LEFT JOIN color_size s ON (p.product_id = s.product_id)
                     LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
@@ -233,7 +233,7 @@ if(isset($_GET['flag'])){
         }
     }
 }else{
-    $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
+    $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_size_id, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
                 FROM products p
                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
                 LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
@@ -272,6 +272,7 @@ if($selectResult && $selectResult->num_rows > 0){
         $view = isset($row['view'])?$row['view']:"未登録";
         $quality = $row['quality'];
         $create_at = $row['create_at'];
+        $color_size_id = $row['color_size_id'];
         $color_code = $row['color_code'];
         $colorName = getColor($conn, $color_code);
         $size = $row['size'];
@@ -378,6 +379,7 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
             <div class="flex">
+            <b>商品ID</b>$product_id$color_size_id
             <div class="left"><p id="name$product_id"><b>商品名</b>　　　$productname</p></div>
             <button type="butt  on" class="btnStyle2" onclick="changeProductName($product_id)">変更</button><br></div>
             <div id="allCategory$product_id" class="flex" style="display:block">
