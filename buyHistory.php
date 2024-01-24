@@ -211,7 +211,7 @@ if($orderResult && $orderResult->num_rows > 0){
         }else{
             //お気に入りボタン未設置
             $colorSizeText = <<<END
-            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：$seller_id</div><br>
+            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：<a href="seller_profile.php?seller_id=$seller_id">$seller_id</a></div><br>
             END;
         }
 
@@ -223,7 +223,6 @@ if($orderResult && $orderResult->num_rows > 0){
             echo $colorSizeText;
 
             $totalTtext = <<<END
-            
             <br>
             <hr class="hr_hasen">
             <div>合計購入金額：$total</div>
@@ -240,6 +239,7 @@ if($orderResult && $orderResult->num_rows > 0){
             echo $colorSizeText;
         }
     }
+    echo $totalTtext;
 }else{
     //購入履歴がないとき
     echo "<div class='buyHistory_no'><p class='p_history'>購入履歴がありません</p>";
