@@ -177,7 +177,6 @@ if($user_id === $postUserId){
         $addressname = $addressRow['addressname'];
 
         echo <<<HTML
-        <a href="address_insert.php">
         <div class='sub-content-item1'>
             <div class="flexBox001">
                 <h2>お届け先</h2>
@@ -189,7 +188,6 @@ if($user_id === $postUserId){
                 </div>
         </div>
         </div>
-        </a>
         HTML;
     }else{
         echo <<<HTML
