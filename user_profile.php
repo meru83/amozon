@@ -217,7 +217,7 @@ if($user_id === $postUserId){
         echo <<<HTML
         <a href='chat_room.php?room_id=$room_id&username=$username'>
         <div class='sub-content-item'>
-            <div class="flexBox">
+            <div class="flexBox2">
                 <!-- ここにチャットマーク -->
                 <img src="img/chat2.svg" class="logo" style="width:60px;">
             </div>
