@@ -33,27 +33,45 @@ if(isset($_POST['add'])){
             $updateSql = "UPDATE address SET default_status = false WHERE address_id <> ? AND user_id = ? AND seller_id IS NULL";
             $updateStmt = $conn->prepare($updateSql);
             $updateStmt->bind_param("is",$last_id,$user_id);
+            $updateStmt->execute();
+            echo <<<HTML
+            <script>
+            if(!alert("住所の登録に成功しました。")){
+                location.href = 'user_top.php';
+            }
+            </script>
+            HTML;
         }else if($_SESSION['seller_id']){
             $updateSql = "UPDATE address SET default_status = false WHERE address_id <> ? AND seller_id = ? AND user_id IS NULL";
             $updateStmt = $conn->prepare($updateSql);
             $updateStmt->bind_param("is",$last_id,$seller_id);
+            $updateStmt->execute();
+            echo <<<HTML
+            <script>
+            if(!alert("住所の登録に成功しました。")){
+                location.href = 'seller_top.php';
+            }
+            </script>
+            HTML;
         }
-        $updateStmt->execute();
-        echo <<<HTML
-        <script>
-        if(!alert("住所の登録に成功しました。")){
-            location.href = 'user_top.php';
-        }
-        </script>
-        HTML;
     }else{
-        echo <<<HTML
-        <script>
-        if(!alert("住所の登録に失敗しました。")){
-            location.href = 'user_top.php';
+        if($_SESSION['user_id']){
+            echo <<<HTML
+            <script>
+            if(!alert("住所の登録に失敗しました。")){
+                location.href = 'user_top.php';
+            }
+            </script>
+            HTML;
+        }else if($_SESSION['seller_id']){
+            echo <<<HTML
+            <script>
+            if(!alert("住所の登録に失敗しました。")){
+                location.href = 'seller_top.php';
+            }
+            </script>
+            HTML;
         }
-        </script>
-        HTML;
     }
 }
 ?>
@@ -66,7 +84,10 @@ if(isset($_POST['add'])){
     <title>住所登録</title>
 </head>
 <body class="address_body">
-<form method="post" id="form" class="address_form">
+<?php
+if(isset($_SESSION['seller_id'])){}
+?>
+<!-- <form method="post" action="" id="form" class="address_form"> -->
     <label for="post_code" class="address_label">郵便番号：</label><br>
     <div id="his" style="display:none; color:red">必須</div>
     <input type="text" name="post_code" id="input" class="address_textbox" maxlength=8 placeholder="例)1234567（ハイフンなし）" required>
