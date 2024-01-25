@@ -23,9 +23,11 @@ $error_message = isset($_GET['error_message'])?$_GET['error_message']:null;//ど
 //DISTINCTで重複レコードを一つにまとめる
 $sql = "SELECT DISTINCT chatrooms.room_id, chatrooms.user_id, chatrooms.seller_id, users.username, seller.sellerName
         FROM chatrooms
-        INNER JOIN users ON (chatrooms.user_id = users.user_id)
-        INNER JOIN seller ON (chatrooms.seller_id = seller.seller_id)
-        WHERE (chatrooms.user_id = ?) OR (chatrooms.seller_id = ?)";
+        LEFT JOIN users ON (chatrooms.user_id = users.user_id)
+        LEFT JOIN seller ON (chatrooms.seller_id = seller.seller_id)
+        LEFT JOIN messages ON (chatrooms.room_id = messages.room_id)
+        WHERE (chatrooms.user_id = ?) OR (chatrooms.seller_id = ?)
+        ORDER BY messages.timestamp DESC";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $user_id, $seller_id);
@@ -148,11 +150,11 @@ if ($result === false) {
             $notYetRow = $notYetResult->fetch_assoc();
             $notYetDeli = $notYetRow['notYetDeli'];
             echo <<<HTML
-            <li class="menu-item"> <a href="seller/notYetDeli.php"><img src="img/kuruma.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
+            <li class="menu-item"> <a href="seller/notYetDeli.php"><img src="img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
             HTML;
         }else{
             echo <<<HTML
-            <li class="menu-item"> <a href="seller/notYetDeli.php"><img src="img/kuruma.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
+            <li class="menu-item"> <a href="seller/notYetDeli.php"><img src="img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
             HTML;
         }
 

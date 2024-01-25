@@ -117,7 +117,7 @@ if(isset($_GET['deliStatus'])){
                 LEFT JOIN products p ON (d.product_id = p.product_id)
                 LEFT JOIN color_size s ON (d.color_size_id = s.color_size_id)
                 LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
-                WHERE o.user_id = ? && $deliStatusSqlText
+                WHERE o.user_id = ? && $deliStatusSqlText && NOT o.total <= 0 && NOT d.detail_total <= 0
                 ORDER BY o.create_at DESC";
 }else{
     $orderSql = "SELECT o.order_id, o.total, o.order_status, o.create_at, d.order_pieces, d.detail_total, 
@@ -127,7 +127,7 @@ if(isset($_GET['deliStatus'])){
                 LEFT JOIN products p ON (d.product_id = p.product_id)
                 LEFT JOIN color_size s ON (d.color_size_id = s.color_size_id)
                 LEFT JOIN favorite f ON (p.product_id = f.product_id) && (s.color_size_id = f.color_size_id) && (f.user_id = ?)
-                WHERE o.user_id = ? && NOT o.total = 0 && NOT d.detail_total = 0
+                WHERE o.user_id = ? && NOT o.total <= 0 && NOT d.detail_total <= 0
                 ORDER BY o.create_at DESC";
 }
 
