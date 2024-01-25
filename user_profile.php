@@ -85,7 +85,6 @@ if(isset($_GET['user_id'])){
 //自分のプロフィールか否か判定
 //このページに飛んでくるときにpostかgetでuser_idを持たせてそれが自分のidか否か
 if($user_id === $postUserId){
-    error_log("a");
     // $sessionFlag = true;
     //ここに自分から見た時のデザイン
     $selectSql = "SELECT u.username, u.icon, p.total_pay
@@ -114,21 +113,79 @@ if($user_id === $postUserId){
         HTML;
     }
     echo "<h1>$username</h1>";
-    echo <<<HTML
-    <a href='chargePay.php'>
-    <div class="sub-content">
-        <div class="sub-content-item1"></div>
-        <div class="sub-content-item1"></div>
-        <div class="sub-content-item1"></div>
-    </div>
-    </a>
-    HTML;
+    $addressSql = "SELECT post_code, prefectures, city, tyou, room_number, addressname 
+                FROM address
+                WHERE user_id = ? && default_status = 1";
+    $addressStmt = $conn->prepare($addressSql);
+    $addressStmt->bind_param("s",$user_id);
+    $addressStmt->execute();
+    $addressResult = $addressStmt->get_result();
+    if($addressResult && $addressResult->num_rows > 0){
+        $addressRow = $addressResult->fetch_assoc();
+        $post_code = $addressRow['post_code'];
+        $prefectures = $addressRow['prefectures'];
+        $city = $addressRow['city'];
+        $tyou = $addressRow['tyou'];
+        $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:"";
+        $addressname = $addressRow['addressname'];
+
+        echo <<<HTML
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <h2>お届け先：<h2>
+                〒 $post_code<br>
+                $prefectures
+                $city $tyou $room_number <br>
+                $addressname
+            </div>
+        </div>
+        HTML;
+    }else{
+        echo <<<HTML
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <h2>お届け先：<h2>
+                未登録
+            </div>
+        </div>
+        HTML;
+    }
+    if(isset($total_pay)){
+        echo <<<HTML
+        <a href='chargePay.php'>
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <h2>残高<h2>
+                <p>$total_pay 円</p>
+            </div>
+        </div>
+        </a>
+        HTML;
+    }else{
+        echo <<<HTML
+        <a href='chargePay.php'>
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <h2>残高<h2>
+                <p>0 円</p>
+            </div>
+        </div>
+        </a>
+        HTML;
+    }
 }else{
-    error_log("b");
     // $sessionFlag = false;
     //ここに相手から見た時のデザイン
 }
 ?>
+
+
+            </div>
+        </div>  
+    </body>
+</html>
+
+
 
 <!-- <!DOCTYPE html>
 <html lang="ja">
@@ -187,15 +244,20 @@ if($user_id === $postUserId){
                 </div>
                 </a> -->
                 
-                <a href='chargePay.php'>
+                <!-- <a href='chargePay.php'>
                 <div class='sub-content-item'>
                     <div class="flexBox">
                         <h2>残高<h2>
                         <p>￥0</p>
                     </div>
                 </div>
-                </a>
-            </div>
+                </a> -->
+
+
+
+
+                <!-- ＊＊＊＊＊＊＊＊＊＊＊＊　　　ここからｐｈｐのした　　　＊＊＊＊＊＊＊＊＊＊＊＊＊ -->
+            <!-- </div>
         </div>  
     </body>
-</html>
+</html> -->
