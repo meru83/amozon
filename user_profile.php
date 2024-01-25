@@ -145,7 +145,7 @@ if($user_id === $postUserId){
         $selectRow = $selectResult->fetch_assoc();
         $username = $selectRow['username'];
         $icon = isset($selectRow['icon'])?$selectRow['icon']:null;
-        $total_pay = isset($selectRow['total_pay'])?$selectRow['total_pay']:null;
+        $total_pay = isset($selectRow['total_pay'])?$selectRow['total_pay']:0;
         $comma_total_pay = number_format($total_pay);
     }
     if(isset($icon)){
