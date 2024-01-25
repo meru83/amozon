@@ -57,7 +57,7 @@
 
 .textbox{
     text-align: center;
-    margin: 50px;
+    margin: 50px auto;
     max-width: 600px;
     padding: 24px 500px;
 }
