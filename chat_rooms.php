@@ -43,15 +43,15 @@ if ($result === false) {
     die($errorMessage);
 }
 
-if(isset($_SESSION['seller_id'])){
-    $seller_chat = <<<END
-    <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-    END;
-}else{
-    $seller_chat = <<<END
-    <li class="menu-item"><a href="seller/seller.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-    END;
-}
+// if(isset($_SESSION['seller_id'])){
+//     $seller_chat = <<<END
+//     <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+//     END;
+// }else{
+//     $seller_chat = <<<END
+//     <li class="menu-item"><a href="seller/seller.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+//     END;
+// }
 
 ?>
 
@@ -110,7 +110,7 @@ if(isset($_SESSION['seller_id'])){
     if(isset($_SESSION['user_id'])){
         $flagUserId = $_SESSION['user_id'];
         echo <<<HTML
-        <li class="menu-item"><a href="user_profile.php?user_id=".$flagUserId><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+        <li class="menu-item"><a href="user_profile.php?user_id=$flagUserId"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
         HTML;
     }
     echo <<< HTML
