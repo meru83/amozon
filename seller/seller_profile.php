@@ -193,13 +193,16 @@ if($seller_id === $postSellerId){
         echo <<<HTML
         <div class='sub-content-item1'>
         <div class="flexBox001">
+        <a href="../address_insert.php">
                 <h2>お届け先：<h2>
                 未登録
-            </div>
+        </a>
+        </div>
         </div>
         HTML;
     }
-    // echo '</div>';
+    echo '</div>';
+    echo '</div>';
     // echo '</div>';
     $soldSql = "SELECT d.detail_total FROM orders_detail d
                 LEFT JOIN orders o ON (d.order_id = o.order_id)
