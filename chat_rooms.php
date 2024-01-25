@@ -67,6 +67,7 @@ if ($result === false) {
 <body>
 <div id="header" class="header">
     <div class="back"><div class="backBtn" onclick="history.back()"><img src="img/return_left.png" style="width:100%;"></div></div>
+    <h1 class="h1_White">チャットルーム</h1>
         <?php
         //ユーザーでログインしてた時のログアウトボタン
         if(!is_null($user_id)){
