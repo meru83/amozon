@@ -11,6 +11,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+
+$seller_id = isset($_SESSION['seller_id'])?$_SESSION['seller_id']:null;
+$user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:null;
+
 if(isset($_SESSION['user_id']) || isset($_SESSION['seller_id'])){
     $foo2 = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
