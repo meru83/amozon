@@ -79,7 +79,7 @@ if(isset($_SESSION['seller_id'])){
                     if(isset($_SESSION['seller_id'])){
                         echo '<li class="menu-item"><a href="../chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }else{
-                        echo '<li class="menu-item"><a href="seller.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                        echo '<li class="menu-item"><a href="seller_log.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }
                     ?>
                     <?php

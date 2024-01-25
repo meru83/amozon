@@ -189,7 +189,7 @@ if($orderResult && $orderResult->num_rows > 0){
             $colorSizeText = <<<END
             <input type="hidden" id="product_id$count" name="product_id" value="$product_id">
             <input type="hidden" id="color_size_id$count" name="color_size_id" value="$color_size_id">
-            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size</a>  <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：<a href="seller_profile.php?seller_id=$seller_id">$seller_id</a></div><br>
+            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size</a>  <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：<a href="seller/seller_profile.php?seller_id=$seller_id">$seller_id</a></div><br>
             END;
             //$favorite_product null か $user_id
             if(!($favorite_product === null) && isset($_SESSION['user_id'])){
@@ -217,7 +217,7 @@ if($orderResult && $orderResult->num_rows > 0){
         }else{
             //お気に入りボタン未設置
             $colorSizeText = <<<END
-            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：<a href="seller_profile.php?seller_id=$seller_id">$seller_id</a></div><br>
+            <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div> <div>販売者：<a href="seller/seller_profile.php?seller_id=$seller_id">$seller_id</a></div><br>
             END;
         }
 
