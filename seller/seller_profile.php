@@ -104,7 +104,7 @@ END;
 // ログイン中のユーザーIDを取得
 $user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:null;//判定に使うときにnullが使えない
 $seller_id = isset($_SESSION['seller_id'])?$_SESSION['seller_id']:"A";
-$other = isset($_GET['other'])?$_GET['other']:null;
+$other_id = isset($_GET['other_id'])?$_GET['other_id']:null;
 if(isset($_GET['seller_id'])){
     $postSellerId = $_GET['seller_id'];
 }else if(isset($_POST['seller_id'])){
@@ -213,7 +213,7 @@ if($seller_id === $postSellerId){
     //相手
     $otherSql = "SELECT sellerName, icon FROM seller WHERE seller_id = ?";
     $otherStmt = $conn->prepare($otherSql);
-    $otherStmt->bind_param("s",$other);
+    $otherStmt->bind_param("s",$other_id);
     $otherStmt->execute();
     $otherResult = $otherStmt->get_result();
     if($otherResult && $otherResult->num_rows > 0){
@@ -233,7 +233,7 @@ if($seller_id === $postSellerId){
 
         $chatSql = "SELECT c.room_id, s.sellerName FROM chatrooms c
                 -- LEFT JOIN users u ON (c.user_id = u.user_id)
-                LEFT JOIN seller s ON (c.seller_id = u.seller_id)
+                LEFT JOIN seller s ON (c.seller_id = s.seller_id)
                 WHERE c.user_id = ? && c.seller_id = ?";
         $chatStmt = $conn->prepare($chatSql);
         $chatStmt->bind_param("ss",$user_id,$other_id);
@@ -246,7 +246,7 @@ if($seller_id === $postSellerId){
             //こいつとのチャットにとばす
             // echo "<a href='chat_room.php?room_id=$room_id&sellerName=$user_id'><div class='sellerChat'>$username とのチャット</div></a><br>";
             echo <<<HTML
-            <a href='chat_room.php?room_id=$room_id&sellerName=$sellerName'>
+            <a href='../chat_room.php?room_id=$room_id&sellerName=$sellerName'>
             <div class='sub-content-item'>
                 <div class="flexBox">
                     <!-- ここにチャットマーク -->
