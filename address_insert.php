@@ -84,10 +84,7 @@ if(isset($_POST['add'])){
     <title>住所登録</title>
 </head>
 <body class="address_body">
-<?php
-if(isset($_SESSION['seller_id'])){}
-?>
-<!-- <form method="post" action="" id="form" class="address_form"> -->
+<form method="post" action="" id="form" class="address_form">
     <label for="post_code" class="address_label">郵便番号：</label><br>
     <div id="his" style="display:none; color:red">必須</div>
     <input type="text" name="post_code" id="input" class="address_textbox" maxlength=8 placeholder="例)1234567（ハイフンなし）" required>
