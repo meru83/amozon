@@ -38,6 +38,7 @@ if(isset($_SESSION['seller_id'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>販売者のトップ</title>
     <link rel="stylesheet" href="../css/Amozon_insta.css">
+    <link rel="stylesheet" href="../css/test.css">
 </head>
 <body>
     <div id="header" class="header">
@@ -102,7 +103,16 @@ if(isset($_SESSION['seller_id'])){
         
         <div class="right-content">
         <p id="current-time"></p>
+        <?php
+            if(isset($_GET['error_message'])){
+                $error_message = $_GET['error_message'];
+                echo "<p class='error_red'>".$error_message."</p>";
+            }
 
+            if(!isset($_SESSION['seller_id'])){
+                echo '<div class="error_red">※ユーザー登録またはログインを完了させてください。</div>';
+            }
+            ?>
         <div class="cp_box">
         <input id="cp03" type="checkbox">
         <label for="cp03"></label>
@@ -141,16 +151,6 @@ if(isset($_SESSION['seller_id'])){
 
         </div>
         </div>
-            <?php
-            if(isset($_GET['error_message'])){
-                $error_message = $_GET['error_message'];
-                echo "<p class='error_red'>".$error_message."</p>";
-            }
-
-            if(!isset($_SESSION['seller_id'])){
-                echo '<div class="error_red">※ユーザー登録またはログインを完了させてください。</div>';
-            }
-            ?>
         </div>
     </div>
 
