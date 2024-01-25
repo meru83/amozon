@@ -176,7 +176,6 @@ if($user_id === $postUserId){
         $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:"";
         $addressname = $addressRow['addressname'];
 
-        echo '<div class="sub-content">';
         echo <<<HTML
         <a href="address_insert.php">
         <div class='sub-content-item1'>
@@ -204,7 +203,6 @@ if($user_id === $postUserId){
         </a>
         HTML;
     }
-    echo "</div>";
     if(isset($comma_total_pay)){
         echo <<<HTML
         <a href='chargePay.php'>
