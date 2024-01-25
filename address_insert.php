@@ -49,7 +49,7 @@ if(isset($_POST['add'])){
             echo <<<HTML
             <script>
             if(!alert("住所の登録に成功しました。")){
-                location.href = 'seller_top.php';
+                location.href = '../seller_top.php';
             }
             </script>
             HTML;
@@ -67,7 +67,7 @@ if(isset($_POST['add'])){
             echo <<<HTML
             <script>
             if(!alert("住所の登録に失敗しました。")){
-                location.href = 'seller_top.php';
+                location.href = '../seller_top.php';
             }
             </script>
             HTML;
