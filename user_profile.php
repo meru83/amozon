@@ -146,6 +146,7 @@ if($user_id === $postUserId){
         $username = $selectRow['username'];
         $icon = isset($selectRow['icon'])?$selectRow['icon']:null;
         $total_pay = isset($selectRow['total_pay'])?$selectRow['total_pay']:null;
+        $comma_total_pay = number_format($total_pay);
     }
     if(isset($icon)){
         echo <<<END
@@ -198,13 +199,13 @@ if($user_id === $postUserId){
         HTML;
     }
     echo "</div>";
-    if(isset($total_pay)){
+    if(isset($comma_total_pay)){
         echo <<<HTML
         <a href='chargePay.php'>
         <div class='sub-content-item'>
             <div class="flexBox">
                 <h2>残高<h2>
-                <p>$total_pay 円</p>
+                <p>$comma_total_pay 円</p>
             </div>
         </div>
         </a>
