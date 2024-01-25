@@ -123,6 +123,7 @@ END;
             </div>
         </div>
 
+        <div class="right-content">
         <div class="amozon_profile">
         <!-- <img src="../img/cart_dake.svg" class="amozon_usericon"> -->
 <?php
@@ -188,9 +189,11 @@ if($seller_id === $postSellerId){
                 <b>$addressname</b>
             </div>
         </div>
+        </div>
         HTML;
     }else{
         echo <<<HTML
+        <div class="sub-content">
         <div class='sub-content-item1'>
         <div class="flexBox001">
         <a href="../address_insert.php">
@@ -201,7 +204,6 @@ if($seller_id === $postSellerId){
         </div>
         HTML;
     }
-    echo '</div>';
     echo '</div>';
     // echo '</div>';
     $soldSql = "SELECT d.detail_total FROM orders_detail d
