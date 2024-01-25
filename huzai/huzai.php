@@ -100,7 +100,7 @@ if($result && $result->num_rows > 0){
                     //発送済み
                     $htmlText .= <<<END
                     <div id="$count">
-                    <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div>
+                    <a href="../productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div>
                     <button class="huzai_button" type="button">発送済み</button>
                     <br>
                     </div>
