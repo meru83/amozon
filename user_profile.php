@@ -176,6 +176,56 @@ if($user_id === $postUserId){
 }else{
     // $sessionFlag = false;
     //ここに相手から見た時のデザイン
+    $selectSql = "SELECT u.username, u.icon
+                FROM users u
+                WHERE u.user_id = ?";
+    $selectStmt = $conn->prepare($selectSql);
+    $selectStmt->bind_param("s",$postUserId);
+    $selectStmt->execute();
+    $selectResult = $selectStmt->get_result();
+    $selectRow = $selectStmt->fetch_assoc();
+    $username = $selectRow['username'];
+    $icon = isset($selectRow['icon'])?$selectRow['icon']:null;
+    if(isset($icon)){
+        echo <<<END
+        <img src="img/$icon" class="amozon_usericon">
+        END;
+    }else{
+        echo <<<HTML
+        <img src="img/cart_dake.svg" class="amozon_usericon">
+        HTML;
+    }
+    echo "<h1>$username</h1>";
+    if(isset($_SESSION['seller_id'])){
+        $sessionId = $_SESSION['seller_id'];
+    }else if(isset($_SESSION['user_id'])){
+        $sessionId = $_SESSION['user_id'];
+    }else{
+        $sessionId = "A";
+    }
+    $chatSql = "SELECT room_id FROM chatrooms
+            WHERE user_id = ? && seller_id = ?";
+    $chatStmt = $conn->prepare();
+    $chatStmt->bind_param("ss",$postUserId,$sessionId);
+    $chatStmt->execute();
+    $chatResult = $chatStmt->get_result();
+    if($chatResult && $chatResult->num_rows > 0){
+        $chatRow = $chatResult->fetch_assoc();
+        $chatRow['room_id'];
+        //こいつとのチャットにとばす
+        // echo "<a href='chat_room.php?room_id=$room_id&sellerName=$user_id'><div class='sellerChat'>$username とのチャット</div></a><br>";
+        echo <<<HTML
+        <a href='chat_room.php?room_id=$room_id&sellerName=$user_id'>
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <!-- ここにチャットマーク -->
+            </div>
+        </div>
+        </a>
+        HTML;
+    }else{
+        //チャットルームが存在しない
+    }
 }
 ?>
 
