@@ -254,6 +254,12 @@ if($seller_id === $postSellerId){
             </div>
             </a>
             HTML;
+        }else{
+            $insertSql = "INSERT INTO user_id, seller_id VALUES(?,?)";
+            $insertStmt = $conn->prepare($insertSql);
+            $insertStmt->bind_param("ss",$user_id,$other_id);
+            $insertStmt->execute();
+            $last_id = $conn->$insert_id;
         }
     }
 }

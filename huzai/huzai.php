@@ -238,8 +238,7 @@ function cancelButton(order_id,product_id,color_size_id,detail_total,count){
                 response.forEach(function(row) {
                     if(row.error_message){
                         var divElement = document.getElementById(count);
-                        console.log(divElement);
-                        divElement.innerHtml = "注文がキャンセルされました";
+                        divElement.innerHTML = "注文がキャンセルされました";
                     }else{
                         alert("注文のキャンセルができませんでした。もう一度お試しください。");
                     }
