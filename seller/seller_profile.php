@@ -59,7 +59,14 @@ END;
                         echo '<li class="menu-item"><a href="seller.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }
                     ?>
-                    <li class="menu-item"><a href="seller_home.php"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    <?php
+                    if(isset($_SESSION['seller_id'])){
+                        $flagSellerId = $_SESSION['seller_id'];
+                        echo <<<HTML
+                        <li class="menu-item"><a href="seller_profile.php?seller_id=$flagSellerId"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                        HTML;
+                    }
+                    ?>
                     <!--log--->
                 </ul>
             </div>
@@ -71,39 +78,99 @@ END;
         </div>
 
         <div class="amozon_profile">
+        <!-- <img src="../img/cart_dake.svg" class="amozon_usericon"> -->
+<?php
+// ログイン中のユーザーIDを取得
+$user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:null;//判定に使うときにnullが使えない
+$seller_id = isset($_SESSION['seller_id'])?$_SESSION['seller_id']:"A";
+if(isset($_GET['seller_id'])){
+    $postSellerId = $_GET['seller_id'];
+}else if(isset($_POST['seller_id'])){
+    $postSellerId = $_POST['seller_id'];
+}else{
+    $postSellerId = "B";
+}
+
+if($seller_id === $postSellerId){
+    //自分
+    $sql_seller = "SELECT sellerName, icon FROM seller WHERE seller_id = ?";
+    $sql_stmt = $conn->prepare($sql_seller);
+    $sql_stmt->bind_param("s",$seller_id); 
+    $sql_stmt->execute();
+    $sql_result = $sql_stmt->get_result();
+    if($sql_result && $sql_result->num_rows > 0){
+        $sql_row = $sql_result->fetch_assoc();
+        $sellerName = $sql_row['sellerName'];
+        $icon = isset($selectRow['icon'])?$selectRow['icon']:null;
+    }
+    if(isset($icon)){
+        echo <<<END
+        <img src="../img/$icon" class="amozon_usericon">
+        END;
+    }else{
+        echo <<<HTML
         <img src="../img/cart_dake.svg" class="amozon_usericon">
-        <?php
-             // ログイン中のユーザーIDを取得
-        if (isset($_SESSION['seller_id'])) {
-            $seller_id = $_SESSION['seller_id'];
-            $sql_seller = "SELECT sellerName FROM seller WHERE seller_id = '$seller_id'";
-            $result_seller = $conn->query($sql_seller);
+        HTML;
+    }
+    echo "<h1>$sellerName</h1>";
+    $addressSql = "SELECT post_code, prefectures, city, tyou, room_number, addressname 
+                FROM address
+                WHERE seller_id = ? && default_status = 1";
+    $addressStmt = $conn->prepare($addressSql);
+    $addressStmt->bind_param("s",$seller_id);
+    $addressStmt->execute();
+    $addressResult = $addressStmt->get_result();
+    if($addressResult && $addressResult->num_rows > 0){
+        $addressRow = $addressResult->fetch_assoc();
+        $post_code = $addressRow['post_code'];
+        $prefectures = $addressRow['prefectures'];
+        $city = $addressRow['city'];
+        $tyou = $addressRow['tyou'];
+        $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:"";
+        $addressname = $addressRow['addressname'];
 
-        // クエリの実行にエラーがある場合
-        if (!$result_seller) {
-            die("クエリの実行にエラーがあります: " . $conn->error);
-        }
-
-        // ユーザー名が取得できた場合は表示
-        if ($result_seller->num_rows > 0) {
-            $row_seller = $result_seller->fetch_assoc();
-            echo "<h1>{$row_seller['sellerName']}</h1>";
-        }           
-        // データベース接続を閉じる
-            $conn->close();
-        } else {
-            // ログインしていない場合
-            echo "<p>ログインしていません</p>";
-        }
-        ?>
-        <a href='chargePay.php'>
-            <div class="sub-content">
-                <div class="sub-content-item1"></div>
-                <div class="sub-content-item1"></div>
-                <div class="sub-content-item1"></div>
-                    </div>>
-                </a>
+        echo <<<HTML
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <h2>発送元：<h2>
+                〒 $post_code<br>
+                $prefectures
+                $city $tyou $room_number <br>
+                $addressname
             </div>
-        </div>  
+        </div>
+        HTML;
+    }else{
+        echo <<<HTML
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <h2>お届け先：<h2>
+                未登録
+            </div>
+        </div>
+        HTML;
+    }
+    $soldSql = "SELECT d.detail_total FROM orders_detail d
+                LEFT JOIN orders o ON (d.order_id = o.order_id)
+                LEFT JOIN products p ON (d.product_id = p.product_id)
+                WHERE p.seller_id = ? && o.order_status = '配達完了'";
+    $soldStmt = $conn->prepare($soldSql);
+    $soldStmt->bind_param("s",$seller_id);
+    $soldStmt->execute();
+    $soldResult = $soldStmt->get_result();
+    if($soldResult && $soldResult->num_rows > 0){
+        $total = 0;
+        //トータル計算
+        while($soldRow = $soldResult->fetch_assoc()){
+            $total += $soldRow['detail_total'];
+        }
+        echo $total;
+    }
+}else{
+    //相手
+}       
+// データベース接続を閉じる
+$conn->close();
+?>  
     </body>
 </html>

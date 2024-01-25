@@ -82,7 +82,14 @@ if(isset($_SESSION['seller_id'])){
                         echo '<li class="menu-item"><a href="seller.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }
                     ?>
-                    <li class="menu-item"><a href="seller_home.php"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    <?php
+                    if(isset($_SESSION['seller_id'])){
+                        $flagSellerId = $_SESSION['seller_id'];
+                        echo <<<HTML
+                        <li class="menu-item"><a href="seller_profile.php?seller_id=$flagSellerId"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                        HTML;
+                    }
+                    ?>
                     <!--log--->
                 </ul>
             </div>
