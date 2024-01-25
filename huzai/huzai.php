@@ -62,6 +62,15 @@ if($result && $result->num_rows > 0){
             while($notYetDeliRow = $notYetDeliResult->fetch_assoc()){
                 //order_idはgetで取得
                 $total = $notYetDeliRow['total'];
+                if($total <= 0){
+                    echo <<<HTML
+                    <script>
+                        if(!alert("注文はすべてキャンセルされました。")){
+                            window.location.href = "buyHistory.php";
+                        }
+                    </script>
+                    HTML;
+                }
                 $create_at = $notYetDeliRow['create_at'];
                 $order_pieces = $notYetDeliRow['order_pieces'];
                 $product_id = $notYetDeliRow['product_id'];
@@ -107,6 +116,7 @@ if($result && $result->num_rows > 0){
                     END;
                     $flag = false;
                 }
+                $count++;
             }
             if($deli_status_flag){
                 $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
@@ -114,9 +124,25 @@ if($result && $result->num_rows > 0){
                 $updateStmt->execute();
             }
         }else{
-            $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
-            $updateStmt->bind_param("si",$orderStatusText2,$order_id);
-            $updateStmt->execute();
+            $checkSql = "SELECT total FROM orders 
+                        WHERE user_id = ? && order_status = '出荷準備中' && order_id = ? && NOT total = 0";
+            $checkStmt = $conn->prepare($checkSql);
+            $checkStmt->bind_param("si",$user_id,$order_id);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
+            if($checkResult && $checkResult->num_rows > 0){
+                $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
+                $updateStmt->bind_param("si",$orderStatusText2,$order_id);
+                $updateStmt->execute();
+            }else{
+                echo <<<HTML
+                <script>
+                    if(!alert("注文はすべてキャンセルされました。")){
+                        window.location.href = "../buyHistory.php";
+                    }
+                </script>
+                HTML;
+            }
         }
     }else if($order_status === $orderStatusText2){
         $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
