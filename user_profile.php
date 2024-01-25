@@ -201,17 +201,10 @@ if($user_id === $postUserId){
         HTML;
     }
     echo "<h1>$username</h1>";
-    if(isset($_SESSION['seller_id'])){
-        $sessionId = $_SESSION['seller_id'];
-    }else if(isset($_SESSION['user_id'])){
-        $sessionId = $_SESSION['user_id'];
-    }else{
-        $sessionId = "A";
-    }
     $chatSql = "SELECT room_id FROM chatrooms
             WHERE user_id = ? && seller_id = ?";
     $chatStmt = $conn->prepare($chatSql);
-    $chatStmt->bind_param("ss",$postUserId,$sessionId);
+    $chatStmt->bind_param("ss",$other_id,$seller_id);
     $chatStmt->execute();
     $chatResult = $chatStmt->get_result();
     if($chatResult && $chatResult->num_rows > 0){

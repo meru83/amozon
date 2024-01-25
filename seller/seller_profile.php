@@ -226,6 +226,8 @@ if($seller_id === $postSellerId){
             HTML;
         }
         echo "<h1>$sellerName</h1>";
+
+        $chatSql = "SELECT room_id WHERE user_id = ?";
     }
 }       
 // データベース接続を閉じる
