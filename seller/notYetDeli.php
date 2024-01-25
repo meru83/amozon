@@ -100,10 +100,6 @@ if(isset($_SESSION['seller_id'])){
                 <li class="menu-item"><a href="../py/rireki.php" class="a_link"><img src="../img/gurafu.png" class="logo"><span class="menu-item-text">売上管理</span></a></li>
                     </ul>
                 </div>
-                <div>
-                    <ul class="menu-list-bottom">
-                    </ul>
-                </div>
             </div>
             <div class="right-content">
 
@@ -178,6 +174,9 @@ if($notYetDeliResult && $notYetDeliResult->num_rows > 0){
     echo $create_atText;
 }else{
     //未発送の商品がないとき
+    echo "<div class='mihasou'>未発送の商品がありません";
+    echo '<a href="seller_top.php"><div class="home">ホームに戻る</div></a>';
+    echo '</div>';
 }
 
 echo '</div>';//<div class="right-content">

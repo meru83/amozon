@@ -267,6 +267,23 @@
     color: white;
 }
 
+.mihasou {
+    width: fit-content;
+    margin: 200px auto 0 auto;
+}
+
+.home {
+    text-align: center;
+    margin: 200px 60px 0 60px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #005aae;
+    color: white;
+}
+
+.home:hover {
+    background: #004488;
+}
 
 /* 1266px以下でのスタイル */
 @media screen and (max-width: 1266px) {
