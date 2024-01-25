@@ -21,12 +21,14 @@ if(isset($_SESSION['user_id']) || isset($_SESSION['seller_id'])){
     </div>
 END;
 }else{
-    $foo2 = <<<END
-    <div class="New_log">
-        <a href="register.php"><div class="log_style">新規登録</div></a>
-        <a href="login.php"><div class="log_style rightM">ログイン</div></a>
-    </div>
-END;
+//     $foo2 = <<<END
+//     <div class="New_log">
+//         <a href="register.php"><div class="log_style">新規登録</div></a>
+//         <a href="login.php"><div class="log_style rightM">ログイン</div></a>
+//     </div>
+// END;
+    header("Location:login.php");
+    exit();
 }
 $user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:"B";//判定に使うときにnullが使えない
 $seller_id = isset($_SESSION['seller_id'])?$_SESSION['seller_id']:null;
