@@ -197,14 +197,14 @@ if($seller_id === $postSellerId){
         </div>
         HTML;
     }
-    echo '</div>';
-    echo '</div>';
+    // echo '</div>';
+    // echo '</div>';
     $soldSql = "SELECT d.detail_total FROM orders_detail d
                 LEFT JOIN orders o ON (d.order_id = o.order_id)
                 LEFT JOIN products p ON (d.product_id = p.product_id)
                 WHERE p.seller_id = ? && o.order_status = '配達完了'";
     $soldStmt = $conn->prepare($soldSql);
-    $soldStmt->bind_param("s",$other);
+    $soldStmt->bind_param("s",$seller_id);
     $soldStmt->execute();
     $soldResult = $soldStmt->get_result();
     if($soldResult && $soldResult->num_rows > 0){
@@ -213,6 +213,7 @@ if($seller_id === $postSellerId){
         while($soldRow = $soldResult->fetch_assoc()){
             $total += $soldRow['detail_total'];
         }
+        // error_log($total);
         $commaTotal = number_format($total);
         echo <<<HTML
         <div class='sub-content-item'>
@@ -223,6 +224,7 @@ if($seller_id === $postSellerId){
         </div>
         HTML;
     }else{
+        error_log("a");
         echo <<<HTML
         <div class='sub-content-item'>
             <div class="flexBox">
