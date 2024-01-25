@@ -183,7 +183,7 @@ if($user_id === $postUserId){
     $selectStmt->bind_param("s",$postUserId);
     $selectStmt->execute();
     $selectResult = $selectStmt->get_result();
-    $selectRow = $selectStmt->fetch_assoc();
+    $selectRow = $selectResult->fetch_assoc();
     $username = $selectRow['username'];
     $icon = isset($selectRow['icon'])?$selectRow['icon']:null;
     if(isset($icon)){
@@ -205,17 +205,17 @@ if($user_id === $postUserId){
     }
     $chatSql = "SELECT room_id FROM chatrooms
             WHERE user_id = ? && seller_id = ?";
-    $chatStmt = $conn->prepare();
+    $chatStmt = $conn->prepare($chatSql);
     $chatStmt->bind_param("ss",$postUserId,$sessionId);
     $chatStmt->execute();
     $chatResult = $chatStmt->get_result();
     if($chatResult && $chatResult->num_rows > 0){
         $chatRow = $chatResult->fetch_assoc();
-        $chatRow['room_id'];
+        $room_id = $chatRow['room_id'];
         //こいつとのチャットにとばす
         // echo "<a href='chat_room.php?room_id=$room_id&sellerName=$user_id'><div class='sellerChat'>$username とのチャット</div></a><br>";
         echo <<<HTML
-        <a href='chat_room.php?room_id=$room_id&sellerName=$user_id'>
+        <a href='chat_room.php?room_id=$room_id&user_id=$user_id'>
         <div class='sub-content-item'>
             <div class="flexBox">
                 <!-- ここにチャットマーク -->
