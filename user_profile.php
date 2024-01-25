@@ -72,15 +72,17 @@ END;
     <div class="right-content">
             <div class="amozon_profile">
 <?php
-$user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:"A";//判定に使うときにnullが使えない
+$user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:"B";//判定に使うときにnullが使えない
 $seller_id = isset($_SESSION['seller_id'])?$_SESSION['seller_id']:null;
+$other_id = isset($_GET['other_id'])?$_GET['other_id']:null;
 if(isset($_GET['user_id'])){
     $postUserId = $_GET['user_id'];
 }else if(isset($_POST['user_id'])){
     $postUserId = $_POST['user_id'];
 }else{
-    $postUserId = "B";
+    $postUserId = "A";
 }
+
 
 //自分のプロフィールか否か判定
 //このページに飛んでくるときにpostかgetでuser_idを持たせてそれが自分のidか否か
@@ -184,7 +186,7 @@ if($user_id === $postUserId){
                 FROM users u
                 WHERE u.user_id = ?";
     $selectStmt = $conn->prepare($selectSql);
-    $selectStmt->bind_param("s",$postUserId);
+    $selectStmt->bind_param("s",$other_id);
     $selectStmt->execute();
     $selectResult = $selectStmt->get_result();
     $selectRow = $selectResult->fetch_assoc();

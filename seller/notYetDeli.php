@@ -164,7 +164,7 @@ if($notYetDeliResult && $notYetDeliResult->num_rows > 0){
             $create_atText = <<<END
             <br>
             <b>購入日時</b>：$create_at 
-            <a href="../user_profile.php?user_id=$user_id">$user_id</a> 様
+            <a href="../user_profile.php?other_id=$user_id">$user_id</a> 様
             <button id="$product_id$color_size_id" class="hasso" type="button" style="display:block" onclick="deliComplete($product_id$color_size_id, $order_id, '$user_id')">発送完了</button>
             <div id="2$product_id$color_size_id" style="display:none; color:red; margin-top:24px;">発送が完了しました</div>
             </div>
