@@ -52,7 +52,9 @@
             $check_result = $check_stmt->get_result();
 
             if ($check_result && $check_result->num_rows > 0) {
-                echo '<div class="existence">ユーザーIDがすでに存在します。</div>';
+                $sonzai =<<<END
+                <div class="existence">ユーザーIDがすでに存在します。</div>
+                END;
             } else {
                 // パスワードをハッシュ化
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -87,6 +89,9 @@
     <form method="POST" id ='form' class="seller_form">
         <img src="../img/Re.ReaD2blue.svg" class="seller_brand">
         <h1 class="seller_h1">新規登録</h1>
+        <?php if(isset($sonzai)) {
+            echo $sonzai;    
+        }?>
         <label for="seller_id">販売専用アカウント ID</label>
         <div id="his" style="display:none; color:red">必須</div>
         <input type="text" id="seller_id" class="seller_textbox" placeholder="re_bank" name="seller_id" required><br>
