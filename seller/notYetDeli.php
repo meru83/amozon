@@ -77,25 +77,25 @@ if(isset($_SESSION['seller_id'])){
                             $notYetRow = $notYetResult->fetch_assoc();
                             $notYetDeli = $notYetRow['notYetDeli'];
                             echo <<<HTML
-                            <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
+                            <li class="menu-item"> <a href="notYetDeli.php" class="a_link"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
                             HTML;
                         }else{
                             echo <<<HTML
-                            <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
+                            <li class="menu-item"> <a href="notYetDeli.php" class="a_link"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
                             HTML;
                         }
 
                         if(isset($_SESSION['seller_id'])){
-                            echo '<li class="menu-item"><a href="../chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                            echo '<li class="menu-item"><a href="../chat_rooms.php" class="a_link"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                         }else{
-                            echo '<li class="menu-item"><a href="seller_log.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                            echo '<li class="menu-item"><a href="seller_log.php" class="a_link"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                         }
                         ?>
                         <?php
                         if(isset($_SESSION['seller_id'])){
                             $flagSellerId = $_SESSION['seller_id'];
                             echo <<<HTML
-                            <li class="menu-item"><a href="seller_profile.php?seller_id=$flagSellerId"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                            <li class="menu-item"><a href="seller_profile.php?seller_id=$flagSellerId" class="a_link"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
                             HTML;
                         }
                         ?>
