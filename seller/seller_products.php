@@ -73,7 +73,28 @@ if(isset($_SESSION['seller_id'])){
                     <li class="menu-item"><a href="seller_top.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
                     <li class="menu-item"> <a href="p2_insert.php"><img src="../img/hensyu.png" class="logo"><span class="menu-item-text">商品情報登録</span></a></li>
                     <li class="menu-item"> <a href="seller_products.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">登録商品一覧</span></a></li>
+                    <!-- <li class="menu-item"> <a href=""><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li> -->
                     <?php
+                    $notYetSql = "SELECT COUNT(DISTINCT o.order_id) AS notYetDeli FROM orders o
+                                LEFT JOIN orders_detail d ON (o.order_id = d.order_id)
+                                LEFT JOIN products p ON (d.product_id = p.product_id)
+                                WHERE o.order_status = '出荷準備中' && p.seller_id = ?";
+                    $notYetStmt = $conn->prepare($notYetSql);
+                    $notYetStmt->bind_param("s",$seller_id);
+                    $notYetStmt->execute();
+                    $notYetResult = $notYetStmt->get_result();
+                    if($notYetResult && $notYetResult->num_rows > 0){
+                        $notYetRow = $notYetResult->fetch_assoc();
+                        $notYetDeli = $notYetRow['notYetDeli'];
+                        echo <<<HTML
+                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
+                        HTML;
+                    }else{
+                        echo <<<HTML
+                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
+                        HTML;
+                    }
+
                     if(isset($_SESSION['seller_id'])){
                         echo '<li class="menu-item"><a href="../chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }else{

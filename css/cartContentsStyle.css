@@ -220,6 +220,7 @@ a, a:hover, a:active, a:visited {
     background-color: #ffffff;
     border: 1px solid #005aae;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .btnStyle:hover {
