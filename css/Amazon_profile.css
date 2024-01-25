@@ -253,6 +253,15 @@ a, a:hover, a:active, a:visited {
     box-sizing: border-box;
 }
 
+.tuuti {
+    max-width: 35px;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 100px;
+    background-color: #000;
+    color: white;
+}
+
 /* 1266px以下でのスタイル */
 @media screen and (max-width: 1266px) {
     .left-menu {
