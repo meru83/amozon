@@ -100,10 +100,6 @@ if(isset($_SESSION['seller_id'])){
                 <li class="menu-item"><a href="../py/rireki.php" class="a_link"><img src="../img/gurafu.png" class="logo"><span class="menu-item-text">売上管理</span></a></li>
                     </ul>
                 </div>
-                <div>
-                    <ul class="menu-list-bottom">
-                    </ul>
-                </div>
             </div>
             <div class="right-content">
 
