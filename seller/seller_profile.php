@@ -177,7 +177,6 @@ if($seller_id === $postSellerId){
         $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:"";
         $addressname = $addressRow['addressname'];
 
-        echo '<div class="sub-content">';
         echo <<<HTML
         <div class='sub-content-item1'>
             <div class="flexBox001">

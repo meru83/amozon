@@ -176,6 +176,7 @@ if($user_id === $postUserId){
         $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:"";
         $addressname = $addressRow['addressname'];
 
+        echo '<a href="address_insert.php">';
         echo <<<HTML
         <div class='sub-content-item1'>
             <div class="flexBox001">
@@ -201,27 +202,30 @@ if($user_id === $postUserId){
         </a>
         HTML;
     }
+    echo "</a>";
     if(isset($comma_total_pay)){
         echo <<<HTML
-        <a href='chargePay.php'>
+        
         <div class='sub-content-item'>
+        <a href='chargePay.php'>
             <div class="flexBox">
                 <h2>残高<h2>
                 <p>$comma_total_pay 円</p>
             </div>
+            </a>
         </div>
-        </a>
+        
         HTML;
     }else{
         echo <<<HTML
-        <a href='chargePay.php'>
         <div class='sub-content-item'>
+        <a href='chargePay.php'>
             <div class="flexBox">
                 <h2>残高<h2>
                 <p>0 円</p>
             </div>
-        </div>
         </a>
+        </div>
         HTML;
     }
 }else{
