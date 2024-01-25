@@ -85,17 +85,23 @@ if(isset($_SESSION['seller_id'])){
                         HTML;
                     }
 
-                    if(isset($_SESSION['seller_id'])){
-                        echo '<li class="menu-item"><a href="../chat_rooms.php" class="a_link"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
-                    }else{
-                        echo '<li class="menu-item"><a href="seller.php" class="a_link"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
-                    }
-                    ?>
-                    <li class="menu-item"><a href="seller_home.php" class="a_link"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
-                    <!--log--->
-                </ul>
-            </div>
-            <div>
+                        if(isset($_SESSION['seller_id'])){
+                            echo '<li class="menu-item"><a href="../chat_rooms.php" class="a_link"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                        }else{
+                            echo '<li class="menu-item"><a href="seller_log.php" class="a_link"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                        }
+                        ?>
+                        <?php
+                        if(isset($_SESSION['seller_id'])){
+                            $flagSellerId = $_SESSION['seller_id'];
+                            echo <<<HTML
+                            <li class="menu-item"><a href="seller_profile.php?seller_id=$flagSellerId" class="a_link"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                            HTML;
+                        }
+                        ?>
+                    </ul>
+                </div>
+                <div>
                 <ul class="menu-list-bottom">
                 <li class="menu-item"><a href="../py/rireki.php" class="a_link"><img src="../img/gurafu.png" class="logo"><span class="menu-item-text">売上管理</span></a></li>
                     </ul>
@@ -148,7 +154,9 @@ if($notYetDeliResult && $notYetDeliResult->num_rows > 0){
             HTML;
         }else{
             $htmlText = <<<HTML
+            <div class='backG'>
             以前、$user_id 様より購入されていた商品はキャンセルされました。
+            </div>
             HTML;
         }
 

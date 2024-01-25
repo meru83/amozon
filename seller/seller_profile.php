@@ -151,27 +151,31 @@ if($seller_id === $postSellerId){
         $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:"";
         $addressname = $addressRow['addressname'];
 
+        echo '<div class="sub-content">';
         echo <<<HTML
-        <div class='sub-content-item'>
-            <div class="flexBox">
-                <h2>発送元：<h2>
-                〒 $post_code<br>
-                $prefectures
-                $city $tyou $room_number <br>
-                $addressname
+        <div class='sub-content-item1'>
+            <div class="flexBox001">
+                <h2>発送元：</h2>
+                <div class="box001">
+                <b>〒 $post_code</b><br>
+                <b>$prefectures</b>
+                <b>$city $tyou $room_number</b> <br>
+                <b>$addressname</b>
             </div>
         </div>
         HTML;
     }else{
         echo <<<HTML
-        <div class='sub-content-item'>
-            <div class="flexBox">
+        <div class='sub-content-item1'>
+        <div class="flexBox001">
                 <h2>お届け先：<h2>
                 未登録
             </div>
         </div>
         HTML;
     }
+    echo '</div>';
+    echo '</div>';
     $soldSql = "SELECT d.detail_total FROM orders_detail d
                 LEFT JOIN orders o ON (d.order_id = o.order_id)
                 LEFT JOIN products p ON (d.product_id = p.product_id)
