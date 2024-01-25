@@ -207,6 +207,28 @@ if($seller_id === $postSellerId){
     }
 }else{
     //相手
+    $otherSql = "SELECT sellerName, icon FROM seller WHERE seller_id = ?";
+    $otherStmt = $conn->prepare($otherSql);
+    $otherStmt->bind_param("s",$other);
+    $otherStmt->execute();
+    $otherResult = $otherStmt->get_result();
+    if($otherResult && $otherResult->num_rows > 0){
+        $otherRow = $otherResult->fetch_assoc();
+        $sellerName = $otherRow['sellerName'];
+        $icon = isset($selectRow['icon'])?$selectRow['icon']:null;
+        if(isset($icon)){
+            echo <<<END
+            <img src="../img/$icon" class="amozon_usericon">
+            END;
+        }else{
+            echo <<<HTML
+            <img src="../img/cart_dake.svg" class="amozon_usericon">
+            HTML;
+        }
+        echo "<h1>$sellerName</h1>";
+
+        $chatSql = "SELECT room_id WHERE user_id = ?";
+    }
 }       
 // データベース接続を閉じる
 $conn->close();
