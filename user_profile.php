@@ -129,27 +129,31 @@ if($user_id === $postUserId){
         $room_number = isset($addressRow['room_number'])?$addressRow['room_number']:"";
         $addressname = $addressRow['addressname'];
 
+        echo '<div class="sub-content">';
         echo <<<HTML
-        <div class='sub-content-item'>
-            <div class="flexBox">
-                <h2>お届け先：<h2>
-                〒 $post_code<br>
-                $prefectures
-                $city $tyou $room_number <br>
-                $addressname
-            </div>
+        <div class='sub-content-item1'>
+            <div class="flexBox001">
+                <h2>お届け先</h2>
+                <div class="box001">
+                <b>〒 $post_code</b><br>
+                <b>$prefectures</b>
+                <b>$city $tyou $room_number</b><br>
+                <b>$addressname</b>
+                </div>
+        </div>
         </div>
         HTML;
     }else{
         echo <<<HTML
-        <div class='sub-content-item'>
-            <div class="flexBox">
-                <h2>お届け先：<h2>
-                未登録
-            </div>
+        <div class='sub-content-item1'>
+        <div class="flexBox001">
+            <b><h2>お届け先<h2></b>
+                <b>未登録</b>
+        </div>
         </div>
         HTML;
     }
+    echo "</div>";
     if(isset($total_pay)){
         echo <<<HTML
         <a href='chargePay.php'>

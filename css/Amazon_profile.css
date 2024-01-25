@@ -208,7 +208,7 @@ a, a:hover, a:active, a:visited {
 }
 
 .sub-content-item1 {
-    width: 97%;
+    width: 100%;
     height: 100px;
     background-color: #e2f1ff;
     margin: 5px;
@@ -232,6 +232,14 @@ a, a:hover, a:active, a:visited {
     display: flex;
     justify-content: space-between;
     margin: 21px 100px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.flexBox001 {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 80px;
     align-items: center;
     box-sizing: border-box;
 }
