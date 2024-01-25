@@ -71,11 +71,11 @@ if(isset($_SESSION['seller_id'])){
                         $notYetRow = $notYetResult->fetch_assoc();
                         $notYetDeli = $notYetRow['notYetDeli'];
                         echo <<<HTML
-                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
+                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/kuruma.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
                         HTML;
                     }else{
                         echo <<<HTML
-                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
+                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/kuruma.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
                         HTML;
                     }
 
