@@ -58,7 +58,7 @@ END;
                 if(isset($_SESSION['user_id'])){
                     $flagUserId = $_SESSION['user_id'];
                     echo <<<HTML
-                    <li class="menu-item"><a href="user_profile.php?user_id=$flagUserId" class="a_link"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    <li class="menu-item"><a href="user_profile.php?user_id=$flagUserId" class="a_link"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>;
                     HTML;
                 }
                 ?>
