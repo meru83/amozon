@@ -250,7 +250,7 @@ if($seller_id === $postSellerId){
             <div class='sub-content-item'>
                 <div class="flexBox">
                     <!-- ここにチャットマーク -->
-                    <img src="../img/chat2.svg" class="logo">
+                    <img src="../img/chat2.svg" class="logo" style="width:60px;">
                 </div>
             </div>
             </a>
