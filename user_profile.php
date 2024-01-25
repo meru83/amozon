@@ -176,6 +176,7 @@ if($user_id === $postUserId){
 
         echo '<div class="sub-content">';
         echo <<<HTML
+        <a href="address_insert.php">
         <div class='sub-content-item1'>
             <div class="flexBox001">
                 <h2>お届け先</h2>
@@ -187,15 +188,18 @@ if($user_id === $postUserId){
                 </div>
         </div>
         </div>
+        </a>
         HTML;
     }else{
         echo <<<HTML
+        <a href="address_insert.php">
         <div class='sub-content-item1'>
         <div class="flexBox001">
             <b><h2>お届け先<h2></b>
                 <b>未登録</b>
         </div>
         </div>
+        </a>
         HTML;
     }
     echo "</div>";
