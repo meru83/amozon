@@ -140,7 +140,7 @@ if(isset($_SESSION['user_id'])){
         if($stmt->execute()){
             $insertSql = "INSERT INTO pay_history2 (user_id, pay_pay) VALUES(?, ?)";
             $insertStmt = $conn->prepare($insertSql);
-            $insertStmt->bind_param("si", $user_id, $maxPrice);
+            $insertStmt->bind_param("isi", $last_id, $user_id, $maxPrice);
             $insertStmt->execute();
         }
         
