@@ -227,9 +227,32 @@ if($seller_id === $postSellerId){
         }
         echo "<h1>$sellerName</h1>";
 
-        $chatSql = "SELECT room_id WHERE user_id = ?";
+        $chatSql = "SELECT c.room_id, s.sellerName FROM chatrooms c
+                -- LEFT JOIN users u ON (c.user_id = u.user_id)
+                LEFT JOIN seller s ON (c.seller_id = u.seller_id)
+                WHERE c.user_id = ? && c.seller_id = ?";
+        $chatStmt = $conn->prepare($chatSql);
+        $chatStmt->bind_param("ss",$user_id,$other_id);
+        $chatStmt->execute();
+        $chatResult = $chatStmt->get_result();
+        if($chatResult && $chatResult->num_rows > 0){
+            $chatRow = $chatResult->fetch_assoc();
+            $room_id = $chatRow['room_id'];
+            $sellerName = $chatRow['sellerName'];
+            //こいつとのチャットにとばす
+            // echo "<a href='chat_room.php?room_id=$room_id&sellerName=$user_id'><div class='sellerChat'>$username とのチャット</div></a><br>";
+            echo <<<HTML
+            <a href='chat_room.php?room_id=$room_id&sellerName=$sellerName'>
+            <div class='sub-content-item'>
+                <div class="flexBox">
+                    <!-- ここにチャットマーク -->
+                </div>
+            </div>
+            </a>
+            HTML;
+        }
     }
-}       
+}
 // データベース接続を閉じる
 $conn->close();
 ?>  

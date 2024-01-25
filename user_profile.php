@@ -201,8 +201,9 @@ if($user_id === $postUserId){
         HTML;
     }
     echo "<h1>$username</h1>";
-    $chatSql = "SELECT room_id FROM chatrooms
-            WHERE user_id = ? && seller_id = ?";
+    $chatSql = "SELECT c.room_id, username FROM chatrooms c
+            LEFT JOIN users u ON (c.user_id = u.user_id)
+            WHERE c.user_id = ? && c.seller_id = ?";
     $chatStmt = $conn->prepare($chatSql);
     $chatStmt->bind_param("ss",$other_id,$seller_id);
     $chatStmt->execute();
@@ -210,10 +211,11 @@ if($user_id === $postUserId){
     if($chatResult && $chatResult->num_rows > 0){
         $chatRow = $chatResult->fetch_assoc();
         $room_id = $chatRow['room_id'];
+        $username = $chatRow['username'];
         //こいつとのチャットにとばす
         // echo "<a href='chat_room.php?room_id=$room_id&sellerName=$user_id'><div class='sellerChat'>$username とのチャット</div></a><br>";
         echo <<<HTML
-        <a href='chat_room.php?room_id=$room_id&user_id=$user_id'>
+        <a href='chat_room.php?room_id=$room_id&username=$username'>
         <div class='sub-content-item'>
             <div class="flexBox">
                 <!-- ここにチャットマーク -->
