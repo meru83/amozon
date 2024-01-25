@@ -39,7 +39,7 @@ echo"<style>
     echo <<< END
     <div id="header" class="header">
     <div class="back"><div class="backBtn" onclick="history.back()"><img src="../img/return_left.png" style="width:100%;"></div></div>
-    <h1 class="h1_White">プロフィール</h1>
+    <h1 class="h1_White">登録商品情報編集</h1>
     <div class="space"></div>
     </div>
     END;
