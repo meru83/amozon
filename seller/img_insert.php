@@ -193,10 +193,19 @@ function getColor($conn, $color_code){
 ?>
 <form method="post" enctype="multipart/form-data">
     <?=$htmlText?>
-    <input type="submit" class="styleBtn" value="登録"><br>
+    <input id="rail" type="submit" class="styleBtn" value="登録"><br>
 </form>
 </div>
 </div>
 </body>
+<script>
+const rail = document.getElementById('rail');
+rail.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!alert("商品に写真を登録しました")){
+        rail.submit();
+    }
+});
+</script>
 </html>
 
