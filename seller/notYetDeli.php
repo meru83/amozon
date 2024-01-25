@@ -174,6 +174,9 @@ if($notYetDeliResult && $notYetDeliResult->num_rows > 0){
     echo $create_atText;
 }else{
     //未発送の商品がないとき
+    echo "<div class='mihasou'>未発送の商品がありません";
+    echo '<a href="seller_top.php"><div class="home">ホームに戻る</div></a>';
+    echo '</div>';
 }
 
 echo '</div>';//<div class="right-content">
