@@ -83,7 +83,6 @@ if(isset($_GET['user_id'])){
     $postUserId = "A";
 }
 
-
 //自分のプロフィールか否か判定
 //このページに飛んでくるときにpostかgetでuser_idを持たせてそれが自分のidか否か
 if($user_id === $postUserId){

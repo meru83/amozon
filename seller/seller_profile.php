@@ -104,6 +104,7 @@ END;
 // ログイン中のユーザーIDを取得
 $user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:null;//判定に使うときにnullが使えない
 $seller_id = isset($_SESSION['seller_id'])?$_SESSION['seller_id']:"A";
+$other = isset($_GET['other'])?$_GET['other']:null;
 if(isset($_GET['seller_id'])){
     $postSellerId = $_GET['seller_id'];
 }else if(isset($_POST['seller_id'])){
@@ -176,7 +177,7 @@ if($seller_id === $postSellerId){
                 LEFT JOIN products p ON (d.product_id = p.product_id)
                 WHERE p.seller_id = ? && o.order_status = '配達完了'";
     $soldStmt = $conn->prepare($soldSql);
-    $soldStmt->bind_param("s",$seller_id);
+    $soldStmt->bind_param("s",$other);
     $soldStmt->execute();
     $soldResult = $soldStmt->get_result();
     if($soldResult && $soldResult->num_rows > 0){
