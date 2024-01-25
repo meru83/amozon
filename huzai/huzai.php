@@ -161,9 +161,11 @@ function getColor($conn, $color_code){
 </head>
 <body>
 
-    <header >
-        <h1>荷物の配達状況確認</h1>
-    </header>
+        <div id="header" class="header">
+            <div class="back"><div class="backBtn" onclick="history.back()"><img src="../img/return_left.png" style="width:100%;"></div></div>
+            <h1 class="h1_White">荷物の配達状況確認</h1>
+            <div class="space"></div>
+        </div>
 
     <section>
         <h2>荷物の詳細</h2>
