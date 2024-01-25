@@ -258,6 +258,14 @@
     background-color: #d6eaff;
 }
 
+.tuuti {
+    max-width: 35px;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 100px;
+    background-color: #000;
+    color: white;
+}
 
 
 /* 1266px以下でのスタイル */
@@ -285,6 +293,10 @@
     .right-content {
         margin-left: 110px;
     }
+
+    .tuuti {
+        margin-left: 8px;
+    }
 }
 
 .backBtn {
@@ -299,6 +311,5 @@
 .backBtn:hover {
     background-color: white;
 }
-
 
 
