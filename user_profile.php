@@ -11,6 +11,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+//ヘッダーログインボタンORログアウトボタン
 if(isset($_SESSION['user_id']) || isset($_SESSION['seller_id'])){
     $foo2 = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
@@ -19,7 +20,7 @@ if(isset($_SESSION['user_id']) || isset($_SESSION['seller_id'])){
     </form>
     </div>
 END;
-} else {
+}else{
     $foo2 = <<<END
     <div class="New_log">
         <a href="register.php"><div class="log_style">新規登録</div></a>
@@ -27,6 +28,32 @@ END;
     </div>
 END;
 }
+
+
+$user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:"A";//判定に使うときにnullが使えない
+$seller_id = isset($_SESSION['seller_id'])?$_SESSION['seller_id']:null;
+if(isset($_GET['user_id'])){
+    $postUserId = $_GET['user_id'];
+}else if(isset($_POST['user_id'])){
+    $postUserId = $_POST['user_id'];
+}else{
+    $postUserId = "B";
+}
+
+//自分のプロフィールか否か判定
+//このページに飛んでくるときにpostかgetでuser_idを持たせてそれが自分のidか否か
+// if($user_id === $postUserId){
+//     // $sessionFlag = true;
+//     //ここに自分から見た時のデザイン
+//     $selectSql = "SELECT u.user_id, u.username, u.user_status, u.icon 
+//                 FROM users u
+//                 LEFT JOIN address a ON (u.user_id = a.user_id)
+//                 WHERE user_id = ?";
+//     $selectStmt = ;
+// }else{
+//     // $sessionFlag = false;
+//     //ここに相手から見た時のデザイン
+// }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
