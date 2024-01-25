@@ -164,7 +164,24 @@ if($seller_id === $postSellerId){
         while($soldRow = $soldResult->fetch_assoc()){
             $total += $soldRow['detail_total'];
         }
-        echo $total;
+        $commaTotal = number_format($total);
+        echo <<<HTML
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <h2>総売り上げ：<h2>
+                $commaTotal 円
+            </div>
+        </div>
+        HTML;
+    }else{
+        echo <<<HTML
+        <div class='sub-content-item'>
+            <div class="flexBox">
+                <h2>総売り上げ：<h2>
+                0 円
+            </div>
+        </div>
+        HTML;
     }
 }else{
     //相手
