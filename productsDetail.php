@@ -30,8 +30,8 @@ if(isset($_SESSION['user_id'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/search_style.css">
-    <link rel="stylesheet" href="css/productsDetail.css">
     <link rel="stylesheet" href="css/Amozon_insta.css">
+    <link rel="stylesheet" href="css/productsDetail.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>検索</title>
     <style>
@@ -49,7 +49,7 @@ if(isset($_SESSION['user_id'])){
 <body>
 <div id="header" class="header">
     <div class="back"><div class="backBtn" onclick="history.back()"><img src="img/return_left.png" style="width:100%;"></div></div>
-    <h1 class="h1_White">トップページ</h1>
+    <h1 class="h1_White">商品詳細</h1>
     <?=$foo2?>
 </div>
     <div class="Amozon-container">
@@ -57,14 +57,21 @@ if(isset($_SESSION['user_id'])){
         <div class="left-menu">
             <div>
                 <ul class="menu-list">
-                    <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
-                    <li class="menu-item"><a href="user_top.php"><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
-                    <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
-                    <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
-                    <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-                    <li class="menu-item"><a href="favoriteProduct.php"><img src="img/heartBlack.png" class="logo"></span><span class="menu-item-text">お気に入り</span></a></li>
-                    <li class="menu-item"><a href="buyHistory.php"><img src="img/meisi.png" class="logo"><span class="menu-item-text">購入履歴</span></a></li>
-                    <li class="menu-item"><a href="user_profile.php"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    <li class="menu-item-logo"><a href="" class="a_link"><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                    <li class="menu-item"><a href="user_top.php" class="a_link"><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                    <li class="menu-item"><a href="search.php" class="a_link"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                    <li class="menu-item"><a href="cartContents.php" class="a_link"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                    <li class="menu-item"><a href="chat_rooms.php" class="a_link"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                    <li class="menu-item"><a href="favoriteProduct.php" class="a_link"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">お気に入り</span></a></li>
+                    <li class="menu-item"><a href="buyHistory.php" class="a_link"><img src="img/meisi.png" class="logo"><span class="menu-item-text">購入履歴</span></a></li>
+                    <?php
+                    if(isset($_SESSION['user_id'])){
+                        $flagUserId = $_SESSION['user_id'];
+                        echo <<<HTML
+                        <li class="menu-item"><a href="user_profile.php?user_id=$flagUserId" class="a_link"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                        HTML;
+                    }
+                    ?>
                 </ul>
             </div>
             <div>
@@ -215,7 +222,7 @@ $htmlText = <<<END
 <div class="flex"><b>色</b>　　　　　<div>$colorName</div></div>
 <div class="flex"><b>出品日</b>　　　<div>$create_at</div></div>
 <div class="flex"><b>出品者</b>　　　<div>$seller_id</a></div></div>
-<div class="flex"><b>チャット</b>　　<div><a href="create.php?seller_id=$seller_id">チャット開始</a></div></div>
+<div class="flex"><b>チャット</b>　　<div><a href="create.php?seller_id=$seller_id" class="aBtn">チャット開始</a></div></div>
 END;
 //$favorite_product null か $user_id
 if(!($favorite_product === null) && isset($_SESSION['user_id'])){

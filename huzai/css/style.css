@@ -1,18 +1,8 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     background-color: #f4f4f4;
 }
 
-header {
-    background-color: #99CCFF;
-    color: #fff;
-    text-align: center;
-    padding: 1em;
-}
-
-section {
+section{
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
@@ -22,8 +12,8 @@ section {
     position: relative;
 }
 
-h2 {
-    margin-top: 20px;
+.blook{
+    width: 100%;
 }
 
 .status-box{
@@ -89,4 +79,11 @@ h2 {
     text-decoration: none;
     border-radius: 5px;
     margin-top: 20px;
+}
+
+.textbox{
+    text-align: center;
+    margin: 102px;
+    width: auto;
+    padding: 50px;
 }

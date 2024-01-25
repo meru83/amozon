@@ -69,19 +69,46 @@ if(isset($_SESSION['seller_id'])){
         <div class="left-menu">
             <div>
                 <ul class="menu-list">
-                    <li class="menu-item-logo"><a href=""><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                <li class="menu-item-logo"><a href=""><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
                     <li class="menu-item"><a href="seller_top.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
                     <li class="menu-item"> <a href="p2_insert.php"><img src="../img/hensyu.png" class="logo"><span class="menu-item-text">商品情報登録</span></a></li>
                     <li class="menu-item"> <a href="seller_products.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">登録商品一覧</span></a></li>
+                    <!-- <li class="menu-item"> <a href=""><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li> -->
                     <?php
+                    $notYetSql = "SELECT COUNT(DISTINCT o.order_id) AS notYetDeli FROM orders o
+                                LEFT JOIN orders_detail d ON (o.order_id = d.order_id)
+                                LEFT JOIN products p ON (d.product_id = p.product_id)
+                                WHERE o.order_status = '出荷準備中' && p.seller_id = ?";
+                    $notYetStmt = $conn->prepare($notYetSql);
+                    $notYetStmt->bind_param("s",$seller_id);
+                    $notYetStmt->execute();
+                    $notYetResult = $notYetStmt->get_result();
+                    if($notYetResult && $notYetResult->num_rows > 0){
+                        $notYetRow = $notYetResult->fetch_assoc();
+                        $notYetDeli = $notYetRow['notYetDeli'];
+                        echo <<<HTML
+                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/kuruma.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
+                        HTML;
+                    }else{
+                        echo <<<HTML
+                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/kuruma.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
+                        HTML;
+                    }
+
                     if(isset($_SESSION['seller_id'])){
                         echo '<li class="menu-item"><a href="../chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }else{
-                        echo '<li class="menu-item"><a href="seller.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                        echo '<li class="menu-item"><a href="seller_log.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }
                     ?>
-                    <li class="menu-item"><a href="seller_home.php"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
-                    <!--log--->
+                    <?php
+                    if(isset($_SESSION['seller_id'])){
+                        $flagSellerId = $_SESSION['seller_id'];
+                        echo <<<HTML
+                        <li class="menu-item"><a href="seller_profile.php?seller_id=$flagSellerId"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                        HTML;
+                    }
+                    ?>
                 </ul>
             </div>
             <div>
@@ -102,7 +129,138 @@ if(isset($_SESSION['seller_id'])){
             </form>
         <div  class='p2'><h2><?=$seller_name?> 様</h2></div>
 <?php
-$selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
+if(isset($_GET['flag'])){
+    //seller_products.php内の検索
+    $searchText = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+    $sizeArray = array('FREE','フリー','フリーサイズ','ふりー','ふりーさいず','FREEサイズ','FREEさいず','XS','XSサイズ','XSさいず','S','S','Sサイズ','Sさいず','えす','えすさいず','M','Mサイズ','Mさいず','えむ','えむさいず','L','Lサイズ','Lさいず','える','えるさいず','XL','XLサイズ','XLさいず','2XL','2XLサイズ','2XLさいず');
+    $colorArray = array('ホワイト','白','白色','白っぽい','white','しろ','しろいろ','黒','黒色','ブラック','黒っぽい','black','くろ','くろいろ','グレー','灰色','灰','灰っぽい','gray','はい','はいいろ','ブラウン','茶','茶色','茶っぽい','brown','ちゃ','ちゃいろ','ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','くりーむいろ','beige','グリーン','緑','緑色','深緑','みどり','みどりいろ','ふかみどり','green','ブルー','青色','青','あお','あおいろ','blue','パープル','紫','紫色','むらさき','むらさきいろ','purple','イエロー','黄色','黄','きいろ','yellow','ピンク','ピンク色','ピンクいろ','ぴんくいろ','ぴんく','pink','レッド','赤','赤色','red','あか','あかいろ','オレンジ','オレンジ色','オレンジいろ','おれんじ','おれんじいろ','orange');
+    $qualityArray = array('新品', '未使用', '新品未使用', '新品、未使用',  'しんぴん' ,'みしよう', '中古', '中古品', 'ちゅうこ','良品', 'やや傷あり', '不良', '傷あり');
+    //検索された文字列が品質のみか否かのif文
+    if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($searchText,$colorArray) && !in_array($searchText,$sizeArray)){
+        // if(!empty($searchText)  && !in_array($searchText,$qualityArray)){
+        if(preg_match('/[|]+/u',$searchText)){
+            //`|`があったらOR検索として扱いそこで区切る。
+            $orKeywords = preg_split('/[|]+/u', $searchText);
+        }else{
+            //`|`がない場合検索文字列をそのまま扱う。
+            $orKeywords = array($searchText);
+        }
+
+        echo "<div class='all'>";//全体
+        foreach($orKeywords as $orKeyword){
+            $conditions = array();
+            $qualityConditions = array();
+            $colorConditions = array();
+            $sizeCondition = array();
+            $keywords = preg_split('/\s+/u',$orKeyword);
+            foreach ($keywords as $keyword) {
+                //品質で検索された場合品質の項目を品質の配列($qualityConditions[])に格納
+                if(in_array($keyword,$qualityArray)){
+                    if (in_array($keyword, ['中古', '中古品', 'ちゅうこ'])) {
+                        $qualityConditions[] = "(p.quality = '良品' OR p.quality = 'やや傷あり' OR p.quality = '不良')";
+                    }else if(in_array($keyword, ['新品', '未使用', '新品未使用', 'しんぴん' ,'みしよう'])) {
+                        $qualityConditions[] = "p.quality = '新品・未使用'";
+                    }else if(in_array($keyword, ['傷あり'])) {
+                        $qualityConditions[] = "p.quality = 'やや傷あり'";
+                    }else{
+                        $qualityConditions[] = "p.quality = '$keyword'";
+                    }
+                }else if(in_array($keyword,$colorArray)){
+                    //色
+                    if(in_array($keyword,['ホワイト','白','白色','白っぽい','white','しろ','しろいろ'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#FFFFFF'";
+                    }else if(in_array($keyword,['黒','黒色','ブラック','黒っぽい','black','くろ','くろいろ'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#313131'";
+                    }else if(in_array($keyword,['グレー','灰色','灰','灰っぽい','gray','はい','はいいろ'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#AAB2BE'";
+                    }else if(in_array($keyword,['ブラウン','茶','茶色','茶っぽい','brown','ちゃ','ちゃいろ'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#81604C'";
+                    }else if(in_array($keyword,['ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','くりーむいろ','beige'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#E0D1AD'";
+                    }else if(in_array($keyword,['グリーン','緑','緑色','深緑','みどり','みどりいろ','ふかみどり','green'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#9ED563'";
+                    }else if(in_array($keyword,['ブルー','青色','青','あお','あおいろ','blue'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#4DBEE9'";
+                    }else if(in_array($keyword,['パープル','紫','紫色','むらさき','むらさきいろ','purple'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#AD8EEF'";
+                    }else if(in_array($keyword,['イエロー','黄色','黄','きいろ','yellow'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#FED14C'";
+                    }else if(in_array($keyword,['ピンク','ピンク色','ピンクいろ','ぴんくいろ','ぴんく','pink'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#F8AFD7'";
+                    }else if(in_array($keyword,['レッド','赤','赤色','red','あか','あかいろ'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#EF5663'";
+                    }else if(in_array($keyword,['オレンジ','オレンジ色','オレンジいろ','おれんじ','おれんじいろ','orange'])){
+                        //sql
+                        $colorConditions[] = "s.color_code = '#F98140'";
+                    }else{
+                        //sql
+                        $colorConditions[] = "s.color_code = '$keyword'";
+                    }
+                }else if(in_array($keyword,$sizeArray)){
+                    //サイズ
+                    if(in_array($keyword,['FREE','フリー','フリーサイズ','ふりー','ふりーさいず','FREEサイズ','FREEさいず'])){
+                        $sizeCondition[] = "s.size = 'FREE'";
+                    }else if(in_array($keyword,['XS','XSサイズ','XSさいず'])){
+                        $sizeCondition[] = "s.size = 'XS'";
+                    }else if(in_array($keyword,['S','S','Sサイズ','Sさいず','えす','えすさいず','エス','エスサイズ'])){
+                        $sizeCondition[] = "s.size = 'S'";
+                    }else if(in_array($keyword,['M','Mサイズ','Mさいず','えむ','えむさいず','エム','エムサイズ'])){
+                        $sizeCondition[] = "s.size = 'M'";
+                    }else if(in_array($keyword,['L','Lサイズ','Lさいず','える','えるさいず','エル','エルサイズ'])){
+                        $sizeCondition[] = "s.size = 'L'";
+                    }else if(in_array($keyword,['XL','XLサイズ','XLさいず'])){
+                        $sizeCondition[] = "s.size = 'XL'";
+                    }else if(in_array($keyword,['2XL','2XLサイズ','2XLさいず'])){
+                        $sizeCondition[] = "s.size = '2XL'";
+                    }else{
+                        $sizeCondition[] = "s.size = '$keyword'";
+                    }
+                }else{
+                    //品質以外の検索はここへ入る
+                    //マッチ文字数の多い文字を検索上位に表示させたい
+                    //初っ端のORのところをANDにして商品名での検索がないときだけカテゴリのみの検索ができるようにしたい
+                    $conditions[] = "(p.productname LIKE '%$keyword%' OR 
+                                    p.big_category_id IN (SELECT big_category_id FROM big_category WHERE big_category_name LIKE '%$keyword%') OR
+                                    p.category_id IN (SELECT category_id FROM category WHERE category_name LIKE '%$keyword%') OR
+                                    p.small_category IN (SELECT small_category FROM small_category WHERE small_category_name LIKE '%$keyword%'))";
+                }
+            }
+            if(!empty($qualityConditions)){
+                $conditions[] = "(" . implode(' OR ', $qualityConditions) . ")";
+            }
+            if(!empty($colorConditions)){
+                $conditions[] = "(" . implode(' OR ', $colorConditions) . ")";
+            }
+            if(!empty($sizeCondition)){
+                $conditions[] = "(" . implode(' OR ', $sizeCondition) . ")";
+            }
+            $andConditions = implode(' AND ', $conditions);
+
+            // 検索結果を取得するクエリを作成
+            $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_size_id, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
+                    FROM products p
+                    LEFT JOIN color_size s ON (p.product_id = s.product_id)
+                    LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
+                    LEFT JOIN category c ON (p.category_id = c.category_id)
+                LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
+                    LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
+                    WHERE $andConditions && s.service_status = true && p.seller_id = ?";
+        }
+    }
+}else{
+    $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality, s.color_size_id, s.color_code, s.size, b.big_category_name, c.category_name, sc.small_category_name, i.img_url 
                 FROM products p
                 LEFT JOIN color_size s ON (p.product_id = s.product_id)
                 LEFT JOIN big_category b ON (p.big_category_id = b.big_category_id)
@@ -110,6 +268,7 @@ $selectSql = "SELECT p.product_id, p.productname, p.view, p.create_at, p.quality
                 LEFT JOIN small_category sc ON (p.small_category = sc.small_category)
                 LEFT JOIN products_img i ON (s.color_size_id = i.color_size_id)
                 WHERE p.seller_id = ? && s.service_status = true";
+}
 
 $selectStmt = $conn->prepare($selectSql);
 $selectStmt->bind_param("s",$seller_id);
@@ -140,6 +299,7 @@ if($selectResult && $selectResult->num_rows > 0){
         $view = isset($row['view'])?$row['view']:"未登録";
         $quality = $row['quality'];
         $create_at = $row['create_at'];
+        $color_size_id = $row['color_size_id'];
         $color_code = $row['color_code'];
         $colorName = getColor($conn, $color_code);
         $size = $row['size'];
@@ -245,9 +405,11 @@ if($selectResult && $selectResult->num_rows > 0){
             <br>
             <br>
             <!----変更のところ鉛筆マークにできるならしてもいいかも---->
+            <div><b>商品ID</b>　　　$product_id$color_size_id</div>
             <div class="flex">
             <div class="left"><p id="name$product_id"><b>商品名</b>　　　$productname</p></div>
-            <button type="butt  on" class="btnStyle2" onclick="changeProductName($product_id)">変更</button><br></div>
+            <button type="butt  on" class="btnStyle2" onclick="changeProductName($product_id)">変更</button><br>
+            </div>
             <div id="allCategory$product_id" class="flex" style="display:block">
             <div id="categoryText$product_id" class="left float">
             <b>カテゴリ名</b>　$big_category_name - $category_name - $small_category_name

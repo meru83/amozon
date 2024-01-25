@@ -56,14 +56,21 @@ if(isset($_SESSION['user_id'])){
         <div class="left-menu">
             <div>
                 <ul class="menu-list">
-                    <li class="menu-item-logo"><a href=""><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
-                    <li class="menu-item"><a href="user_top.php"><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
-                    <li class="menu-item"><a href="search.php"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
-                    <li class="menu-item"><a href="cartContents.php"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
-                    <li class="menu-item"><a href="chat_rooms.php"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
-                    <li class="menu-item"><a href="favoriteProduct.php"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">お気に入り</span></a></li>
-                    <li class="menu-item"><a href="buyHistory.php"><img src="img/meisi.png" class="logo"><span class="menu-item-text">購入履歴</span></a></li>
-                    <li class="menu-item"><a href="user_profile.php"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                    <li class="menu-item-logo"><a href="" class="a_link"><img src="img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                    <li class="menu-item"><a href="user_top.php" class="a_link"><img src="img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
+                    <li class="menu-item"><a href="search.php" class="a_link"><img src="img/musimegane.png" class="logo"><span class="menu-item-text">検索</span></a></li>
+                    <li class="menu-item"><a href="cartContents.php" class="a_link"><img src="img/cart.png" class="logo"><span class="menu-item-text">カート</span></a></li>
+                    <li class="menu-item"><a href="chat_rooms.php" class="a_link"><img src="img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>
+                    <li class="menu-item"><a href="favoriteProduct.php" class="a_link"><img src="img/heartBlack.png" class="logo"><span class="menu-item-text">お気に入り</span></a></li>
+                    <li class="menu-item"><a href="buyHistory.php" class="a_link"><img src="img/meisi.png" class="logo"><span class="menu-item-text">購入履歴</span></a></li>
+                    <?php
+                    if(isset($_SESSION['user_id'])){
+                        $flagUserId = $_SESSION['user_id'];
+                        echo <<<HTML
+                        <li class="menu-item"><a href="user_profile.php?user_id=$flagUserId" class="a_link"><img src="img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                        HTML;
+                    }
+                    ?>
                 </ul>
             </div>
             <div>
@@ -86,15 +93,28 @@ include "db_config.php";
 
 // 検索キーワードを取得し、空白で分割
 $searchText = isset($_GET['search']) ? trim($_GET['search']) : '';
-$searchSql = "INSERT INTO search(searchText) VALUES(?)";//要修正
-$searchStmt = $conn->prepare($searchSql);
-$searchStmt->bind_param("s", $searchText);
-$searchStmt->execute();
+$searchSelectSql = "SELECT searchText FROM search WHERE searchText = ?";
+$searchSelectStmt = $conn->prepare($searchSelectSql);
+$searchSelectStmt->bind_param("s",$searchText);
+$searchSelectStmt->execute();
+$searchSelectResult = $searchSelectStmt->get_result();
+if($searchSelectResult && $searchSelectResult->num_rows > 0){
+    $searchSelectRow = $searchSelectResult->fetch_assoc();
+    $searchSql = "UPDATE search SET search_count = search_count + 1 WHERE searchText = ?";
+    $searchStmt = $conn->prepare($searchSql);
+    $searchStmt->bind_param("s",$searchText);
+    $searchStmt->execute();
+}else{
+    $searchSql = "INSERT INTO search(searchText, search_count) VALUES(?, 1)";//要修正
+    $searchStmt = $conn->prepare($searchSql);
+    $searchStmt->bind_param("s", $searchText);
+    $searchStmt->execute();
+}
 $count = 0;
 
-$sizeArray = array('FREE','XS','S','M','L','XL','2XL');
-$colorArray = array('ホワイト','白','白色','白っぽい','white','しろ','しろいろ','黒','黒色','ブラック','黒っぽい','グレー','灰色','灰','ブラウン','茶','茶色','ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','グリーン','緑','緑色','深緑','ブルー','青色','青','パープル','紫','紫色','イエロー','黄色','黄','きいろ','ピンク','ピンク色','ピンクいろ','レッド','赤','赤色','red','オレンジ','オレンジ色','オレンジいろ');
-$qualityArray = array('新品', '未使用', '新品未使用', '新品、未使用', '中古', '中古品', '良品', 'やや傷あり', '不良', '傷あり');
+$sizeArray = array('FREE','フリー','フリーサイズ','ふりー','ふりーさいず','FREEサイズ','FREEさいず','XS','XSサイズ','XSさいず','S','S','Sサイズ','Sさいず','えす','えすさいず','M','Mサイズ','Mさいず','えむ','えむさいず','L','Lサイズ','Lさいず','える','えるさいず','XL','XLサイズ','XLさいず','2XL','2XLサイズ','2XLさいず');
+$colorArray = array('ホワイト','白','白色','白っぽい','white','しろ','しろいろ','黒','黒色','ブラック','黒っぽい','black','くろ','くろいろ','グレー','灰色','灰','灰っぽい','gray','はい','はいいろ','ブラウン','茶','茶色','茶っぽい','brown','ちゃ','ちゃいろ','ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','くりーむいろ','beige','グリーン','緑','緑色','深緑','みどり','みどりいろ','ふかみどり','green','ブルー','青色','青','あお','あおいろ','blue','パープル','紫','紫色','むらさき','むらさきいろ','purple','イエロー','黄色','黄','きいろ','yellow','ピンク','ピンク色','ピンクいろ','ぴんくいろ','ぴんく','pink','レッド','赤','赤色','red','あか','あかいろ','オレンジ','オレンジ色','オレンジいろ','おれんじ','おれんじいろ','orange');
+$qualityArray = array('新品', '未使用', '新品未使用', '新品、未使用',  'しんぴん' ,'みしよう', '中古', '中古品', 'ちゅうこ','良品', 'やや傷あり', '不良', '傷あり');
 //検索された文字列が品質のみか否かのif文
 if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($searchText,$colorArray) && !in_array($searchText,$sizeArray)){
     // if(!empty($searchText)  && !in_array($searchText,$qualityArray)){
@@ -116,73 +136,75 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
         foreach ($keywords as $keyword) {
             //品質で検索された場合品質の項目を品質の配列($qualityConditions[])に格納
             if(in_array($keyword,$qualityArray)){
-                if (in_array($keyword, ['中古', '中古品'])) {
+                if (in_array($keyword, ['中古', '中古品', 'ちゅうこ'])) {
                     $qualityConditions[] = "(p.quality = '良品' OR p.quality = 'やや傷あり' OR p.quality = '不良')";
-                } elseif (in_array($keyword, ['新品', '未使用', '新品未使用'])) {
-                    $qualityConditions[] = "p.quality = '新品、未使用'";
-                } elseif (in_array($keyword, ['傷あり'])) {
+                }else if(in_array($keyword, ['新品', '未使用', '新品未使用', 'しんぴん' ,'みしよう'])) {
+                    $qualityConditions[] = "p.quality = '新品・未使用'";
+                }else if(in_array($keyword, ['傷あり'])) {
                     $qualityConditions[] = "p.quality = 'やや傷あり'";
-                } else {
+                }else{
                     $qualityConditions[] = "p.quality = '$keyword'";
                 }
             }else if(in_array($keyword,$colorArray)){
                 //色
-                if(in_array($keyword,['ホワイト','白','白色','白っぽい','white','しろ','しろいろ'])){
+                if(in_array($keyword,['ホワイト','白','白色','白っぽい','white','WHITE','White','しろ','しろいろ'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#FFFFFF'";
-                }else if(in_array($keyword,['黒','黒色','ブラック','黒っぽい'])){
+                }else if(in_array($keyword,['黒','黒色','ブラック','黒っぽい','black','BLACK','Black','くろ','くろいろ'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#313131'";
-                }else if(in_array($keyword,['グレー','灰色','灰'])){
+                }else if(in_array($keyword,['グレー','灰色','灰','灰っぽい','gray','GRAY','Gray','はい','はいいろ','#7d7d7d','#adadad','#d3d3d3','#797979'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#AAB2BE'";
-                }else if(in_arrya($keyword,['ブラウン','茶','茶色'])){
+                }else if(in_array($keyword,['ブラウン','茶','茶色','茶っぽい','brown','BROWN','Brown','ちゃ','ちゃいろ','#726250','#8c6450','#734e30','#b38e6f'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#81604C'";
-                }else if(in_arrya($keyword,['ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色'])){
+                }else if(in_array($keyword,['ベージュ','オフホワイト','クリーム色','クリームイエロー','薄い黄色','薄黄色','くりーむいろ','beige','BEIGE','Beige','#f6e5cc','#e8d3ca','#eedcb3'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#E0D1AD'";
-                }else if(in_arrya($keyword,['グリーン','緑','緑色','深緑'])){
+                }else if(in_array($keyword,['グリーン','緑','緑色','深緑','みどり','みどりいろ','ふかみどり','green','Green','GREEN','#005739','#798543','#005133','#5D8165','#547443'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#9ED563'";
-                }else if(in_array($keyword,['ブルー','青色','青'])){
+                }else if(in_array($keyword,['ブルー','青色','青','あお','あおいろ','blue','Blue','BLUE','#0F5474','#243250','#475189','#23274F','#283446'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#4DBEE9'";
-                }else if(in_arrya($keyword,['パープル','紫','紫色'])){
+                }else if(in_array($keyword,['パープル','紫','紫色','むらさき','むらさきいろ','purple','Purple','PURPLE','#6658A6','#C77EB5','#6F51A1','#7D415E','#9E76B4'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#AD8EEF'";
-                }else if(in_array($keyword,['イエロー','黄色','黄','きいろ'])){
+                }else if(in_array($keyword,['イエロー','黄色','黄','きいろ','yellow','Yellow','YELLOW','#FFC800','#F4E511','#FAC61E','#FFD700','#CBC547'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#FED14C'";
-                }else if(in_array($keyword,['ピンク','ピンク色','ピンクいろ'])){
+                }else if(in_array($keyword,['ピンク','ピンク色','ピンクいろ','ぴんくいろ','ぴんく','pink','Pink','PINK','#F067A6','#CD4187','#FF3399','#E761A4','#EC008C'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#F8AFD7'";
-                }else if(in_array($keyword,['レッド','赤','赤色','red'])){
+                }else if(in_array($keyword,['レッド','赤','赤色','あか','あかいろ','red','Red','RED','#ED1A3D','#ED1A3D','#C22047','#EF4123','#D11C2C'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#EF5663'";
-                }else if(in_array($keyword,['オレンジ','オレンジ色','オレンジいろ'])){
+                }else if(in_array($keyword,['オレンジ','オレンジ色','オレンジいろ','おれんじ','おれんじいろ','orange','Orange','ORANGE','#F15A22','#E15A28','#F58220','#F36C21','#F68B1F'])){
                     //sql
                     $colorConditions[] = "s.color_code = '#F98140'";
                 }else{
                     //sql
-                    $colorConditions[] = "s.color_code = $keyword";
+                    $colorConditions[] = "s.color_code = '$keyword'";
                 }
             }else if(in_array($keyword,$sizeArray)){
                 //サイズ
-                if(in_array($keyword,['FREE'])){
+                if(in_array($keyword,['FREE','フリー','フリーサイズ','ふりー','ふりーさいず','FREEサイズ','FREEさいず'])){
                     $sizeCondition[] = "s.size = 'FREE'";
-                }else if(in_array($keyword,['XS'])){
+                }else if(in_array($keyword,['XS','XSサイズ','XSさいず'])){
                     $sizeCondition[] = "s.size = 'XS'";
-                }else if(in_array($keyword,['S'])){
+                }else if(in_array($keyword,['S','Sサイズ','Sさいず','えす','えすさいず','エス','エスサイズ'])){
                     $sizeCondition[] = "s.size = 'S'";
-                }else if(in_array($keyword,['M'])){
+                }else if(in_array($keyword,['M','Mサイズ','Mさいず','えむ','えむさいず','エム','エムサイズ'])){
                     $sizeCondition[] = "s.size = 'M'";
-                }else if(in_array($keyword,['L'])){
+                }else if(in_array($keyword,['L','Lサイズ','Lさいず','える','えるさいず','エル','エルサイズ'])){
                     $sizeCondition[] = "s.size = 'L'";
-                }else if(in_array($keyword,['XL'])){
+                }else if(in_array($keyword,['XL','XLサイズ','XLさいず'])){
                     $sizeCondition[] = "s.size = 'XL'";
-                }else if(in_array($keyword,['2XL'])){
+                }else if(in_array($keyword,['2XL','2XLサイズ','2XLさいず'])){
                     $sizeCondition[] = "s.size = '2XL'";
+                }else{
+                    $sizeCondition[] = "s.size = '$keyword'";
                 }
             }else{
                 //品質以外の検索はここへ入る
@@ -286,11 +308,11 @@ if(!empty($searchText)  && !in_array($searchText,$qualityArray) && !in_array($se
                         <br>
                         <div class="setumei">
                         <a href='productsDetail.php?product_id=$product_id&color_size_id=$color_size_id'>
-                        <!---色: $colorName---->
                         <!----商品名　　:------> $productname<br>
                         <!----カテゴリ名: $category_name<br>------>
                         <!---価格　　　: ------>¥$commaPrice<br>
                         <!---サイズ: ------>$size サイズ<br>
+                        <!---色: ---->$colorName
                         </a>
                         </div>
                         END;

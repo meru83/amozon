@@ -179,6 +179,14 @@ a, a:hover, a:active, a:visited {
     height: 100%;
 }
 
+.tuuti {
+    max-width: 35px;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 100px;
+    background-color: #000;
+    color: white;
+}
 
 
 
@@ -207,6 +215,10 @@ a, a:hover, a:active, a:visited {
     .right-content {
         margin-left: 110px;
     }
+
+    .tuuti {
+        margin-left: 8px;
+    }
 }
 
 .backBtn {
@@ -221,6 +233,4 @@ a, a:hover, a:active, a:visited {
 .backBtn:hover {
     background-color: white;
 }
-
-
 

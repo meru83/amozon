@@ -63,25 +63,51 @@ if(isset($_SESSION['seller_id'])){
         <div class="left-menu">
             <div>
                 <ul class="menu-list">
-                    <li class="menu-item-logo"><a href=""><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
+                <li class="menu-item-logo"><a href=""><img src="../img/cart_dake.svg" class="logo"><span class="menu-item-text-logo">Re.ReaD</span></a></li>
                     <li class="menu-item"><a href="seller_top.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">ホーム</span></a></li>
-                    <li class="menu-item"> <a href="p2_insert.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">商品情報登録</span></a></li>
-                    <li class="menu-item"> <a href="seller_products.php"><img src="../img/cart.png" class="logo"><span class="menu-item-text">登録商品一覧</span></a></li>
+                    <li class="menu-item"> <a href="p2_insert.php"><img src="../img/hensyu.png" class="logo"><span class="menu-item-text">商品情報登録</span></a></li>
+                    <li class="menu-item"> <a href="seller_products.php"><img src="../img/meisi.png" class="logo"><span class="menu-item-text">登録商品一覧</span></a></li>
+                    <!-- <li class="menu-item"> <a href=""><img src="../img/meisi.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li> -->
                     <?php
+                    $notYetSql = "SELECT COUNT(DISTINCT o.order_id) AS notYetDeli FROM orders o
+                                LEFT JOIN orders_detail d ON (o.order_id = d.order_id)
+                                LEFT JOIN products p ON (d.product_id = p.product_id)
+                                WHERE o.order_status = '出荷準備中' && p.seller_id = ?";
+                    $notYetStmt = $conn->prepare($notYetSql);
+                    $notYetStmt->bind_param("s",$seller_id);
+                    $notYetStmt->execute();
+                    $notYetResult = $notYetStmt->get_result();
+                    if($notYetResult && $notYetResult->num_rows > 0){
+                        $notYetRow = $notYetResult->fetch_assoc();
+                        $notYetDeli = $notYetRow['notYetDeli'];
+                        echo <<<HTML
+                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/kuruma.png" class="logo"><span class="menu-item-text">未発送商品</span><span class="tuuti">$notYetDeli</span></a></li>
+                        HTML;
+                    }else{
+                        echo <<<HTML
+                        <li class="menu-item"> <a href="notYetDeli.php"><img src="../img/kuruma.png" class="logo"><span class="menu-item-text">未発送商品</span></a></li>
+                        HTML;
+                    }
+
                     if(isset($_SESSION['seller_id'])){
                         echo '<li class="menu-item"><a href="../chat_rooms.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }else{
-                        echo '<li class="menu-item"><a href="seller.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
+                        echo '<li class="menu-item"><a href="seller_log.php"><img src="../img/chat2.svg" class="logo"></span><span class="menu-item-text-chat">メッセージ</span></a></li>';
                     }
                     ?>
-                    <li class="menu-item"><a href="seller_home.php"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
-                    <!--log--->
+                    <?php
+                    if(isset($_SESSION['seller_id'])){
+                        $flagSellerId = $_SESSION['seller_id'];
+                        echo <<<HTML
+                        <li class="menu-item"><a href="seller_profile.php?seller_id=$flagSellerId"><img src="../img/hito.png" class="logo"><span class="menu-item-text">プロフィール</span></a></li>
+                        HTML;
+                    }
+                    ?>
                 </ul>
             </div>
             <div>
                 <ul class="menu-list-bottom">
-                <li class="menu-item"><a href="../py/rireki.php"><img src="../img/home.png" class="logo"><span class="menu-item-text">売上管理</span></a></li>
-
+                <li class="menu-item"><a href="../py/rireki.php"><img src="../img/gurafu.png" class="logo"><span class="menu-item-text">売上管理</span></a></li>
                 </ul>
             </div>
         </div>
@@ -191,12 +217,22 @@ function getColor($conn, $color_code){
     } 
 }
 ?>
-<form method="post" enctype="multipart/form-data">
+<form id="rail2" method="post" enctype="multipart/form-data">
     <?=$htmlText?>
-    <input type="submit" class="styleBtn" value="登録"><br>
+    <input id="rail" type="submit" class="styleBtn" value="登録"><br>
 </form>
 </div>
 </div>
 </body>
+<script>
+const rail = document.getElementById('rail');
+const rail2 = document.getElementById('rail2');
+rail2.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!alert("商品に写真を登録しました")){
+        rail2.submit();
+    }
+});
+</script>
 </html>
 

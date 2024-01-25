@@ -36,6 +36,14 @@ echo"<style>
         }
     </style>";
 
+    echo <<< END
+    <div id="header" class="header">
+    <div class="back"><div class="backBtn" onclick="history.back()"><img src="../img/return_left.png" style="width:100%;"></div></div>
+    <h1 class="h1_White">プロフィール</h1>
+    <div class="space"></div>
+    </div>
+    END;
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $product_id = $_POST['product_id'];
     // echo $product_id;
@@ -107,7 +115,7 @@ if($selectResult && $selectResult->num_rows > 0){
         <label for="image-file" class="styleFile"><input type="file" id="image-file" name="img[]" multiple accept="image/*"></label>
         <input type="submit" name="submit" class="kakutei" value="確定">
     </form>
-    <b>カラー</b>:$colorName <b>サイズ</b>:$size <br>
+    <b>カラー</b>:$colorName <br><b>サイズ</b>:$size <br>
     <b>商品名</b>: $productname <br>
     <button type="button" class="btnStyle" onclick="changePrice($color_size_id)">変更</button>
     <p id="priceText"><b>価格</b>:￥$commaPrice </p><br>

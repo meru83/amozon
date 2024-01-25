@@ -19,7 +19,7 @@ if(isset($_SESSION['user_id'])){
 }
 
 
-try{
+// try{
     //select insert チャットなかったら作成してチャットへあったらチャットへ
     $maxPrice = $_GET['maxPrice'];
     $arraySellerId = array();
@@ -70,7 +70,7 @@ try{
                 HTML;
             }
 
-            $insert2Sql = "INSERT INTO orders_detail VALUES (?, ?, ?, ?, ?)";
+            $insert2Sql = "INSERT INTO orders_detail (order_id, product_id, color_size_id, order_pieces, detail_total) VALUES (?, ?, ?, ?, ?)";
             $insert2Stmt = $conn->prepare($insert2Sql);
             $insert2Stmt->bind_param("iiiii",$last_id,$product_id,$color_size_id,$cartPieces,$price);
             $insert2Stmt->execute();
@@ -138,9 +138,9 @@ try{
             HTML;
         }
         if($stmt->execute()){
-            $insertSql = "INSERT INTO pay_history2 (user_id, pay_pay) VALUES(?, ?)";
+            $insertSql = "INSERT INTO pay_history2 (order_id, user_id, pay_pay) VALUES(?, ?, ?)";
             $insertStmt = $conn->prepare($insertSql);
-            $insertStmt->bind_param("si", $user_id, $maxPrice);
+            $insertStmt->bind_param("isi", $last_id, $user_id, $maxPrice);
             $insertStmt->execute();
         }
         
@@ -153,14 +153,14 @@ try{
     }
     </script>  
     HTML;
-}catch(Exception $e){
-    error_log("Error in orderConfirm.php: " . $e->getMessage() . PHP_EOL);
-    echo <<<HTML
-    <script>
-    if(!alert("購入処理が強制終了しました。カート画面に戻ります。")){
-        window.location.href = "cartContents.php";
-    }
-    </script>
-    HTML;
-}
+// }catch(Exception $e){
+//     error_log("Error in orderConfirm.php: " . $e->getMessage() . PHP_EOL);
+//     echo <<<HTML
+//     <script>
+//     if(!alert("購入処理が強制終了しました。カート画面に戻ります。")){
+//         window.location.href = "cartContents.php";
+//     }
+//     </script>
+//     HTML;
+// }
 ?>
