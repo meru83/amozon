@@ -236,6 +236,15 @@ a, a:hover, a:active, a:visited {
     box-sizing: border-box;
 }
 
+.flexBox2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 21px 100px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
 .flexBox001 {
     display: flex;
     justify-content: space-between;
