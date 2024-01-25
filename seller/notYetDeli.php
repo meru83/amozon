@@ -21,7 +21,6 @@ session_regenerate_id(TRUE);
 $seller_id = $_SESSION['seller_id'];
 
 if(isset($_SESSION['seller_id'])){
-    $seller_id = $_SESSION['seller_id'];
     $foo = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
     <form action="seller_out.php" method="post">
@@ -146,10 +145,16 @@ if($notYetDeliResult && $notYetDeliResult->num_rows > 0){
         $price = $notYetDeliRow['price'];
         $address_id = $notYetDeliRow['address_id'];
 
-        $htmlText = <<<HTML
-        <div class='backG'><b>商品ID</b>　$product_id$color_size_id<br>
-        <b>商品名</b>　$productname $colorName $size<div><b>単価</b>　　$price  ＊ $order_pieces  </div><div><b>計</b>　　　$detail_total</div>
-        HTML;
+        if(!($detail_total === 0)){
+            $htmlText = <<<HTML
+            <div class='backG'><b>商品ID</b>　$product_id$color_size_id<br>
+            <b>商品名</b>　$productname $colorName $size<div><b>単価</b>　　$price  ＊ $order_pieces  </div><div><b>計</b>　　　$detail_total</div>
+            HTML;
+        }else{
+            $htmlText = <<<HTML
+            以前、$user_id 様より購入されていた商品はキャンセルされました。
+            HTML;
+        }
 
         if(!in_array($order_id,$arrayOrderId)){
             $arrayOrderId[] = $order_id;

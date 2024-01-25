@@ -38,34 +38,83 @@ if($result && $result->num_rows > 0){
     $order_status = $updateRow['order_status'];
     $updateStmt = $conn->prepare($updateSql);
     if($order_status === $orderStatusText1){
+        //出荷準備中の場合
         $cssLink = '<link rel="stylesheet" href="css/style-ready.css">';//出荷準備中まで
         // $updateStmt->bind_param("si",$orderStatusText2,$order_id);
         // $updateStmt->execute();
-        $notYetDeliText = "";
-        $notYetDeliSql = "SELECT o.create_at, d.order_pieces, d.deli_status,
+        $notYetDeliSql = "SELECT o.total, o.create_at, d.product_id, d.color_size_id, d.order_pieces, d.detail_total, d.deli_status,
         p.productname, p.seller_id, s.color_code, s.size, s.price
                         FROM orders o
                         LEFT JOIN orders_detail d ON (o.order_id = d.order_id)
                         LEFT JOIN products p ON (d.product_id = p.product_id)
                         LEFT JOIN color_size s ON (d.color_size_id = s.color_size_id)
-                        WHERE o.user_id = ? && o.order_status = '出荷準備中' && o.order_id = ?
+                        WHERE o.user_id = ? && o.order_status = '出荷準備中' && o.order_id = ? && NOT d.detail_total = 0
                         ORDER BY o.create_at";
         $notYetDeliStmt = $conn->prepare($notYetDeliSql);
         $notYetDeliStmt->bind_param("si",$user_id,$order_id);
         $notYetDeliStmt->execute();
         $notYetDeliResult = $notYetDeliStmt->get_result();
         if($notYetDeliResult && $notYetDeliResult->num_rows > 0){
+            $totalText = "";//合計金額
+            $htmlText = "";//商品情報
+            $count = 0;
+            $flag = true;
             while($notYetDeliRow = $notYetDeliResult->fetch_assoc()){
+                //order_idはgetで取得
+                $total = $notYetDeliRow['total'];
                 $create_at = $notYetDeliRow['create_at'];
                 $order_pieces = $notYetDeliRow['order_pieces'];
+                $product_id = $notYetDeliRow['product_id'];
+                $color_size_id = $notYetDeliRow['color_size_id'];
                 $deli_status = $notYetDeliRow['deli_status'];
+                $detail_total = $notYetDeliRow['detail_total'];
                 $productname = $notYetDeliRow['productname'];
                 $seller_id = $notYetDeliRow['seller_id'];
                 $color_code = $notYetDeliRow['color_code'];
                 $colorName = getColor($conn, $color_code);
                 $size = $notYetDeliRow['size'];
                 $price = $notYetDeliRow['price'];
+                $deli_status_flag = true;
+
+                if(!$deli_status){
+                    //未発送
+                    $deli_status_flag = false;
+                    $htmlText .= <<<END
+                    <div id="$count">
+                    <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div>
+                    <button type="butto" onclick="cancelButton($order_id,$product_id,$color_size_id,$detail_total,$count)">注文をキャンセル</button>
+                    <br>
+                    </div>
+                    END;
+                }else if($deli_status){
+                    //発送済み
+                    $htmlText .= <<<END
+                    <div id="$count">
+                    <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div>
+                    <button type="butto">発送済み</button>
+                    <br>
+                    </div>
+                    END;
+                }
+
+                if($flag){
+                    $totalText = <<<END
+                    <br>
+                    購入日時 $create_at<br>
+                    合計金額 $total
+                    END;
+                    $flag = false;
+                }
             }
+            if($deli_status_flag){
+                $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
+                $updateStmt->bind_param("si",$orderStatusText2,$order_id);
+                $updateStmt->execute();
+            }
+        }else{
+            $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
+            $updateStmt->bind_param("si",$orderStatusText2,$order_id);
+            $updateStmt->execute();
         }
     }else if($order_status === $orderStatusText2){
         $cssLink = '<link rel="stylesheet" href="css/style-set.css">';//発送済みまで
@@ -76,6 +125,7 @@ if($result && $result->num_rows > 0){
         $updateStmt->bind_param("si",$orderStatusText4,$order_id);
         $updateStmt->execute();
     }else{
+        // 配達済みのお互いが評価できるようにしたい
         $cssLink = '<link rel="stylesheet" href="css/style-goru.css">';//配達済みまで
     }
 }else{
@@ -150,19 +200,50 @@ function getColor($conn, $color_code){
         <p id="status3">現在、配達中です。</p>
         <p id="status4">配達済みです。商品が届かない場合は不在票が投函されていないかご確認ください。</p>
     </section>
+    <?php
+    if(isset($htmlText) && isset($totalText)){
+        echo <<<HTML
+        <h3>購入明細</h3>
+        ※発送済み商品は注文のキャンセルができません。<br><br>
+        <!-- ＊＊＊＊＊＊＊＊注意＊＊＊＊＊＊＊＊＊ -->
+        <!-- ※発送済み商品は注文のキャンセルができません。は赤色表示 -->
+        $htmlText, $totalText
+        HTML;
+    }
+    ?>
 
-    <script>
-function checked() {
-    // ボタンを無効化
-    document.getElementById("checked").disabled = true;
+<script>
+function cancelButton(order_id,product_id,color_size_id,detail_total,count){
+    const formData = new FormData();
+    formData.append('order_id',order_id);
+    formData.append('color_size_id',color_size_id);
+    formData.append('product_id',product_id);
+    formData.append('detail_total',detail_total);
 
-    // ここにチャージの処理を追加
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST','huzaiBack.php',true);
+    xhr.send(formData);
 
-    // 例: 5秒後にボタンを再度有効化
-    setTimeout(function() {
-        document.getElementById("checked").disabled = false;
-    }, 5000);
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            try {
+                const response = JSON.parse(xhr.responseText);
+                response.forEach(function(row) {
+                    if(row.error_message){
+                        var divElement = document.getElementById(count);
+                        console.log(divElement);
+                        divElement.innerHtml = "注文がキャンセルされました";
+                    }else{
+                        alert("注文のキャンセルができませんでした。もう一度お試しください。");
+                    }
+                });
+            } catch (error) {
+                console.error("Error parsing JSON response:", error);
+                alert("リクエストが失敗しました。");
+            }
+        }
+    }
 }
-    </script>
+</script>
 </body>
 </html>
