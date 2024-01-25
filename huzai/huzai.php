@@ -82,26 +82,28 @@ if($result && $result->num_rows > 0){
                     $htmlText .= <<<END
                     <div id="$count">
                     <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div>
-                    <button type="butto" onclick="cancelButton($order_id,$product_id,$color_size_id,$detail_total,$count)">注文をキャンセル</button>
+                    <button class="huzai_button" type="button" onclick="cancelButton($order_id,$product_id,$color_size_id,$detail_total,$count)">注文をキャンセル</button>
                     <br>
                     </div>
+                    <br>
                     END;
                 }else if($deli_status){
                     //発送済み
                     $htmlText .= <<<END
                     <div id="$count">
                     <a href="productsDetail.php?product_id=$product_id&color_size_id=$color_size_id">$productname $colorName $size </a> <div>単価$price  ＊ $order_pieces  </div><div>計　$detail_total</div>
-                    <button type="butto">発送済み</button>
+                    <button class="huzai_button" type="button">発送済み</button>
                     <br>
                     </div>
+                    <br>
                     END;
                 }
 
                 if($flag){
                     $totalText = <<<END
                     <br>
-                    購入日時 $create_at<br>
-                    合計金額 $total
+                    <p>購入日時 $create_at</p><br>
+                    <p>合計金額 $total</p>
                     END;
                     $flag = false;
                 }
@@ -156,15 +158,18 @@ function getColor($conn, $color_code){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=css/Amozon_huzai_insta.css>
     <?= $cssLink ?>
     <title>荷物の配達状況確認</title>
 </head>
 <body>
 
-    <header >
-        <h1>荷物の配達状況確認</h1>
-    </header>
-
+    <div id="header" class="header">
+        <div class="back"><div class="backBtn" onclick="history.back()"><img src="../img/return_left.png" style="width:100%;"></div></div>
+        <h1 class="h1_White">荷物の配達状況確認</h1>
+        <div style="width: 100%;"></div>
+    </div>
+    
     <section>
         <h2>荷物の詳細</h2>
         <p>配送業者: サンプルエクスプレス</p>
@@ -203,11 +208,13 @@ function getColor($conn, $color_code){
     <?php
     if(isset($htmlText) && isset($totalText)){
         echo <<<HTML
+        <div class="textbox">
         <h3>購入明細</h3>
         ※発送済み商品は注文のキャンセルができません。<br><br>
         <!-- ＊＊＊＊＊＊＊＊注意＊＊＊＊＊＊＊＊＊ -->
         <!-- ※発送済み商品は注文のキャンセルができません。は赤色表示 -->
-        $htmlText, $totalText
+        $htmlText $totalText
+        </div>
         HTML;
     }
     ?>

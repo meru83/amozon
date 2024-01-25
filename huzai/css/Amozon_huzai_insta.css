@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+}
+
+.h1_White{
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.header{
+    background-color: #99CCFF;
+    padding: 15px;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.space {
+    width: 200px;
+}
+
+.back {
+    width:100%;
+    height: 100%;
+}
+
+.backBtn {
+    width:48px;
+    height: 100%;
+    margin-left: 64px;
+    padding-left: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.backBtn:hover {
+    background-color: white;
+}
+
+.huzai_button {
+    margin-top: 5px;
+    padding: 6px 15px;
+    color: #005aae;
+    background-color: #ffffff;
+    border: none;
+    border: 1px solid #005aae;
+    border-radius: 4px;
+}
+
+.huzai_button:hover{
+    background-color: #def7ff;
+}
+
+.textbox{
+    text-align: center;
+    margin: 50px;
+    max-width: 600px;
+    padding: 0px 500px;
+}
