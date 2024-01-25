@@ -18,18 +18,20 @@ $user_id = isset($_SESSION['user_id'])?$_SESSION['user_id']:null;
 if(isset($_SESSION['user_id']) || isset($_SESSION['seller_id'])){
     $foo2 = <<<END
     <div style="width:100%; text-align: right; height: fit-content;">
-    <form action="logout.php" method="post">
+    <form action="../logout.php" method="post">
         <input type="submit" name="logout" class="log_out" value="ログアウト">
     </form>
     </div>
 END;
 } else {
-    $foo2 = <<<END
-    <div class="New_log">
-        <a href="register.php"><div class="log_style">新規登録</div></a>
-        <a href="login.php"><div class="log_style rightM">ログイン</div></a>
-    </div>
-END;
+//     $foo2 = <<<END
+//     <div class="New_log">
+//         <a href="../register.php"><div class="log_style">新規登録</div></a>
+//         <a href="login.php"><div class="log_style rightM">ログイン</div></a>
+//     </div>
+// END;
+    header("Location:../login.php");
+    exit();
 }
 ?>
 
