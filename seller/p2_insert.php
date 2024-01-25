@@ -193,9 +193,7 @@ const smallCategoryLabel = document.getElementById('smallCategoryLabel');
 
 //Enterで下に行く処理
 form.addEventListener('keydown', (e) => {
-    if(is_empty()){
-        return true;
-    }else if (e.key === 'Enter'){
+    if (e.key === 'Enter'){
         e.preventDefault();
         let act = document.activeElement.id;
         if(act === 'productname'){
@@ -219,12 +217,12 @@ form.addEventListener('keydown', (e) => {
         return false;
     }
 
-    function is_empty(){
-    if(productname.value === "" || view.value === "" || quality.value === "" || big_category.value === "" || category.value === ""){
-        return false;
-    }else{
-        return true;
-    }
+    // function is_empty(){
+    // if(productname.value === "" || view.value === "" || quality.value === "" || big_category.value === "" || category.value === ""){
+    //     return false;
+    // }else{
+    //     return true;
+    // }
 }
 });
 
