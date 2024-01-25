@@ -30,6 +30,7 @@ if(isset($_SESSION['user_id'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/test.css">
     <link rel="stylesheet" href="css/Amozon_insta.css">
     <title>ユーザートップ</title>
 </head>
@@ -69,7 +70,6 @@ if(isset($_SESSION['user_id'])){
         </div>
         
         <div class="right-content">
-        <h1></h1>
         <?php
         if(isset($_GET['error_message'])){
         $error_message = $_GET['error_message'];
@@ -81,35 +81,72 @@ if(isset($_SESSION['user_id'])){
         }
         ?>
         <p id="current-time"></p>
+
+        <div class="cp_box">
+        <input id="cp01" type="checkbox">
+        <label for="cp01"></label>
+        <div class="cp_container">
+            <h1>メニュー説明</h1>
+            <p><h2>1.ホーム</h2></p>
+            <p><h3>・・・FAQ一覧</h3></p>
+            <p><h2>2.検索</h2></p>
+            <p><h3>・・・ここから商品を見つけます。商品のカテゴリーで絞ることも可能です。</h3></p>
+            <p><h2>3.カート</h2></p>
+            <p><h3>・・・カートに入れた商品一覧が見れます、また購入はカート内から行えます。</h3></p>
+            <p><h2>4.メッセージ</h2></p>
+            <p><h3>・・・販売者と直接話すことができます、商品を検索していただき、お好みの商品を選んでいただいて商品詳細ページからチャットルームを作成します。また購入して頂くと通知が送信されます。（※チャットの有無に関わらず定型文がチャットで自動で送信されます）</h3></p>
+            <p><h2>5.お気に入り</h2></p>
+            <p><h3>・・・商品のハートマークを押すと、お気に入りページに別途で表示されます。</h3></p>
+            <p><h2>6.購入履歴</h2></p>
+            <p><h3>・・・明細と配達状況が確認できます。</h3></p>
+            <p><h2>7.プロフィール</h2></p>
+            <p><h3>・・・変更/設定、残高の確認はここで行えます。残高のチャージは残高を押して頂くとチャージページに行きます。</h3></p>
         </div>
         </div>
+
+        <div class="cp_box">
+        <input id="cp02" type="checkbox">
+        <label for="cp02"></label>
+        <div class="cp_container">
+            <h1>当サイトの使用上の注意事項</h1>
+            <p><h2>1.メールアドレスについて</h2></p>
+            <p><h3>・・・正しくメールアドレスが登録されていない場合、二段階認証によってログインできなくなる可能性があります。</h3></p>
+            <p><h2>2.チャットについて</h2></p>
+            <p><h3>・・・不適切な発言や、違法行為は禁止です。</h3></p>
+            <p><h2>3.</h2></p>
+            <p><h3>・・・</h3></p>
         </div>
-        <script>
-            function updateClock() {
-            var currentTime = new Date();
-            var hours = currentTime.getHours();
-            var minutes = currentTime.getMinutes();
-            var seconds = currentTime.getSeconds();
+        </div>
 
-            // ゼロ埋め
-            minutes = (minutes < 10 ? "0" : "") + minutes;
-            seconds = (seconds < 10 ? "0" : "") + seconds;
 
-            // フォーマット（24時間制）
-            var formattedTime = hours + ":" + minutes + ":" + seconds;
+        </div>
+        </div>
+<script>
+    function updateClock() {
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
 
-            // 現在の時間を表示する要素にセット
-            document.getElementById('current-time').innerHTML = formattedTime;
+    // ゼロ埋め
+    minutes = (minutes < 10 ? "0" : "") + minutes;
+    seconds = (seconds < 10 ? "0" : "") + seconds;
 
-            // 1秒ごとに更新
-            setTimeout(updateClock, 1000);
-        }
+    // フォーマット（24時間制）
+    var formattedTime = hours + ":" + minutes + ":" + seconds;
 
-        // ページ読み込み時に初回実行
-        document.addEventListener("DOMContentLoaded", function() {
-            updateClock();
-        });
-        </script>
+    // 現在の時間を表示する要素にセット
+    document.getElementById('current-time').innerHTML = formattedTime;
+
+    // 1秒ごとに更新
+    setTimeout(updateClock, 1000);
+}
+
+// ページ読み込み時に初回実行
+document.addEventListener("DOMContentLoaded", function() {
+    updateClock();
+});
+</script>
 
 </body>
 </html>
