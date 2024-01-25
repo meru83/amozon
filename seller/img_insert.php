@@ -217,7 +217,7 @@ function getColor($conn, $color_code){
     } 
 }
 ?>
-<form method="post" enctype="multipart/form-data">
+<form id="rail2" method="post" enctype="multipart/form-data">
     <?=$htmlText?>
     <input id="rail" type="submit" class="styleBtn" value="登録"><br>
 </form>
@@ -226,10 +226,11 @@ function getColor($conn, $color_code){
 </body>
 <script>
 const rail = document.getElementById('rail');
-rail.addEventListener('submit',function(e){
+const rail2 = document.getElementById('rail2');
+rail2.addEventListener('submit',function(e){
     e.preventDefault();
     if(!alert("商品に写真を登録しました")){
-        rail.submit();
+        rail2.submit();
     }
 });
 </script>
