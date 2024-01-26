@@ -188,15 +188,14 @@ if($seller_id === $postSellerId){
                 <b>$addressname</b>
             </div>
         </div>
-        </div>
         HTML;
     }else{
         echo <<<HTML
-        <div class="sub-content">
         <div class='sub-content-item1'>
         <div class="flexBox001">
+        <div class="box001">
         <a href="../address_insert.php">
-                <h2>お届け先：<h2>
+                <h2>発送元：<h2>
                 未登録
         </a>
         </div>
