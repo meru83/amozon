@@ -10,4 +10,7 @@ $conn = new mysqli($host, $db_username, $db_password, $db_name);
 if ($conn->connect_error) {
     die("データベースへの接続に失敗しました: " . $conn->connect_error);
 }
+
+$conn -> set_charset("utf8");
+
 ?>
